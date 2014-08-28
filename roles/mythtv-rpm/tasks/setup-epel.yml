@@ -1,0 +1,8 @@
+# roles/mythtv-rpm/tasks/setup-epel.yml
+
+- shell:            /bin/rpm -q --quiet epel-release-7 && echo installed || echo missing
+  register:         epel
+
+- name: setup EPEL repository
+  command: yum localinstall -y --nogpgcheck http://dl.fedoraproject.org/pub/epel/beta/7/x86_64/epel-release-7-0.2.noarch.rpm
+  when: epel.stdout == "missing"

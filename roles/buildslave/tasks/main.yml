@@ -1,0 +1,48 @@
+# roles/buildslave/tasks/main.yml
+
+- name: install python twisted - Fedora
+  yum:  name={{ item }} state=installed
+  when: ansible_distribution == "Fedora"
+  with_items:
+    - python-twisted
+
+- name: install python twisted - CentOS
+  yum:  name={{ item }} state=installed
+  when: ansible_distribution == "CentOS"
+  with_items:
+    - python-twisted-core
+    - python-twisted-web
+    - python-twisted-words
+
+# no buildbot in centos7 or epel7...
+- name: install buildslave (rpm)
+  yum:  name={{ item }} state=installed
+  when: ansible_distribution == "Fedora"
+  with_items:
+    - buildbot-slave
+
+- include: buildbot-build.yml
+  when: ansible_distribution == "CentOS"
+
+- name: install buildslave (deb)
+  apt:  name={{ item }} state=installed
+  when: ansible_pkg_mgr == "apt"
+  with_items:
+    - buildbot-slave
+
+- name: create buildslave user
+  user: name=buildslave state=present generate_ssh_key=yes
+
+- name: setup ccache max cache size
+  command: su - buildslave -c 'ccache -M 10G'
+
+- name: create buildslave ~/bin
+  command: su - buildslave -c 'test -d ~/bin || mkdir ~/bin'
+
+- name: create buildslave ~/bin
+  command: su - buildslave -c 'test -d ~/mythtv || mkdir ~/mythtv'
+
+- name: install slave startup script
+  copy: src={{ ansible_distribution }}-start-buildslave.sh dest=~buildslave/bin/start-buildslave.sh mode=0755
+
+- cron: name="autostart slave at reboot" user=buildslave special_time=reboot job=$HOME/bin/start-buildslave.sh

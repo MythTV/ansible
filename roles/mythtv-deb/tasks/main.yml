@@ -1,0 +1,75 @@
+# roles/mythtv-deb/tasks/main.yml
+
+- name: install compilers and build essentials
+  apt:  name={{ item }} state=installed
+  with_items:
+    - git 
+    - g++ 
+    - make 
+    - build-essential 
+    - yasm
+    - automake
+    - libtool
+    - ccache
+    - pkg-config 
+
+- name: install mythtv essential build libraries
+  apt:  name={{ item }} state=installed
+  with_items:
+    - libqt4-dev 
+    - libqtwebkit-dev
+    - libqt4-opengl-dev
+    - uuid-dev 
+    - libfreetype6-dev 
+    - libmp3lame-dev
+    - libxv-dev
+    - libxxf86vm-dev 
+    - libxinerama-dev
+    - libxrandr-dev
+    - libxml2-dev
+    - libavahi-compat-libdnssd-dev
+    - libexiv2-dev
+    - libasound2-dev
+    - libegl1-mesa-dev
+# Added OpenGL ES
+#    - libgles2-mesa-dev
+
+- name: install mythtv essential runtime libraries
+  apt:  name={{ item }} state=installed
+  with_items:
+    - libqt4-sql-mysql
+
+- name: install mythtv essential python modules
+  apt:  name={{ item }} state=installed
+  with_items:
+    - python-mysqldb 
+    - python-lxml 
+    - python-urlgrabber
+    - python-oauth
+
+- name: install mythtv essential perl modules
+  apt:  name={{ item }} state=installed
+  with_items:
+    - libdbi-perl 
+    - libdbd-mysql-perl
+    - libnet-upnp-perl
+    - libwww-perl 
+    - libio-socket-inet6-perl
+    - libdate-manip-perl
+    - libxml-simple-perl
+    - libxml-xpath-perl 
+    - libimage-size-perl 
+    - libdatetime-format-iso8601-perl 
+    - libsoap-lite-perl 
+    - libjson-perl
+
+- name: install mythtv essential plugin libraries
+  apt:  name={{ item }} state=installed
+  with_items:
+    - libvorbis-dev 
+    - libflac-dev 
+    - libflac++-dev 
+    - libtag1-dev
+    - libcdio-dev 
+    - libcdio-paranoia-dev
+    - libmysqlclient-dev

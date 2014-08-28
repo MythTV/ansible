@@ -1,0 +1,83 @@
+# roles/mythtv-rpm/tasks/main.yml
+
+- include: setup-epel.yml
+  when:    ansible_distribution == "CentOS"
+
+- include: setup-rpmfusion.yml
+  when:    ansible_distribution == "Fedora"
+
+- name: install compilers and build essentials
+  yum:  name={{ item }} state=installed
+  with_items:
+    - git 
+    - gcc
+    - gcc-c++ 
+    - make 
+    - gdb
+    - automake
+    - autoconf
+    - libtool
+    - pkgconfig
+# package in repo for fedora, and in epel for centos7/rhel7
+    - yasm
+    - ccache
+
+- name: install mythtv essential build libraries
+  yum:  name={{ item }} state=installed
+  with_items:
+    - qt-devel
+    - libuuid-devel 
+    - libxml2-devel
+    - alsa-lib-devel
+    - pulseaudio-libs-devel
+    - avahi-compat-libdns_sd-devel
+    - exiv2
+    - exiv2-devel
+# package in repo for fedora, and in epel for centos7/rhel7
+    - qtwebkit-devel
+
+- include: lame-build.yml
+  when:    ansible_distribution == "CentOS"
+
+- include: lame-install.yml
+  when:    ansible_distribution == "Fedora"
+
+- name: install mythtv essential runtime libraries
+  yum:  name={{ item }} state=installed
+  with_items:
+    - qt-mysql
+
+- name: install mythtv essential python modules
+  yum:  name={{ item }} state=installed
+  with_items:
+    - MySQL-python
+    - python-lxml
+
+- name: install mythtv essential perl modules
+  yum:  name={{ item }} state=installed
+  with_items:
+    - perl\(ExtUtils::MakeMaker\)
+    - perl\(DBI\)
+    - perl\(DBD::mysql\)
+    - perl\(HTTP::Request\)
+    - perl\(LWP::UserAgent\)
+    - perl\(IO::Socket::INET6\)
+    - perl\(Date::Manip\)
+
+- name: install mythtv essential perl modules - Fedora only
+  yum:  name={{ item }} state=installed
+  when: ansible_distribution == "Fedora"
+  with_items:
+# not found on centos7
+    - perl\(Net::UPnP::QueryResponse\)
+    - perl\(Net::UPnP::ControlPoint\)
+
+- name: install mythtv essential plugin libraries
+  yum:  name={{ item }} state=installed
+  with_items:
+    - libvorbis-devel
+    - flac-devel
+    - taglib-devel
+    - libcdio-devel
+    - libcdio-paranoia-devel
+    - mysql-devel
