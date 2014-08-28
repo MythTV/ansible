@@ -4,5 +4,5 @@
   register:         rpmfusion
 
 - name: setup RPMfusion repository
-  command: yum localinstall -y --nogpgcheck http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm 
+  command: yum localinstall -y --nogpgcheck {{ rpmfusion_rpm }}
   when: ansible_distribution == "Fedora" and rpmfusion.stdout == "missing"

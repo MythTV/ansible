@@ -1,5 +1,9 @@
 # roles/mythtv-rpm/vars/main.yml
 
+epel_rpm: "http://dl.fedoraproject.org/pub/epel/beta/7/x86_64/epel-release-7-0.2.noarch.rpm"
+
+rpmfusion_rpm: "http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+
 lame_src: " http://download1.rpmfusion.org/free/el/updates/6/SRPMS/lame-3.99.5-1.el6.src.rpm"
 lame_rpm: "~/rpmbuild/RPMS/{{ansible_architecture}}/lame-3.99.5-1.el7.centos.{{ansible_architecture}}.rpm" 
 lame_rpms_all: "~/rpmbuild/RPMS/{{ansible_architecture}}/lame-3.99.5-1.el7.centos.{{ansible_architecture}}.rpm ~/rpmbuild/RPMS/{{ansible_architecture}}/lame-libs-3.99.5-1.el7.centos.{{ansible_architecture}}.rpm ~/rpmbuild/RPMS/{{ansible_architecture}}/lame-devel-3.99.5-1.el7.centos.{{ansible_architecture}}.rpm"
