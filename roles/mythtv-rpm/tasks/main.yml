@@ -25,7 +25,6 @@
 - name: install mythtv essential build libraries
   yum:  name={{ item }} state=installed
   with_items:
-    - qt-devel
     - libuuid-devel 
     - libxml2-devel
     - alsa-lib-devel
@@ -34,18 +33,21 @@
     - exiv2
     - exiv2-devel
 # packages in repo for fedora, and in epel for centos7/rhel7
-    - qtwebkit-devel
+
+- name: install optional build libraries
+  yum:  name={{ item }} state=installed
+  with_items:
+    - libXinerama-devel
+    - libXrandr-devel
+    - libXv-devel
+
+- include: qt4.yml
 
 - include: lame-build.yml
   when:    ansible_distribution == "CentOS"
 
 - include: lame-install.yml
   when:    ansible_distribution == "Fedora"
-
-- name: install mythtv essential runtime libraries
-  yum:  name={{ item }} state=installed
-  with_items:
-    - qt-mysql
 
 - name: install mythtv essential python modules
   yum:  name={{ item }} state=installed
