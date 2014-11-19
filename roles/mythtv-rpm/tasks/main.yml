@@ -18,7 +18,7 @@
     - autoconf
     - libtool
     - pkgconfig
-# package in repo for fedora, and in epel for centos7/rhel7
+# packages in repo for fedora, and in epel for centos7/rhel7
     - yasm
     - ccache
 
@@ -33,7 +33,7 @@
     - avahi-compat-libdns_sd-devel
     - exiv2
     - exiv2-devel
-# package in repo for fedora, and in epel for centos7/rhel7
+# packages in repo for fedora, and in epel for centos7/rhel7
     - qtwebkit-devel
 
 - include: lame-build.yml
@@ -52,6 +52,7 @@
   with_items:
     - MySQL-python
     - python-lxml
+    - python-oauth
 
 - name: install mythtv essential perl modules
   yum:  name={{ item }} state=installed
@@ -63,6 +64,12 @@
     - perl\(LWP::UserAgent\)
     - perl\(IO::Socket::INET6\)
     - perl\(Date::Manip\)
+    - perl\(XML::Simple\)
+    - perl\(XML::XPath\)
+    - perl\(Image::Size\)
+    - perl\(DateTime::Format::ISO8601\)
+    - perl\(SOAP::Lite\)
+    - perl\(JSON\)
 
 - name: install mythtv essential perl modules - Fedora only
   yum:  name={{ item }} state=installed

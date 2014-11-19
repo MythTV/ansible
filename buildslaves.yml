@@ -4,8 +4,6 @@
 # "ansible_pkg_mgr": "apt"
 
 - hosts:        buildslaves
-  sudo:         yes
-  user:         root
   roles:
     - { role: mythtv-deb, when:  ansible_pkg_mgr == "apt" }
     - { role: mythtv-rpm, when:  ansible_pkg_mgr == "yum" }
