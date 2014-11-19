@@ -1,0 +1,10 @@
+- name: install qt5 libraries
+  yum:  name={{ item }} state=installed
+  with_items:
+    - qt5-qtbase-devel
+    - qt5-qtwebkit-devel
+    - qt5-qtscript-devel
+# packages in repo for fedora, and in epel for centos7/rhel7
+#    - none yet
+  tags:
+    - qt5
