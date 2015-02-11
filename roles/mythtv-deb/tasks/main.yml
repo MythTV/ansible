@@ -16,9 +16,6 @@
 - name: install mythtv essential build libraries
   apt:  name={{ item }} state=installed
   with_items:
-    - libqt4-dev 
-    - libqtwebkit-dev
-    - libqt4-opengl-dev
     - uuid-dev 
     - libfreetype6-dev 
     - libmp3lame-dev
@@ -33,6 +30,10 @@
     - libegl1-mesa-dev
 # Added OpenGL ES
 #    - libgles2-mesa-dev
+
+- include: qt4.yml
+
+#- include: qt5.yml
 
 - name: install mythtv essential runtime libraries
   apt:  name={{ item }} state=installed
