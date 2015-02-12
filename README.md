@@ -21,14 +21,14 @@ OR
 
 Then run the playbooks as follows.
 For a normal development system running Qt4
-# ansible-playbook -i hosts -l qt4 buildslaves.yml
+# ansible-playbook -i hosts qt4.yml
 
 For a normal development system running Qt5
-# ansible-playbook -i hosts -l qt5 buildslaves.yml
+# ansible-playbook -i hosts qt5.yml
 
 For a buildslave system running Qt4
-# ansible-playbook -i hosts -l buildslaves buildslaves.yml
+# ansible-playbook -i hosts buildslave.yml
 
 For a buildslave system running Qt5
-# ansible-playbook -i hosts -l buildslaves-qt5 buildslaves.yml
+# ansible-playbook -i hosts buildslave-qt5.yml
 
