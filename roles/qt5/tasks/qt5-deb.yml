@@ -1,6 +1,4 @@
-# roles/mythtv-deb/tasks/qt5.yml
-- name: enable wheezy backports repo
-  apt_repository: repo='deb http://ftp2.de.debian.org/debian wheezy-backports main contrib non-free' state=present
+# Install Qt5
 
 - name: install qt5
   apt:  name={{ item }} state=installed

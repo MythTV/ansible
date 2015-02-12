@@ -1,0 +1,6 @@
+- include:  qt4-deb.yml
+  when:     ansible_pkg_mgr == "apt"
+
+- include:  qt4-rpm.yml
+  when:     ansible_pkg_mgr == "yum"
+#

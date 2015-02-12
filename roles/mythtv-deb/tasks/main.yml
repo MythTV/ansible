@@ -31,15 +31,6 @@
 # Added OpenGL ES
 #    - libgles2-mesa-dev
 
-- include: qt4.yml
-
-#- include: qt5.yml
-
-- name: install mythtv essential runtime libraries
-  apt:  name={{ item }} state=installed
-  with_items:
-    - libqt4-sql-mysql
-
 - name: install mythtv essential python modules
   apt:  name={{ item }} state=installed
   with_items:
