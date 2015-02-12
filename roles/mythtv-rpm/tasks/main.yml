@@ -41,11 +41,6 @@
     - libXrandr-devel
     - libXv-devel
 
-- include: qt4.yml
-
-#- include: qt5.yml
-#  when:    ansible_distribution == "Fedora"
-
 - include: lame-build.yml
   when:    ansible_distribution == "CentOS"
 
