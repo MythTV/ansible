@@ -1,2 +1,12 @@
+[qt4]
+localhost	ansible_connection=local
+
+[qt5]
+localhost	ansible_connection=local
+
 [buildslaves]
 localhost	ansible_connection=local
+
+[buildslaves-qt5]
+localhost	ansible_connection=local
+
