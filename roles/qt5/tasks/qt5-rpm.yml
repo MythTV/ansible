@@ -8,3 +8,10 @@
 #    - none yet
   tags:
     - qt5
+
+- name: install qt5 runtime dependencies
+  yum:  name={{ item }} state=installed
+  with_items:
+    - qt5-qtbase-mysql
+  tags:
+    - qt5
