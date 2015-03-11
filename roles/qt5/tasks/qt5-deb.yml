@@ -8,7 +8,6 @@
     - libqt5opengl5-dev
     - libqt5script5
     - qtscript5-dev
-    - qt5-default
     - qt5-qmake
 
 - name: install mythtv essential runtime libraries
