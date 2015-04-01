@@ -53,9 +53,10 @@
     - MySQL-python
     - python-lxml
 
-- name: install mythtv essential python modules (Fedora only)
+- name: install mythtv essential python modules - Fedora only
   yum:  name={{ item }} state=installed
   when: ansible_distribution == "Fedora"
+  with_items:
     - python-oauth
 
 - name: install mythtv essential perl modules
