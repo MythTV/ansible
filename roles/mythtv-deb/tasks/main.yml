@@ -13,6 +13,12 @@
     - ccache
     - pkg-config 
 
+- name: install compilers and build essentials 2
+  apt:  name={{ item }} state=installed
+  when: ansible_lsb.codename == "jessie"
+  with_items:
+    - libtool-bin
+
 - name: install mythtv essential build libraries
   apt:  name={{ item }} state=installed
   with_items:
