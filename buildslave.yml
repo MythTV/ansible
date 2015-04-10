@@ -1,6 +1,6 @@
 # Master playbook
 
-- hosts:        localhost
+- hosts:        [ 'localhost', 'buildslaves' ]
   roles:
     - { role: mythtv-deb, when:  ansible_pkg_mgr == "apt" }
     - { role: mythtv-rpm, when:  ansible_pkg_mgr == "yum" }
