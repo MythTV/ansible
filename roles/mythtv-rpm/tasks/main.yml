@@ -40,6 +40,8 @@
     - libXinerama-devel
     - libXrandr-devel
     - libXv-devel
+    - libva-devel
+    - libvdpau-devel
 
 - include: lame-build.yml
   when:    ansible_distribution == "CentOS"

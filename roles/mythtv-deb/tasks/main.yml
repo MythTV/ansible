@@ -37,6 +37,12 @@
 # Added OpenGL ES
 #    - libgles2-mesa-dev
 
+- name: install mythtv extra build libraries
+  apt:  name={{ item }} state=installed
+  with_items:
+    - libva-dev
+    - libvdpau-dev
+
 - name: install mythtv essential python modules
   apt:  name={{ item }} state=installed
   with_items:
