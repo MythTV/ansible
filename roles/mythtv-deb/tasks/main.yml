@@ -13,9 +13,15 @@
     - ccache
     - pkg-config 
 
-- name: install compilers and build essentials 2
+- name: install compilers and build essentials 2 (debian)
   apt:  name={{ item }} state=installed
   when: ansible_lsb.codename == "jessie"
+  with_items:
+    - libtool-bin
+
+- name: install compilers and build essentials 2 (ubuntu)
+  apt:  name={{ item }} state=installed
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version >= "15"
   with_items:
     - libtool-bin
 
