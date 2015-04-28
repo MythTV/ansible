@@ -21,7 +21,7 @@
 
 - name: install compilers and build essentials 2 (ubuntu)
   apt:  name={{ item }} state=installed
-  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version >= "15"
+  when: ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int >= 15
   with_items:
     - libtool-bin
 
