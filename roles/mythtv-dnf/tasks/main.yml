@@ -52,7 +52,7 @@
 - name: install mythtv essential python modules
   dnf:  name={{ item }} state=installed
   with_items:
-    - MySQL-python
+    - python-mysql
     - python-lxml
 
 - name: install mythtv essential python modules - Fedora only
