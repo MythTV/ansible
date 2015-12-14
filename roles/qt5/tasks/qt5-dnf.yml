@@ -1,0 +1,17 @@
+- name: install qt5 libraries
+  dnf:  name={{ item }} state=installed
+  with_items:
+    - qt5-qtbase-devel
+    - qt5-qtwebkit-devel
+    - qt5-qtscript-devel
+# packages in repo for fedora, and in epel for centos7/rhel7
+#    - none yet
+  tags:
+    - qt5
+
+- name: install qt5 runtime dependencies
+  dnf:  name={{ item }} state=installed
+  with_items:
+    - qt5-qtbase-mysql
+  tags:
+    - qt5

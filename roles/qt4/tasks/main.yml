@@ -3,4 +3,6 @@
 
 - include:  qt4-rpm.yml
   when:     ansible_pkg_mgr == "yum"
-#
+
+- include:  qt4-dnf.yml
+  when:     ansible_pkg_mgr == "dnf"
