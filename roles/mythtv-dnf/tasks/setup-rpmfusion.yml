@@ -1,0 +1,8 @@
+# roles/mythtv-rpm/tasks/setup-rpmfusion.yml
+
+- shell:            /bin/rpm -q --quiet rpmfusion-free-release && echo installed || echo missing
+  register:         rpmfusion
+
+- name: setup RPMfusion repository
+  command: dnf install -y --nogpgcheck {{ rpmfusion_rpm }}
+  when: ansible_distribution == "Fedora" and rpmfusion.stdout == "missing"

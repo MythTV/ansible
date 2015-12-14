@@ -1,0 +1,6 @@
+# roles/mythtv-rpm/tasks/lame-install.yml
+
+- name: install LAME
+  dnf:  name={{ item }} state=installed
+  with_items:
+    - lame-devel
