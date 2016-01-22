@@ -6,3 +6,6 @@
 
 - include:  qt5-dnf.yml
   when:     ansible_pkg_mgr == "dnf"
+
+- include:  qt5-pacman.yml
+  when:     ansible_pkg_mgr == "pacman"

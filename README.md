@@ -11,8 +11,12 @@ for your distro
 # yum install ansible
 # dnf install ansible
 # apt-get install ansible
+# pacman -S ansible python2
 
 Then run the playbooks as follows.
+
+Please note archlinux users will need to add `--limit archlinux` to these commands
+
 For a normal development system running Qt4
 # ansible-playbook -i hosts qt4.yml
 
@@ -25,3 +29,5 @@ For a buildslave system running Qt4
 For a buildslave system running Qt5
 # ansible-playbook -i hosts buildslave-qt5.yml
 
+For a buildslave system running both Qt4 and Qt5
+# ansible-playbook -i hosts buildslave.yml

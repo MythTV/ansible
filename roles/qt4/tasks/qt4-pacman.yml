@@ -1,0 +1,8 @@
+- name: install qt4 libraries
+  pacman:  name={{ item }} state=installed
+  with_items:
+    - qt4
+    - qtwebkit
+  tags:
+    - qt4
+

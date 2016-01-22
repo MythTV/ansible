@@ -5,5 +5,6 @@
     - { role: mythtv-deb, when:  ansible_pkg_mgr == "apt" }
     - { role: mythtv-rpm, when:  ansible_pkg_mgr == "yum" }
     - { role: mythtv-dnf, when:  ansible_pkg_mgr == "dnf" }
+    - { role: mythtv-pacman, when:  ansible_pkg_mgr == "pacman" }
     - role: qt5
     - role: buildslave

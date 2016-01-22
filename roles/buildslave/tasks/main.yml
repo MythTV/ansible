@@ -30,6 +30,12 @@
   with_items:
     - buildbot-slave
 
+- name: install buildslave (pacman)
+  pacman:  name={{ item }} state=installed
+  when: ansible_pkg_mgr == "pacman"
+  with_items:
+    - buildbot-slave
+
 - name: create buildslave user
   user: name=buildslave state=present generate_ssh_key=yes
 
