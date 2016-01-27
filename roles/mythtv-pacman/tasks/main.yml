@@ -23,6 +23,11 @@
     - libxml2
     - exiv2
 
+- name: install mythtv optional build libraries
+  pacman: name={{ item }} state=installed
+  with_items:
+    - libcec
+
 - name: install mythtv essential python modules
   pacman:  name={{ item }} state=installed
   with_items:

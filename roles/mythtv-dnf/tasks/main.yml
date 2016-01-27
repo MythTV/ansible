@@ -42,6 +42,7 @@
     - libXv-devel
     - libva-devel
     - libvdpau-devel
+    - libcec-devel
 
 - include: lame-build.yml
   when:    ansible_distribution == "CentOS"
