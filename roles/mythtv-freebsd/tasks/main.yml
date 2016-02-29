@@ -1,0 +1,50 @@
+- name: install compilers and build essentials
+  pkgng: name={{ item }} state=present
+  with_items:
+    - git
+    - ccache
+    - yasm
+    - autoconf
+    - automake
+    - pkgconf
+
+- name: install essential libraries
+  pkgng: name={{ item }} state=present
+  with_items:
+    - taglib
+    - exiv2
+
+- name: install optional libraries
+  pkgng: name={{ item }} state=present
+  with_items:
+    - libvpx
+    - x264
+    - xvid
+
+- name: install python essentials
+  pkgng: name={{ item }} state=present
+  with_items:
+    - python
+    - py27-MySQLdb
+    - py27-lxml
+    - py27-urlgrabber
+
+- name: install perl essentials
+  pkgng: name={{ item }} state=present
+  with_items:
+    - perl5
+    - p5-DBI
+    - p5-DBD-mysql
+    - p5-libwww
+    - p5-Net-UPnP
+    - p5-IO-Socket-INET6
+    - p5-Date-Manip
+
+- name: install packages from ports
+  portinstall: name={{ item }} state=present
+  with_items:
+    - devel/subversion
+    - gmake
+    - libtool
+    - audio/lame
+    - audio/faac

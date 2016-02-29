@@ -12,6 +12,7 @@ for your distro
 # dnf install ansible
 # apt-get install ansible
 # pacman -S ansible python2
+# pkg install ansible
 
 Then run the playbooks as follows.
 

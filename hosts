@@ -4,4 +4,7 @@ localhost	ansible_connection=local
 [archlinux]
 localhost	ansible_connection=local ansible_python_interpreter=/usr/bin/python2
 
+[freebsd]
+localhost	ansible_connection=local ansible_python_interpreter=/usr/local/bin/python2.7
+
 [buildslaves]

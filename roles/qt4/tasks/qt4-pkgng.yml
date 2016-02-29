@@ -1,0 +1,13 @@
+- name: install essential libraries
+  pkgng: name={{ item }} state=present
+  with_items:
+    - qt4
+  tags:
+    - qt4
+
+- name: install packages from ports
+  portinstall: name={{ item }} state=present
+  with_items:
+    - qt4-mysql-plugin
+  tags:
+    - qt4

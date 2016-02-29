@@ -1,0 +1,6 @@
+- name: install essential libraries
+  pkgng: name={{ item }} state=present
+  with_items:
+    - qt5
+  tags:
+    - qt5

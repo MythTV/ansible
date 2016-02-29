@@ -6,6 +6,7 @@
     - { role: mythtv-rpm, when:  ansible_pkg_mgr == "yum" }
     - { role: mythtv-dnf, when:  ansible_pkg_mgr == "dnf" }
     - { role: mythtv-pacman, when:  ansible_pkg_mgr == "pacman" }
+    - { role: mythtv-freebsd, when: ansible_pkg_mgr == "pkgng" }
     - role: qt4
     - role: qt5
     - role: buildslave

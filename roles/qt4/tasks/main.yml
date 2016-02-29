@@ -9,3 +9,6 @@
 
 - include:  qt4-pacman.yml
   when:     ansible_pkg_mgr == "pacman"
+
+- include:  qt4-pkgng.yml
+  when:     ansible_pkg_mgr == "pkgng"
