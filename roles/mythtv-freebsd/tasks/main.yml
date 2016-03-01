@@ -59,7 +59,7 @@
     - libtool
     - audio/lame
     - audio/faac
-    - multimedia/webcamd
+    - multimedia/v4l_compat
     - multimedia/libcec
     - multimedia/libvdpau
     - multimedia/libva
