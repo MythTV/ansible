@@ -49,6 +49,7 @@
     - libva-dev
     - libvdpau-dev
     - libcec-dev
+    - libcec-platform-dev
 
 - name: install mythtv essential python modules
   apt:  name={{ item }} state=installed
