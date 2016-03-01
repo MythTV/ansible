@@ -22,6 +22,8 @@
     - xvid
     - libvorbis
     - flac
+    - freetype2
+    - libxml2
 
 - name: install python essentials
   pkgng: name={{ item }} state=present
@@ -57,3 +59,8 @@
     - libtool
     - audio/lame
     - audio/faac
+    - multimedia/webcamd
+    - multimedia/libcec
+    - multimedia/libvdpau
+    - multimedia/libva
+    - multimedia/libv4l
