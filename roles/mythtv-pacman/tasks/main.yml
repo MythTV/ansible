@@ -27,6 +27,7 @@
   pacman: name={{ item }} state=installed
   with_items:
     - libcec
+    - libass
 
 - name: install mythtv essential python modules
   pacman:  name={{ item }} state=installed
