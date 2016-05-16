@@ -1,6 +1,5 @@
-#!/bin/bash
+#!/bin/sh
 cd ~/mythtv
-/usr/bin/buildslave stop
+/usr/local/bin/buildslave stop
 echo FreeBSD `/bin/freebsd-version` > info/host
-exec /usr/bin/buildslave start
-
+exec /usr/local/bin/buildslave start
