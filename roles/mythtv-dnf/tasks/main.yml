@@ -54,7 +54,7 @@
 - name: install mythtv essential python modules
   dnf:  name={{ item }} state=installed
   with_items:
-    - python-mysql
+    - python2-mysql
     - python-lxml
 
 - name: install mythtv essential python modules - Fedora only
@@ -66,27 +66,26 @@
 - name: install mythtv essential perl modules
   dnf:  name={{ item }} state=installed
   with_items:
-    - perl\(ExtUtils::MakeMaker\)
-    - perl\(DBI\)
-    - perl\(DBD::mysql\)
-    - perl\(HTTP::Request\)
-    - perl\(LWP::UserAgent\)
-    - perl\(IO::Socket::INET6\)
-    - perl\(Date::Manip\)
-    - perl\(XML::Simple\)
-    - perl\(XML::XPath\)
-    - perl\(DateTime::Format::ISO8601\)
-    - perl\(SOAP::Lite\)
-    - perl\(JSON\)
+    - perl-ExtUtils-MakeMaker
+    - perl-DBI
+    - perl-DBD-MySQL
+    - perl-HTTP-Message
+    - perl-libwww-perl
+    - perl-IO-Socket-INET6
+    - perl-Date-Manip
+    - perl-XML-Simple
+    - perl-XML-XPath
+    - perl-DateTime-Format-ISO8601
+    - perl-SOAP-Lite
+    - perl-JSON
 
 - name: install mythtv essential perl modules - Fedora only
   dnf:  name={{ item }} state=installed
   when: ansible_distribution == "Fedora"
   with_items:
 # not found on centos7
-    - perl\(Image::Size\)
-    - perl\(Net::UPnP::QueryResponse\)
-    - perl\(Net::UPnP::ControlPoint\)
+    - perl-Image-Size
+    - perl-Net-UPnP
 
 - name: install mythtv essential plugin libraries
   dnf:  name={{ item }} state=installed
