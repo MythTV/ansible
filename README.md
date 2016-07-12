@@ -1,34 +1,39 @@
 These are ansible playbooks for setting up MythTV buildslaves.
 
 How to use this
-# git clone https://github.com/MythTV/ansible
+> # git clone https://github.com/MythTV/ansible
 
 Debian users will need to enable wheezy-backports
 https://wiki.debian.org/Backports
 
+###### Install the ansible package
 Then install the `ansible` package. Choose the one appropriate
 for your distro
-# yum install ansible
-# dnf install ansible
-# apt-get install ansible
-# pacman -S ansible python2
-# pkg install ansible
+> # yum install ansible
+> # dnf install ansible
+> # apt-get install ansible
+> # pacman -S ansible python2
+> # pkg install ansible
 
+###### Run the playbooks
 Then run the playbooks as follows.
 
 Please note archlinux users will need to add `--limit archlinux` to these commands
+Alternate hosts files are provided for archlinux and freebsd users, as these
+platforms have different python requirements. Please replace hosts, with the
+appropriate filename.
 
 For a normal development system running Qt4
-# ansible-playbook -i hosts qt4.yml
+> # ansible-playbook -i hosts qt4.yml
 
 For a normal development system running Qt5
-# ansible-playbook -i hosts qt5.yml
+> # ansible-playbook -i hosts qt5.yml
 
 For a buildslave system running Qt4
-# ansible-playbook -i hosts buildslave.yml
+> # ansible-playbook -i hosts buildslave.yml
 
 For a buildslave system running Qt5
-# ansible-playbook -i hosts buildslave-qt5.yml
+> # ansible-playbook -i hosts buildslave-qt5.yml
 
 For a buildslave system running both Qt4 and Qt5
-# ansible-playbook -i hosts buildslave.yml
+> # ansible-playbook -i hosts buildslave.yml
