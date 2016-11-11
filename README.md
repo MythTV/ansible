@@ -7,16 +7,20 @@ How to use this
 Debian users will need to enable [wheezy-backports](https://wiki.debian.org/Backports)
 
 
-###### Install the ansible package
+### Install the ansible package
 Then install the `ansible` package. Choose the one appropriate
 for your distro
 > yum install ansible
+
 > dnf install ansible
+
 > apt-get install ansible
+
 > pacman -S ansible python2
+
 > pkg install ansible
 
-###### Run the playbooks
+### Run the playbooks
 Then run the playbooks as follows.
 
 Please note archlinux users will need to add `--limit archlinux` to these commands
