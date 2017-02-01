@@ -51,10 +51,10 @@
     - libcec-dev
     - libass-dev
 
-- name: install mythtv extra build libraries
+- name: install mythtv extra build libraries 2
   apt:  name={{ item }} state=installed
-  with_items:
   when: ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int <= 16
+  with_items:
     - libcec-platform-dev
 
 - name: install mythtv essential python modules
