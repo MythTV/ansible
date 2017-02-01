@@ -49,8 +49,13 @@
     - libva-dev
     - libvdpau-dev
     - libcec-dev
-    - libcec-platform-dev
     - libass-dev
+
+- name: install mythtv extra build libraries
+  apt:  name={{ item }} state=installed
+  with_items:
+  when: ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int <= 16
+    - libcec-platform-dev
 
 - name: install mythtv essential python modules
   apt:  name={{ item }} state=installed
