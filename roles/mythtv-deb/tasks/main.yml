@@ -99,6 +99,6 @@
 
 - name: install mythtv essential plugin libraries 2 (debian)
   apt:  name={{ item }} state=installed
-  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int <= 9
+  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 9
   with_items:
     - default-libmysqlclient-dev
