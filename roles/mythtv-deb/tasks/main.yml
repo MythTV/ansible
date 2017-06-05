@@ -15,7 +15,7 @@
 
 - name: install compilers and build essentials 2 (debian)
   apt:  name={{ item }} state=installed
-  when: ansible_lsb.codename == "jessie"
+  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 8
   with_items:
     - libtool-bin
 
@@ -90,4 +90,15 @@
     - libtag1-dev
     - libcdio-dev 
     - libcdio-paranoia-dev
+
+- name: install mythtv essential plugin libraries 2 (debian)
+  apt:  name={{ item }} state=installed
+  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int <= 8
+  with_items:
     - libmysqlclient-dev
+
+- name: install mythtv essential plugin libraries 2 (debian)
+  apt:  name={{ item }} state=installed
+  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int <= 9
+  with_items:
+    - default-libmysqlclient-dev
