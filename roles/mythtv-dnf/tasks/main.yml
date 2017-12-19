@@ -57,6 +57,9 @@
     - python2-mysql
     - python-lxml
     - python-urlgrabber
+    - python2-future
+    - python2-requests
+    - python-requests-cache
 
 - name: install mythtv essential python modules - Fedora only
   dnf:  name={{ item }} state=installed
