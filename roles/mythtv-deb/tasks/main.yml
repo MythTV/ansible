@@ -70,9 +70,10 @@
 
 - name: install mythtv extra build libraries (Ubuntu 16.04 and later)
   apt:  name={{ item }} state=installed
-  when: ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int <= 16
+  when: ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int >= 16
   with_items:
     - libcec-platform-dev
+    - libmysqlclient-dev
 
 - name: install mythtv essential python modules
   apt:  name={{ item }} state=installed
