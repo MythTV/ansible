@@ -1,0 +1,17 @@
+- name: install qt5 libraries
+  zypper: name={{ item }} state=installed
+  with_items:
+    - libqt5-qtbase-devel
+    - libQt5WebKit5-devel
+    - libQt5WebKitWidgets-devel
+    - libqt5-qtscript-devel
+  tags:
+    - qt5
+
+- name: install qt5 runtime dependencies
+  zypper: name={{ item }} state=installed
+  with_items:
+    - libQt5Sql5-mysql
+  tags:
+    - qt5
+

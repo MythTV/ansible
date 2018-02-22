@@ -12,3 +12,6 @@
 
 - include:  qt5-pkgng.yml
   when:     ansible_pkg_mgr == "pkgng"
+
+- include:  qt5-suse.yml
+  when:     ansible_pkg_mgr == "zypper"
