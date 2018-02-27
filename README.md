@@ -1,5 +1,7 @@
 ## Ansible Playbooks for MythTV
 These are ansible playbooks for setting up MythTV buildslaves.
+They can also be used to install all the necessary packages if
+you wish to build MythTV from source.
 
 How to use this
 > git clone https://github.com/MythTV/ansible
@@ -19,6 +21,8 @@ for your distro
 > pacman -S ansible python2
 
 > pkg install ansible
+
+> zypper install ansible
 
 ### Run the playbooks
 Then run the playbooks as follows.
