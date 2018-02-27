@@ -28,17 +28,21 @@ Alternate hosts files are provided for archlinux and freebsd users, as these
 platforms have different python requirements. Please replace hosts, with the
 appropriate filename.
 
-For a normal development system running Qt4
-> ansible-playbook -i hosts qt4.yml
-
 For a normal development system running Qt5
 > ansible-playbook -i hosts qt5.yml
 
-For a buildslave system running Qt4
-> ansible-playbook -i hosts buildslave.yml
-
 For a buildslave system running Qt5
 > ansible-playbook -i hosts buildslave-qt5.yml
+
+#### Only for older releases
+You will only need to use these instructions if you are trying
+to build older releases of MythTV which are based on Qt4.
+
+For a normal development system running Qt4
+> ansible-playbook -i hosts qt4.yml
+
+For a buildslave system running Qt4
+> ansible-playbook -i hosts buildslave.yml
 
 For a buildslave system running both Qt4 and Qt5
 > ansible-playbook -i hosts buildslave.yml
