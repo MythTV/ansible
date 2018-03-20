@@ -6,6 +6,9 @@
 - include: setup-rpmfusion.yml
   when:    ansible_distribution == "Fedora"
 
+- name: install yum (needed by python-twisted)
+  dnf: name=yum state=installed
+
 - name: install compilers and build essentials
   dnf:  name={{ item }} state=installed
   with_items:
@@ -66,6 +69,7 @@
   when: ansible_distribution == "Fedora"
   with_items:
     - python-oauth
+    - libselinux-python
 
 - name: install mythtv essential perl modules
   dnf:  name={{ item }} state=installed
