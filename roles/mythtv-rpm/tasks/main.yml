@@ -44,6 +44,11 @@
     - libvdpau-devel
     - libcec-devel
     - libass-devel
+    - libavc1394-devel
+    - libiec61883-devel
+    - fftw-devel
+    - libcrystalhd-devel
+    - systemd-devel
 
 - include: lame-build.yml
   when:    ansible_distribution == "CentOS"
