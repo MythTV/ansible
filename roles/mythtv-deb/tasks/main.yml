@@ -56,17 +56,11 @@
   with_items:
     - libxcb-shm0-dev
 
-- name: install mythtv extra build libraries (Debian Jessie or earlier)
+- name: install mythtv extra build libraries (Debian)
   apt:  name={{ item }} state=installed
-  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int <= 8
+  when: ansible_distribution == "Debian"
   with_items:
     - libcec-dev
-
-- name: install mythtv extra build libraries (Debian Stretch or later)
-  apt:  name={{ item }} state=installed
-  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 9
-  with_items:
-    - libcec-platform-dev
 
 - name: install mythtv extra build libraries (Ubuntu 16.04)
   apt:  name={{ item }} state=installed
