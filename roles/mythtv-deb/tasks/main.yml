@@ -68,16 +68,16 @@
   with_items:
     - libxcb-shm0-dev
 
-- name: install mythtv extra build libraries (Ubuntu 16.04 - 17.10)
+- name: install mythtv extra build libraries (Ubuntu 16.04 - 17.04)
   apt:  name={{ item }} state=installed
-  when: ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int >= 16 and ansible_lsb.major_release|int < 18
+  when: ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int == 16 or ansible_lsb.release == "17.04")
   with_items:
     - libcec-platform-dev
     - libmysqlclient-dev
 
-- name: install mythtv extra build libraries (Ubuntu 18.04 and later)
+- name: install mythtv extra build libraries (Ubuntu 17.10 and later)
   apt:  name={{ item }} state=installed
-  when: ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int >= 18
+  when: ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 18 or ansible_lsb.release == "17.10")
   with_items:
     - libcec-dev
     - libmysqlclient-dev
