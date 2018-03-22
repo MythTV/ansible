@@ -50,6 +50,12 @@
     - libvdpau-dev
     - libass-dev
 
+- name: install mythtv extra build libraries (Raspbian Stretch or later)
+  apt:  name={{ item }} state=installed
+  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 9 and ansible_lsb.id == "Raspbian"
+  with_items:
+    - libxcb-shm0-dev
+
 - name: install mythtv extra build libraries (Debian Jessie or earlier)
   apt:  name={{ item }} state=installed
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int <= 8
@@ -62,25 +68,35 @@
   with_items:
     - libcec-platform-dev
 
-- name: install mythtv extra build libraries (Raspbian Stretch or later)
+- name: install mythtv extra build libraries (Ubuntu 16.04)
   apt:  name={{ item }} state=installed
-  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 9 and ansible_lsb.id == "Raspbian"
-  with_items:
-    - libxcb-shm0-dev
-
-- name: install mythtv extra build libraries (Ubuntu 16.04 - 17.04)
-  apt:  name={{ item }} state=installed
-  when: ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int == 16 or ansible_lsb.release == "17.04")
+  when: ansible_distribution == "Ubuntu" and ansible_lsb.release == "16.04"
   with_items:
     - libcec-platform-dev
-    - libmysqlclient-dev
 
-- name: install mythtv extra build libraries (Ubuntu 17.10 and later)
+- name: install mythtv extra build libraries (Ubuntu 16.10 and later)
   apt:  name={{ item }} state=installed
-  when: ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 18 or ansible_lsb.release == "17.10")
+  when: ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 17 or ansible_lsb.release == "16.10")
   with_items:
     - libcec-dev
+
+- name: install mythtv mysql client libraries (Ubuntu)
+  apt:  name={{ item }} state=installed
+  when: ansible_distribution == "Ubuntu"
+  with_items:
     - libmysqlclient-dev
+
+- name: install mythtv mysql client libraries (Debian - Jessie and earlier)
+  apt:  name={{ item }} state=installed
+  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int <= 8
+  with_items:
+    - libmysqlclient-dev
+
+- name: install mythtv mysql client libraries (Debian - Stretch and later)
+  apt:  name={{ item }} state=installed
+  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 9
+  with_items:
+    - default-libmysqlclient-dev
 
 - name: install mythtv essential python modules
   apt:  name={{ item }} state=installed
@@ -119,14 +135,3 @@
     - libcdio-dev 
     - libcdio-paranoia-dev
 
-- name: install mythtv essential plugin libraries 2 (debian)
-  apt:  name={{ item }} state=installed
-  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int <= 8
-  with_items:
-    - libmysqlclient-dev
-
-- name: install mythtv essential plugin libraries 2 (debian)
-  apt:  name={{ item }} state=installed
-  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 9
-  with_items:
-    - default-libmysqlclient-dev
