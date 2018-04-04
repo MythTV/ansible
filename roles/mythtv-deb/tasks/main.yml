@@ -73,6 +73,13 @@
   when: ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 17 or ansible_lsb.release == "16.10")
   with_items:
     - libcec-dev
+    - libavc1394-dev
+    - libiec61883-dev
+    - libpulse-dev
+    - libfftw3-dev
+    - libcrystalhd-dev
+    - libssl-dev
+    - libsystemd-dev
 
 - name: install mythtv mysql client libraries (Ubuntu)
   apt:  name={{ item }} state=installed
