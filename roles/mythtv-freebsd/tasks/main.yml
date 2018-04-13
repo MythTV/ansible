@@ -11,12 +11,15 @@
 - name: install essential libraries
   pkgng: name={{ item }} state=present
   with_items:
+    - libxml2
     - taglib
     - exiv2
+    - libXinerama
 
 - name: install optional libraries
   pkgng: name={{ item }} state=present
   with_items:
+    - openssl
     - libvpx
     - x264
     - xvid
@@ -24,6 +27,10 @@
     - flac
     - freetype2
     - libxml2
+    - fftw3
+    - fftw3-float
+    - libass
+    - pulseaudio
 
 - name: install python essentials
   pkgng: name={{ item }} state=present
