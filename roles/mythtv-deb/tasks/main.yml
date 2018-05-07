@@ -61,6 +61,13 @@
   when: ansible_distribution == "Debian"
   with_items:
     - libcec-dev
+    - libavc1394-dev
+    - libiec61883-dev
+    - libpulse-dev
+    - libfftw3-dev
+    - libcrystalhd-dev
+    - libssl-dev
+    - libsystemd-dev
 
 - name: install mythtv extra build libraries (Ubuntu 16.04)
   apt:  name={{ item }} state=installed
