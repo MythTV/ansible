@@ -30,6 +30,9 @@
     - fftw3
     - fftw3-float
     - libass
+    - x264
+    - x265
+    - libvpx
     - pulseaudio
 
 - name: install python essentials

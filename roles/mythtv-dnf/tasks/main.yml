@@ -52,7 +52,10 @@
     - fftw-devel
     - libcrystalhd-devel
     - systemd-devel
-
+    - xvidcore-devel
+    - x264-devel
+    - x265-devel
+    - libvpx-devel
 
 - include: lame-build.yml
   when:    ansible_distribution == "CentOS"

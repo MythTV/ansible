@@ -49,6 +49,11 @@
     - fftw-devel
     - libcrystalhd-devel
     - systemd-devel
+# These three don't exist on CentOS
+#    - xvidcore-devel
+#    - x264-devel
+#    - x265-devel
+    - libvpx-devel
 
 - include: lame-build.yml
   when:    ansible_distribution == "CentOS"

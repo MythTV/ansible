@@ -49,6 +49,10 @@
     - libva-dev
     - libvdpau-dev
     - libass-dev
+    - libxvidcore-dev
+    - libx264-dev
+    - libx265-dev
+    - libvpx-dev
 
 - name: install mythtv extra build libraries (Raspbian Stretch or later)
   apt:  name={{ item }} state=installed
