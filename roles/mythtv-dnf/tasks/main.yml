@@ -33,8 +33,12 @@
     - alsa-lib-devel
     - pulseaudio-libs-devel
     - avahi-compat-libdns_sd-devel
-    - exiv2
     - exiv2-devel
+    - lzo-devel
+    - hdhomerun-devel
+    - libsamplerate-devel
+    - libXNVCtrl-devel
+
 # packages in repo for fedora, and in epel for centos7/rhel7
     - lame-devel
 
@@ -108,3 +112,4 @@
     - libcdio-devel
     - libcdio-paranoia-devel
     - mysql-devel
+    - minizip-devel

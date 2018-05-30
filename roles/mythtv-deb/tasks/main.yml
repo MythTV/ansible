@@ -42,6 +42,10 @@
     - libegl1-mesa-dev
 # Added OpenGL ES
 #    - libgles2-mesa-dev
+    - liblzo2-dev
+    - libhdhomerun-dev
+    - libsamplerate0-dev
+    - libxnvctrl-dev
 
 - name: install mythtv extra build libraries
   apt:  name={{ item }} state=present
@@ -141,3 +145,8 @@
     - libcdio-dev 
     - libcdio-paranoia-dev
 
+- name: install mythtv essential plugin libraries
+  apt:  name={{ item }} state=present
+  when: ansible_distribution == "Debian" or (ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int >= 16)
+  with_items:
+    - libminizip-dev

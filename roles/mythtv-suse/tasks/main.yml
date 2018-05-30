@@ -22,6 +22,9 @@
 ## No pulseaudio-libs-devel
     - avahi-compat-mDNSResponder-devel
     - libexiv2-devel
+    - lzo-devel
+    - libhdhomerun-devel
+    - libsamplerate-devel
 
 - name: install optional build libraries
   zypper: name={{ item }} state=present
@@ -92,3 +95,4 @@
     - fftw3-threads-devel
     - libexif-devel
     - dcraw
+    - minizip-devel

@@ -15,6 +15,11 @@
     - taglib
     - exiv2
     - libXinerama
+    - lzo2
+    - libhdhomerun
+    - libsamplerate
+    # for libXNVCtrl
+    - nvidia-settings
 
 - name: install optional libraries
   pkgng: name={{ item }} state=present
@@ -34,6 +39,7 @@
     - x265
     - libvpx
     - pulseaudio
+    - minizip
 
 - name: install python essentials
   pkgng: name={{ item }} state=present
