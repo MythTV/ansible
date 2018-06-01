@@ -33,6 +33,7 @@
     - exiv2
     - exiv2-devel
 # packages in repo for fedora, and in epel for centos7/rhel7
+    - lame-devel
 
 - name: install optional build libraries
   yum:  name={{ item }} state=installed
@@ -54,12 +55,6 @@
 #    - x264-devel
 #    - x265-devel
     - libvpx-devel
-
-- include: lame-build.yml
-  when:    ansible_distribution == "CentOS"
-
-- include: lame-install.yml
-  when:    ansible_distribution == "Fedora"
 
 - name: install mythtv essential python modules
   yum:  name={{ item }} state=installed
