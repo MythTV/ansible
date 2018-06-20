@@ -1,7 +1,7 @@
 # Install Qt5
 
 - name: install qt5
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   with_items:
     - libqt5core5a
     - libqt5webkit5-dev
@@ -11,6 +11,6 @@
     - qt5-qmake
 
 - name: install mythtv essential runtime libraries
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   with_items:
     - libqt5sql5-mysql

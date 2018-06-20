@@ -1,5 +1,5 @@
 - name: install compilers and build essentials
-  zypper: name={{ item }} state=installed
+  zypper: name={{ item }} state=present
   with_items:
     - git
     - gcc
@@ -14,7 +14,7 @@
     - ccache
 
 - name: install mythtv essential build libraries
-  zypper: name={{ item }} state=installed
+  zypper: name={{ item }} state=present
   with_items:
     - libuuid-devel
     - libxml2-devel
@@ -24,7 +24,7 @@
     - libexiv2-devel
 
 - name: install optional build libraries
-  zypper: name={{ item }} state=installed
+  zypper: name={{ item }} state=present
   with_items:
     - libXinerama-devel
     - libXrandr-devel
@@ -36,12 +36,12 @@
     - libass-devel
 
 - name: install lame
-  zypper: name={{ item }} state=installed
+  zypper: name={{ item }} state=present
   with_items:
     - libmp3lame-devel
 
 - name: install mythtv essential python modules
-  zypper: name={{ item }} state=installed
+  zypper: name={{ item }} state=present
   with_items:
     - python-MySQL-python
     - python-lxml
@@ -60,7 +60,7 @@
   zypper_repository: name=devel_languages_perl repo={{ perl_repo }} state=present auto_import_keys=yes
 
 - name: install mythtv essential perl modules
-  zypper: name={{ item }} state=installed
+  zypper: name={{ item }} state=present
   with_items:
     - perl-ExtUtils-MakeMaker
     - perl-DBI
@@ -78,7 +78,7 @@
     - perl-Net-UPnP
 
 - name: install mythtv essential plugin libraries
-  zypper: name={{ item }} state=installed
+  zypper: name={{ item }} state=present
   with_items:
     - libvorbis-devel
     - flac-devel

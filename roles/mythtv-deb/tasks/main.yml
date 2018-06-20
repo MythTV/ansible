@@ -1,7 +1,7 @@
 # roles/mythtv-deb/tasks/main.yml
 
 - name: install compilers and build essentials
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   with_items:
     - git 
     - g++ 
@@ -14,19 +14,19 @@
     - pkg-config 
 
 - name: install compilers and build essentials 2 (debian)
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 8
   with_items:
     - libtool-bin
 
 - name: install compilers and build essentials 2 (ubuntu)
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   when: ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int >= 15
   with_items:
     - libtool-bin
 
 - name: install mythtv essential build libraries
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   with_items:
     - uuid-dev 
     - libfreetype6-dev 
@@ -44,7 +44,7 @@
 #    - libgles2-mesa-dev
 
 - name: install mythtv extra build libraries
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   with_items:
     - libva-dev
     - libvdpau-dev
@@ -55,13 +55,13 @@
     - libvpx-dev
 
 - name: install mythtv extra build libraries (Raspbian Stretch or later)
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 9 and ansible_lsb.id == "Raspbian"
   with_items:
     - libxcb-shm0-dev
 
 - name: install mythtv extra build libraries (Debian)
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   when: ansible_distribution == "Debian"
   with_items:
     - libcec-dev
@@ -74,7 +74,7 @@
     - libsystemd-dev
 
 - name: install mythtv extra build libraries (Ubuntu 16.04 and later)
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   when: ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 16)
   with_items:
     - libcec-dev
@@ -87,25 +87,25 @@
     - libsystemd-dev
 
 - name: install mythtv mysql client libraries (Ubuntu)
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   when: ansible_distribution == "Ubuntu"
   with_items:
     - libmysqlclient-dev
 
 - name: install mythtv mysql client libraries (Debian - Jessie and earlier)
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int <= 8
   with_items:
     - libmysqlclient-dev
 
 - name: install mythtv mysql client libraries (Debian - Stretch and later)
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 9
   with_items:
     - default-libmysqlclient-dev
 
 - name: install mythtv essential python modules
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   with_items:
     - python-mysqldb 
     - python-lxml 
@@ -116,7 +116,7 @@
     - python-requests-cache
 
 - name: install mythtv essential perl modules
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   with_items:
     - libdbi-perl 
     - libdbd-mysql-perl
@@ -132,7 +132,7 @@
     - libjson-perl
 
 - name: install mythtv essential plugin libraries
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   with_items:
     - libvorbis-dev 
     - libflac-dev 

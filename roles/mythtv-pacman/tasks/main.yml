@@ -1,20 +1,20 @@
 # roles/mythtv-pacman/tasks/main.yml
 
 - name: install essential system utils
-  pacman: name={{ item }} state=installed
+  pacman: name={{ item }} state=present
   with_items:
     - lsb-release
     - cronie
 
 - name: install compilers and build essentials
-  pacman: name={{ item }} state=installed
+  pacman: name={{ item }} state=present
   with_items:
     - base-devel
     - yasm
     - ccache
 
 - name: install mythtv essential build libraries
-  pacman: name={{ item }} state=installed
+  pacman: name={{ item }} state=present
   with_items:
     - lame
     - libxv
@@ -24,13 +24,13 @@
     - exiv2
 
 - name: install mythtv optional build libraries
-  pacman: name={{ item }} state=installed
+  pacman: name={{ item }} state=present
   with_items:
     - libcec
     - libass
 
 - name: install mythtv essential python modules
-  pacman:  name={{ item }} state=installed
+  pacman:  name={{ item }} state=present
   with_items:
     - python2-lxml
     - urlgrabber
@@ -38,7 +38,7 @@
     - mysql-python
 
 - name: install mythtv essential perl modules
-  pacman:  name={{ item }} state=installed
+  pacman:  name={{ item }} state=present
   with_items:
     - perl-dbi
     - perl-dbd-mysql
@@ -53,7 +53,7 @@
     - perl-json
 
 - name: install mythtv essential plugin libraries
-  pacman:  name={{ item }} state=installed
+  pacman:  name={{ item }} state=present
   with_items:
     - flac
 #    - libtag1-dev

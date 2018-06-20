@@ -1,5 +1,5 @@
 - name: install qt4 libraries
-  yum:  name={{ item }} state=installed
+  yum:  name={{ item }} state=present
   with_items:
     - qt-devel
 # packages in repo for fedora, and in epel for centos7/rhel7
@@ -8,7 +8,7 @@
     - qt4
 
 - name: install mythtv essential runtime libraries
-  yum:  name={{ item }} state=installed
+  yum:  name={{ item }} state=present
   with_items:
     - qt-mysql
   tags:

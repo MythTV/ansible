@@ -1,5 +1,5 @@
 - name: install qt5 libraries
-  yum:  name={{ item }} state=installed
+  yum:  name={{ item }} state=present
   with_items:
     - qt5-qtbase-devel
     - qt5-qtwebkit-devel
@@ -10,7 +10,7 @@
     - qt5
 
 - name: install qt5 runtime dependencies
-  yum:  name={{ item }} state=installed
+  yum:  name={{ item }} state=present
   with_items:
     - qt5-qtbase-mysql
   tags:

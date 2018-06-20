@@ -1,5 +1,5 @@
 - name: install qt5 libraries
-  pacman:  name={{ item }} state=installed
+  pacman:  name={{ item }} state=present
   with_items:
     - qt5-base
     - qt5-script

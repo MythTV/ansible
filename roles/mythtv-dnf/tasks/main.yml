@@ -7,10 +7,10 @@
   when:    ansible_distribution == "Fedora"
 
 - name: install yum (needed by python-twisted)
-  dnf: name=yum state=installed
+  dnf: name=yum state=present
 
 - name: install compilers and build essentials
-  dnf:  name={{ item }} state=installed
+  dnf:  name={{ item }} state=present
   with_items:
     - git 
     - gcc
@@ -26,7 +26,7 @@
     - ccache
 
 - name: install mythtv essential build libraries
-  dnf:  name={{ item }} state=installed
+  dnf:  name={{ item }} state=present
   with_items:
     - libuuid-devel 
     - libxml2-devel
@@ -39,7 +39,7 @@
     - lame-devel
 
 - name: install optional build libraries
-  dnf:  name={{ item }} state=installed
+  dnf:  name={{ item }} state=present
   with_items:
     - libXinerama-devel
     - libXrandr-devel
@@ -59,7 +59,7 @@
     - libvpx-devel
 
 - name: install mythtv essential python modules
-  dnf:  name={{ item }} state=installed
+  dnf:  name={{ item }} state=present
   with_items:
     - python2-mysql
     - python-lxml
@@ -69,14 +69,14 @@
     - python-requests-cache
 
 - name: install mythtv essential python modules - Fedora only
-  dnf:  name={{ item }} state=installed
+  dnf:  name={{ item }} state=present
   when: ansible_distribution == "Fedora"
   with_items:
     - python-oauth
     - libselinux-python
 
 - name: install mythtv essential perl modules
-  dnf:  name={{ item }} state=installed
+  dnf:  name={{ item }} state=present
   with_items:
     - perl-ExtUtils-MakeMaker
     - perl-DBI
@@ -92,7 +92,7 @@
     - perl-JSON
 
 - name: install mythtv essential perl modules - Fedora only
-  dnf:  name={{ item }} state=installed
+  dnf:  name={{ item }} state=present
   when: ansible_distribution == "Fedora"
   with_items:
 # not found on centos7
@@ -100,7 +100,7 @@
     - perl-Net-UPnP
 
 - name: install mythtv essential plugin libraries
-  dnf:  name={{ item }} state=installed
+  dnf:  name={{ item }} state=present
   with_items:
     - libvorbis-devel
     - flac-devel

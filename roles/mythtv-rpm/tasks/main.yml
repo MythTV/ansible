@@ -7,7 +7,7 @@
   when:    ansible_distribution == "Fedora"
 
 - name: install compilers and build essentials
-  yum:  name={{ item }} state=installed
+  yum:  name={{ item }} state=present
   with_items:
     - git 
     - gcc
@@ -23,7 +23,7 @@
     - ccache
 
 - name: install mythtv essential build libraries
-  yum:  name={{ item }} state=installed
+  yum:  name={{ item }} state=present
   with_items:
     - libuuid-devel 
     - libxml2-devel
@@ -36,7 +36,7 @@
     - lame-devel
 
 - name: install optional build libraries
-  yum:  name={{ item }} state=installed
+  yum:  name={{ item }} state=present
   with_items:
     - libXinerama-devel
     - libXrandr-devel
@@ -57,19 +57,19 @@
     - libvpx-devel
 
 - name: install mythtv essential python modules
-  yum:  name={{ item }} state=installed
+  yum:  name={{ item }} state=present
   with_items:
     - MySQL-python
     - python-lxml
 
 - name: install mythtv essential python modules - Fedora only
-  yum:  name={{ item }} state=installed
+  yum:  name={{ item }} state=present
   when: ansible_distribution == "Fedora"
   with_items:
     - python-oauth
 
 - name: install mythtv essential perl modules
-  yum:  name={{ item }} state=installed
+  yum:  name={{ item }} state=present
   with_items:
     - perl-ExtUtils-MakeMaker
     - perl-DBI
@@ -85,7 +85,7 @@
     - perl-JSON
 
 - name: install mythtv essential perl modules - Fedora only
-  yum:  name={{ item }} state=installed
+  yum:  name={{ item }} state=present
   when: ansible_distribution == "Fedora"
   with_items:
 # not found on centos7
@@ -94,7 +94,7 @@
     - perl\(Net::UPnP::ControlPoint\)
 
 - name: install mythtv essential plugin libraries
-  yum:  name={{ item }} state=installed
+  yum:  name={{ item }} state=present
   with_items:
     - libvorbis-devel
     - flac-devel

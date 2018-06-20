@@ -19,7 +19,7 @@
   register:         build_buildbot
 
 - name: install buildbot build requirements
-  yum:  name={{ item }} state=installed
+  yum:  name={{ item }} state=present
   when: buildbot.stdout == "missing" and build_buildbot.stdout == "missing"
   with_items:
     - python-zope-interface

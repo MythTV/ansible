@@ -1,13 +1,13 @@
 # roles/buildslave/tasks/main.yml
 
 - name: install python twisted - Fedora
-  yum:  name={{ item }} state=installed
+  yum:  name={{ item }} state=present
   when: ansible_distribution == "Fedora"
   with_items:
     - python-twisted
 
 - name: install python twisted - CentOS
-  yum:  name={{ item }} state=installed
+  yum:  name={{ item }} state=present
   when: ansible_distribution == "CentOS"
   with_items:
     - python-twisted-core
@@ -16,7 +16,7 @@
 
 # no buildbot in centos7 or epel7...
 - name: install buildslave (rpm)
-  yum:  name={{ item }} state=installed
+  yum:  name={{ item }} state=present
   when: ansible_distribution == "Fedora"
   with_items:
     - buildbot-slave
@@ -25,13 +25,13 @@
   when: ansible_distribution == "CentOS"
 
 - name: install buildslave (deb)
-  apt:  name={{ item }} state=installed
+  apt:  name={{ item }} state=present
   when: ansible_pkg_mgr == "apt"
   with_items:
     - buildbot-slave
 
 - name: install buildslave (pacman)
-  pacman:  name={{ item }} state=installed
+  pacman:  name={{ item }} state=present
   when: ansible_pkg_mgr == "pacman"
   with_items:
     - buildbot-slave
