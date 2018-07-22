@@ -34,6 +34,9 @@
     - libvdpau-devel
     - libcec-devel
     - libass-devel
+    - libcrystalhd-devel
+    - systemd-devel
+    - libvpx-devel
 
 - name: install lame
   zypper: name={{ item }} state=present
@@ -86,4 +89,6 @@
     - libcdio-devel
     - libcdio-paranoia-devel
     - libmysqlclient-devel
-
+    - fftw3-threads-devel
+    - libexif-devel
+    - dcraw
