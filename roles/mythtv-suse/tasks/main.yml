@@ -56,8 +56,13 @@
     - python-requests
     - python-oauth
 
-- name: determine devel:languages:perl repository url
+- name: determine devel:languages:perl repository url (Leap)
+  when: ansible_distribution == "openSUSE Leap"
   set_fact: perl_repo="http://download.opensuse.org/repositories/devel:/languages:/perl/{{ ansible_distribution | regex_replace('\\ ', '_') }}_{{ ansible_distribution_version }}/"
+
+- name: determine devel:languages:perl repository url (Tumbleweed)
+  when: ansible_distribution == "openSUSE Tumbleweed"
+  set_fact: perl_repo="http://download.opensuse.org/repositories/devel:/languages:/perl/{{ ansible_distribution | regex_replace('\\ ', '_') }}/"
 
 - name: print perl_repo
   debug: var=perl_repo
