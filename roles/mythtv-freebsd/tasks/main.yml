@@ -15,6 +15,7 @@
     - taglib
     - exiv2
     - libXinerama
+    - libbluray
     - lzo2
     - libhdhomerun
     - libsamplerate

@@ -22,6 +22,7 @@
 ## No pulseaudio-libs-devel
     - avahi-compat-mDNSResponder-devel
     - libexiv2-devel
+    - libbluray-devel
     - lzo-devel
     - libhdhomerun-devel
     - libsamplerate-devel
@@ -40,6 +41,7 @@
     - libcrystalhd-devel
     - systemd-devel
     - libvpx-devel
+    - libbluray-bdj
 
 - name: install lame
   zypper: name={{ item }} state=present

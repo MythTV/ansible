@@ -57,6 +57,7 @@
     - libx264-dev
     - libx265-dev
     - libvpx-dev
+    - libbluray-bdj
 
 - name: install mythtv extra build libraries (Raspbian Stretch or later)
   apt:  name={{ item }} state=present
@@ -77,6 +78,12 @@
     - libssl-dev
     - libsystemd-dev
 
+- name: install mythtv extra build libraries (Debian Stretch and later)
+  apt:  name={{ item }} state=present
+  when: ansible_distribution == "Debian" and (ansible_lsb.major_release|int == 9 or ansible_lsb.release == "testing")
+  with_items:
+    - libbluray-dev
+
 - name: install mythtv extra build libraries (Ubuntu 16.04 and later)
   apt:  name={{ item }} state=present
   when: ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 16)
@@ -89,6 +96,7 @@
     - libcrystalhd-dev
     - libssl-dev
     - libsystemd-dev
+    - libbluray-dev
 
 - name: install mythtv mysql client libraries (Ubuntu)
   apt:  name={{ item }} state=present

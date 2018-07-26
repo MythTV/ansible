@@ -34,6 +34,7 @@
     - pulseaudio-libs-devel
     - avahi-compat-libdns_sd-devel
     - exiv2-devel
+    - libbluray-devel
     - lzo-devel
     - hdhomerun-devel
     - libsamplerate-devel
@@ -61,6 +62,7 @@
     - x264-devel
     - x265-devel
     - libvpx-devel
+    - libbluray-bdj
 
 - name: install mythtv essential python modules
   dnf:  name={{ item }} state=present
