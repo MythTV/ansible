@@ -73,22 +73,9 @@
     - libssl-dev
     - libsystemd-dev
 
-- name: install mythtv extra build libraries (Ubuntu 16.04)
+- name: install mythtv extra build libraries (Ubuntu 16.04 and later)
   apt:  name={{ item }} state=installed
-  when: ansible_distribution == "Ubuntu" and ansible_lsb.release == "16.04"
-  with_items:
-    - libcec-dev
-    - libavc1394-dev
-    - libiec61883-dev
-    - libpulse-dev
-    - libfftw3-dev
-    - libcrystalhd-dev
-    - libssl-dev
-    - libsystemd-dev
-
-- name: install mythtv extra build libraries (Ubuntu 16.10 and later)
-  apt:  name={{ item }} state=installed
-  when: ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 17 or ansible_lsb.release == "16.10")
+  when: ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 16)
   with_items:
     - libcec-dev
     - libavc1394-dev
