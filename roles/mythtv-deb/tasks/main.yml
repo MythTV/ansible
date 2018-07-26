@@ -104,17 +104,23 @@
   with_items:
     - libmysqlclient-dev
 
-- name: install mythtv mysql client libraries (Debian - Jessie and earlier)
+- name: install mythtv mysql client libraries (Debian - Jessie)
   apt:  name={{ item }} state=present
-  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int <= 8
+  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int == 8
   with_items:
     - libmysqlclient-dev
 
-- name: install mythtv mysql client libraries (Debian - Stretch and later)
+- name: install mythtv mysql client libraries (Debian - Stretch)
   apt:  name={{ item }} state=present
-  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 9
+  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int == 9
   with_items:
     - default-libmysqlclient-dev
+
+- name: install mythtv mysql client libraries (Debian - Buster and later)
+  apt:  name={{ item }} state=present
+  when: ansible_distribution == "Debian" and (ansible_lsb.major_release|int >= 10 or ansible_lsb.release == "testing")
+  with_items:
+    - libmariadbclient-dev
 
 - name: install mythtv essential python modules
   apt:  name={{ item }} state=present
