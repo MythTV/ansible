@@ -64,10 +64,17 @@
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 9 and ansible_lsb.id == "Raspbian"
   with_items:
     - libxcb-shm0-dev
+    - libcec4-dev
+    - libavc1394-dev
+    - libiec61883-dev
+    - libpulse-dev
+    - libfftw3-dev
+    - libssl-dev
+    - libsystemd-dev
 
 - name: install mythtv extra build libraries (Debian)
   apt:  name={{ item }} state=present
-  when: ansible_distribution == "Debian"
+  when: ansible_distribution == "Debian" and ansible_lsb.id != "Raspbian"
   with_items:
     - libcec-dev
     - libavc1394-dev
