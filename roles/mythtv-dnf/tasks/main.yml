@@ -38,10 +38,24 @@
     - lzo-devel
     - hdhomerun-devel
     - libsamplerate-devel
-    - libXNVCtrl-devel
-
 # packages in repo for fedora, and in epel for centos7/rhel7
     - lame-devel
+
+# Check if user has negativo's nvidia repository enabled
+- shell: /usr/bin/dnf repoinfo -q fedora-nvidia | grep ^Repo-status
+  register: fedora_nvidia_repo
+
+- name: install nvidia build libraries (rpmfusion)
+  dnf:  name={{ item }} state=present
+  when: not fedora_nvidia_repo.stdout | search("enabled")
+  with_items:
+    - libXNVCtrl-devel
+
+- name: install nvidia build libraries (negativo's nvidia repo)
+  dnf:  name={{ item }} state=present
+  when: fedora_nvidia_repo.stdout | search("enabled")
+  with_items:
+    - nvidia-libXNVCtrl-devel
 
 - name: install optional build libraries
   dnf:  name={{ item }} state=present
