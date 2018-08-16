@@ -42,7 +42,7 @@
     - lame-devel
 
 # Check if user has negativo's nvidia repository enabled
-- shell: /usr/bin/dnf repoinfo -q fedora-nvidia | grep ^Repo-status
+- shell: /usr/bin/dnf repoinfo -q fedora-nvidia
   register: fedora_nvidia_repo
 
 - name: install nvidia build libraries (rpmfusion)
