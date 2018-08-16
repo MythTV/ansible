@@ -1,16 +1,26 @@
 # Install Qt5
 
-- name: install qt5
-  apt:  name={{ item }} state=present
-  with_items:
-    - libqt5core5a
-    - libqt5webkit5-dev
-    - libqt5opengl5-dev
-    - libqt5script5
-    - qtscript5-dev
-    - qt5-qmake
+# This looks like overkill, but the intent is to provide future maintainers
+# with a template to add more (especially conditional) packages.
 
-- name: install mythtv essential runtime libraries
-  apt:  name={{ item }} state=present
-  with_items:
-    - libqt5sql5-mysql
+- name: create a list of qt5 packages
+  set_fact:
+    deb_pkg_lst:
+      - libqt5core5a
+      - libqt5webkit5-dev
+      - libqt5opengl5-dev
+      - libqt5script5
+      - qtscript5-dev
+      - qt5-qmake
+
+- name: add the qt5 mythtv essential runtime libraries
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libqt5sql5-mysql
+
+- name: install qt5
+  apt:
+    name:
+      '{{ lookup("flattened", deb_pkg_lst ) }}'
+    state: present

@@ -1,180 +1,211 @@
 # roles/mythtv-deb/tasks/main.yml
 
-- name: install compilers and build essentials
-  apt:  name={{ item }} state=present
-  with_items:
-    - git 
-    - g++ 
-    - make 
-    - build-essential 
-    - yasm
-    - automake
-    - libtool
-    - ccache
-    - pkg-config 
+- name: list compilers and build essentials
+  set_fact:
+    deb_pkg_lst:
+      - git
+      - g++
+      - make
+      - build-essential
+      - yasm
+      - automake
+      - libtool
+      - ccache
+      - pkg-config
 
-- name: install compilers and build essentials 2 (debian)
-  apt:  name={{ item }} state=present
+- name: list compilers and build essentials 2 (debian)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libtool-bin
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 8
-  with_items:
-    - libtool-bin
 
-- name: install compilers and build essentials 2 (ubuntu)
-  apt:  name={{ item }} state=present
+- name: list compilers and build essentials 2 (ubuntu)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libtool-bin
   when: ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int >= 15
-  with_items:
-    - libtool-bin
 
-- name: install mythtv essential build libraries
-  apt:  name={{ item }} state=present
-  with_items:
-    - uuid-dev 
-    - libfreetype6-dev 
-    - libmp3lame-dev
-    - libxv-dev
-    - libxxf86vm-dev 
-    - libxinerama-dev
-    - libxrandr-dev
-    - libxml2-dev
-    - libavahi-compat-libdnssd-dev
-    - libexiv2-dev
-    - libasound2-dev
-    - libegl1-mesa-dev
-# Added OpenGL ES
-#    - libgles2-mesa-dev
-    - liblzo2-dev
-    - libhdhomerun-dev
-    - libsamplerate0-dev
-    - libxnvctrl-dev
+- name: list mythtv essential build libraries
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - uuid-dev
+      - libfreetype6-dev
+      - libmp3lame-dev
+      - libxv-dev
+      - libxxf86vm-dev
+      - libxinerama-dev
+      - libxrandr-dev
+      - libxml2-dev
+      - libavahi-compat-libdnssd-dev
+      - libexiv2-dev
+      - libasound2-dev
+      - libegl1-mesa-dev
+      # Added OpenGL ES
+      #- libgles2-mesa-dev
+      - liblzo2-dev
+      - libhdhomerun-dev
+      - libsamplerate0-dev
+      - libxnvctrl-dev
 
-- name: install mythtv extra build libraries
-  apt:  name={{ item }} state=present
-  with_items:
-    - libva-dev
-    - libvdpau-dev
-    - libass-dev
-    - libxvidcore-dev
-    - libx264-dev
-    - libvpx-dev
-    - libbluray-bdj
+- name: list mythtv extra build libraries
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libva-dev
+      - libvdpau-dev
+      - libass-dev
+      - libxvidcore-dev
+      - libx264-dev
+      - libvpx-dev
+      - libbluray-bdj
 
-- name: install mythtv extra build libraries (Raspbian Stretch or later)
-  apt:  name={{ item }} state=present
+- name: list mythtv extra build libraries (Raspbian Stretch or later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libxcb-shm0-dev
+      - libcec4-dev
+      - libavc1394-dev
+      - libiec61883-dev
+      - libpulse-dev
+      - libfftw3-dev
+      - libssl-dev
+      - libsystemd-dev
+      - libx265-dev
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 9 and ansible_lsb.id == "Raspbian"
-  with_items:
-    - libxcb-shm0-dev
-    - libcec4-dev
-    - libavc1394-dev
-    - libiec61883-dev
-    - libpulse-dev
-    - libfftw3-dev
-    - libssl-dev
-    - libsystemd-dev
-    - libx265-dev
 
-- name: install mythtv extra build libraries (Debian)
-  apt:  name={{ item }} state=present
+- name: list mythtv extra build libraries (Debian)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libcec-dev
+      - libavc1394-dev
+      - libiec61883-dev
+      - libpulse-dev
+      - libfftw3-dev
+      - libcrystalhd-dev
+      - libssl-dev
+      - libsystemd-dev
   when: ansible_distribution == "Debian" and ansible_lsb.id != "Raspbian"
-  with_items:
-    - libcec-dev
-    - libavc1394-dev
-    - libiec61883-dev
-    - libpulse-dev
-    - libfftw3-dev
-    - libcrystalhd-dev
-    - libssl-dev
-    - libsystemd-dev
 
-- name: install mythtv extra build libraries (Debian Stretch and later)
-  apt:  name={{ item }} state=present
+- name: list mythtv extra build libraries (Debian Stretch and later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libbluray-dev
+      - libx265-dev
   when: ansible_distribution == "Debian" and (ansible_lsb.major_release|int == 9 or ansible_lsb.release == "testing")
-  with_items:
-    - libbluray-dev
-    - libx265-dev
 
-- name: install mythtv extra build libraries (Ubuntu 16.04 and later)
-  apt:  name={{ item }} state=present
+- name: list mythtv extra build libraries (Ubuntu 16.04 and later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libcec-dev
+      - libavc1394-dev
+      - libiec61883-dev
+      - libpulse-dev
+      - libfftw3-dev
+      - libcrystalhd-dev
+      - libssl-dev
+      - libsystemd-dev
+      - libbluray-dev
+      - libx265-dev
   when: ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 16)
-  with_items:
-    - libcec-dev
-    - libavc1394-dev
-    - libiec61883-dev
-    - libpulse-dev
-    - libfftw3-dev
-    - libcrystalhd-dev
-    - libssl-dev
-    - libsystemd-dev
-    - libbluray-dev
-    - libx265-dev
 
-- name: install mythtv mysql client libraries (Ubuntu)
-  apt:  name={{ item }} state=present
+- name: list mythtv mysql client libraries (Ubuntu)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libmysqlclient-dev
   when: ansible_distribution == "Ubuntu"
-  with_items:
-    - libmysqlclient-dev
 
-- name: install mythtv mysql client libraries (Debian - Jessie)
-  apt:  name={{ item }} state=present
+- name: list mythtv mysql client libraries (Debian - Jessie)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libmysqlclient-dev
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int == 8
-  with_items:
-    - libmysqlclient-dev
 
-- name: install mythtv mysql client libraries (Debian - Stretch)
-  apt:  name={{ item }} state=present
+- name: list mythtv mysql client libraries (Debian - Stretch)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - default-libmysqlclient-dev
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int == 9
-  with_items:
-    - default-libmysqlclient-dev
 
-- name: install mythtv mysql client libraries (Debian - Buster and later)
-  apt:  name={{ item }} state=present
+- name: list mythtv mysql client libraries (Debian - Buster and later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libmariadbclient-dev
   when: ansible_distribution == "Debian" and (ansible_lsb.major_release|int >= 10 or ansible_lsb.release == "testing")
-  with_items:
-    - libmariadbclient-dev
 
-- name: install mythtv essential python modules
-  apt:  name={{ item }} state=present
-  with_items:
-    - python-mysqldb 
-    - python-lxml 
-    - python-urlgrabber
-    - python-oauth
+- name: list mythtv essential python modules
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - python-mysqldb
+      - python-lxml
+      - python-urlgrabber
+      - python-oauth
 
-- name: install mythtv essential python modules (Stretch/16.04 and later)
-  apt:  name={{ item }} state=present
+- name: list mythtv essential python modules (Stretch/16.04 and later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - python-future
+      - python-requests
+      - python-requests-cache
   when: (ansible_distribution == "Debian" and (ansible_lsb.major_release|int >= 9 or ansible_lsb.release == "testing") or (ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 16)))
-  with_items:
-    - python-future
-    - python-requests
-    - python-requests-cache
 
-- name: install mythtv essential perl modules
-  apt:  name={{ item }} state=present
-  with_items:
-    - libdbi-perl 
-    - libdbd-mysql-perl
-    - libnet-upnp-perl
-    - libwww-perl 
-    - libio-socket-inet6-perl
-    - libdate-manip-perl
-    - libxml-simple-perl
-    - libxml-xpath-perl 
-    - libimage-size-perl 
-    - libdatetime-format-iso8601-perl 
-    - libsoap-lite-perl 
-    - libjson-perl
+- name: list mythtv essential perl modules
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libdbi-perl
+      - libdbd-mysql-perl
+      - libnet-upnp-perl
+      - libwww-perl
+      - libio-socket-inet6-perl
+      - libdate-manip-perl
+      - libxml-simple-perl
+      - libxml-xpath-perl
+      - libimage-size-perl
+      - libdatetime-format-iso8601-perl
+      - libsoap-lite-perl
+      - libjson-perl
 
-- name: install mythtv essential plugin libraries
-  apt:  name={{ item }} state=present
-  with_items:
-    - libvorbis-dev 
-    - libflac-dev 
-    - libflac++-dev 
-    - libtag1-dev
-    - libcdio-dev 
-    - libcdio-paranoia-dev
+- name: list mythtv essential plugin libraries
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libvorbis-dev
+      - libflac-dev
+      - libflac++-dev
+      - libtag1-dev
+      - libcdio-dev
+      - libcdio-paranoia-dev
 
-- name: install mythtv essential plugin libraries
-  apt:  name={{ item }} state=present
+- name: list mythtv essential plugin libraries (Debian or Ubuntu 16+)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libminizip-dev
   when: ansible_distribution == "Debian" or (ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int >= 16)
-  with_items:
-    - libminizip-dev
+
+- name: make sure the package list is flattened, this can be removed
+  debug:
+    msg:
+      'Check for flattened package list: {{ lookup("flattened", deb_pkg_lst) }}'
+
+- name: install mythtv-deb packages
+  apt:
+    name:
+      '{{ lookup("flattened", deb_pkg_lst ) }}'
+    state:
+      present
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
