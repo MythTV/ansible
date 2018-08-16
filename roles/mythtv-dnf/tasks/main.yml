@@ -6,9 +6,6 @@
 - include: setup-rpmfusion.yml
   when:    ansible_distribution == "Fedora"
 
-- name: install yum (needed by python-twisted)
-  dnf: name=yum state=present
-
 - name: install compilers and build essentials
   dnf:  name={{ item }} state=present
   with_items:
