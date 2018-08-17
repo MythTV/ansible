@@ -12,17 +12,15 @@ Jessie or later is recommended for 0.28 and above.
 ### Install the ansible package
 Then install the `ansible` package. Choose the one appropriate
 for your distro
-> yum install ansible
 
-> dnf install ansible
-
-> apt-get install ansible
-
-> pacman -S ansible python2
-
-> pkg install py27-ansible
-
-> zypper install ansible
+Distro | Command
+-------|--------
+Archlinux |  pacman -S ansible python2 
+Centos | yum install ansible
+Debian (and derivatives) | apt-get install ansible
+Fedora | dnf install ansible
+FreeBSD | pkg install py27-ansible
+OpenSuse |  zypper install ansible
 
 ### Run the playbooks
 Then run the playbooks as follows.
