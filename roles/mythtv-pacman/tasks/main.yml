@@ -37,7 +37,6 @@
   pacman:  name={{ item }} state=present
   with_items:
     - python2-lxml
-    - urlgrabber
     - python2-oauth
     - mysql-python
 
@@ -46,7 +45,6 @@
   with_items:
     - perl-dbi
     - perl-dbd-mysql
-    - perl-net-upnp
     - perl-io-socket-inet6
     - perl-date-manip
     - perl-xml-simple
