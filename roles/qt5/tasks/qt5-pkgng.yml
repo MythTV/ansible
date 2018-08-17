@@ -1,6 +1,10 @@
 - name: install essential libraries
-  pkgng: name={{ item }} state=present
-  with_items:
-    - qt5
+  pkgng:
+    name:
+      - qt5
+    state:
+      present
   tags:
     - qt5
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

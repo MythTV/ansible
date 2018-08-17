@@ -1,83 +1,103 @@
-- name: install compilers and build essentials
-  pkgng: name={{ item }} state=present
-  with_items:
-    - git
-    - ccache
-    - yasm
-    - autoconf
-    - automake
-    - pkgconf
+- name: create a list of compilers and build essentials
+  set_fact:
+    pkgng_pkg_lst:
+      - git
+      - ccache
+      - yasm
+      - autoconf
+      - automake
+      - pkgconf
 
-- name: install essential libraries
-  pkgng: name={{ item }} state=present
-  with_items:
-    - libxml2
-    - taglib
-    - exiv2
-    - libXinerama
-    - libbluray
-    - lzo2
-    - libhdhomerun
-    - libsamplerate
-    - libcec
-    # for libXNVCtrl
-    - nvidia-settings
+- name: add essential libraries
+  set_fact:
+    pkgng_pkg_lst:
+      - '{{ pkgng_pkg_lst }}'
+      - libxml2
+      - taglib
+      - exiv2
+      - libXinerama
+      - libbluray
+      - lzo2
+      - libhdhomerun
+      - libsamplerate
+      - libcec
+      # for libXNVCtrl
+      - nvidia-settings
 
-- name: install optional libraries
-  pkgng: name={{ item }} state=present
-  with_items:
-    - openssl
-    - libvpx
-    - x264
-    - xvid
-    - libvorbis
-    - flac
-    - faac
-    - freetype2
-    - libxml2
-    - fftw3
-    - fftw3-float
-    - libass
-    - x264
-    - x265
-    - libvpx
-    - pulseaudio
-    - minizip
+- name: add optional libraries
+  set_fact:
+    pkgng_pkg_lst:
+      - '{{ pkgng_pkg_lst }}'
+      - openssl
+      - libvpx
+      - x264
+      - xvid
+      - libvorbis
+      - flac
+      - faac
+      - freetype2
+      - libxml2
+      - fftw3
+      - fftw3-float
+      - libass
+      - x264
+      - x265
+      - libvpx
+      - pulseaudio
+      - minizip
 
-- name: install python essentials
-  pkgng: name={{ item }} state=present
-  with_items:
-    - python
-    - py27-lxml
-    - py27-MySQLdb
-    - py27-oauth
-    - py27-urlgrabber
+- name: add python essentials
+  set_fact:
+    pkgng_pkg_lst:
+      - '{{ pkgng_pkg_lst }}'
+      - python
+      - py27-lxml
+      - py27-MySQLdb
+      - py27-oauth
+      - py27-urlgrabber
 
-- name: install perl essentials
-  pkgng: name={{ item }} state=present
-  with_items:
-    - perl5
-    - p5-Date-Manip
-    - p5-DateTime-Format-ISO8601
-    - p5-DBI
-    - p5-DBD-mysql
-    - p5-Image-Size
-    - p5-IO-Socket-INET6
-    - p5-JSON
-    - p5-libwww
-    - p5-Net-UPnP
-    - p5-SOAP-Lite
-    - p5-XML-XPath
-    - p5-XML-Simple
+- name: add perl essentials
+  set_fact:
+    pkgng_pkg_lst:
+      - '{{ pkgng_pkg_lst }}'
+      - perl5
+      - p5-Date-Manip
+      - p5-DateTime-Format-ISO8601
+      - p5-DBI
+      - p5-DBD-mysql
+      - p5-Image-Size
+      - p5-IO-Socket-INET6
+      - p5-JSON
+      - p5-libwww
+      - p5-Net-UPnP
+      - p5-SOAP-Lite
+      - p5-XML-XPath
+      - p5-XML-Simple
+
+- name: final package list
+  debug:
+    msg:
+      '{{ lookup("flattened", pkgng_pkg_lst) }}'
+
+- name: install packages
+  pkgng:
+    name:
+      '{{ lookup("flattened", pkgng_pkg_lst ) }}'
+    state:
+      present
 
 - name: install packages from ports
-  portinstall: name={{ item }} state=present
-  with_items:
-    - devel/subversion
-    - gmake
-    - libtool
-    - audio/lame
-    - multimedia/v4l_compat
-    - multimedia/libvdpau
-    - multimedia/libva
-    - multimedia/libv4l
+  portinstall:
+    name:
+      - devel/subversion
+      - gmake
+      - libtool
+      - audio/lame
+      - multimedia/v4l_compat
+      - multimedia/libvdpau
+      - multimedia/libva
+      - multimedia/libv4l
+    state:
+      present
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

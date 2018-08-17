@@ -1,13 +1,19 @@
 - name: install essential libraries
-  pkgng: name={{ item }} state=present
-  with_items:
-    - qt4
+  pkgng:
+    name:
+      - qt4
+    state:
+      present
   tags:
     - qt4
 
 - name: install packages from ports
-  portinstall: name={{ item }} state=present
-  with_items:
-    - qt4-mysql-plugin
+  portinstall:
+    name:
+      - qt4-mysql-plugin
+    state:
+      present
   tags:
     - qt4
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
