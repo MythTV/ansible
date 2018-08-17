@@ -19,6 +19,7 @@
     - lzo2
     - libhdhomerun
     - libsamplerate
+    - libcec
     # for libXNVCtrl
     - nvidia-settings
 
@@ -31,6 +32,7 @@
     - xvid
     - libvorbis
     - flac
+    - faac
     - freetype2
     - libxml2
     - fftw3
@@ -75,9 +77,7 @@
     - gmake
     - libtool
     - audio/lame
-    - audio/faac
     - multimedia/v4l_compat
-    - multimedia/libcec
     - multimedia/libvdpau
     - multimedia/libva
     - multimedia/libv4l
