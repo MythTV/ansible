@@ -1,6 +1,6 @@
 # roles/mythtv-deb/tasks/main.yml
 
-- name: list compilers and build essentials
+- name: create a list of deb compilers and build essentials
   set_fact:
     deb_pkg_lst:
       - git
@@ -13,21 +13,21 @@
       - ccache
       - pkg-config
 
-- name: list compilers and build essentials 2 (debian)
+- name: add compilers and build essentials 2 (debian)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libtool-bin
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 8
 
-- name: list compilers and build essentials 2 (ubuntu)
+- name: add compilers and build essentials 2 (ubuntu)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libtool-bin
   when: ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int >= 15
 
-- name: list mythtv essential build libraries
+- name: add mythtv essential build libraries
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -50,7 +50,7 @@
       - libsamplerate0-dev
       - libxnvctrl-dev
 
-- name: list mythtv extra build libraries
+- name: add mythtv extra build libraries
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -62,7 +62,7 @@
       - libvpx-dev
       - libbluray-bdj
 
-- name: list mythtv extra build libraries (Raspbian Stretch or later)
+- name: add mythtv extra build libraries (Raspbian Stretch or later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -77,7 +77,7 @@
       - libx265-dev
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 9 and ansible_lsb.id == "Raspbian"
 
-- name: list mythtv extra build libraries (Debian)
+- name: add mythtv extra build libraries (Debian)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -91,7 +91,7 @@
       - libsystemd-dev
   when: ansible_distribution == "Debian" and ansible_lsb.id != "Raspbian"
 
-- name: list mythtv extra build libraries (Debian Stretch and later)
+- name: add mythtv extra build libraries (Debian Stretch and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -99,7 +99,7 @@
       - libx265-dev
   when: ansible_distribution == "Debian" and (ansible_lsb.major_release|int == 9 or ansible_lsb.release == "testing")
 
-- name: list mythtv extra build libraries (Ubuntu 16.04 and later)
+- name: add mythtv extra build libraries (Ubuntu 16.04 and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -115,35 +115,35 @@
       - libx265-dev
   when: ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 16)
 
-- name: list mythtv mysql client libraries (Ubuntu)
+- name: add mythtv mysql client libraries (Ubuntu)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libmysqlclient-dev
   when: ansible_distribution == "Ubuntu"
 
-- name: list mythtv mysql client libraries (Debian - Jessie)
+- name: add mythtv mysql client libraries (Debian - Jessie)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libmysqlclient-dev
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int == 8
 
-- name: list mythtv mysql client libraries (Debian - Stretch)
+- name: add mythtv mysql client libraries (Debian - Stretch)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - default-libmysqlclient-dev
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int == 9
 
-- name: list mythtv mysql client libraries (Debian - Buster and later)
+- name: add mythtv mysql client libraries (Debian - Buster and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libmariadbclient-dev
   when: ansible_distribution == "Debian" and (ansible_lsb.major_release|int >= 10 or ansible_lsb.release == "testing")
 
-- name: list mythtv essential python modules
+- name: add mythtv essential python modules
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -152,7 +152,7 @@
       - python-urlgrabber
       - python-oauth
 
-- name: list mythtv essential python modules (Stretch/16.04 and later)
+- name: add mythtv essential python modules (Stretch/16.04 and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -161,7 +161,7 @@
       - python-requests-cache
   when: (ansible_distribution == "Debian" and (ansible_lsb.major_release|int >= 9 or ansible_lsb.release == "testing") or (ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 16)))
 
-- name: list mythtv essential perl modules
+- name: add mythtv essential perl modules
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -178,7 +178,7 @@
       - libsoap-lite-perl
       - libjson-perl
 
-- name: list mythtv essential plugin libraries
+- name: add mythtv essential plugin libraries
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -189,17 +189,17 @@
       - libcdio-dev
       - libcdio-paranoia-dev
 
-- name: list mythtv essential plugin libraries (Debian or Ubuntu 16+)
+- name: add mythtv essential plugin libraries (Debian or Ubuntu 16+)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libminizip-dev
   when: ansible_distribution == "Debian" or (ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int >= 16)
 
-- name: make sure the package list is flattened, this can be removed
+- name: final deb package list
   debug:
     msg:
-      'Check for flattened package list: {{ lookup("flattened", deb_pkg_lst) }}'
+      '{{ lookup("flattened", deb_pkg_lst) }}'
 
 - name: install mythtv-deb packages
   apt:
