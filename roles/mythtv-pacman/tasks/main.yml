@@ -1,64 +1,86 @@
 # roles/mythtv-pacman/tasks/main.yml
 
-- name: install essential system utils
-  pacman: name={{ item }} state=present
-  with_items:
-    - lsb-release
-    - cronie
+- name: create a list of essential system utils
+  set_fact:
+    pacman_pkg_lst:
+      - lsb-release
+      - cronie
 
-- name: install compilers and build essentials
-  pacman: name={{ item }} state=present
-  with_items:
-    - base-devel
-    - yasm
-    - ccache
+- name: add compilers and build essentials
+  set_fact:
+    pacman_pkg_lst:
+      - '{{ pacman_pkg_lst }}'
+      - base-devel
+      - yasm
+      - ccache
 
-- name: install mythtv essential build libraries
-  pacman: name={{ item }} state=present
-  with_items:
-    - lame
-    - libbluray
-    - libxnvctrl
-    - libsamplerate
-    - libxv
-    - libxinerama
-    - libxrandr
-    - libxml2
-    - taglib
-    - exiv2
+- name: add mythtv essential build libraries
+  set_fact:
+    pacman_pkg_lst:
+      - '{{ pacman_pkg_lst }}'
+      - lame
+      - libbluray
+      - libxnvctrl
+      - libsamplerate
+      - libxv
+      - libxinerama
+      - libxrandr
+      - libxml2
+      - taglib
+      - exiv2
 
-- name: install mythtv optional build libraries
-  pacman: name={{ item }} state=present
-  with_items:
-    - libcec
-    - libass
+- name: add mythtv optional build libraries
+  set_fact:
+    pacman_pkg_lst:
+      - '{{ pacman_pkg_lst }}'
+      - libcec
+      - libass
 
-- name: install mythtv essential python modules
-  pacman:  name={{ item }} state=present
-  with_items:
-    - python2-lxml
-    - python2-oauth
-    - mysql-python
+- name: add mythtv essential python modules
+  set_fact:
+    pacman_pkg_lst:
+      - '{{ pacman_pkg_lst }}'
+      - python2-lxml
+      - urlgrabber
+      - python2-oauth
+      - mysql-python
 
-- name: install mythtv essential perl modules
-  pacman:  name={{ item }} state=present
-  with_items:
-    - perl-dbi
-    - perl-dbd-mysql
-    - perl-io-socket-inet6
-    - perl-date-manip
-    - perl-xml-simple
-    - perl-xml-xpath
-    - perl-image-size
-    - perl-datetime-format-iso8601
-    - perl-soap-lite
-    - perl-json
+- name: add mythtv essential perl modules
+  set_fact:
+    pacman_pkg_lst:
+      - '{{ pacman_pkg_lst }}'
+      - perl-dbi
+      - perl-dbd-mysql
+      - perl-net-upnp
+      - perl-io-socket-inet6
+      - perl-date-manip
+      - perl-xml-simple
+      - perl-xml-xpath
+      - perl-image-size
+      - perl-datetime-format-iso8601
+      - perl-soap-lite
+      - perl-json
 
-- name: install mythtv essential plugin libraries
-  pacman:  name={{ item }} state=present
-  with_items:
-    - flac
-#    - libtag1-dev
-#    - libcdio-dev
-#    - libcdio-paranoia-dev
-    - libmariadbclient
+- name: add mythtv essential plugin libraries
+  set_fact:
+    pacman_pkg_lst:
+      - '{{ pacman_pkg_lst }}'
+      - flac
+      # - libtag1-dev
+      # - libcdio-dev
+      # - libcdio-paranoia-dev
+      - libmariadbclient
+
+- name: final package list
+  debug:
+    msg:
+     '{{ lookup("flattened", pacman_pkg_lst) }}'
+
+- name: install packages
+  pacman:
+    name:
+      '{{ lookup("flattened", pacman_pkg_lst ) }}'
+    state:
+      present
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

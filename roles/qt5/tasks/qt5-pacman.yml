@@ -1,9 +1,12 @@
 - name: install qt5 libraries
-  pacman:  name={{ item }} state=present
-  with_items:
-    - qt5-base
-    - qt5-script
-    - qt5-webkit
+  pacman:
+    name:
+      - qt5-base
+      - qt5-script
+      - qt5-webkit
+    state:
+      present
   tags:
     - qt5
 
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

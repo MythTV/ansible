@@ -1,8 +1,11 @@
 - name: install qt4 libraries
-  pacman:  name={{ item }} state=present
-  with_items:
-    - qt4
-    - qtwebkit
+  pacman:
+    name:
+      - qt4
+      - qtwebkit
+    state:
+      present
   tags:
     - qt4
 
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
