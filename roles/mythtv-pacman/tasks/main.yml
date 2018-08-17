@@ -17,10 +17,14 @@
   pacman: name={{ item }} state=present
   with_items:
     - lame
+    - libbluray
+    - libxnvctrl
+    - libsamplerate
     - libxv
     - libxinerama
     - libxrandr
     - libxml2
+    - taglib
     - exiv2
 
 - name: install mythtv optional build libraries
