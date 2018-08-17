@@ -20,7 +20,7 @@ for your distro
 
 > pacman -S ansible python2
 
-> pkg install ansible
+> pkg install py27-ansible
 
 > zypper install ansible
 
