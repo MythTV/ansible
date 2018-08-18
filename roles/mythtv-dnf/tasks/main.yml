@@ -6,123 +6,145 @@
 - include: setup-rpmfusion.yml
   when:    ansible_distribution == "Fedora"
 
-- name: install compilers and build essentials
-  dnf:  name={{ item }} state=present
-  with_items:
-    - git 
-    - gcc
-    - gcc-c++ 
-    - make 
-    - gdb
-    - automake
-    - autoconf
-    - libtool
-    - pkgconfig
-# packages in repo for fedora, and in epel for centos7/rhel7
-    - yasm
-    - ccache
+- name: create dnf compilers and build essentials list
+  set_fact:
+    dnf_pkg_lst:
+      - git
+      - gcc
+      - gcc-c++
+      - make
+      - gdb
+      - automake
+      - autoconf
+      - libtool
+      - pkgconfig
+      # packages in repo for fedora, and in epel for centos7/rhel7
+      - yasm
+      - ccache
 
-- name: install mythtv essential build libraries
-  dnf:  name={{ item }} state=present
-  with_items:
-    - libuuid-devel 
-    - libxml2-devel
-    - alsa-lib-devel
-    - pulseaudio-libs-devel
-    - avahi-compat-libdns_sd-devel
-    - exiv2-devel
-    - libbluray-devel
-    - lzo-devel
-    - hdhomerun-devel
-    - libsamplerate-devel
-# packages in repo for fedora, and in epel for centos7/rhel7
-    - lame-devel
+- name: add mythtv essential build libraries
+  set_fact:
+    dnf_pkg_lst:
+      - '{{ dnf_pkg_lst }}'
+      - libuuid-devel
+      - libxml2-devel
+      - alsa-lib-devel
+      - pulseaudio-libs-devel
+      - avahi-compat-libdns_sd-devel
+      - exiv2-devel
+      - libbluray-devel
+      - lzo-devel
+      - hdhomerun-devel
+      - libsamplerate-devel
+      # packages in repo for fedora, and in epel for centos7/rhel7
+      - lame-devel
 
 # Check if user has negativo's nvidia repository enabled
 - shell: /usr/bin/dnf repoinfo -q fedora-nvidia
   register: fedora_nvidia_repo
 
-- name: install nvidia build libraries (rpmfusion)
-  dnf:  name={{ item }} state=present
+- name: add nvidia build libraries (rpmfusion)
+  set_fact:
+    dnf_pkg_lst:
+      - '{{ dnf_pkg_lst }}'
+      - libXNVCtrl-devel
   when: not fedora_nvidia_repo.stdout | search("enabled")
-  with_items:
-    - libXNVCtrl-devel
 
-- name: install nvidia build libraries (negativo's nvidia repo)
-  dnf:  name={{ item }} state=present
+- name: add nvidia build libraries (negativo's nvidia repo)
+  set_fact:
+    dnf_pkg_lst:
+      - '{{ dnf_pkg_lst }}'
+      - nvidia-libXNVCtrl-devel
   when: fedora_nvidia_repo.stdout | search("enabled")
-  with_items:
-    - nvidia-libXNVCtrl-devel
 
-- name: install optional build libraries
-  dnf:  name={{ item }} state=present
-  with_items:
-    - libXinerama-devel
-    - libXrandr-devel
-    - libXv-devel
-    - libva-devel
-    - libvdpau-devel
-    - libcec-devel
-    - libass-devel
-    - libavc1394-devel
-    - libiec61883-devel
-    - fftw-devel
-    - libcrystalhd-devel
-    - systemd-devel
-    - xvidcore-devel
-    - x264-devel
-    - x265-devel
-    - libvpx-devel
-    - libbluray-bdj
+- name: add optional build libraries
+  set_fact:
+    dnf_pkg_lst:
+      - '{{ dnf_pkg_lst }}'
+      - libXinerama-devel
+      - libXrandr-devel
+      - libXv-devel
+      - libva-devel
+      - libvdpau-devel
+      - libcec-devel
+      - libass-devel
+      - libavc1394-devel
+      - libiec61883-devel
+      - fftw-devel
+      - libcrystalhd-devel
+      - systemd-devel
+      - xvidcore-devel
+      - x264-devel
+      - x265-devel
+      - libvpx-devel
+      - libbluray-bdj
 
-- name: install mythtv essential python modules
-  dnf:  name={{ item }} state=present
-  with_items:
-    - python2-mysql
-    - python-lxml
-    - python-urlgrabber
-    - python2-future
-    - python2-requests
-    - python-requests-cache
+- name: add mythtv essential python modules
+  set_fact:
+    dnf_pkg_lst:
+      - '{{ dnf_pkg_lst }}'
+      - python2-mysql
+      - python-lxml
+      - python-urlgrabber
+      - python2-future
+      - python2-requests
+      - python-requests-cache
 
-- name: install mythtv essential python modules - Fedora only
-  dnf:  name={{ item }} state=present
+- name: add mythtv essential python modules - Fedora only
+  set_fact:
+    dnf_pkg_lst:
+      - '{{ dnf_pkg_lst }}'
+      - python-oauth
+      - libselinux-python
   when: ansible_distribution == "Fedora"
-  with_items:
-    - python-oauth
-    - libselinux-python
 
-- name: install mythtv essential perl modules
-  dnf:  name={{ item }} state=present
-  with_items:
-    - perl-ExtUtils-MakeMaker
-    - perl-DBI
-    - perl-DBD-MySQL
-    - perl-HTTP-Message
-    - perl-libwww-perl
-    - perl-IO-Socket-INET6
-    - perl-Date-Manip
-    - perl-XML-Simple
-    - perl-XML-XPath
-    - perl-DateTime-Format-ISO8601
-    - perl-SOAP-Lite
-    - perl-JSON
+- name: add mythtv essential perl modules
+  set_fact:
+    dnf_pkg_lst:
+      - '{{ dnf_pkg_lst }}'
+      - perl-ExtUtils-MakeMaker
+      - perl-DBI
+      - perl-DBD-MySQL
+      - perl-HTTP-Message
+      - perl-libwww-perl
+      - perl-IO-Socket-INET6
+      - perl-Date-Manip
+      - perl-XML-Simple
+      - perl-XML-XPath
+      - perl-DateTime-Format-ISO8601
+      - perl-SOAP-Lite
+      - perl-JSON
 
-- name: install mythtv essential perl modules - Fedora only
-  dnf:  name={{ item }} state=present
+- name: add mythtv essential perl modules - Fedora only
+  set_fact:
+    dnf_pkg_lst:
+      # not found on centos7
+      - '{{ dnf_pkg_lst }}'
+      - perl-Image-Size
+      - perl-Net-UPnP
   when: ansible_distribution == "Fedora"
-  with_items:
-# not found on centos7
-    - perl-Image-Size
-    - perl-Net-UPnP
 
-- name: install mythtv essential plugin libraries
-  dnf:  name={{ item }} state=present
-  with_items:
-    - libvorbis-devel
-    - flac-devel
-    - taglib-devel
-    - libcdio-devel
-    - libcdio-paranoia-devel
-    - mysql-devel
-    - minizip-devel
+- name: add mythtv essential plugin libraries
+  set_fact:
+    dnf_pkg_lst:
+      - '{{ dnf_pkg_lst }}'
+      - libvorbis-devel
+      - flac-devel
+      - taglib-devel
+      - libcdio-devel
+      - libcdio-paranoia-devel
+      - mysql-devel
+      - minizip-devel
+
+- name: final package list
+  debug:
+    msg:
+      '{{ lookup("flattened", dnf_pkg_lst) }}'
+
+- name: install packages
+  dnf:
+    name:
+      '{{ lookup("flattened", dnf_pkg_lst ) }}'
+    state: present
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
