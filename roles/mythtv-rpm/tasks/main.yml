@@ -6,104 +6,125 @@
 - include: setup-rpmfusion.yml
   when:    ansible_distribution == "Fedora"
 
-- name: install compilers and build essentials
-  yum:  name={{ item }} state=present
-  with_items:
-    - git 
-    - gcc
-    - gcc-c++ 
-    - make 
-    - gdb
-    - automake
-    - autoconf
-    - libtool
-    - pkgconfig
-# packages in repo for fedora, and in epel for centos7/rhel7
-    - yasm
-    - ccache
+- name: create a list of compilers and build essentials
+  set_fact:
+    yum_pkg_lst:
+      - git
+      - gcc
+      - gcc-c++
+      - make
+      - gdb
+      - automake
+      - autoconf
+      - libtool
+      - pkgconfig
+      # packages in repo for fedora, and in epel for centos7/rhel7
+      - yasm
+      - ccache
 
-- name: install mythtv essential build libraries
-  yum:  name={{ item }} state=present
-  with_items:
-    - libuuid-devel 
-    - libxml2-devel
-    - alsa-lib-devel
-    - pulseaudio-libs-devel
-    - avahi-compat-libdns_sd-devel
-    - exiv2-devel
-    - lzo-devel
-    - hdhomerun-devel
-    - libsamplerate-devel
-    - libXNVCtrl-devel
+- name: add mythtv essential build libraries
+  set_fact:
+    yum_pkg_lst:
+      - '{{ yum_pkg_lst }}'
+      - libuuid-devel
+      - libxml2-devel
+      - alsa-lib-devel
+      - pulseaudio-libs-devel
+      - avahi-compat-libdns_sd-devel
+      - exiv2-devel
+      - lzo-devel
+      - hdhomerun-devel
+      - libsamplerate-devel
+      - libXNVCtrl-devel
+      # packages in repo for fedora, and in epel for centos7/rhel7
+      - lame-devel
 
-# packages in repo for fedora, and in epel for centos7/rhel7
-    - lame-devel
+- name: add optional build libraries
+  set_fact:
+    yum_pkg_lst:
+      - '{{ yum_pkg_lst }}'
+      - libXinerama-devel
+      - libXrandr-devel
+      - libXv-devel
+      - libva-devel
+      - libvdpau-devel
+      - libcec-devel
+      - libass-devel
+      - libavc1394-devel
+      - libiec61883-devel
+      - fftw-devel
+      - libcrystalhd-devel
+      - systemd-devel
+      # These three don't exist on CentOS
+      # - xvidcore-devel
+      # - x264-devel
+      # - x265-devel
+      - libvpx-devel
 
-- name: install optional build libraries
-  yum:  name={{ item }} state=present
-  with_items:
-    - libXinerama-devel
-    - libXrandr-devel
-    - libXv-devel
-    - libva-devel
-    - libvdpau-devel
-    - libcec-devel
-    - libass-devel
-    - libavc1394-devel
-    - libiec61883-devel
-    - fftw-devel
-    - libcrystalhd-devel
-    - systemd-devel
-# These three don't exist on CentOS
-#    - xvidcore-devel
-#    - x264-devel
-#    - x265-devel
-    - libvpx-devel
+- name: add mythtv essential python modules
+  set_fact:
+    yum_pkg_lst:
+      - '{{ yum_pkg_lst }}'
+      - python-lxml
 
-- name: install mythtv essential python modules
-  yum:  name={{ item }} state=present
-  with_items:
-    - MySQL-python
-    - python-lxml
-
-- name: install mythtv essential python modules - Fedora only
-  yum:  name={{ item }} state=present
+- name: add mythtv essential python modules - Fedora only
+  set_fact:
+    yum_pkg_lst:
+      - '{{ yum_pkg_lst }}'
+      - python-oauth
   when: ansible_distribution == "Fedora"
-  with_items:
-    - python-oauth
 
-- name: install mythtv essential perl modules
-  yum:  name={{ item }} state=present
-  with_items:
-    - perl-ExtUtils-MakeMaker
-    - perl-DBI
-    - perl-DBD-MySQL
-    - perl-HTTP-Message
-    - perl-libwww-perl
-    - perl-IO-Socket-INET6
-    - perl-Date-Manip
-    - perl-XML-Simple
-    - perl-XML-XPath
-    - perl-DateTime-Format-ISO8601
-    - perl-SOAP-Lite
-    - perl-JSON
+- name: add mythtv essential perl modules
+  set_fact:
+    yum_pkg_lst:
+      - '{{ yum_pkg_lst }}'
+      - perl-ExtUtils-MakeMaker
+      - perl-DBI
+      - perl-DBD-MySQL
+      - perl-HTTP-Message
+      - perl-libwww-perl
+      - perl-IO-Socket-INET6
+      - perl-Date-Manip
+      - perl-XML-Simple
+      - perl-XML-XPath
+      - perl-DateTime-Format-ISO8601
+      - perl-SOAP-Lite
+      - perl-JSON
 
-- name: install mythtv essential perl modules - Fedora only
-  yum:  name={{ item }} state=present
+- name: add mythtv essential perl modules - Fedora only
+  set_fact:
+    yum_pkg_lst:
+      - '{{ yum_pkg_lst }}'
+      # not found on centos7
+      - perl\(Image::Size\)
+      - perl\(Net::UPnP::QueryResponse\)
+      - perl\(Net::UPnP::ControlPoint\)
   when: ansible_distribution == "Fedora"
-  with_items:
-# not found on centos7
-    - perl\(Image::Size\)
-    - perl\(Net::UPnP::QueryResponse\)
-    - perl\(Net::UPnP::ControlPoint\)
 
-- name: install mythtv essential plugin libraries
-  yum:  name={{ item }} state=present
-  with_items:
-    - libvorbis-devel
-    - flac-devel
-    - taglib-devel
-    - libcdio-devel
-    - libcdio-paranoia-devel
-    - mysql-devel
-    - minizip-devel
+- name: add mythtv essential plugin libraries
+  set_fact:
+    yum_pkg_lst:
+      - '{{ yum_pkg_lst }}'
+      - libvorbis-devel
+      - flac-devel
+      - taglib-devel
+      - libcdio-devel
+      - libcdio-paranoia-devel
+      - mysql-devel
+      - minizip-devel
+
+- name: final package list
+  debug:
+    msg:
+      '{{ lookup("flattened", yum_pkg_lst) }}'
+
+- name: install packages
+  yum:
+    name:
+      '{{ lookup("flattened", yum_pkg_lst) }}'
+    state:
+      present
+  tags:
+    - qt5
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

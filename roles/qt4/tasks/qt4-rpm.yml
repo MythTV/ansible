@@ -1,15 +1,37 @@
-- name: install qt4 libraries
-  yum:  name={{ item }} state=present
-  with_items:
-    - qt-devel
-# packages in repo for fedora, and in epel for centos7/rhel7
-    - qtwebkit-devel
+- name: create a list of libraries
+  set_fact:
+    yum_pkg_lst:
+      - qt-devel
+      # packages in repo for fedora, and in epel for centos7/rhel7
+      - qtwebkit-devel
   tags:
     - qt4
 
-- name: install mythtv essential runtime libraries
-  yum:  name={{ item }} state=present
-  with_items:
-    - qt-mysql
+# This looks like overkill, but the intent is to provide future maintainers
+# with a template to add more (especially conditional) packages.
+
+- name: add mythtv essential runtime libraries
+  set_fact:
+    yum_pkg_lst:
+      - {{ yum_pkg_lst }}
+      - qt-mysql
   tags:
     - qt4
+
+- name: final package list
+  debug:
+    msg:
+      '{{ lookup("flattened", yum_pkg_lst) }}'
+  tags:
+    - qt4
+
+- name: install packages
+  yum:
+    name:
+      '{{ lookup("flattened", yum_pkg_lst) }}'
+    state:
+      present
+  tags:
+    - qt4
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

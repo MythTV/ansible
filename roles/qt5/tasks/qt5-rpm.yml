@@ -1,17 +1,37 @@
-- name: install qt5 libraries
-  yum:  name={{ item }} state=present
-  with_items:
-    - qt5-qtbase-devel
-    - qt5-qtwebkit-devel
-    - qt5-qtscript-devel
-# packages in repo for fedora, and in epel for centos7/rhel7
-#    - none yet
+- name: create list of qt5 libraries
+  set_fact:
+    yum_pkg_lst:
+      - qt5-qtbase-devel
+      - qt5-qtwebkit-devel
+      - qt5-qtscript-devel
+      # packages in repo for fedora, and in epel for centos7/rhel7
+      # - none yet
   tags:
     - qt5
 
-- name: install qt5 runtime dependencies
-  yum:  name={{ item }} state=present
-  with_items:
-    - qt5-qtbase-mysql
+# This looks like overkill, but the intent is to provide future maintainers
+# with a template to add more (especially conditional) packages.
+
+- name: add qt5 runtime dependencies
+  set_fact:
+    yum_pkg_lst:
+      - '{{ yum_pkg_lst }}'
+      - qt5-qtbase-mysql
   tags:
     - qt5
+
+- name: final rpm qt5 package list
+  debug:
+    msg:
+      '{{ lookup("flattened", yum_pkg_lst) }}'
+
+- name: install rpm qt5 packages
+  yum:
+    name:
+      '{{ lookup("flattened", yum_pkg_lst) }}'
+    state:
+      present
+  tags:
+    - qt5
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
