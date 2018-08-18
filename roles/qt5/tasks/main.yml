@@ -15,3 +15,5 @@
 
 - include:  qt5-suse.yml
   when:     ansible_pkg_mgr == "zypper"
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

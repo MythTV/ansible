@@ -12,3 +12,5 @@
 
 - include:  qt4-pkgng.yml
   when:     ansible_pkg_mgr == "pkgng"
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

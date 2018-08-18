@@ -196,12 +196,12 @@
       - libminizip-dev
   when: ansible_distribution == "Debian" or (ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int >= 16)
 
-- name: final deb package list
+- name: final package list
   debug:
     msg:
       '{{ lookup("flattened", deb_pkg_lst) }}'
 
-- name: install mythtv-deb packages
+- name: install packages
   apt:
     name:
       '{{ lookup("flattened", deb_pkg_lst ) }}'

@@ -29,3 +29,5 @@
     name:
       '{{ lookup("flattened", deb_pkg_lst ) }}'
     state: present
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

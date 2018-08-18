@@ -1,12 +1,31 @@
 # roles/mythtv-deb/tasks/qt4.yml
-- name: install qt4
-  apt:  name={{ item }} state=present
-  with_items:
-    - libqt4-dev 
-    - libqtwebkit-dev
-    - libqt4-opengl-dev
 
-- name: install mythtv essential runtime libraries
-  apt:  name={{ item }} state=present
-  with_items:
-    - libqt4-sql-mysql
+- name: create a list of deb qt4 packages
+  set_fact:
+    deb_pkg_lst:
+      - libqt4-dev
+      - libqtwebkit-dev
+      - libqt4-opengl-dev
+
+# This looks like overkill, but the intent is to provide future maintainers
+# with a template to add more (especially conditional) packages.
+
+- name: add mythtv essential runtime libraries
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libqt4-sql-mysql
+
+- name: final package list
+  debug:
+    msg:
+      '{{ lookup("flattened", deb_pkg_lst) }}'
+
+- name: install mythtv packages
+  apt:
+    name:
+      '{{ lookup("flattened", deb_pkg_lst ) }}'
+    state:
+      present
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
