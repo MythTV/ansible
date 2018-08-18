@@ -1,62 +1,66 @@
-- name: install compilers and build essentials
-  zypper: name={{ item }} state=present
-  with_items:
-    - git
-    - gcc
-    - gcc-c++
-    - make
-    - gdb
-    - automake
-    - autoconf
-    - libtool
-    - pkg-config
-    - yasm
-    - ccache
+- name: create a list of compilers and build essentials
+  set_fact:
+    zypper_pkg_lst:
+      - git
+      - gcc
+      - gcc-c++
+      - make
+      - gdb
+      - automake
+      - autoconf
+      - libtool
+      - pkg-config
+      - yasm
+      - ccache
 
-- name: install mythtv essential build libraries
-  zypper: name={{ item }} state=present
-  with_items:
-    - libuuid-devel
-    - libxml2-devel
-    - alsa-devel
-## No pulseaudio-libs-devel
-    - avahi-compat-mDNSResponder-devel
-    - libexiv2-devel
-    - libbluray-devel
-    - lzo-devel
-    - libhdhomerun-devel
-    - libsamplerate-devel
+- name: add mythtv essential build libraries
+  set_fact:
+    zypper_pkg_lst:
+      - '{{ zypper_pkg_lst }}'
+      - libuuid-devel
+      - libxml2-devel
+      - alsa-devel
+      # no pulseaudio-libs-devel
+      - avahi-compat-mDNSResponder-devel
+      - libexiv2-devel
+      - libbluray-devel
+      - lzo-devel
+      - libhdhomerun-devel
+      - libsamplerate-devel
 
-- name: install optional build libraries
-  zypper: name={{ item }} state=present
-  with_items:
-    - libXinerama-devel
-    - libXrandr-devel
-    - libXv-devel
-    - libva-devel
-    - libva-gl-devel
-    - libvdpau-devel
-    - libcec-devel
-    - libass-devel
-    - libcrystalhd-devel
-    - systemd-devel
-    - libvpx-devel
-    - libbluray-bdj
+- name: add optional build libraries
+  set_fact:
+    zypper_pkg_lst:
+      - '{{ zypper_pkg_lst }}'
+      - libXinerama-devel
+      - libXrandr-devel
+      - libXv-devel
+      - libva-devel
+      - libva-gl-devel
+      - libvdpau-devel
+      - libcec-devel
+      - libass-devel
+      - libcrystalhd-devel
+      - systemd-devel
+      - libvpx-devel
+      - libbluray-bdj
 
-- name: install lame
-  zypper: name={{ item }} state=present
-  with_items:
-    - libmp3lame-devel
+- name: add lame
+  set_fact:
+    zypper_pkg_lst:
+      - '{{ zypper_pkg_lst }}'
+      - libmp3lame-devel
 
-- name: install mythtv essential python modules
-  zypper: name={{ item }} state=present
-  with_items:
-    - python-MySQL-python
-    - python-lxml
-    - python-urlgrabber
-    - python-future
-    - python-requests
-    - python-oauth
+- name: add mythtv essential python modules
+  set_fact:
+    zypper_pkg_lst:
+      - '{{ zypper_pkg_lst }}'
+      - python-MySQL-python
+      - python-lxml
+      - python-urlgrabber
+      - python-future
+      - python-requests
+      - python-oauth
 
 - name: determine devel:languages:perl repository url (Leap)
   when: ansible_distribution == "openSUSE Leap"
@@ -72,34 +76,50 @@
 - name: enable devel:languages:perl repository
   zypper_repository: name=devel_languages_perl repo={{ perl_repo }} state=present auto_import_keys=yes
 
-- name: install mythtv essential perl modules
-  zypper: name={{ item }} state=present
-  with_items:
-    - perl-ExtUtils-MakeMaker
-    - perl-DBI
-    - perl-DBD-mysql
-    - perl-HTTP-Message
-    - perl-libwww-perl
-    - perl-IO-Socket-INET6
-    - perl-Date-Manip
-    - perl-XML-Simple
-    - perl-XML-XPath
-    - perl-DateTime-Format-ISO8601
-    - perl-SOAP-Lite
-    - perl-JSON
-    - perl-Image-Size
-    - perl-Net-UPnP
+- name: add mythtv essential perl modules
+  set_fact:
+    zypper_pkg_lst:
+      - '{{ zypper_pkg_lst }}'
+      - perl-ExtUtils-MakeMaker
+      - perl-DBI
+      - perl-DBD-mysql
+      - perl-HTTP-Message
+      - perl-libwww-perl
+      - perl-IO-Socket-INET6
+      - perl-Date-Manip
+      - perl-XML-Simple
+      - perl-XML-XPath
+      - perl-DateTime-Format-ISO8601
+      - perl-SOAP-Lite
+      - perl-JSON
+      - perl-Image-Size
+      - perl-Net-UPnP
 
-- name: install mythtv essential plugin libraries
-  zypper: name={{ item }} state=present
-  with_items:
-    - libvorbis-devel
-    - flac-devel
-    - libtag-devel
-    - libcdio-devel
-    - libcdio-paranoia-devel
-    - libmysqlclient-devel
-    - fftw3-threads-devel
-    - libexif-devel
-    - dcraw
-    - minizip-devel
+- name: add mythtv essential plugin libraries
+  set_fact:
+    zypper_pkg_lst:
+      - '{{ zypper_pkg_lst }}'
+      - libvorbis-devel
+      - flac-devel
+      - libtag-devel
+      - libcdio-devel
+      - libcdio-paranoia-devel
+      - libmysqlclient-devel
+      - fftw3-threads-devel
+      - libexif-devel
+      - dcraw
+      - minizip-devel
+
+- name: final package list
+  debug:
+    msg:
+      '{{ lookup("flattened", zypper_pkg_lst) }}'
+
+- name: install packages
+  zypper:
+    name:
+      '{{ lookup("flattened", zypper_pkg_lst ) }}'
+    state:
+      present
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

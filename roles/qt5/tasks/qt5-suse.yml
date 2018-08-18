@@ -1,17 +1,38 @@
-- name: install qt5 libraries
-  zypper: name={{ item }} state=present
-  with_items:
-    - libqt5-qtbase-devel
-    - libQt5WebKit5-devel
-    - libQt5WebKitWidgets-devel
-    - libqt5-qtscript-devel
+- name: create a list of qt5 libraries
+  set_fact:
+    zypper_pkg_lst:
+      - libqt5-qtbase-devel
+      - libQt5WebKit5-devel
+      - libQt5WebKitWidgets-devel
+      - libqt5-qtscript-devel
   tags:
     - qt5
 
-- name: install qt5 runtime dependencies
-  zypper: name={{ item }} state=present
-  with_items:
-    - libQt5Sql5-mysql
+# This looks like overkill, but the intent is to provide future maintainers
+# with a template to add more (especially conditional) packages.
+
+- name: add qt5 runtime dependencies
+  set_fact:
+    zypper_pkg_lst:
+      - '{{ zypper_pkg_lst }}'
+      - libQt5Sql5-mysql
   tags:
     - qt5
 
+- name: final zypper qt5 package list
+  debug:
+    msg:
+      '{{ lookup("flattened", zypper_pkg_lst) }}'
+  tags:
+    - qt5
+
+- name: install zypper qt5 packages
+  zypper:
+    name:
+      '{{ lookup("flattened", zypper_pkg_lst ) }}'
+    state:
+      present
+  tags:
+    - qt5
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
