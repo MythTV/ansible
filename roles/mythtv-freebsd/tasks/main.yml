@@ -74,6 +74,31 @@
       - p5-XML-XPath
       - p5-XML-Simple
 
+- name: add subversion
+  set_fact:
+    pkgng_pkg_lst:
+      - '{{ pkgng_pkg_lst }}'
+      - subversion
+  when: ansible_distribution_major_version|int >= 11
+
+- name: packages from ports
+  set_fact:
+    ports_pkg_lst:
+      - gmake
+      - libtool
+      - audio/lame
+      - multimedia/v4l_compat
+      - multimedia/libvdpau
+      - multimedia/libva
+      - multimedia/libv4l
+
+- name: add subversion (from ports)
+  set_fact:
+    ports_pkg_lst:
+      - '{{ ports_pkg_lst }}'
+      - devel/subversion
+  when: ansible_distribution_major_version|int < 11
+
 - name: final package list
   debug:
     msg:
@@ -86,17 +111,15 @@
     state:
       present
 
+- name: final package list (from ports)
+  debug:
+    msg:
+      '{{ lookup("flattened", ports_pkg_lst) }}'
+
 - name: install packages from ports
   portinstall:
     name:
-      - devel/subversion
-      - gmake
-      - libtool
-      - audio/lame
-      - multimedia/v4l_compat
-      - multimedia/libvdpau
-      - multimedia/libva
-      - multimedia/libv4l
+      '{{ lookup("flattened", ports_pkg_lst) }}'
     state:
       present
 
