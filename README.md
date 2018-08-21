@@ -3,8 +3,10 @@ These are ansible playbooks for setting up MythTV buildslaves.
 They can also be used to install all the necessary packages if
 you wish to build MythTV from source.
 
-How to use this
-`git clone https://github.com/MythTV/ansible`
+First you need to clone the playbooks:
+```
+git clone https://github.com/MythTV/ansible
+```
 
 Debian users running Wheezy will need to enable [wheezy-backports](https://wiki.debian.org/Backports)
 Jessie or later is recommended for 0.28 and above.
@@ -30,11 +32,15 @@ Alternate hosts files are provided for archlinux and freebsd users, as these
 platforms have different python requirements. Please replace hosts, with the
 appropriate filename.
 
-For a normal development system
-`ansible-playbook -i hosts qt5.yml`
+For a normal development system:
+```
+ansible-playbook -i hosts qt5.yml
+```
 
-For a buildslave system
-`ansible-playbook -i hosts buildslave.yml`
+For a buildslave system:
+```
+ansible-playbook -i hosts buildslave.yml
+```
 
 ### Other Platforms
 We welcome contributions to support additional platforms. Please contact the developers if you are interested in this.
