@@ -19,23 +19,25 @@
   register:         build_buildbot
 
 - name: install buildbot build requirements
-  yum:  name={{ item }} state=present
+  yum:
+    name:
+      - python-zope-interface
+      - python-twisted-core
+      - python-devel
+      - python-sphinx
+      - python-sqlalchemy
+      - python-migrate
+      - python-mock
+      - python-dateutil
+      # python-twisted-mail is not available on centos7
+      # - python-twisted-mail
+      - bzr
+      - cvs
+      - mercurial
+      - subversion
+    state:
+      present
   when: buildbot.stdout == "missing" and build_buildbot.stdout == "missing"
-  with_items:
-    - python-zope-interface
-    - python-twisted-core
-    - python-devel 
-    - python-sphinx 
-    - python-sqlalchemy 
-    - python-migrate 
-    - python-mock 
-    - python-dateutil 
-# python-twisted-mail is not available on centos7
-#    - python-twisted-mail 
-    - bzr 
-    - cvs 
-    - mercurial 
-    - subversion 
 
 - name:     build python-twisted-mail
   command:  rpmbuild --rebuild {{ twisted_mail_src }}
@@ -50,10 +52,12 @@
   command:  yum -y localinstall {{ twisted_mail_rpm }} {{ twisted_names_rpm }}
   when:     twisted_mail.stdout == "missing" or twisted_names.stdout == "missing"
 
-- name:     build buildbot 
+- name:     build buildbot
   command:  rpmbuild --rebuild {{ bb_src }}
   when:     buildbot.stdout == "missing" and build_buildbot.stdout == "missing"
 
 - name:     install buildbot after local build
   command:  yum -y localinstall {{ bb_rpm }}
   when:     buildbot.stdout == "missing"
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
