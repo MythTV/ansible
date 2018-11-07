@@ -46,13 +46,21 @@
       present
   when: ansible_pkg_mgr == "pacman"
 
-- name: install packages from ports
+- name: install buildslave from ports
   portinstall:
     name:
       - devel/buildbot-slave
     state:
       present
-  when: ansible_distribution == "FreeBSD"
+  when: ansible_distribution == "FreeBSD" and ansible_distribution_major_version|int <= 10
+
+- name: install buildbot-worker
+  pkgng:
+    name:
+      - py27-buildbot-worker
+    state:
+      present
+  when: ansible_distribution == "FreeBSD" and ansible_distribution_major_version|int >= 11
 
 - name: create buildslave user
   user: name=buildslave state=present generate_ssh_key=yes
