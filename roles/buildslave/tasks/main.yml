@@ -52,7 +52,7 @@
       - devel/buildbot-slave
     state:
       present
-  when: ansible_distribution == "FreeBSD" and ansible_distribution_major_version|int <= 10
+  when: ansible_distribution == "FreeBSD" and ansible_distribution_major_version|int <= 9
 
 - name: install buildbot-worker
   pkgng:
@@ -60,7 +60,15 @@
       - py27-buildbot-worker
     state:
       present
-  when: ansible_distribution == "FreeBSD" and ansible_distribution_major_version|int >= 11
+  when: ansible_distribution == "FreeBSD" and ansible_distribution_major_version|int >= 10
+
+- name: buildbot worker support libraries
+  pkgng:
+    name:
+      - py27-service_identity
+    state:
+      present
+  when: ansible_distribution == "FreeBSD"
 
 - name: create buildslave user
   user: name=buildslave state=present generate_ssh_key=yes
