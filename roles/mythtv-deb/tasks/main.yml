@@ -54,6 +54,7 @@
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
+      - libcec-dev
       - libva-dev
       - libvdpau-dev
       - libass-dev
@@ -61,19 +62,18 @@
       - libx264-dev
       - libvpx-dev
       - libbluray-bdj
-
-- name: add mythtv extra build libraries (Raspbian Stretch or later)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - libxcb-shm0-dev
-      - libcec4-dev
       - libavc1394-dev
       - libiec61883-dev
       - libpulse-dev
       - libfftw3-dev
       - libssl-dev
       - libsystemd-dev
+
+- name: add mythtv extra build libraries (Raspbian Stretch or later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libxcb-shm0-dev
       - libx265-dev
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 9 and ansible_lsb.id == "Raspbian"
 
@@ -81,14 +81,7 @@
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
-      - libcec-dev
-      - libavc1394-dev
-      - libiec61883-dev
-      - libpulse-dev
-      - libfftw3-dev
       - libcrystalhd-dev
-      - libssl-dev
-      - libsystemd-dev
   when: ansible_distribution == "Debian" and ansible_lsb.id != "Raspbian"
 
 - name: add mythtv extra build libraries (Debian Stretch and later)
