@@ -1,3 +1,12 @@
+- name: check if ports bootstrapped
+  stat:
+    path: /usr/ports
+  register: ports_dir
+
+- name: bootstrap ports
+  command: /usr/sbin/portsnap extract
+  when: not ports_dir.stat.exists
+
 - name: create a list of compilers and build essentials
   set_fact:
     pkgng_pkg_lst:
@@ -74,30 +83,44 @@
       - p5-XML-XPath
       - p5-XML-Simple
 
-- name: add subversion
+- name: add packages moved to main repository (freebsd11+)
   set_fact:
     pkgng_pkg_lst:
       - '{{ pkgng_pkg_lst }}'
       - subversion
   when: ansible_distribution_major_version|int >= 11
 
+- name: add packages moved to main repository (freebsd12+)
+  set_fact:
+    pkgng_pkg_lst:
+      - '{{ pkgng_pkg_lst }}'
+      - gmake
+      - libtool
+  when: ansible_distribution_major_version|int >= 12
+
 - name: packages from ports
   set_fact:
     ports_pkg_lst:
-      - gmake
-      - libtool
       - audio/lame
       - multimedia/v4l_compat
       - multimedia/libvdpau
       - multimedia/libva
       - multimedia/libv4l
 
-- name: add subversion (from ports)
+- name: add packages from ports (freebsd 10 and earlier)
   set_fact:
     ports_pkg_lst:
       - '{{ ports_pkg_lst }}'
       - devel/subversion
   when: ansible_distribution_major_version|int < 11
+
+- name: add packages from ports (freebsd 11 and earlier)
+  set_fact:
+    ports_pkg_lst:
+      - '{{ ports_pkg_lst }}'
+      - gmake
+      - libtool
+  when: ansible_distribution_major_version|int < 12
 
 - name: final package list
   debug:
