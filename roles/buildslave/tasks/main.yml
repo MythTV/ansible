@@ -83,7 +83,7 @@
   command: su - buildslave -c 'test -d ~/mythtv || mkdir ~/mythtv'
 
 - name: install slave startup script
-  copy: src={{ ansible_distribution }}-start-buildslave.sh dest=~buildslave/bin/start-buildslave.sh mode=0755
+  copy: src={{ ansible_distribution }}-start-buildslave.sh dest=~buildslave/bin/start-buildslave.sh mode=0755 owner=buildslave
 
 - cron: name="autostart slave at reboot" user=buildslave special_time=reboot job=$HOME/bin/start-buildslave.sh
 
