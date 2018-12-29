@@ -54,7 +54,9 @@
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
-      - libcec-dev
+      # libcec is now libcec4 
+      #- libcec-dev
+      - libcec4-dev
       - libva-dev
       - libvdpau-dev
       - libass-dev
