@@ -1,0 +1,6 @@
+# Tools cppcheck & doxygen
+
+- hosts:        localhost
+  roles:
+    - role: cppcheck
+    - role: doxygen

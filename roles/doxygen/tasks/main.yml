@@ -1,0 +1,19 @@
+- name: package list
+  set_fact:
+    doxygen_pkg_lst:
+      - doxygen
+      - graphviz
+
+- name: install packages (Fedora)
+  dnf:
+    name:
+      '{{ lookup("flattened", doxygen_pkg_lst) }}'
+    state: present
+  when:    ansible_distribution == "Fedora"
+
+- name: install packages (Ubuntu)
+  apt:
+    name:
+      '{{ lookup("flattened", doxygen_pkg_lst) }}'
+    state: present
+  when:    ansible_distribution == "Ubuntu"
