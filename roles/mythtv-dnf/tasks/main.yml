@@ -88,7 +88,6 @@
       - python-urlgrabber
       - python2-future
       - python2-requests
-      - python-requests-cache
 
 - name: add mythtv essential python modules - Fedora only
   set_fact:
@@ -97,6 +96,22 @@
       - python-oauth
       - libselinux-python
   when: ansible_distribution == "Fedora"
+
+# Packages renamed in f30
+# python-requests-cache -> python2-requests-cache
+- name: add mythtv essential python modules - Fedora <30
+  set_fact:
+    dnf_pkg_lst:
+      - '{{ dnf_pkg_lst }}'
+      - python-requests-cache
+  when: ansible_distribution == "Fedora" and ansible_distribution_version|int < 30
+
+- name: add mythtv essential python modules - Fedora 30+
+  set_fact:
+    dnf_pkg_lst:
+      - '{{ dnf_pkg_lst }}'
+      - python2-requests-cache
+  when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 30
 
 - name: add mythtv essential perl modules
   set_fact:
