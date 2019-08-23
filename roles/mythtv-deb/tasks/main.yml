@@ -91,7 +91,7 @@
       - '{{ deb_pkg_lst }}'
       - libbluray-dev
       - libx265-dev
-  when: ansible_distribution == "Debian" and (ansible_lsb.major_release|int == 9 or ansible_lsb.release == "testing")
+  when: ansible_distribution == "Debian" and (ansible_lsb.major_release|int >= 9 or ansible_lsb.release == "testing")
 
 - name: add mythtv extra build libraries (Ubuntu 16.04 and later)
   set_fact:
