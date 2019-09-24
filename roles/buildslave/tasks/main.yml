@@ -18,6 +18,14 @@
       present
   when: ansible_distribution == "CentOS"
 
+- name: ensure cron installed - Fedora
+  yum:
+    name:
+      - cronie
+    state:
+      present
+  when: ansible_distribution == "Fedora"
+
 # no buildbot in centos7 or epel7...
 - name: install buildslave (rpm)
   yum:
