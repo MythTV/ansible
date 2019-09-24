@@ -3,6 +3,13 @@
 - shell:            /bin/rpm -q --quiet rpmfusion-free-release && echo installed || echo missing
   register:         rpmfusion
 
-- name: setup RPMfusion repository
+- shell:            /usr/bin/grep -qi Rawhide /etc/fedora-release && echo rawhide || echo released
+  register:         rawhide
+
+- name: setup RPMfusion repository (Fedora rawhide)
+  command: dnf install -y --nogpgcheck {{ rpmfusion_rawhide_rpm }}
+  when: ansible_distribution == "Fedora" and rpmfusion.stdout == "missing" and rawhide.stdout =="rawhide"
+
+- name: setup RPMfusion repository (Fedora release versions)
   command: dnf install -y --nogpgcheck {{ rpmfusion_rpm }}
-  when: ansible_distribution == "Fedora" and rpmfusion.stdout == "missing"
+  when: ansible_distribution == "Fedora" and rpmfusion.stdout == "missing" and not rawhide.stdout == "rawhide"
