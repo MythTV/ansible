@@ -72,10 +72,23 @@
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
-      - libcec4-dev
       - libxcb-shm0-dev
       - libx265-dev
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 9 and ansible_lsb.id == "Raspbian"
+
+- name: add mythtv extra build libraries (Raspbian Stretch)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libcec4-dev
+  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int == 9 and ansible_lsb.id == "Raspbian"
+
+- name: add mythtv extra build libraries (Raspbian Buster or later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libcec-dev
+  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 10 and ansible_lsb.id == "Raspbian"
 
 - name: add mythtv extra build libraries (Debian)
   set_fact:
