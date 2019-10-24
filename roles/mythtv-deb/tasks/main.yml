@@ -88,6 +88,7 @@
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libcec-dev
+      - hwdata
   when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 10 and ansible_lsb.id == "Raspbian"
 
 - name: add mythtv extra build libraries (Debian)
