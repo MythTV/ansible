@@ -167,7 +167,16 @@
       - python-future
       - python-requests
       - python-requests-cache
-  when: (ansible_distribution == "Debian" and (ansible_lsb.major_release|int >= 9 or ansible_lsb.release == "testing") or (ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 16)))
+  when: (ansible_distribution == "Debian" and (ansible_lsb.major_release|int >= 9) or (ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 16)))
+
+- name: add mythtv essential python modules (Buster)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - python-future
+      - python-requests
+      - python3-requests-cache
+  when: (ansible_distribution == "Debian" and ansible_lsb.release == "testing")
 
 - name: add mythtv essential perl modules
   set_fact:
