@@ -11,7 +11,7 @@
     pacman_pkg_lst:
       - '{{ pacman_pkg_lst }}'
       - base-devel
-      - yasm
+      - nasm
       - ccache
 
 - name: add mythtv essential build libraries

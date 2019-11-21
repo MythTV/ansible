@@ -12,7 +12,7 @@
     pkgng_pkg_lst:
       - git
       - ccache
-      - yasm
+      - nasm
       - autoconf
       - automake
       - pkgconf

@@ -10,7 +10,7 @@
       - autoconf
       - libtool
       - pkg-config
-      - yasm
+      - nasm
       - ccache
 
 - name: add mythtv essential build libraries

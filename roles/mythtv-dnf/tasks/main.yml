@@ -19,7 +19,7 @@
       - libtool
       - pkgconfig
       # packages in repo for fedora, and in epel for centos7/rhel7
-      - yasm
+      - nasm
       - ccache
 
 - name: add mythtv essential build libraries

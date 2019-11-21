@@ -7,7 +7,7 @@
       - g++
       - make
       - build-essential
-      - yasm
+      - nasm
       - automake
       - libtool
       - ccache
