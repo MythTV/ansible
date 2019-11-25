@@ -48,14 +48,14 @@
     dnf_pkg_lst:
       - '{{ dnf_pkg_lst }}'
       - libXNVCtrl-devel
-  when: not fedora_nvidia_repo.stdout | search("enabled")
+  when: not fedora_nvidia_repo.stdout is search("enabled")
 
 - name: add nvidia build libraries (negativo's nvidia repo)
   set_fact:
     dnf_pkg_lst:
       - '{{ dnf_pkg_lst }}'
       - nvidia-libXNVCtrl-devel
-  when: fedora_nvidia_repo.stdout | search("enabled")
+  when: fedora_nvidia_repo.stdout is search("enabled")
 
 - name: add optional build libraries
   set_fact:
