@@ -125,7 +125,9 @@
       - '{{ dnf_pkg_lst }}'
       - python3-libselinux
       - python3-future
+      - python3-mysql
       - python3-requests-cache
+      - python3-simplejson
   when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 31
 
 - name: add mythtv essential perl modules
