@@ -127,7 +127,7 @@
       - python2-simplejson
   when: ansible_distribution == "Fedora" and ansible_distribution_version|int < 31
 
-- name: add mythtv essential python modules - Fedora 31+
+- name: add mythtv essential python3 modules - Fedora 30+
   set_fact:
     dnf_pkg_lst:
       - '{{ dnf_pkg_lst }}'
@@ -136,7 +136,7 @@
       - python3-mysql
       - python3-requests-cache
       - python3-simplejson
-  when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 31
+  when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 30
 
 - name: add mythtv essential perl modules
   set_fact:
