@@ -15,6 +15,8 @@ Jessie or later is recommended for 0.28 and above.
 Then install the `ansible` package. Choose the one appropriate
 for your distro
 
+* Centos users will need to enable the [EPEL](https://fedoraproject.org/wiki/EPEL) repository in order to be able to install ansible
+
 Distro | Command
 -------|--------
 Archlinux |  pacman -S ansible python2 
