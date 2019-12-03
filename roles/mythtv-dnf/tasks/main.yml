@@ -85,7 +85,7 @@
       - libcec-devel
   when: ansible_distribution == "Fedora"
 
-- name: add mythtv essential python modules
+- name: add mythtv essential python modules (Fedora < 30)
   set_fact:
     dnf_pkg_lst:
       - '{{ dnf_pkg_lst }}'
@@ -93,44 +93,37 @@
       - python-lxml
       - python-urlgrabber
       - python2-requests
-
-- name: add mythtv essential python modules - Fedora only
-  set_fact:
-    dnf_pkg_lst:
-      - '{{ dnf_pkg_lst }}'
       - python-oauth
-  when: ansible_distribution == "Fedora"
-
-# Packages renamed in f30
-# python-requests-cache -> python2-requests-cache
-- name: add mythtv essential python modules - Fedora <30
-  set_fact:
-    dnf_pkg_lst:
-      - '{{ dnf_pkg_lst }}'
       - python-requests-cache
+      - python-libselinux
+      - python2-future
   when: ansible_distribution == "Fedora" and ansible_distribution_version|int < 30
 
-- name: add mythtv essential python modules - Fedora 30,31
+- name: add mythtv essential python2 modules - Fedora 30
   set_fact:
     dnf_pkg_lst:
       - '{{ dnf_pkg_lst }}'
-      - python2-requests-cache
-  when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 30 and ansible_distribution_version|int < 32
-
-- name: add mythtv essential python modules - Fedora <31
-  set_fact:
-    dnf_pkg_lst:
-      - '{{ dnf_pkg_lst }}'
-      - libselinux-python
+      - python2-libselinux
       - python2-future
+      - python2-oauth
+  when: ansible_distribution == "Fedora" and ansible_distribution_version|int == 30
+
+- name: add mythtv essential python2 modules - Fedora 30,31
+  set_fact:
+    dnf_pkg_lst:
+      - '{{ dnf_pkg_lst }}'
       - python2-mysql
       - python2-simplejson
-  when: ansible_distribution == "Fedora" and ansible_distribution_version|int < 31
+      - python2-lxml
+      - python2-urlgrabber
+      - python2-requests-cache
+  when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 30 and ansible_distribution_version|int < 32
 
 - name: add mythtv essential python3 modules - Fedora 30+
   set_fact:
     dnf_pkg_lst:
       - '{{ dnf_pkg_lst }}'
+      - python3-lxml
       - python3-libselinux
       - python3-future
       - python3-mysql
