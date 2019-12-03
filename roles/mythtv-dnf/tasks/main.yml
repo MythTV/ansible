@@ -117,6 +117,8 @@
       - '{{ dnf_pkg_lst }}'
       - libselinux-python
       - python2-future
+      - python2-mysql
+      - python2-simplejson
   when: ansible_distribution == "Fedora" and ansible_distribution_version|int < 31
 
 - name: add mythtv essential python modules - Fedora 31+
