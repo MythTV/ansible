@@ -1,6 +1,6 @@
 # roles/mythtv-rpm/tasks/setup-epel.yml
 
-- shell:            /bin/rpm -q --quiet epel-release-7 && echo installed || echo missing
+- shell:            /bin/rpm -q --quiet epel-release && echo installed || echo missing
   register:         epel
 
 - name: setup EPEL repository
