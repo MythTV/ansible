@@ -30,7 +30,7 @@ OpenSuse |  zypper install ansible
 Then run the playbooks as follows.
 
 Please note archlinux users will need to add `--limit archlinux` to these commands
-Alternate hosts files are provided for archlinux and freebsd users, as these
+Alternate hosts files are provided for archlinux, fedora 30 and freebsd users, as these
 platforms have different python requirements. Please replace hosts, with the
 appropriate filename.
 
