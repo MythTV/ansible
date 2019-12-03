@@ -66,7 +66,6 @@
       - libXv-devel
       - libva-devel
       - libvdpau-devel
-      - libcec-devel
       - libass-devel
       - libiec61883-devel
       - fftw-devel
@@ -83,6 +82,7 @@
     dnf_pkg_lst:
       - '{{ dnf_pkg_lst }}'
       - libavc1394-devel
+      - libcec-devel
   when: ansible_distribution == "Fedora"
 
 - name: add mythtv essential python modules
