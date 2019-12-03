@@ -148,15 +148,8 @@
       - perl-DateTime-Format-ISO8601
       - perl-SOAP-Lite
       - perl-JSON
-
-- name: add mythtv essential perl modules - Fedora only
-  set_fact:
-    dnf_pkg_lst:
-      # not found on centos7
-      - '{{ dnf_pkg_lst }}'
       - perl-Image-Size
       - perl-Net-UPnP
-  when: ansible_distribution == "Fedora"
 
 - name: add mythtv essential plugin libraries
   set_fact:
