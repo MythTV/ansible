@@ -4,6 +4,7 @@ epel_rpm: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_
 
 rpmfusion_rpm: "http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
 rpmfusion_rawhide_rpm: "http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-rawhide.noarch.rpm"
+rpmfusion_el_rpm: "https://download1.rpmfusion.org/free/el/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
 
 lame_src: " http://download1.rpmfusion.org/free/el/updates/6/SRPMS/lame-3.99.5-1.el6.src.rpm"
 lame_rpm: "~/rpmbuild/RPMS/{{ansible_architecture}}/lame-3.99.5-1.el7.centos.{{ansible_architecture}}.rpm" 

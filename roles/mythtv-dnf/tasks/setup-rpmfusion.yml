@@ -13,3 +13,7 @@
 - name: setup RPMfusion repository (Fedora release versions)
   command: dnf install -y --nogpgcheck {{ rpmfusion_rpm }}
   when: ansible_distribution == "Fedora" and rpmfusion.stdout == "missing" and not rawhide.stdout == "rawhide"
+
+- name: setup RPMFusion repository (CentOS release versions)
+  command: dnf install -y --nogpgcheck {{ rpmfusion_el_rpm }}
+  when: ansible_distribution == "CentOS" and rpmfusion.stdout == "missing"

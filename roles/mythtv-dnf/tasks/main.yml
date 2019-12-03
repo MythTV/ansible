@@ -4,7 +4,7 @@
   when:    ansible_distribution == "CentOS"
 
 - include: setup-rpmfusion.yml
-  when:    ansible_distribution == "Fedora"
+  when:    ansible_distribution == "Fedora" or ansible_distribution == "CentOS"
 
 - name: create dnf compilers and build essentials list
   set_fact:
