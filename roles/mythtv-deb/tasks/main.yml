@@ -55,6 +55,7 @@
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libva-dev
+      - libdrm-dev
       - libvdpau-dev
       - libass-dev
       - libxvidcore-dev

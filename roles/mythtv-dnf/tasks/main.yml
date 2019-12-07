@@ -64,6 +64,7 @@
       - libXrandr-devel
       - libXv-devel
       - libva-devel
+      - libdrm-devel
       - libvdpau-devel
       - libass-devel
       - libiec61883-devel
