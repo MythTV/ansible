@@ -3,6 +3,7 @@
     doxygen_pkg_lst:
       - doxygen
       - graphviz
+      - rsync
 
 - name: install packages (Fedora)
   dnf:

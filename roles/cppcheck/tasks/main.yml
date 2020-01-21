@@ -2,6 +2,7 @@
   set_fact:
     cppcheck_pkg_lst:
       - cppcheck
+      - rsync
 
 - name: distro specific packages (Fedora)
   set_fact:
