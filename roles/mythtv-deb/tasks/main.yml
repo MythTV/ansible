@@ -150,6 +150,7 @@
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libmariadbclient-dev
+      - libmariadb-dev-compat
   when: ansible_distribution == "Debian" and (ansible_lsb.major_release|int >= 10 or ansible_lsb.release == "testing")
 
 - name: add mythtv essential python modules
@@ -189,7 +190,7 @@
       - python3-pycurl
       - python-requests
       - python3-requests-cache
-  when: (ansible_distribution == "Debian" and ansible_lsb.release == "testing")
+  when: ansible_distribution == "Debian" and (ansible_lsb.major_release|int >= 10 or ansible_lsb.release == "testing")
 
 - name: add mythtv essential perl modules
   set_fact:
