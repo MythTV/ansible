@@ -68,6 +68,7 @@
       - libfftw3-dev
       - libssl-dev
       - libsystemd-dev
+      - libgnutls28-dev
 
 - name: add mythtv extra build libraries (Raspbian Stretch or later)
   set_fact:

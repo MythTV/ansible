@@ -106,6 +106,8 @@
       - multimedia/libvdpau
       - multimedia/libva
       - multimedia/libv4l
+      - graphics/libdrm
+      - security/gnutls
 
 - name: add packages from ports (freebsd 10 and earlier)
   set_fact:

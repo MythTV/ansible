@@ -75,6 +75,7 @@
       - x264-devel
       - x265-devel
       - libvpx-devel
+      - gnutls-devel
 
 - name: add optional build libraries - Fedora only
   set_fact:
