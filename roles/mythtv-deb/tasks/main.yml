@@ -163,6 +163,7 @@
       - python-urlgrabber
       - python-oauth
       - python-pycurl
+  when: (ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int < 20 )
 
 - name: add mythtv essential python modules (Stretch/16.04 and later)
   set_fact:
@@ -179,7 +180,21 @@
       - python3-oauth
       - python-simplejson
       - python3-simplejson
-  when: (ansible_distribution == "Debian" and (ansible_lsb.major_release|int >= 9) or (ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 16)))
+  when: (ansible_distribution == "Debian" and (ansible_lsb.major_release|int >= 9) or (ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 16 and ansible_lsb.major_release|int < 20)))
+
+- name: add mythtv essential python modules (Ubuntu 20.04 and later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - python3-future
+      - python3-requests
+      - python3-requests-cache
+      - python3-mysqldb
+      - python3-lxml
+      - python3-oauth
+      - python3-pycurl
+      - python3-simplejson
+  when: (ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 20 ))
 
 - name: add mythtv essential python modules (Buster)
   set_fact:
