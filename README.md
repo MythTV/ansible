@@ -24,6 +24,7 @@ Centos | yum install ansible
 Debian (and derivatives) | apt-get install ansible
 Fedora | dnf install ansible
 FreeBSD | pkg install py27-ansible
+MacOSX | port install py38-ansible
 OpenSuse |  zypper install ansible
 
 ### Run the playbooks

@@ -1,0 +1,146 @@
+### This is mostly a copy of the freebsd role and largely untested. ###
+
+- name: create a list of compilers and build essentials
+  set_fact:
+    macports_pkg_list:
+      - ccache
+      - nasm
+      - autoconf
+      - automake
+      - pkgconfig
+
+- name: add essential libraries
+  set_fact:
+    macports_pkg_list:
+      - '{{ macports_pkg_list }}'
+      - libxml2
+      - taglib
+      - exiv2
+      - libbluray
+      - lzo2
+      - libsamplerate
+      - libcec
+
+- name: add optional libraries
+  set_fact:
+    macports_pkg_list:
+      - '{{ macports_pkg_list }}'
+      - openssl
+      - libvpx
+      - x264
+      - x265
+      - XviD
+      - libvorbis
+      - flac
+      - faac
+      - freetype
+      - libxml2
+      - fftw-3
+      - libass
+      - x264
+      - x265
+      - libvpx
+      - minizip
+      - apache-ant
+
+- name: add python essentials
+  set_fact:
+    macports_pkg_list:
+      - '{{ macports_pkg_list }}'
+      - python38
+      - py38-future
+      - py38-requests
+      - py38-requests-cache
+      - py38-lxml
+      - py38-oauthlib
+      - py38-curl
+      - py38-simplejson
+      - py38-wheel
+      - py38-pip
+      - py38-pymysql
+
+- name: add perl essentials
+  set_fact:
+    macports_pkg_list:
+      - '{{ macports_pkg_list }}'
+      - perl5
+      - p5-date-manip
+      - p5-datetime-format-iso8601
+      - p5-dbi
+      - p5-dbd-mysql
+      - p5-image-size
+      - p5-io-socket-inet6
+      - p5-json
+      - p5-libwww-perl
+      - p5-http-request-ascgi
+      - p5-net-upnp
+      - p5-soap-lite
+      - p5-xml-xpath
+      - p5-xml-simple
+
+- name: add packages moved to main repository (MacOSX11+)
+  set_fact:
+    macports_pkg_list:
+      - '{{ macports_pkg_list }}'
+      - subversion
+  when: ansible_distribution_major_version|int >= 11
+
+- name: add packages moved to main repository (MacOSX12+)
+  set_fact:
+    macports_pkg_list:
+      - '{{ macports_pkg_list }}'
+      - gmake
+      - libtool
+  when: ansible_distribution_major_version|int >= 12
+
+- name: packages from ports
+  set_fact:
+    macports_pkg_list:
+      - '{{ macports_pkg_list }}'
+      - lame
+      - gnutls
+
+- name: add packages from ports (MacOSX 10 and earlier)
+  set_fact:
+    macports_pkg_list:
+      - '{{ macports_pkg_list }}'
+      - subversion
+  when: ansible_distribution_major_version|int < 11
+
+- name: add packages from ports (MacOSX 11 and earlier)
+  set_fact:
+    macports_pkg_list:
+      - '{{ macports_pkg_list }}'
+      - gmake
+      - libtool
+  when: ansible_distribution_major_version|int < 12
+
+- name: final package list
+  debug:
+    msg:
+      '{{ lookup("flattened", macports_pkg_list) }}'
+
+- name: install packages
+  become: yes
+  macports:
+    name:
+      '{{ lookup("flattened", macports_pkg_list) }}'
+  when: ansible_distribution == "MacOSX" and ansible_pkg_mgr == "macports" and ansible_distribution_major_version|int == 10
+
+- name: select the installed version of python and pip
+  become: yes
+  command: '{{ cmd }}'
+  vars:
+    cmd:
+    - port select --set python python38
+    - port select --set python3 python38
+    - port select --set pip pip38
+    - port select --set pip3 pip38
+
+- name: install mysqlclient (for mysqldb)
+  become: no
+  #command: /opt/local/bin/pip install mysqlclient
+  pip:
+      name: mysqlclient
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
