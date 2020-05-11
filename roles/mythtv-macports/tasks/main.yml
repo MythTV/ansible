@@ -131,13 +131,13 @@
 
 - name: select the installed version of python and pip
   become: yes
-  command: 'port select --set {{ item.new }} {{ item.old }}'
+  command: 'port select --set {{ item.group }} {{ item.version }}'
   loop:
-    - {new: 'python', old: ' python38'}
-    - {new: 'python3', old: 'ython38'}
-    - {new: 'pip', old: 'ip38'}
-    - {new: 'pip3', old: 'pip38'}
-  tags: change_names
+    - { group: 'python',  version: 'python38' }
+    - { group: 'python3', version: 'python38' }
+    - { group: 'pip',     version: 'pip38'    }
+    - { group: 'pip3',    version: 'pip38'    }
+  tags: port_select
 
 - name: install mysqlclient (for mysqldb)
   become: no
