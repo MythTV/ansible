@@ -24,7 +24,7 @@ Centos | yum install ansible
 Debian (and derivatives) | apt-get install ansible
 Fedora | dnf install ansible
 FreeBSD | pkg install py27-ansible
-MacOSX | port install py38-ansible
+MacOSX | See MacOSX Users below
 OpenSuse |  zypper install ansible
 
 ### Run the playbooks
@@ -35,14 +35,22 @@ Alternate hosts files are provided for archlinux, fedora 30 and freebsd users, a
 platforms have different python requirements. Please replace hosts, with the
 appropriate filename.
 
+MacOSX Users:
+```
+sudo port -v selfupdate
+sudo port upgrade outdated
+sudo port install py38-ansible
+sudo ansible-playbook-3.8 -i hosts.macports qt5.yml
+```
+
 For a normal development system:
 ```
-ansible-playbook -i hosts qt5.yml
+sudo ansible-playbook -i hosts qt5.yml
 ```
 
 For a buildslave system:
 ```
-ansible-playbook -i hosts buildslave.yml
+sudo ansible-playbook -i hosts buildslave.yml
 ```
 
 ### Other Platforms

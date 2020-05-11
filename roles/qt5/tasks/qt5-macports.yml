@@ -17,8 +17,7 @@
   macports:
     name:
       '{{ lookup("flattened", macports_pkg_list) }}'
-    state:
-      present
+    update_cache: yes
   tags:
     - qt5
 
