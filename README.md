@@ -3,7 +3,7 @@ These are ansible playbooks for setting up MythTV buildslaves.
 They can also be used to install all the necessary packages if
 you wish to build MythTV from source.
 
-First you need to clone the playbooks:
+First you need to clone the playbooks, install git if necessary.
 ```
 git clone https://github.com/MythTV/ansible
 ```
@@ -40,7 +40,7 @@ MacOSX Users:
 sudo port -v selfupdate
 sudo port upgrade outdated
 sudo port install py38-ansible
-sudo ansible-playbook-3.8 -i hosts.macports qt5.yml
+ansible-playbook-3.8 --ask-become-pass -i hosts.macports qt5.yml
 ```
 
 For a normal development system:

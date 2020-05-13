@@ -79,34 +79,12 @@
       - p5-xml-xpath
       - p5-xml-simple
 
-- name: add packages moved to main repository (MacOSX11+)
-  set_fact:
-    macports_pkg_list:
-      - '{{ macports_pkg_list }}'
-      - subversion
-  when: ansible_distribution_major_version|int >= 11
-
-- name: add packages moved to main repository (MacOSX12+)
-  set_fact:
-    macports_pkg_list:
-      - '{{ macports_pkg_list }}'
-      - gmake
-      - libtool
-  when: ansible_distribution_major_version|int >= 12
-
 - name: packages from ports
   set_fact:
     macports_pkg_list:
       - '{{ macports_pkg_list }}'
       - lame
       - gnutls
-
-- name: add packages from ports (MacOSX 10 and earlier)
-  set_fact:
-    macports_pkg_list:
-      - '{{ macports_pkg_list }}'
-      - subversion
-  when: ansible_distribution_major_version|int < 11
 
 - name: add packages from ports (MacOSX 11 and earlier)
   set_fact:
@@ -123,6 +101,8 @@
 
 - name: install packages
   become: yes
+  become_user: root
+  become_method: sudo
   macports:
     name:
       '{{ lookup("flattened", macports_pkg_list) }}'
@@ -131,6 +111,8 @@
 
 - name: select the installed version of python and pip
   become: yes
+  become_user: root
+  become_method: sudo
   command: 'port select --set {{ item.group }} {{ item.version }}'
   loop:
     - { group: 'python',  version: 'python38' }
@@ -140,7 +122,6 @@
   tags: port_select
 
 - name: install mysqlclient (for mysqldb)
-  become: no
   pip:
       name: mysqlclient
 

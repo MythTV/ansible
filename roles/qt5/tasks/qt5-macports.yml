@@ -14,6 +14,9 @@
       '{{ lookup("flattened", macports_pkg_list) }}'
 
 - name: install port qt5 packages
+  become: yes
+  become_user: root
+  become_method: sudo
   macports:
     name:
       '{{ lookup("flattened", macports_pkg_list) }}'
