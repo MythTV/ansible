@@ -1,4 +1,6 @@
-### This is mostly a copy of the freebsd role and largely untested. ###
+# roles/mythtv-macports/tasks/main.yml
+
+---
 
 - name: create a list of compilers and build essentials
   set_fact:
@@ -43,6 +45,9 @@
       - minizip
       - apache-ant
       - hdhomerun
+      - libX11
+      - liberation-fonts
+      - dejavu-fonts
 
 - name: add python essentials
   set_fact:
@@ -83,18 +88,12 @@
   set_fact:
     macports_pkg_list:
       - '{{ macports_pkg_list }}'
+      - gmake
+      - libtool
       - lame
       - gnutls
 
-- name: add packages from ports (MacOSX 11 and earlier)
-  set_fact:
-    macports_pkg_list:
-      - '{{ macports_pkg_list }}'
-      - gmake
-      - libtool
-  when: ansible_distribution_major_version|int < 12
-
-- name: final package list
+- name: print final list of ports
   debug:
     msg:
       '{{ lookup("flattened", macports_pkg_list) }}'
@@ -107,7 +106,6 @@
     name:
       '{{ lookup("flattened", macports_pkg_list) }}'
     update_cache: yes
-  when: ansible_distribution == "MacOSX" and ansible_pkg_mgr == "macports" and ansible_distribution_major_version|int == 10
 
 - name: select the installed version of python and pip
   become: yes

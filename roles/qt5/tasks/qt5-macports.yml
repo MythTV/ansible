@@ -8,7 +8,7 @@
   tags:
     - qt5
 
-- name: final port qt5 package list
+- name: print final qt5 list of ports
   debug:
     msg:
       '{{ lookup("flattened", macports_pkg_list) }}'
