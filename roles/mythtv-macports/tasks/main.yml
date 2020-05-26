@@ -52,7 +52,7 @@
 - name: develop a Python package version suffix
   set_fact:
     python_package_suffix:
-      '{{ ansible_python.version.major }}{{ ansible_python.version.minor }} }'
+      '{{ ansible_python.version.major }}{{ ansible_python.version.minor }}'
 
 - name: add python essentials
   set_fact:
