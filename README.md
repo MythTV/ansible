@@ -35,17 +35,17 @@ Alternate hosts files are provided for archlinux, fedora 30 and freebsd users, a
 platforms have different python requirements. Please replace hosts, with the
 appropriate filename.
 
-MacOSX Users:
+For a normal development system:
+```
+sudo ansible-playbook -i hosts qt5.yml
+```
+
+MacOSX Users (replace python3.8 with the currently available of Python):
 ```
 sudo port -v selfupdate
 sudo port upgrade outdated
 sudo port install py38-ansible
-ansible-playbook-3.8 --ask-become-pass -i hosts.macports qt5.yml
-```
-
-For a normal development system:
-```
-sudo ansible-playbook -i hosts qt5.yml
+ansible-playbook-3.8 --extra-vars=ansible_python_interpreter=/opt/local/bin/python3.8 qt5.yml --ask-become-pass
 ```
 
 For a buildslave system:

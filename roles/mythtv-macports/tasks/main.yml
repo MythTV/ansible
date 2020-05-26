@@ -49,21 +49,26 @@
       - liberation-fonts
       - dejavu-fonts
 
+- name: develop a Python package version suffix
+  set_fact:
+    python_package_suffix:
+      '{{ ansible_python.version.major }}{{ ansible_python.version.minor }} }'
+
 - name: add python essentials
   set_fact:
     macports_pkg_list:
       - '{{ macports_pkg_list }}'
-      - python38
-      - py38-future
-      - py38-requests
-      - py38-requests-cache
-      - py38-lxml
-      - py38-oauthlib
-      - py38-curl
-      - py38-simplejson
-      - py38-wheel
-      - py38-pip
-      - py38-pymysql
+      - python{{ python_package_suffix }}
+      - py{{ python_package_suffix }}-future
+      - py{{ python_package_suffix }}-requests
+      - py{{ python_package_suffix }}-requests-cache
+      - py{{ python_package_suffix }}-lxml
+      - py{{ python_package_suffix }}-oauthlib
+      - py{{ python_package_suffix }}-curl
+      - py{{ python_package_suffix }}-simplejson
+      - py{{ python_package_suffix }}-wheel
+      - py{{ python_package_suffix }}-pip
+      - py{{ python_package_suffix }}-pymysql
 
 - name: add perl essentials
   set_fact:
@@ -113,14 +118,15 @@
   become_method: sudo
   command: 'port select --set {{ item.group }} {{ item.version }}'
   loop:
-    - { group: 'python',  version: 'python38' }
-    - { group: 'python3', version: 'python38' }
-    - { group: 'pip',     version: 'pip38'    }
-    - { group: 'pip3',    version: 'pip38'    }
-  tags: port_select
+    - { group: python,  version: 'python{{ python_package_suffix }}' }
+    - { group: python3, version: 'python{{ python_package_suffix }}' }
+    - { group: pip,     version: 'pip{{ python_package_suffix }}' }
+    - { group: pip3,    version: 'pip{{ python_package_suffix }}' }
 
 - name: install mysqlclient (for mysqldb)
   pip:
       name: mysqlclient
+      executable: pip3
+  tags: pip
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
