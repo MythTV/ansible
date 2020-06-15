@@ -5,6 +5,11 @@
       - graphviz
       - rsync
 
+- name: final package list
+  debug:
+    msg:
+      '{{ lookup("flattened", doxygen_pkg_lst) }}'
+
 - name: install packages (Fedora)
   dnf:
     name:

@@ -18,6 +18,11 @@
       - libswitch-perl
   when:    ansible_distribution == "Ubuntu"
 
+- name: final package list
+  debug:
+    msg:
+      '{{ lookup("flattened", cppcheck_pkg_lst) }}'
+
 - name: install packages (Fedora)
   dnf:
     name:
