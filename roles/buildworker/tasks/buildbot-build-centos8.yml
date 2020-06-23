@@ -31,12 +31,12 @@
       - mercurial
       - subversion
 
-- name: final dnf qt5 package list
+- name: final dnf buildbot build depends package list
   debug:
     msg:
       '{{ lookup("flattened", dnf_pkg_lst) }}'
 
-- name: install dnf qt5 packages
+- name: install dnf buildbot build depends packages
   dnf:
     name:
       '{{ lookup("flattened", dnf_pkg_lst ) }}'
