@@ -10,4 +10,4 @@
     - { role: mythtv-pacman, when:  ansible_pkg_mgr == "pacman" }
     - { role: mythtv-suse, when: ansible_pkg_mgr == "zypper" }
     - role: qt5
-    - role: buildslave
+    - role: buildworker

@@ -1,4 +1,4 @@
-# roles/buildslave/tasks/main.yml
+# roles/buildworker/tasks/main.yml
 
 - name: install python twisted - Fedora
   yum:
@@ -16,7 +16,7 @@
       - python-twisted-words
     state:
       present
-  when: ansible_distribution == "CentOS"
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 7
 
 - name: ensure cron installed - Fedora
   yum:
@@ -27,29 +27,32 @@
   when: ansible_distribution == "Fedora"
 
 # no buildbot in centos7 or epel7...
-- name: install buildslave (rpm)
+- name: install buildworker (rpm)
   yum:
     name:
-      - buildbot-slave
+      - buildbot-worker
     state:
       present
   when: ansible_distribution == "Fedora"
 
-- include: buildbot-build.yml
-  when: ansible_distribution == "CentOS"
+- include: buildbot-build-centos7.yml
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 7
 
-- name: install buildslave (deb)
+- include: buildbot-build-centos8.yml
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 8
+
+- name: install buildworker (deb)
   apt:
     name:
-      - buildbot-slave
+      - buildbot-worker
     state:
         present
   when: ansible_pkg_mgr == "apt"
 
-- name: install buildslave (pacman)
+- name: install buildworker (pacman)
   pacman:
     name:
-      - buildbot-slave
+      - buildbot-worker
     state:
       present
   when: ansible_pkg_mgr == "pacman"
@@ -78,21 +81,21 @@
       present
   when: ansible_distribution == "FreeBSD"
 
-- name: create buildslave user
-  user: name=buildslave state=present generate_ssh_key=yes
+- name: create buildworker user
+  user: name=buildworker state=present generate_ssh_key=yes
 
 - name: setup ccache max cache size
-  command: su - buildslave -c 'ccache -M 10G'
+  command: su - buildworker -c 'ccache -M 10G'
 
-- name: create buildslave ~/bin
-  command: su - buildslave -c 'test -d ~/bin || mkdir ~/bin'
+- name: create buildworker ~/bin
+  command: su - buildworker -c 'test -d ~/bin || mkdir ~/bin'
 
-- name: create buildslave ~/bin
-  command: su - buildslave -c 'test -d ~/mythtv || mkdir ~/mythtv'
+- name: create buildworker ~/bin
+  command: su - buildworker -c 'test -d ~/mythtv || mkdir ~/mythtv'
 
-- name: install slave startup script
-  copy: src={{ ansible_distribution }}-start-buildslave.sh dest=~buildslave/bin/start-buildslave.sh mode=0755 owner=buildslave
+- name: install worker startup script
+  copy: src={{ ansible_distribution }}-start-buildworker.sh dest=~buildworker/bin/start-buildworker.sh mode=0755 owner=buildworker
 
-- cron: name="autostart slave at reboot" user=buildslave special_time=reboot job=$HOME/bin/start-buildslave.sh
+- cron: name="autostart worker at reboot" user=buildworker special_time=reboot job=$HOME/bin/start-buildworker.sh
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

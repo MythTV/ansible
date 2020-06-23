@@ -35,6 +35,8 @@
       - cvs
       - mercurial
       - subversion
+      # Need rpmbuild to actually build the package
+      - rpm-build
     state:
       present
   when: buildbot.stdout == "missing" and build_buildbot.stdout == "missing"

@@ -1,5 +1,5 @@
 ## Ansible Playbooks for MythTV
-These are ansible playbooks for setting up MythTV buildslaves.
+These are ansible playbooks for setting up MythTV buildworkers.
 They can also be used to install all the necessary packages if
 you wish to build MythTV from source.
 
@@ -48,9 +48,9 @@ sudo port install py38-ansible
 ansible-playbook-3.8 --extra-vars=ansible_python_interpreter=/opt/local/bin/python3.8 qt5.yml --ask-become-pass
 ```
 
-For a buildslave system:
+For a buildworker system:
 ```
-sudo ansible-playbook -i hosts buildslave.yml
+sudo ansible-playbook -i hosts buildworker.yml
 ```
 
 ### Other Platforms
