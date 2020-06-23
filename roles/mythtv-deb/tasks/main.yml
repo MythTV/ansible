@@ -128,7 +128,6 @@
       - libiec61883-dev
       - libpulse-dev
       - libfftw3-dev
-      - libcrystalhd-dev
       - libssl-dev
       - libsystemd-dev
       - libbluray-dev
@@ -136,6 +135,16 @@
   when:
     - ansible_distribution == "Ubuntu"
     - (ansible_lsb.major_release|int >= 16)
+
+- name: add mythtv extra build libraries (Ubuntu 16.04 and later, not aarch64)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libcrystalhd-dev
+  when:
+    - ansible_distribution == "Ubuntu"
+    - (ansible_lsb.major_release|int >= 16)
+    - ansible_architecture != "aarch64"
 
 - name: add mythtv mysql client libraries (Ubuntu)
   set_fact:
