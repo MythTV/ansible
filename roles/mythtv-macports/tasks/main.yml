@@ -116,7 +116,7 @@
   become_user: root
   become_method: sudo
   command: 'port select --set {{ item.group }} {{ item.version }}'
-  loop:
+  with_list:
     - { group: python,  version: 'python{{ python_package_suffix }}' }
     - { group: python3, version: 'python{{ python_package_suffix }}' }
     - { group: pip,     version: 'pip{{ python_package_suffix }}' }
