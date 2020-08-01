@@ -44,7 +44,7 @@
       - libasound2-dev
       - libegl1-mesa-dev
       # Added OpenGL ES
-      #- libgles2-mesa-dev
+      # - libgles2-mesa-dev
       - liblzo2-dev
       - libhdhomerun-dev
       - libsamplerate0-dev
