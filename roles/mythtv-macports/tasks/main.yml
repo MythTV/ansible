@@ -68,6 +68,7 @@
       - py{{ python_package_suffix }}-simplejson
       - py{{ python_package_suffix }}-wheel
       - py{{ python_package_suffix }}-pymysql
+      - py{{ python_package_suffix }}-pip
 
 - name: add perl essentials
   set_fact:
