@@ -2,6 +2,24 @@
 
 ---
 
+- name: specify a mariadb/mysql version to install
+  set_fact: 
+    database_version=mariadb-10.2
+  when:
+    database_version is undefined
+- name: check if this is a mariadb based install
+  set_fact:
+    database_name=mariadb
+  when: database_version is search("mariadb")
+- name: check if this is a mysql based install
+  set_fact:
+    database_name=mysql
+  when: database_version is search("mysql")
+
+- name: setup macports mariadb/mysql variant variables
+  set_fact:
+    mysql_variant="{{ database_version | regex_replace('-') | regex_replace('\.', '_') }}"
+
 - name: create a list of compilers and build essentials
   set_fact:
     macports_pkg_list:
@@ -48,6 +66,7 @@
       - libX11
       - liberation-fonts
       - dejavu-fonts
+      - '{{ database_version }}'
 
 - name: develop a Python package version suffix
   set_fact:
@@ -78,7 +97,6 @@
       - p5-date-manip
       - p5-datetime-format-iso8601
       - p5-dbi
-      - p5-dbd-mysql
       - p5-image-size
       - p5-io-socket-inet6
       - p5-json
@@ -112,27 +130,37 @@
       '{{ lookup("flattened", macports_pkg_list) }}'
     update_cache: yes
 
-- name: select the installed version of python
+- name: install p5-dbd-* for previously specified mariadb/mysql version
+  become: yes
+  become_user: root
+  become_method: sudo
+  macports:
+    name: 'p5-dbd-{{ database_name }}'
+    variant: +{{ mysql_variant }}
+
+- name: select the installed version of mariadb/mysql and python
   become: yes
   become_user: root
   become_method: sudo
   command: 'port select --set {{ item.group }} {{ item.version }}'
   with_list:
+    - { group: mysql,  version: '{{ database_version }}' }
     - { group: python,  version: 'python{{ python_package_suffix }}' }
     - { group: python3, version: 'python{{ python_package_suffix }}' }
     - { group: pip,     version: 'pip{{ python_package_suffix }}' }
     - { group: pip3,    version: 'pip{{ python_package_suffix }}' }
 
-- name: install mysqlclient (for mysqldb)
+- name: install py-mysqlclient (for mariadb/mysqldb)
   become: yes
   become_user: root
   become_method: sudo
   block:
-    - name: install mysqlclient via MacPorts (for mysqldb)
+    - name: install py-mysqlclient via MacPorts (for mariadb/mysqldb)
       macports:
         name: py{{ python_package_suffix }}-mysqlclient
+        variant: +{{ mysql_variant }}
   rescue:
-    - name: install mysqlclient via pip (for mysqldb)
+    - name: install py-mysqlclient via pip (for mariadb/mysqldb)
       pip:
         name: mysqlclient
         executable: pip3

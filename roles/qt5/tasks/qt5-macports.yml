@@ -1,10 +1,13 @@
+# parse out database name and major/minor version
+- name: specify mysql/mariadb database version to compile against
+  set_fact:  qt_mysql_variant="{{ database_version | regex_replace('-') | regex_replace('\.', '_') }}"
+
 - name: create list of qt5 libraries
   set_fact:
     macports_pkg_list:
       - qt5
       - qt5-qtwebkit
       - qt5-qtscript
-      - qt5-mysql-plugin
   tags:
     - qt5
 
@@ -21,6 +24,16 @@
     name:
       '{{ lookup("flattened", macports_pkg_list) }}'
     update_cache: yes
+  tags:
+    - qt5
+
+- name: install qt5-mysql-plugin for previously specified mariadb/mysql version
+  become: yes
+  become_user: root
+  become_method: sudo
+  macports:
+    name: qt5-mysql-plugin
+    variant: +{{ qt_mysql_variant }}
   tags:
     - qt5
 

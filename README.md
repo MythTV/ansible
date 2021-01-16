@@ -48,6 +48,11 @@ sudo port install py38-ansible
 ansible-playbook-3.8 --extra-vars=ansible_python_interpreter=/opt/local/bin/python3.8 qt5.yml --ask-become-pass
 ```
 
+MacOSX Users (optionally also specify a databse version as follows):
+```
+ansible-playbook-3.8 --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.8 database_version=mariadb-10.2"  qt5.yml --ask-become-pass
+```
+
 For a buildworker system:
 ```
 sudo ansible-playbook -i hosts buildworker.yml
