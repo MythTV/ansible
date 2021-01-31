@@ -1,0 +1,36 @@
+---
+
+extends: default
+
+rules:
+
+  # For braces, colons and commas, allow more spaces for readability
+  braces:
+    level: warning
+    max-spaces-inside: 8
+    min-spaces-inside: 1
+
+  colons:
+    level: warning
+    max-spaces-after: 16
+    max-spaces-before: 0
+
+  commas:
+    level: warning
+    max-spaces-after: 16
+    max-spaces-before: 0
+
+  # For now, ignore missing --- lines
+  document-start: disable
+
+  # Just warn for long lines
+  line-length:
+    level: warning
+    max: 360
+
+  # Ansible likes yes/no, so don't whine about them
+  truthy:
+    allowed-values: ['true', 'false', 'yes', 'no']
+
+# yamllint disable rule:line-length
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
