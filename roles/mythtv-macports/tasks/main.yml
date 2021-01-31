@@ -3,7 +3,7 @@
 ---
 
 - name: specify a mariadb/mysql version to install
-  set_fact: 
+  set_fact:
     database_version=mariadb-10.2
   when:
     database_version is undefined
@@ -130,7 +130,7 @@
       '{{ lookup("flattened", macports_pkg_list) }}'
     update_cache: yes
 
-# note p5-dbd-mysql does exist, but has issues installing on some systems, 
+# note p5-dbd-mysql does exist, but has issues installing on some systems,
 # p5-dbd-mariab works with mysql and has more recently been updated
 - name: install p5-dbd-mariadb for previously specified mariadb/mysql version
   become: yes
