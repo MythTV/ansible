@@ -130,14 +130,12 @@
       '{{ lookup("flattened", macports_pkg_list) }}'
     update_cache: yes
 
-# note p5-dbd-mysql does exist, but has issues installing on some systems,
-# p5-dbd-mariab works with mysql and has more recently been updated
-- name: install p5-dbd-mariadb for previously specified mariadb/mysql version
+- name: install p5-dbd-mysql for previously specified mariadb/mysql version
   become: yes
   become_user: root
   become_method: sudo
   macports:
-    name: 'p5-dbd-mariadb'
+    name: 'p5-dbd-mysql'
     variant: +{{ mysql_variant }}
 
 - name: select the installed version of mariadb/mysql and python
