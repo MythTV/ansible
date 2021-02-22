@@ -63,7 +63,7 @@
       - minizip
       - apache-ant
       - hdhomerun
-      - libX11
+      - xorg-libX11
       - liberation-fonts
       - dejavu-fonts
       - '{{ database_version }}'
