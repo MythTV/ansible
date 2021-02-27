@@ -1,6 +1,6 @@
 - name: check to see if qtwebkit is requested
   set_fact:
-    install_qtwebkit=true
+    install_qtwebkit=false
   when:
     install_qtwebkit is undefined
 
@@ -23,9 +23,9 @@
     macports_pkg_list:
       - '{{ macports_pkg_list }}'
       - qt5-qtwebkit
+  when: install_qtwebkit == "true"
   tags:
     - qt5
-  when: install_qtwebkit
 
 - name: print final qt5 list of ports
   debug:
