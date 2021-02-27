@@ -39,7 +39,6 @@
       - libbluray
       - lzo2
       - libsamplerate
-      - libcec
 
 - name: add optional libraries
   set_fact:
