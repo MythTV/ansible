@@ -1,4 +1,11 @@
+- name: check to see if qtwebkit is requested
+  set_fact:
+    install_qtwebkit=true
+  when:
+    install_qtwebkit is undefined
+
 # parse out database name and major/minor version
+# database_version is set in the macports main.yml
 - name: specify mysql/mariadb database version to compile against
   set_fact:  qt_mysql_variant="{{ database_version | regex_replace('-') | regex_replace('\.', '_') }}"
 
@@ -6,10 +13,19 @@
   set_fact:
     macports_pkg_list:
       - qt5
-      - qt5-qtwebkit
       - qt5-qtscript
   tags:
     - qt5
+
+# optionally install qtwebkit
+- name: Check it qtwebkit was requested
+  set_fact:
+    macports_pkg_list:
+      - '{{ macports_pkg_list }}'
+      - qt5-qtwebkit
+  tags:
+    - qt5
+  when: install_qtwebkit
 
 - name: print final qt5 list of ports
   debug:
