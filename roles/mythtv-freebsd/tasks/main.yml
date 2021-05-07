@@ -117,17 +117,18 @@
     pkgng_pkg_lst:
       - '{{ pkgng_pkg_lst }}'
       - v4l_compat
+      - libv4l
+      - libva
+      - libva-glx
+      - libvdpau
+      - libdrm
+      - gnutls
   when: ansible_distribution_major_version|int >= 13
 
 - name: packages from ports
   set_fact:
     ports_pkg_lst:
       - audio/lame
-      - multimedia/libvdpau
-      - multimedia/libva
-      - multimedia/libv4l
-      - graphics/libdrm
-      - security/gnutls
 
 - name: add packages from ports (freebsd 10 and earlier)
   set_fact:
@@ -149,6 +150,11 @@
     ports_pkg_lst:
       - '{{ ports_pkg_lst }}'
       - multimedia/v4l_compat
+      - multimedia/libv4l
+      - multimedia/libva
+      - multimedia/libvdpau
+      - graphics/libdrm
+      - security/gnutls
   when: ansible_distribution_major_version|int <= 12
 
 - name: final package list
