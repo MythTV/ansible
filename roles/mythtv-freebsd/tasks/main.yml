@@ -55,7 +55,7 @@
       - pulseaudio
       - minizip
 
-- name: add python essentials
+- name: add python essentials (FreeBSD 12 or earlier)
   set_fact:
     pkgng_pkg_lst:
       - '{{ pkgng_pkg_lst }}'
@@ -64,6 +64,20 @@
       - py27-MySQLdb
       - py27-oauth
       - py27-urlgrabber
+  when: ansible_distribution_major_version|int <= 12
+
+- name: add python essentials (FreeBSD 13 or later)
+  set_fact:
+    pkgng_pkg_lst:
+      - '{{ pkgng_pkg_lst }}'
+      - python
+      - py37-lxml
+      - py37-pymysql
+      - py37-oauth
+      - py37-urlgrabber
+      - py37-requests
+      - py37-simplejson
+  when: ansible_distribution_major_version|int >= 13
 
 - name: add perl essentials
   set_fact:
@@ -98,11 +112,17 @@
       - libtool
   when: ansible_distribution_major_version|int >= 12
 
+- name: add packages moved to main repository (freebsd13+)
+  set_fact:
+    pkgng_pkg_lst:
+      - '{{ pkgng_pkg_lst }}'
+      - v4l_compat
+  when: ansible_distribution_major_version|int >= 13
+
 - name: packages from ports
   set_fact:
     ports_pkg_lst:
       - audio/lame
-      - multimedia/v4l_compat
       - multimedia/libvdpau
       - multimedia/libva
       - multimedia/libv4l
@@ -114,7 +134,7 @@
     ports_pkg_lst:
       - '{{ ports_pkg_lst }}'
       - devel/subversion
-  when: ansible_distribution_major_version|int < 11
+  when: ansible_distribution_major_version|int <= 10
 
 - name: add packages from ports (freebsd 11 and earlier)
   set_fact:
@@ -122,7 +142,14 @@
       - '{{ ports_pkg_lst }}'
       - gmake
       - libtool
-  when: ansible_distribution_major_version|int < 12
+  when: ansible_distribution_major_version|int <= 11
+
+- name: add packages from ports (freebsd 12 and earlier)
+  set_fact:
+    ports_pkg_lst:
+      - '{{ ports_pkg_lst }}'
+      - multimedia/v4l_compat
+  when: ansible_distribution_major_version|int <= 12
 
 - name: final package list
   debug:

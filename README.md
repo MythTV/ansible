@@ -23,7 +23,7 @@ Archlinux |  pacman -S ansible python2
 Centos | yum install ansible
 Debian (and derivatives) | apt-get install ansible
 Fedora | dnf install ansible
-FreeBSD | pkg install py27-ansible
+FreeBSD | pkg install py37-ansible (FreeBSD 13+), pkg install py27-ansible (FreeBSD <= 12)
 MacOSX | See MacOSX Users below
 OpenSuse |  zypper install ansible
 
