@@ -7,10 +7,11 @@
   command: dnf install -y --nogpgcheck {{ epel_rpm }}
   when: epel.stdout == "missing"
 
-- name: check if CentOS PowerTools repo enabled
-  shell:            /usr/bin/dnf -q repolist --enabled PowerTools && echo disabled || echo enabled
-  register:         powertools
 
-- name: enable CentOS PowerTools repository for epel
-  command: dnf config-manager --set-enabled PowerTools
-  when: powertools.stdout == "disabled"
+- name: enable CentOS PowerTools repository
+  lineinfile:
+    path: /etc/yum.repos.d/CentOS-Linux-PowerTools.repo
+    regexp: '^enabled=0'
+    line: "enabled=1"
+    state: present
+
