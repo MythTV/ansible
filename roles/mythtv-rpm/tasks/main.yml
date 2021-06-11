@@ -61,6 +61,7 @@
       # - x264-devel
       # - x265-devel
       - libvpx-devel
+      - gnutls-devel
 
 - name: add mythtv essential python modules
   set_fact:
