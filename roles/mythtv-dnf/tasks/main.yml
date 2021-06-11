@@ -84,6 +84,7 @@
       - x265-devel
       - libvpx-devel
       - gnutls-devel
+      - libdav1d-devel
 
 - name: add optional build libraries - Centos 8 only
   set_fact:
