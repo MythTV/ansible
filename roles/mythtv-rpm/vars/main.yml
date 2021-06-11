@@ -2,6 +2,8 @@
 
 epel_rpm: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
 
+rpmfusion_el_rpm: "https://download1.rpmfusion.org/free/el/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+
 rpmfusion_rpm: "http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
 
 lame_src: " http://download1.rpmfusion.org/free/el/updates/6/SRPMS/lame-3.99.5-1.el6.src.rpm"
