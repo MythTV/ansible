@@ -76,6 +76,28 @@
       - python-oauth
   when: ansible_distribution == "Fedora"
 
+- name: add mythtv essential python modules - CentOS only
+  set_fact:
+    yum_pkg_lst:
+      - '{{ yum_pkg_lst }}'
+      - python-future
+      - python-imaging
+      - python-lxml
+      - python-oauth
+      - python-pycurl
+      - python-requests
+      - python-simplejson
+      - python-urlgrabber
+      - MySQL-python
+      - python3-future
+      - python3-lxml
+      - python3-pycurl
+      - python36-imaging
+      - python36-mysql
+      - python36-requests
+      - python36-simplejson
+  when: ansible_distribution == "CentOS"
+
 - name: add mythtv essential perl modules
   set_fact:
     yum_pkg_lst:
