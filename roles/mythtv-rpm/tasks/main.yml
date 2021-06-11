@@ -6,6 +6,9 @@
 - include: setup-rpmfusion.yml
   when:    ansible_distribution == "Fedora" or ansible_distribution == "CentOS"
 
+- include: setup-scl.yml
+  when:    ansible_distribution == "CentOS"
+
 - name: create a list of compilers and build essentials
   set_fact:
     yum_pkg_lst:
@@ -128,6 +131,13 @@
       - libcdio-paranoia-devel
       - mysql-devel
       - minizip-devel
+
+- name: add devtoolset-9 for CentOS
+  set_fact:
+    yum_pkg_lst:
+      - '{{ yum_pkg_lst }}'
+      - devtoolset-9
+  when: ansible_distribution == "CentOS"
 
 - name: final package list
   debug:
