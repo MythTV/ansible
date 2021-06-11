@@ -7,12 +7,12 @@
   when:    ansible_distribution == "Fedora" or ansible_distribution == "CentOS"
 
 - name: enable Centos 8 Devel repo
-  when:    ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 8
   lineinfile:
-    path:   /etc/yum.repos.d/CentOS-Devel.repo
+    path:   /etc/yum.repos.d/CentOS-Linux-Devel.repo
     regexp: '^enabled=0'
-    line:   enabled=1
+    line:   "enabled=1"
     state:  present
+  when:    ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 8
 
 - name: create dnf compilers and build essentials list
   set_fact:
