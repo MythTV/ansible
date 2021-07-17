@@ -39,6 +39,7 @@
       - libbluray
       - lzo2
       - libsamplerate
+      - libzip
 
 - name: add optional libraries
   set_fact:
