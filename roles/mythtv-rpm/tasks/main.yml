@@ -65,6 +65,7 @@
       - libvpx-devel
       - gnutls-devel
       - libdav1d-devel
+      - libzip-devel
 
 - name: add mythtv essential python modules
   set_fact:

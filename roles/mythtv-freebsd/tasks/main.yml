@@ -30,6 +30,7 @@
       - libhdhomerun
       - libsamplerate
       - libcec
+      - libzip
       # for libXNVCtrl
       - nvidia-settings
 

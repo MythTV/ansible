@@ -49,6 +49,7 @@
       - libhdhomerun-dev
       - libsamplerate0-dev
       - libxnvctrl-dev
+      - libzip-dev
 
 - name: add mythtv extra build libraries
   set_fact:
