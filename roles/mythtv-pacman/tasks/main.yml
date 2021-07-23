@@ -28,6 +28,7 @@
       - libxml2
       - taglib
       - exiv2
+      - libzip
       - libhdhomerun
 
 - name: add mythtv optional build libraries
