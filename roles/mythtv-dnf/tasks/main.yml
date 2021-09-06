@@ -1,18 +1,22 @@
 # roles/mythtv-rpm/tasks/main.yml
 
+- name: enable PowerTools repository
+  command:
+    cmd: dnf config-manager --enable powertools
+    warn: false
+  when: (ansible_distribution == "CentOS" and ansible_distribution_major_version|int >= 8) or ansible_distribution == "Rocky"
+
+- name: enable Devel repository
+  command:
+    cmd: dnf config-manager --enable devel
+    warn: false
+  when: (ansible_distribution == "CentOS" and ansible_distribution_major_version|int >= 8) or ansible_distribution == "Rocky"
+
 - include: setup-epel.yml
-  when:    ansible_distribution == "CentOS"
+  when: ansible_distribution == "CentOS" or ansible_distribution == "Rocky"
 
 - include: setup-rpmfusion.yml
-  when:    ansible_distribution == "Fedora" or ansible_distribution == "CentOS"
-
-- name: enable Centos 8 Devel repo
-  lineinfile:
-    path:   /etc/yum.repos.d/CentOS-Linux-Devel.repo
-    regexp: '^enabled=0'
-    line:   "enabled=1"
-    state:  present
-  when:    ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 8
+  when:    ansible_distribution == "Fedora" or ansible_distribution == "CentOS" or ansible_distribution == "Rocky"
 
 - name: create dnf compilers and build essentials list
   set_fact:
@@ -49,6 +53,8 @@
 
 # Check if user has negativo's nvidia repository enabled
 - shell: /usr/bin/dnf repoinfo -q fedora-nvidia
+  args:
+    warn: false
   register: fedora_nvidia_repo
 
 - name: add nvidia build libraries (rpmfusion)

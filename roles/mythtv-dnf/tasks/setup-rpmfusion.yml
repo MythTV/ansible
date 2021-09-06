@@ -1,19 +1,35 @@
 # roles/mythtv-rpm/tasks/setup-rpmfusion.yml
 
 - shell:            /bin/rpm -q --quiet rpmfusion-free-release && echo installed || echo missing
+  args:
+    warn:           false
   register:         rpmfusion
 
-- shell:            /usr/bin/grep -qi Rawhide /etc/fedora-release && echo rawhide || echo released
+- shell:            /usr/bin/grep -qi Rawhide /etc/fedora-release && echo rawhide || echo release
   register:         rawhide
 
-- name: setup RPMfusion repository (Fedora rawhide)
-  command: dnf install -y --nogpgcheck {{ rpmfusion_rawhide_rpm }}
-  when: ansible_distribution == "Fedora" and rpmfusion.stdout == "missing" and rawhide.stdout =="rawhide"
+- name: setup RPMFusion repository (Fedora rawhide)
+  command:
+    cmd: dnf install -y --nogpgcheck {{ rpmfusion_rawhide_rpm }}
+    warn: false
+  when:
+    - ansible_distribution == "Fedora"
+    - rpmfusion.stdout == "missing"
+    - rawhide.stdout == "rawhide"
 
-- name: setup RPMfusion repository (Fedora release versions)
-  command: dnf install -y --nogpgcheck {{ rpmfusion_rpm }}
-  when: ansible_distribution == "Fedora" and rpmfusion.stdout == "missing" and not rawhide.stdout == "rawhide"
+- name: setup RPMFusion repository (Fedora release versions)
+  command:
+    cmd: dnf install -y --nogpgcheck {{ rpmfusion_rpm }}
+    warn: false
+  when:
+    - ansible_distribution == "Fedora"
+    - rpmfusion.stdout == "missing"
+    - rawhide.stdout == "release"
 
 - name: setup RPMFusion repository (CentOS release versions)
-  command: dnf install -y --nogpgcheck {{ rpmfusion_el_rpm }}
-  when: ansible_distribution == "CentOS" and rpmfusion.stdout == "missing"
+  command:
+    cmd: dnf install -y --nogpgcheck {{ rpmfusion_el_rpm }}
+    warn: false
+  when:
+    - ansible_distribution == "CentOS" or ansible_distribution == "Rocky"
+    - rpmfusion.stdout == "missing"
