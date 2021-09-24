@@ -155,7 +155,8 @@
       - python3-requests-cache
       - python3-simplejson
   when: (ansible_distribution == "Fedora" and ansible_distribution_version|int >= 30) or
-        (ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 8)
+        (ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 8) or
+        (ansible_distribution == "Rocky")
 
 - name: add mythtv essential perl modules
   set_fact:
