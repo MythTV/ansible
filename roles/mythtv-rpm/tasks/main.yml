@@ -39,6 +39,7 @@
       - hdhomerun-devel
       - libsamplerate-devel
       - libXNVCtrl-devel
+      - soundtouch-devel
       # packages in repo for fedora, and in epel for centos7/rhel7
       - lame-devel
 

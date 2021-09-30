@@ -49,6 +49,7 @@
       - libsamplerate-devel
       - libzip-devel
       - expat-devel
+      - soundtouch-devel
       # packages in repo for fedora, and in epel for centos7/rhel7
       - lame-devel
 

@@ -50,6 +50,7 @@
       - libsamplerate0-dev
       - libxnvctrl-dev
       - libzip-dev
+      - libsoundtouch-dev
 
 - name: add mythtv extra build libraries
   set_fact:
