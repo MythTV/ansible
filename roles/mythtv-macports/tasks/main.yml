@@ -66,6 +66,7 @@
       - xorg-libX11
       - liberation-fonts
       - dejavu-fonts
+      - soundtouch
       - '{{ database_version }}'
 
 - name: develop a Python package version suffix
