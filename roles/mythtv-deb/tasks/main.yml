@@ -152,6 +152,15 @@
     - ansible_distribution == "Ubuntu"
     - (ansible_lsb.major_release|int >= 16)
 
+- name: bluray for Mint v20+
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libbluray-dev
+  when:
+    - ansible_distribution == "Linux Mint"
+    - (ansible_lsb.major_release|int >= 20)
+
 - name: add mythtv extra build libraries (Ubuntu 16.04 and later, not aarch64)
   set_fact:
     deb_pkg_lst:
@@ -251,6 +260,7 @@
       - python3-oauth
       - python3-pycurl
       - python3-simplejson
+      - python3-setuptools
   when:
     - ansible_distribution == "Ubuntu"
     - (ansible_lsb.major_release|int >= 20 )
@@ -283,7 +293,7 @@
       - python3-simplejson
   when:
     - ansible_distribution == "Debian"
-    - ansible_lsb.release == "testing" # Bookworm
+    - ansible_lsb.release == "testing"  # Bookworm
 
 - name: add mythtv essential perl modules
   set_fact:
