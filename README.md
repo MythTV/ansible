@@ -44,18 +44,18 @@ MacOSX Users (replace python3.8 with the currently available of Python):
 ```
 sudo port -v selfupdate
 sudo port upgrade outdated
-sudo port install py38-ansible
-ansible-playbook-3.8 --extra-vars=ansible_python_interpreter=/opt/local/bin/python3.8 qt5.yml --ask-become-pass
+sudo port install py39-ansible
+ansible-playbook-3.9 --extra-vars=ansible_python_interpreter=/opt/local/bin/python3.9 qt5.yml --ask-become-pass
 ```
 
 MacOSX Users (optionally specify a databse version as follows):
 ```
-ansible-playbook-3.8 --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.8 database_version=mariadb-10.2"  qt5.yml --ask-become-pass
+ansible-playbook-3.9 --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.9 database_version=mariadb-10.5"  qt5.yml --ask-become-pass
 ```
 
 MacOSX Users (optionally do not install qtwebkit as follows):
 ```
-ansible-playbook-3.8 --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.8 install_qtwebkit=false"  qt5.yml --ask-become-pass
+ansible-playbook-3.9 --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.9 install_qtwebkit=false"  qt5.yml --ask-become-pass
 ```
 
 For a buildworker system:
