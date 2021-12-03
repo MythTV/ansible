@@ -114,15 +114,16 @@
     - ansible_distribution == "Debian"
     - ansible_lsb.id != "Raspbian"
     - ansible_distribution_release != "bookworm"
+    - ansible_distribution_major_version|int < 11
 
-- name: add mythtv extra build libraries (Debian Bookwork and later)
+- name: add mythtv extra build libraries (Debian Bookworm and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libcec-dev
   when:
     - ansible_distribution == "Debian"
-    - ansible_distribution_release == "bookworm"
+    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
 # ^^^ this needs updating once bookworm has a major release version
 
 - name: add mythtv extra build libraries (Debian Stretch and later)
@@ -206,7 +207,7 @@
     - ansible_distribution == "Debian"
     - ansible_lsb.major_release|int == 10
 
-- name: add mythtv mysql client libraries (Debian - Bookwork and later)
+- name: add mythtv mysql client libraries (Debian - Bullseye and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -214,7 +215,7 @@
       - libmariadb-dev-compat
   when:
     - ansible_distribution == "Debian"
-    - ansible_lsb.release == "testing"
+    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
 
 - name: add mythtv essential python modules
   set_fact:
@@ -244,9 +245,10 @@
       - python3-oauth
       - python-simplejson
       - python3-simplejson
-  when: (ansible_distribution == "Debian" and (ansible_lsb.major_release|int >= 9) or
-        (ansible_distribution == "Ubuntu" and (ansible_lsb.major_release|int >= 16
-         and ansible_lsb.major_release|int < 20)))
+  when: (ansible_distribution == "Debian" and
+          (ansible_lsb.major_release|int >= 9 and ansible_distribution_major_version|int < 11) or
+        (ansible_distribution == "Ubuntu" and
+          (ansible_lsb.major_release|int >= 16 and ansible_lsb.major_release|int < 20)))
 
 - name: add mythtv essential python modules (Ubuntu 20.04 and later)
   set_fact:
@@ -279,7 +281,7 @@
     - ansible_distribution == "Debian"
     - ansible_lsb.major_release|int == 10
 
-- name: add mythtv essential python modules (Bookworm)
+- name: add mythtv essential python modules (Buster or later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -291,9 +293,10 @@
       - python3-lxml
       - python3-mysqldb
       - python3-simplejson
+      - python3-setuptools
   when:
     - ansible_distribution == "Debian"
-    - ansible_lsb.release == "testing"  # Bookworm
+    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
 
 - name: add mythtv essential perl modules
   set_fact:
