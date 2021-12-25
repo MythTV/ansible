@@ -264,7 +264,7 @@
       - python3-simplejson
       - python3-setuptools
   when:
-    - ansible_distribution == "Ubuntu"
+    - (ansible_distribution == "Ubuntu") or (ansible_distribution == "Linux Mint")
     - (ansible_lsb.major_release|int >= 20 )
 
 - name: add mythtv essential python modules (Buster)
