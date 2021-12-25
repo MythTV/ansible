@@ -159,7 +159,7 @@
       - '{{ deb_pkg_lst }}'
       - libbluray-dev
   when:
-    - ansible_distribution == "Linux Mint"
+    - (ansible_distribution == "Linux Mint" or ansible_distribution == "Pop!_OS")
     - (ansible_lsb.major_release|int >= 20)
 
 - name: add mythtv extra build libraries (Ubuntu 16.04 and later, not aarch64)
