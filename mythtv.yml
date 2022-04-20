@@ -1,0 +1,72 @@
+#!/usr/bin/python3 /home/bill/source/ansible/bin/ansible-playbook
+# ###################### DELETE THE ABOVE #######################
+#!/usr/bin/ansible-playbook
+#
+# MythTV playbook. Assumes ansible-playbook is in /usr/bin to make
+# this executable.:
+#
+#    ./mythtv.yml --inventory=hosts.yml --limit=<host>
+#
+# If not, run it like this (or change the shebang):
+#
+#    ansible-playbook --inventory=hosts.yml --limit=<host> mythtv.yml
+#
+# <host> = one of the names under hosts: in the hosts.yml file. Most
+# will select localhost.
+
+---
+
+- hosts: mythtv_hosts
+
+  roles:
+    - role: common
+
+    - role: mythtv-deb
+      when:
+        - ansible_pkg_mgr == "apt"
+        - not mythtv_tools
+
+    - role: mythtv-rpm
+      when:
+        - ansible_pkg_mgr == "yum"
+        - not mythtv_tools
+
+    - role: mythtv-dnf
+      when:
+        - ansible_pkg_mgr == "dnf"
+        - not mythtv_tools
+
+    - role: mythtv-freebsd
+      when:
+        - ansible_pkg_mgr == "pkgng"
+        - not mythtv_tools
+
+    - role: mythtv-macports
+      when:
+        - ansible_pkg_mgr == "macports"
+        - not mythtv_tools
+
+    - role: mythtv-pacman
+      when:
+        - ansible_pkg_mgr == "pacman"
+        - not mythtv_tools
+
+    - role: mythtv-suse
+      when:
+        - ansible_pkg_mgr == "zypper"
+        - not mythtv_tools
+
+    - role: qt5
+      when:
+        - not mythtv_tools
+
+    - role: buildworker
+      when: mythtv_builders
+
+    - role: cppcheck
+      when: mythtv_tools
+
+    - role: doxygen
+      when: mythtv_tools
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent:

@@ -1,3 +1,0 @@
-localhost	ansible_connection=local
-
-[buildslaves]
