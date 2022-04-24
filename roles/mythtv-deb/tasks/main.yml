@@ -334,6 +334,19 @@
   when: ansible_distribution == "Debian" or
         (ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int >= 16)
 
+- name: drop Ubuntu 22.04 missing packages FOR NOW
+  block:
+    - name: convert the final package list to an un-nested list
+      set_fact:
+        deb_pkg_lst: '{{ lookup("flattened", deb_pkg_lst ).split(",") }}'
+
+    - name: "remove {{ ['libcrystalhd-dev', 'python3-oauth'] }} for Ubuntu v22.04"
+      set_fact:
+        deb_pkg_lst: "{{ deb_pkg_lst | difference(['libcrystalhd-dev', 'python3-oauth']) }}"
+  when:
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_major_version | int == 22
+
 - name: final package list
   debug:
     msg:
