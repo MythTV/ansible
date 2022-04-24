@@ -6,7 +6,7 @@
 # Ansible Collections required for the MythTV tool IFF running ansible_core
 # as opposed to ansible. Type the following to install:
 #
-#    sudo ansible-galaxy collection install -requirements-file=requirements.yml
+#    sudo ansible-galaxy collection install --requirements-file=requirements.yml
 
 ---
 collections:
