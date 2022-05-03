@@ -1,3 +1,5 @@
+---
+
 - include_tasks:  qt5-deb.yml
   when:     ansible_pkg_mgr == "apt"
 

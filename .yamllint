@@ -4,6 +4,12 @@ extends: default
 
 rules:
 
+  comments:
+    ignore-shebangs: true
+    require-starting-space: true
+    # Doesn't work in yamllint 1.26.3, rule added in 1.14.0 (2019-01-14)
+    # and both of the above should be the defaults.
+
   # For braces, colons and commas, allow more spaces for readability
   braces:
     level: warning
@@ -20,17 +26,13 @@ rules:
     max-spaces-after: 16
     max-spaces-before: 0
 
-  # For now, ignore missing --- lines
-  document-start: disable
-
   # Just warn for long lines
   line-length:
     level: warning
-    max: 360
+    max: 200
 
   # Ansible likes yes/no, so don't whine about them
   truthy:
     allowed-values: ['true', 'false', 'yes', 'no']
 
-# yamllint disable rule:line-length
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

@@ -1,5 +1,7 @@
 # roles/buildslave/tasks/buildbot-build.yml
 
+---
+
 - shell:            /bin/rpm -q --quiet python-twisted-mail && echo installed || echo missing
   register:         twisted_mail
 

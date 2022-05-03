@@ -1,5 +1,7 @@
 # roles/mythtv-rpm/tasks/main.yml
 
+---
+
 - name: enable PowerTools repository
   command:
     cmd: dnf config-manager --enable powertools

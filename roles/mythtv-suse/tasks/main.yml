@@ -1,3 +1,5 @@
+---
+
 - name: create a list of compilers and build essentials
   set_fact:
     zypper_pkg_lst:

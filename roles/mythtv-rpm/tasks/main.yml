@@ -1,5 +1,7 @@
 # roles/mythtv-rpm/tasks/main.yml
 
+---
+
 - include_tasks: setup-epel.yml
   when:    ansible_distribution == "CentOS"
 
