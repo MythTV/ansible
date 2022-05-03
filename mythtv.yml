@@ -1,11 +1,11 @@
-#! /usr/bin/env ansible-playbook
+#! /usr/bin/env --split-string=ansible-playbook --inventory=hosts.yml
 #
 # MythTV playbook. Assumes ansible-playbook can be found in $PATH to
 # make this executable:
 #
-#    ./mythtv.yml --inventory=hosts.yml --limit=<host>
+#    ./mythtv.yml --limit=<host>
 #
-# If not, run it like this (or change the shebang):
+# If not in PATH or env doesn't support --split-string, then run like this:
 #
 #    ansible-playbook --inventory=hosts.yml --limit=<host> mythtv.yml
 #
@@ -67,4 +67,4 @@
     - role: doxygen
       when: mythtv_tools
 
-# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=6:
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
