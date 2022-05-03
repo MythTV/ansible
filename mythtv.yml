@@ -1,9 +1,7 @@
-#!/usr/bin/python3 /home/bill/source/ansible/bin/ansible-playbook
-# ###################### DELETE THE ABOVE #######################
-#!/usr/bin/ansible-playbook
+#! /usr/bin/env ansible-playbook
 #
-# MythTV playbook. Assumes ansible-playbook is in /usr/bin to make
-# this executable.:
+# MythTV playbook. Assumes ansible-playbook can be found in $PATH to
+# make this executable:
 #
 #    ./mythtv.yml --inventory=hosts.yml --limit=<host>
 #
@@ -69,4 +67,4 @@
     - role: doxygen
       when: mythtv_tools
 
-# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent:
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=6:
