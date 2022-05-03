@@ -1,4 +1,4 @@
-#! /usr/bin/env --split-string=ansible-playbook --inventory=hosts.yml
+#!/usr/bin/env --split-string=ansible-playbook --inventory=hosts.yml
 #
 # MythTV playbook. Assumes ansible-playbook can be found in $PATH to
 # make this executable work:

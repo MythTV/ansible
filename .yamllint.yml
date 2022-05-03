@@ -4,12 +4,6 @@ extends: default
 
 rules:
 
-  comments:
-    ignore-shebangs: true
-    require-starting-space: true
-    # Doesn't work in yamllint 1.26.3, rule added in 1.14.0 (2019-01-14)
-    # and both of the above should be the defaults.
-
   # For braces, colons and commas, allow more spaces for readability
   braces:
     level: warning
