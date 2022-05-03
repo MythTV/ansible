@@ -1,5 +1,9 @@
 #!/usr/bin/retext --preview
 
+## Note:
+This release contains changes for the deprecated `include:` module. It only
+runs on ansible versions above 2.4.
+
 ## Ansible Playbook for MythTV
 This repository contains the ansible playbook for setting up MythTV buildslaves.
 It can also be used to install all the necessary packages if
@@ -36,7 +40,8 @@ load them.
 ### Running the playbooks
 For most distributions, run the playbook as follows. Replace
 `localhost` with the `--limit value` in the table below as
-required:
+required. See mythtv.yml for additional command lines if this
+doesn't work for a specific distribution:
 ```
 ./mythtv.yml --inventory=hosts.yml --limit=localhost
 ```
@@ -54,17 +59,17 @@ MacOSX Users (replace python3.9 with the currently available of Python):
 sudo port -v selfupdate
 sudo port upgrade outdated
 sudo port install py38-ansible
-ansible-playbook-3.9 --extra-vars=ansible_python_interpreter=/opt/local/bin/python3.9 qt5.yml
+ansible-playbook-3.9 --inventory=hosts.yml --extra-vars=ansible_python_interpreter=/opt/local/bin/python3.9 qt5.yml
 ```
 
-MacOSX Users (optionally specify a databse version as follows):
+MacOSX Users (optionally specify a database version as follows):
 ```
-ansible-playbook-3.9 --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.9 database_version=mariadb-10.5"  qt5.yml
+ansible-playbook-3.9 --inventory=hosts.yml --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.9 database_version=mariadb-10.5"  mythtv.yml
 ```
 
 MacOSX Users (optionally do not install qtwebkit as follows):
 ```
-ansible-playbook-3.9 --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.9 install_qtwebkit=false"  qt5.yml
+ansible-playbook-3.9 --inventory=hosts.yml --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.9 install_qtwebkit=false"  mythtv.yml
 ```
 No need to run as root as `ansible_become` is `True` (assumes `sudo` works for the
 user running the playbook.)
