@@ -1,7 +1,7 @@
 #! /usr/bin/env --split-string=ansible-playbook --inventory=hosts.yml
 #
 # MythTV playbook. Assumes ansible-playbook can be found in $PATH to
-# make this executable:
+# make this executable work:
 #
 #    ./mythtv.yml --limit=<host>
 #

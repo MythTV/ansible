@@ -43,7 +43,7 @@ For most distributions, run the playbook as follows. Replace
 required. See mythtv.yml for additional command lines if this
 doesn't work for a specific distribution:
 ```
-./mythtv.yml --inventory=hosts.yml --limit=localhost
+./mythtv.yml --limit=localhost
 ```
 Distribution | --limit value
 :-----------|:----------------
