@@ -54,22 +54,22 @@ FreeBSD | freebsd
 Builders | builder
 CPP Check and Doxygen | tools
 
-MacOSX Users (replace python3.9 with the currently available of Python):
+MacOSX Users:
 ```
 sudo port -v selfupdate
 sudo port upgrade outdated
 sudo port install py38-ansible
-ansible-playbook-3.9 --inventory=hosts.yml --extra-vars=ansible_python_interpreter=/opt/local/bin/python3.9 qt5.yml
+./mythtv.yml --limit=localhost
 ```
 
 MacOSX Users (optionally specify a database version as follows):
 ```
-ansible-playbook-3.9 --inventory=hosts.yml --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.9 database_version=mariadb-10.5"  mythtv.yml
+./mythtv.yml -extra-vars="database_version=mariadb-10.5" --limit=localhost
 ```
 
 MacOSX Users (optionally do not install qtwebkit as follows):
 ```
-ansible-playbook-3.9 --inventory=hosts.yml --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.9 install_qtwebkit=false"  mythtv.yml
+./mythtv.yml --extra-vars="install_qtwebkit=false" --limit=localhost
 ```
 No need to run as root as `ansible_become` is `True` (assumes `sudo` works for the
 user running the playbook.)
