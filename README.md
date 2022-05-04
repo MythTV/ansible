@@ -58,7 +58,7 @@ MacOSX Users:
 ```
 sudo port -v selfupdate
 sudo port upgrade outdated
-sudo port install py38-ansible
+sudo port install py310-ansible
 ./mythtv.yml --limit=localhost
 ```
 
