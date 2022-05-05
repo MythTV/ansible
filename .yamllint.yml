@@ -20,13 +20,23 @@ rules:
     max-spaces-after: 16
     max-spaces-before: 0
 
+  document-end: disable
+
+  empty-values: disable
+
+  key-ordering: disable
+
   # Just warn for long lines
   line-length:
     level: warning
     max: 135
 
+  octal-values: enable
+
   # Ansible likes yes/no, so don't whine about them
   truthy:
     allowed-values: ['true', 'false', 'yes', 'no']
+
+...
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
