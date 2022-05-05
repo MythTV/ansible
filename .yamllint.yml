@@ -23,7 +23,7 @@ rules:
   # Just warn for long lines
   line-length:
     level: warning
-    max: 200
+    max: 135
 
   # Ansible likes yes/no, so don't whine about them
   truthy:

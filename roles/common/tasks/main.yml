@@ -1,6 +1,7 @@
-# These tasks will run before other roles (as selected by mythtv.yml) and
+# These tasks will run before other roles (selected by mythtv.yml) and
 # prevent users from running ALL hosts. The instructions are clear that
-# the --limit=<name> must be used.
+# the --limit=<name> must be used. The debug: prints information useful
+# for diagnosing issues.
 
 ---
 

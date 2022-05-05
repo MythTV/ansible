@@ -9,8 +9,8 @@
 #
 #    ansible-playbook --inventory=hosts.yml --limit=<host> mythtv.yml
 #
-# <host> = one of the names under hosts: in the hosts.yml file. Most
-# will select localhost.
+# <host> = one of the names under hosts: in the hosts.yml file. See
+# README.md for help.
 
 ---
 
