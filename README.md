@@ -29,9 +29,9 @@ MacOSX | port -v selfupdate; port upgrade outdated; port install py38-ansible
 FreeBSD | pkg install py27-ansible
 OpenSuse | zypper install ansible
 
-`ansible_core` (as opposed to `ansible`) will require `collections`. They
+`Ansible Core` (as opposed to `Ansible Community`) will require `collections`. They
 are defined in the included `requirements.yml` file. See it for how to
-load them.
+load them. Most users will use Ansible Core from their distribution.
 
 ### Running the playbook
 For most distributions, run the playbook as follows. Replace

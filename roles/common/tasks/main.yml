@@ -21,4 +21,6 @@
       - "Major Version:      {{ ansible_distribution_major_version }}"
       - "Package Manager:    {{ ansible_pkg_mgr }}"
 
+...
+
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

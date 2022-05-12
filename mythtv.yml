@@ -67,4 +67,6 @@
     - role: doxygen
       when: mythtv_tools
 
-# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=6:
