@@ -10,6 +10,10 @@
   when: ansible_limit is not defined
 
 - fail:
+    msg: "Aborting {{ ansible_hostname }} because the --limit= switch was empty"
+  when: ansible_limit == ""
+
+- fail:
     msg: "Aborting {{ ansible_hostname }} because the --limit=all switch was used"
   when: ansible_limit == "all"
 

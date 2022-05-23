@@ -5,7 +5,7 @@
 #
 #    ./mythtv.yml --limit=<host>
 #
-# If not in PATH or env doesn't support -S, then run like this:
+# If not in $PATH or env doesn't support -S, then run like this:
 #
 #    ansible-playbook --inventory=hosts.yml --limit=<host> mythtv.yml
 #
