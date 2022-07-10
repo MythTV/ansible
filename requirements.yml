@@ -1,0 +1,19 @@
+# Introduced in Ansible v2.8, refer to:
+#
+#   https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html
+#   https://www.ansible.com/blog/getting-started-with-ansible-collections
+#
+# Collections required for the MythTV tool IFF running Ansible Core
+# as opposed to Ansible Community. Type the following to install:
+#
+#   sudo ansible-galaxy collection install --requirements-file=requirements.yml
+
+---
+
+collections:
+  - ansible.posix
+  - community.general
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=0:

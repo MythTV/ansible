@@ -1,16 +1,20 @@
 # roles/buildslave/vars/main.yml
 
+---
+
+kojipkgs: "https://kojipkgs.fedoraproject.org//packages"
+
 # python-twisted-mail is a build dependency for buildbot packages
-twisted_mail_src: "https://kojipkgs.fedoraproject.org//packages/python-twisted-mail/12.2.0/3.fc20/src/python-twisted-mail-12.2.0-3.fc20.src.rpm"
+twisted_mail_src: "{{ kojipkgs }}/python-twisted-mail/12.2.0/3.fc20/src/python-twisted-mail-12.2.0-3.fc20.src.rpm"
 twisted_mail_rpm: "~/rpmbuild/RPMS/{{ansible_architecture}}/python-twisted-mail-12.2.0-3.el7.{{ansible_architecture}}.rpm"
 
 # python-twisted-names is a runtime dependency for python-twisted-mail
-twisted_names_src: "https://kojipkgs.fedoraproject.org//packages/python-twisted-names/12.2.0/3.fc20/src/python-twisted-names-12.2.0-3.fc20.src.rpm"
+twisted_names_src: "{{ kojipkgs }}/python-twisted-names/12.2.0/3.fc20/src/python-twisted-names-12.2.0-3.fc20.src.rpm"
 twisted_names_rpm: "~/rpmbuild/RPMS/{{ansible_architecture}}/python-twisted-names-12.2.0-3.el7.{{ansible_architecture}}.rpm"
 
 # buildbot packages
-bb_src:      "https://kojipkgs.fedoraproject.org//packages/buildbot/0.8.8/1.fc20/src/buildbot-0.8.8-1.fc20.src.rpm"
+bb_src:      "{{ kojipkgs }}/buildbot/0.8.8/1.fc20/src/buildbot-0.8.8-1.fc20.src.rpm"
 bb_rpm:       "~/rpmbuild/RPMS/noarch/buildbot-slave-0.8.8-1.el7.noarch.rpm"
 
-bb_src_el8: "https://kojipkgs.fedoraproject.org//packages/buildbot/2.5.1/2.fc32/src/buildbot-2.5.1-2.fc32.src.rpm"
+bb_src_el8: "{{ kojipkgs }}/buildbot/2.5.1/2.fc32/src/buildbot-2.5.1-2.fc32.src.rpm"
 bb_rpm_el8: "~/rpmbuild/RPMS/noarch/buildbot-worker-2.5.1-2.el8.noarch.rpm"

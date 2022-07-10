@@ -1,5 +1,7 @@
 # roles/mythtv-pacman/tasks/main.yml
 
+---
+
 - name: create a list of essential system utils
   set_fact:
     pacman_pkg_lst:

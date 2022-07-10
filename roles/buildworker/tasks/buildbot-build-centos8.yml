@@ -1,5 +1,7 @@
 # Build buildbot packages on Centos8
 
+---
+
 - shell:  /bin/rpm -q --quiet buildbot-worker && echo installed || echo missing
   register:         buildbot
 

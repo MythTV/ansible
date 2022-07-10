@@ -1,0 +1,30 @@
+# These tasks will run before other roles (selected by mythtv.yml) and
+# prevent users from running ALL hosts. The instructions are clear that
+# the --limit=<name> must be used. The debug: prints information useful
+# for diagnosing issues.
+
+---
+
+- fail:
+    msg: "Aborting {{ ansible_hostname }} because the --limit switch wasn't used"
+  when: ansible_limit is not defined
+
+- fail:
+    msg: "Aborting {{ ansible_hostname }} because the --limit= switch was empty"
+  when: ansible_limit == ""
+
+- fail:
+    msg: "Aborting {{ ansible_hostname }} because the --limit=all switch was used"
+  when: ansible_limit == "all"
+
+- name: Information used to select which roles/tasks run
+  debug:
+    msg:
+      - "Inventory Hostname: {{ inventory_hostname }}"
+      - "Distribution:       {{ ansible_distribution }}"
+      - "Major Version:      {{ ansible_distribution_major_version }}"
+      - "Package Manager:    {{ ansible_pkg_mgr }}"
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

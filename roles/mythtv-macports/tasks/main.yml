@@ -123,26 +123,17 @@
       '{{ lookup("flattened", macports_pkg_list) }}'
 
 - name: install packages
-  become: yes
-  become_user: root
-  become_method: sudo
   macports:
     name:
       '{{ lookup("flattened", macports_pkg_list) }}'
     update_cache: yes
 
 - name: install p5-dbd-mysql for previously specified mariadb/mysql version
-  become: yes
-  become_user: root
-  become_method: sudo
   macports:
     name: 'p5-dbd-mysql'
     variant: +{{ mysql_variant }}
 
 - name: select the installed version of mariadb/mysql and python
-  become: yes
-  become_user: root
-  become_method: sudo
   command: 'port select --set {{ item.group }} {{ item.version }}'
   with_list:
     - { group: mysql,  version: '{{ database_version }}' }
@@ -150,9 +141,6 @@
     - { group: python3, version: 'python{{ python_package_suffix }}' }
 
 - name: install py-mysqlclient (for mariadb/mysqldb)
-  become: yes
-  become_user: root
-  become_method: sudo
   macports:
     name: py{{ python_package_suffix }}-mysqlclient
     variant: +{{ mysql_variant }}

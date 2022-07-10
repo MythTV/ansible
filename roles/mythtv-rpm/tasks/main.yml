@@ -1,12 +1,14 @@
 # roles/mythtv-rpm/tasks/main.yml
 
-- include: setup-epel.yml
+---
+
+- include_tasks: setup-epel.yml
   when:    ansible_distribution == "CentOS"
 
-- include: setup-rpmfusion.yml
+- include_tasks: setup-rpmfusion.yml
   when:    ansible_distribution == "Fedora" or ansible_distribution == "CentOS"
 
-- include: setup-scl.yml
+- include_tasks: setup-scl.yml
   when:    ansible_distribution == "CentOS"
 
 - name: create a list of compilers and build essentials

@@ -1,5 +1,7 @@
 # roles/mythtv-rpm/tasks/setup-rpmfusion.yml
 
+---
+
 - shell:            /bin/rpm -q --quiet rpmfusion-free-release && echo installed || echo missing
   args:
     warn:           false

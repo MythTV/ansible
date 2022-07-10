@@ -1,5 +1,7 @@
 # roles/buildworker/tasks/main.yml
 
+---
+
 - name: install python twisted - Fedora
   yum:
     name:
@@ -35,10 +37,10 @@
       present
   when: ansible_distribution == "Fedora"
 
-- include: buildbot-build-centos7.yml
+- include_tasks: buildbot-build-centos7.yml
   when: ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 7
 
-- include: buildbot-build-centos8.yml
+- include_tasks: buildbot-build-centos8.yml
   when: ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 8
 
 - name: install buildworker (deb)

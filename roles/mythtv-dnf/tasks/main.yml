@@ -1,5 +1,7 @@
 # roles/mythtv-rpm/tasks/main.yml
 
+---
+
 - name: enable PowerTools repository
   command:
     cmd: dnf config-manager --enable powertools
@@ -12,10 +14,10 @@
     warn: false
   when: (ansible_distribution == "CentOS" and ansible_distribution_major_version|int >= 8) or ansible_distribution == "Rocky"
 
-- include: setup-epel.yml
+- include_tasks: setup-epel.yml
   when: ansible_distribution == "CentOS" or ansible_distribution == "Rocky"
 
-- include: setup-rpmfusion.yml
+- include_tasks: setup-rpmfusion.yml
   when:    ansible_distribution == "Fedora" or ansible_distribution == "CentOS" or ansible_distribution == "Rocky"
 
 - name: create dnf compilers and build essentials list
