@@ -1,5 +1,3 @@
----
-
 - name: create list of qt5 libraries
   set_fact:
     yum_pkg_lst:

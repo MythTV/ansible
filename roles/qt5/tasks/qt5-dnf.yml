@@ -1,7 +1,5 @@
 # Install Qt5
 
----
-
 - name: create a list of dnf qt5 libraries
   set_fact:
     dnf_pkg_lst:

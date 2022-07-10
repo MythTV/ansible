@@ -1,5 +1,3 @@
----
-
 - name: check to see if qtwebkit is requested
   set_fact:
     install_qtwebkit=false
@@ -35,6 +33,9 @@
       '{{ lookup("flattened", macports_pkg_list) }}'
 
 - name: install port qt5 packages
+  become: yes
+  become_user: root
+  become_method: sudo
   macports:
     name:
       '{{ lookup("flattened", macports_pkg_list) }}'
@@ -43,6 +44,9 @@
     - qt5
 
 - name: install qt5-mysql-plugin for previously specified mariadb/mysql version
+  become: yes
+  become_user: root
+  become_method: sudo
   macports:
     name: qt5-mysql-plugin
     variant: +{{ qt_mysql_variant }}

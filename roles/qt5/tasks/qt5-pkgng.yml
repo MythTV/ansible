@@ -1,5 +1,3 @@
----
-
 - name: install essential libraries
   pkgng:
     name:
