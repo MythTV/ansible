@@ -58,8 +58,11 @@
       - libsystemd-dev
       - libgnutls28-dev
 
-- include_tasks: debian_ubuntu.yml
-  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+- include_tasks: debian.yml
+  when: ansible_distribution == "Debian"
+
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
 - include_tasks: linux_mint.yml
   when: ansible_distribution == "Linux Mint"
