@@ -47,7 +47,7 @@
   when:
     - ansible_lsb.id != "Raspbian"
     - ansible_distribution_release != "Bullseye"
-    - ansible_distribution_major_version|int < 11
+    - ((ansible_distribution_major_version|int < 11) or (ansible_lsb.major_release|int== |int < 11))
 
 - name: add mythtv extra build libraries (Bullseye and later)
   set_fact:

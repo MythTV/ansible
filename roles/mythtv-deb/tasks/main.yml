@@ -58,14 +58,16 @@
       - libsystemd-dev
       - libgnutls28-dev
 
-- include_tasks: debian.yml
-  when: ansible_distribution == "Debian"
+- include_tasks: "{{ ansible_distribution | replace(' ', '_') | lower }}.yml"
 
-- include_tasks: ubuntu.yml
-  when: ansible_distribution == "Ubuntu"
-
-- include_tasks: linux_mint.yml
-  when: ansible_distribution == "Linux Mint"
+# - include_tasks: debian.yml
+#   when: ansible_distribution == "Debian"
+#
+# - include_tasks: ubuntu.yml
+#   when: ansible_distribution == "Ubuntu"
+#
+# - include_tasks: linux_mint.yml
+#   when: ansible_distribution == "Linux Mint"
 
 - name: add mythtv essential perl modules
   set_fact:
@@ -106,5 +108,7 @@
       '{{ lookup("flattened", deb_pkg_lst ) }}'
     state:
       present
+
+...
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

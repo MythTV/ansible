@@ -22,7 +22,6 @@
       - libsystemd-dev
       - libbluray-dev
       - libx265-dev
-      - libcrystalhd-dev
 
 - name: add mythtv mysql client libraries
   set_fact:
