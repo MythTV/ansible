@@ -91,7 +91,7 @@
   when:
     - ansible_lsb.major_release|int >= 16
 
-- name: adjust 22.04 packages
+- name: adjust 22+ packages
   block:
     - set_fact:
         deb_pkg_lst: '{{ lookup("flattened", deb_pkg_lst ).split(",") }}'
@@ -102,7 +102,7 @@
     - set_fact:
         deb_pkg_lst: "{{ deb_pkg_lst | replace('python3-oauth', 'python3-oauthlib') }}"
   when:
-    - ansible_distribution_major_version | int == 22
+    - ansible_distribution_major_version | int >= 22
 
 ...
 
