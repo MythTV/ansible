@@ -101,7 +101,7 @@
       - default-libmysqlclient-dev
       - libmariadb-dev-compat
   when:
-      - ansible_distribution_release == "testing" or ansible_distribution_major_version|int >= 11
+    - ansible_distribution_release == "testing" or ansible_distribution_major_version|int >= 11
     # - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
 
 - name: add mythtv essential python modules (Stretch/16.04 and later)
@@ -149,7 +149,8 @@
       - python3-simplejson
       - python3-setuptools
   when:
-    - ansible_distribution_release == "Bullseye" or ansible_distribution_major_version|int >= 11
+    - ansible_distribution_release == "testing" or ansible_distribution_major_version|int >= 11
+    # - ansible_distribution_release == "Bullseye" or ansible_distribution_major_version|int >= 11
 
 - name: add mythtv essential plugin libraries
   set_fact:
