@@ -23,7 +23,7 @@
       - "Inventory Hostname: {{ inventory_hostname }}"
       - "Distribution:       {{ ansible_distribution }}"
       - "Major Version:      {{ ansible_distribution_major_version }}"
-      - "Major Release:      {{ ansible_lsb.major_release }}"
+      - "LSB Major Release:  {{ ansible_lsb.major_release }}"
       - "Package Manager:    {{ ansible_pkg_mgr }}"
 
 ...

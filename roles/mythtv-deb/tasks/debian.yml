@@ -152,6 +152,16 @@
     - ansible_distribution_release == "testing" or ansible_distribution_major_version|int >= 11
     # - ansible_distribution_release == "Bullseye" or ansible_distribution_major_version|int >= 11
 
+- name: make adjustments for testing or > 12 package here
+  block:
+    - set_fact:
+        deb_pkg_lst: '{{ lookup("flattened", deb_pkg_lst ).split(",") }}'
+
+    - set_fact:
+        deb_pkg_lst: "{{ deb_pkg_lst | replace('python3-oauth', 'python3-oauthlib') }}"
+  when:
+    - ansible_distribution_major_version == 'testing' or  ansible_distribution_major_version | int >= 12
+
 - name: add mythtv essential plugin libraries
   set_fact:
     deb_pkg_lst:
