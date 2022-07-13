@@ -1,5 +1,6 @@
 # roles/mythtv-deb/tasks/debian.yml
 
+# https://www.debian.org/releases, 10=Buster, 11=Bullseye, 12=testing (will be Bookworm)
 ---
 
 - name: add compilers and build essentials 2 (debian)
@@ -46,8 +47,9 @@
       - libcrystalhd-dev
   when:
     - ansible_lsb.id != "Raspbian"
-    - ansible_distribution_release != "Bullseye"
-    - ((ansible_distribution_major_version|int < 11) or (ansible_lsb.major_release|int== |int < 11))
+    - ansible_distribution_release != "testing"
+    # - ansible_distribution_release != "bookworm"
+    - ansible_distribution_major_version|int < 11
 
 - name: add mythtv extra build libraries (Bullseye and later)
   set_fact:
@@ -55,7 +57,8 @@
       - '{{ deb_pkg_lst }}'
       - libcec-dev
   when:
-    - ansible_distribution_release == "Bullseye" or ansible_distribution_major_version|int >= 11
+    - ansible_distribution_release == "testing" or ansible_distribution_major_version|int >= 11
+    # - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
 
 - name: add mythtv extra build libraries (Stretch and later)
   set_fact:
@@ -98,7 +101,8 @@
       - default-libmysqlclient-dev
       - libmariadb-dev-compat
   when:
-    - ansible_distribution_release == "Bullseye" or ansible_distribution_major_version|int >= 11
+      - ansible_distribution_release == "testing" or ansible_distribution_major_version|int >= 11
+    # - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
 
 - name: add mythtv essential python modules (Stretch/16.04 and later)
   set_fact:
