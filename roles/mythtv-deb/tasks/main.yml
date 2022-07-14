@@ -58,7 +58,8 @@
       - libsystemd-dev
       - libgnutls28-dev
 
-- include_tasks: "{{ ansible_distribution | replace(' ', '_') | lower }}.yml"
+- include_tasks:
+    file: "{{ ansible_distribution | replace(' ', '_') | lower }}.yml"
 
 - name: add mythtv essential perl modules
   set_fact:
