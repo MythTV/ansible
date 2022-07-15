@@ -1,6 +1,6 @@
 # roles/mythtv-deb/tasks/debian.yml
 
-# https://www.debian.org/releases, 10=Buster, 11=Bullseye, 12=codename=bookworm (becomes Bookworm)
+# https://www.debian.org/releases, 10=Buster, 11=Bullseye, 12 codename=bookworm (becomes Bookworm)
 
 ---
 
@@ -55,7 +55,7 @@
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
-      - libcec-dev
+      - libcec-devnm
   when:
     - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
 
@@ -66,7 +66,7 @@
       - libbluray-dev
       - libx265-dev
   when:
-    - (ansible_lsb.major_release|int >= 9 or ansible_lsb.release == "testing")
+    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 9
 
 - name: add mythtv mysql client libraries (Jessie)
   set_fact:
@@ -147,21 +147,17 @@
       - python3-simplejson
       - python3-setuptools
   when:
-    - ansible_distribution_release == "testing" or ansible_distribution_major_version|int >= 11
-    # - ansible_distribution_release == "Bullseye" or ansible_distribution_major_version|int >= 11
+    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
 
-- name: make adjustments for testing or > 12 package here
+- name: make adjustments for bookworm or >= 12 package here
   block:
     - set_fact:
         deb_pkg_lst: '{{ lookup("flattened", deb_pkg_lst ).split(",") }}'
 
     - set_fact:
-        deb_pkg_lst: "{{ deb_pkg_lst | difference(['libcrystalhd-dev']) }}"
-
-    - set_fact:
         deb_pkg_lst: "{{ deb_pkg_lst | replace('python3-oauth', 'python3-oauthlib') }}"
   when:
-    - ansible_distribution_major_version == 'testing' or  ansible_distribution_major_version | int >= 12
+    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 12
 
 - name: add mythtv essential plugin libraries
   set_fact:
