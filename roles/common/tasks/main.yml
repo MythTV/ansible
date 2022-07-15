@@ -17,7 +17,7 @@
     msg: "Aborting {{ ansible_hostname }} because the --limit=all switch was used"
   when: ansible_limit == "all"
 
-- name: Debian nformation used to select which roles/tasks run
+- name: Debian information used to select which roles/tasks run
   debug:
     msg:
       - "inventory_hostname:                 {{ inventory_hostname }}"
