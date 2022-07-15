@@ -55,7 +55,7 @@
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
-      - libcec-devnm
+      - libcec-dev
   when:
     - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
 
