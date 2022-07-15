@@ -16,55 +16,68 @@
 
 - hosts: mythtv_hosts
 
-  roles:
-    - role: common
+  tasks:
 
-    - role: mythtv-deb
+    - include_role:
+        name: common
+
+    - include_role:
+        name: mythtv-deb
       when:
         - ansible_pkg_mgr == "apt"
         - not mythtv_tools
 
-    - role: mythtv-rpm
+    - include_role:
+        name: mythtv-rpm
       when:
         - ansible_pkg_mgr == "yum"
         - not mythtv_tools
 
-    - role: mythtv-dnf
+    - include_role:
+        name: mythtv-dnf
       when:
         - ansible_pkg_mgr == "dnf"
         - not mythtv_tools
 
-    - role: mythtv-freebsd
+    - include_role:
+        name: mythtv-freebsd
       when:
         - ansible_pkg_mgr == "pkgng"
         - not mythtv_tools
 
-    - role: mythtv-macports
+    - include_role:
+        name: mythtv-macports
       when:
         - ansible_pkg_mgr == "macports"
         - not mythtv_tools
 
-    - role: mythtv-pacman
+    - include_role:
+        name: mythtv-pacman
       when:
         - ansible_pkg_mgr == "pacman"
         - not mythtv_tools
 
-    - role: mythtv-suse
+    - include_role:
+        name: mythtv-suse
       when:
         - ansible_pkg_mgr == "zypper"
         - not mythtv_tools
 
-    - role: qt5
+    - include_role:
+        name: qt5
       when:
         - not mythtv_tools
 
-    - role: buildworker
+    - include_role:
+        name: buildworker
       when: mythtv_builders
 
-    - role: cppcheck
+    - include_role:
+        name: cppcheck
       when: mythtv_tools
 
-    - role: doxygen
+    - include_role:
+        name: doxygen
       when: mythtv_tools
 
 ...
