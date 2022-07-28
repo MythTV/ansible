@@ -9,9 +9,11 @@ module. It only runs on Ansible versions above 2.3. **
 This repository contains an Ansible playbook for user's that build MythTV
 from source. It's also used for setting up MythTV buildslaves.
 
-First you need to clone the playbooks:
+First you need to clone the playbook:
 
 ``` git clone https://github.com/MythTV/ansible ```
+
+``` cd <the directory just created>```
 
 Debian users running Wheezy will need to enable
 [wheezy-backports](https://wiki.debian.org/Backports).
