@@ -1,13 +1,13 @@
-#!/usr/bin/env -S ansible-playbook
+#!/usr/bin/env ansible-playbook
 #
 # MythTV playbook. Assumes ansible-playbook can be found in $PATH to
 # make this executable work:
 #
 #    ./mythtv.yml --limit=<host>
 #
-# If not in $PATH or env doesn't support -S, then run like this:
+# If not andible-playbook is not in $PATH then run like this:
 #
-#    ansible-playbook --limit=<host> mythtv.yml
+#    <your path>/ansible-playbook --limit=<host> mythtv.yml
 #
 # <host> = one of the names under hosts: in the hosts.yml file. See
 # README.md for help.
