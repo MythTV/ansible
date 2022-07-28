@@ -1,0 +1,19 @@
+# To run: ansible-lint mythtv.yml
+
+---
+
+skip_list:
+  # - command-instead-of-module
+  # - command-instead-of-shell
+  - unnamed-task
+  # - empty-string-compare
+
+warn_list:
+  - no-changed-when
+
+# - literal-compare
+# - no-jinja-nesting
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=6:
