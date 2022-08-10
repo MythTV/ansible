@@ -349,6 +349,17 @@
     - ansible_distribution == "Ubuntu"
     - ansible_distribution_major_version | int == 22
 
+- name: adjust Debian 12+ packages
+  block:
+    - set_fact:
+        deb_pkg_lst: '{{ lookup("flattened", deb_pkg_lst ).split(",") }}'
+
+    - set_fact:
+        deb_pkg_lst: "{{ deb_pkg_lst | replace('python3-oauth', 'python3-oauthlib') }}"
+  when:
+    - ansible_distribution == "Debian"
+    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 12
+
 - name: final package list
   debug:
     msg:
