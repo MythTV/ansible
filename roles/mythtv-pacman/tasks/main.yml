@@ -29,7 +29,6 @@
       - taglib
       - exiv2
       - libzip
-      - libhdhomerun
 
 - name: add mythtv optional build libraries
   set_fact:
@@ -37,14 +36,14 @@
       - '{{ pacman_pkg_lst }}'
       - libcec
       - libass
-      - libhdhomerun-dev
+      # AUR only - libhdhomerun
 
 - name: add mythtv essential python modules
   set_fact:
     pacman_pkg_lst:
       - '{{ pacman_pkg_lst }}'
       - python2-lxml
-      - urlgrabber
+      # AUR only - urlgrabber
       - python2-oauth
       - mysql-python
 
@@ -54,7 +53,7 @@
       - '{{ pacman_pkg_lst }}'
       - perl-dbi
       - perl-dbd-mysql
-      - perl-net-upnp
+      # AUR only - perl-net-upnp
       - perl-io-socket-inet6
       - perl-date-manip
       - perl-xml-simple
