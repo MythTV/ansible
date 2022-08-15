@@ -13,6 +13,7 @@
       - base-devel
       - nasm
       - ccache
+      - git
 
 - name: add mythtv essential build libraries
   set_fact:
@@ -29,6 +30,7 @@
       - taglib
       - exiv2
       - libzip
+      - soundtouch
 
 - name: add mythtv optional build libraries
   set_fact:
@@ -37,15 +39,28 @@
       - libcec
       - libass
       # AUR only - libhdhomerun
+      - libvdpau
+      - libva
+      - x264
+      - x265
+      - libvpx
+      - dav1d
+      - xvidcore
+      - pulseaudio
+      - libavc1394
+      - libiec61883
+      - lirc
 
 - name: add mythtv essential python modules
   set_fact:
     pacman_pkg_lst:
       - '{{ pacman_pkg_lst }}'
-      - python2-lxml
+      - python-lxml
       # AUR only - urlgrabber
-      - python2-oauth
-      - mysql-python
+      - python-mysqlclient
+      - python-requests
+      - python-simplejson
+      - python-future
 
 - name: add mythtv essential perl modules
   set_fact:
@@ -68,10 +83,11 @@
     pacman_pkg_lst:
       - '{{ pacman_pkg_lst }}'
       - flac
-      # - libtag1-dev
-      # - libcdio-dev
-      # - libcdio-paranoia-dev
+      - libcdio
+      - libcdio-paranoia
       - libmariadbclient
+      - python-pycurl
+      - python-oauthlib
 
 - name: final package list
   debug:
