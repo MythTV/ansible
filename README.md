@@ -28,7 +28,7 @@ Choose the appropriate command(s) for your distribution.
 
 Distribution | Command
 :-------|:--------
-Archlinux | pacman -S ansible python2
+Archlinux | pacman -S ansible
 Centos | yum install ansible (enable the [EPEL](https://fedoraproject.org/wiki/EPEL) repository first)
 Debian (and derivatives) | apt install ansible
 Fedora | dnf install ansible
