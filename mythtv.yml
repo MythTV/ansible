@@ -5,11 +5,11 @@
 #
 #    ./mythtv.yml --limit=<host>
 #
-# If not andible-playbook is not in $PATH then run like this:
+# If not, then run like this:
 #
 #    <your path>/ansible-playbook --limit=<host> mythtv.yml
 #
-# <host> = one of the names under hosts: in the hosts.yml file. See
+# <host> = one of the names under 'hosts:' in the hosts.yml file. See
 # README.md for help.
 
 ---
