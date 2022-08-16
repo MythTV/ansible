@@ -1,6 +1,7 @@
 # roles/mythtv-deb/tasks/debian.yml
 
-# https://www.debian.org/releases, 10=Buster, 11=Bullseye, 12 codename=bookworm (becomes Bookworm)
+# https://www.debian.org/releases:
+#   10=Buster, 11=Bullseye, 12 codename=bookworm (becomes Bookworm)
 
 ---
 
