@@ -1,4 +1,4 @@
-# roles/mythtv-rpm/tasks/main.yml
+# roles/mythtv-dnf/tasks/main.yml
 
 ---
 
