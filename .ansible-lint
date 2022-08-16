@@ -1,4 +1,6 @@
 # To run: ansible-lint mythtv.yml
+#
+# Documentation: https://ansible-lint.readthedocs.io/en/latest/default_rules
 
 ---
 
