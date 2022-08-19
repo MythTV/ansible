@@ -63,6 +63,7 @@
       - python-requests
       - python-simplejson
       - python-future
+      - python-setuptools
 
 - name: add mythtv essential perl modules
   set_fact:
