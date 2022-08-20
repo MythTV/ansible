@@ -1,0 +1,12 @@
+# Not really needed as COPYs use specific files/directories
+.ansible-lint
+.git
+.gitignore
+.yamllint
+*.missing
+*.sh
+*.swp
+Docker
+LICENSE
+README.md
+requirements.yml
