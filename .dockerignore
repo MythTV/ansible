@@ -6,7 +6,8 @@
 *.missing
 *.sh
 *.swp
-Docker
+distros
+Docker/
 LICENSE
 README.md
 requirements.yml
