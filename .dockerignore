@@ -6,7 +6,6 @@
 *.missing
 *.sh
 *.swp
-buildbot.distros
 Docker/
 LICENSE
 README.md

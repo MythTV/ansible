@@ -5,5 +5,5 @@ LABEL CODENAME="N/A" EOL="N/A"
 RUN yum --assumeyes distribution-synchronization
 RUN yum --assumeyes install centos-release-ansible-29.noarch git tree vim-enhanced
 WORKDIR /root/source/ansible
-COPY ansible.cfg hosts.yml mythtv.yml roles/ ./
+COPY . ./
 RUN ./mythtv.yml --limit=localhost

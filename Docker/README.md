@@ -30,7 +30,7 @@ This command uses instructions in a `distro:version.Dockerfile`. The
 `--file` switch is used to replace the default `Dockerfile` and
 allows use of the unique file names here.
 
-> `docker build --tag ubuntu:20.04 --file Docker/ubuntu:20.04.Dockerfile .`
+>`docker build --tag ubuntu:20.04 --file Docker/ubuntu:20.04.Dockerfile .`
 
 If the `build` succeeds, the test is done, this Ansible repro will run on
 the selected Linux distribution.
@@ -46,26 +46,26 @@ a package name has changed or is no longer available.
 
 *Docker* only allows `--name`s with alphanumeric characters.
 
-> `docker run --interactive --tty --name ubuntu2004 ubuntu:20.04`
+>`docker run --interactive --tty --name ubuntu2004 ubuntu:20.04`
 
 Start a stopped *Container*
 
 If `docker ps -a` shows a *Container* has "Exited", attach to it
 as follows:
 
-> `docker container start --attach --interactive ubuntu:20.04`
+>`docker container start --attach --interactive ubuntu:20.04`
 
 ## Get the status of all *Container*s
 
-> `docker ps -a`
+>`docker ps -a`
 
 ## List all known *Image*s
 
-> `docker images`
+>`docker images`
 
 ## Dockerfiles here have a `LABEL` instruction, the contents are printable
 
-> `docker inspect ubuntu:20.04 --format='{{json .Config.Labels}}'`
+>`docker inspect ubuntu:20.04 --format='{{json .Config.Labels}}'`
 
 ## Clean things up
 
@@ -73,11 +73,11 @@ Delete "Exited" *Container*s, delete dangling *Image*s and active *Image*s.
 Delete the `REPOSITORY:TAG` before the `IMAGE ID`. The last two are from
 `docker images` output. Use --force to eliminate the prompts.
 
-> `docker container prune [--force]`
+>`docker container prune [--force]`
 
-> `docker image prune [--force]`
+>`docker image prune [--force]`
 
-> `docker image <IMAGE ID> ubuntu:20.04 [--force]`
+>`docker image <IMAGE ID> ubuntu:20.04 [--force]`
 
 ## More *Docker* details
 

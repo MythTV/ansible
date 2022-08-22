@@ -4,8 +4,7 @@ RUN apt-get update && apt-get install --yes ansible git mlocate python3-apt vim
  
 # This only works with the devel/2022 branch!!!
 WORKDIR /root/source/ansible
-COPY ansible.cfg hosts.yml mythtv.yml ./
-COPY roles ./roles/
+COPY . ./
 RUN ./mythtv.yml --limit=localhost 
 
 WORKDIR /root/source 

@@ -10,7 +10,7 @@ f36 done
 fedora-aarch64
 fedora-armv7hl
 fedora-rawhide done
-freebsd12
+freebsd12 added amontalban:freebsd.Dockerfile (the only image available) FAILS
 osx N/A with "standard" hub.docker.com images...
 ubuntu-20.04 done
 ubuntu-22.04 done
