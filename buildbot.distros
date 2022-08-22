@@ -1,0 +1,16 @@
+# Distributions known to the buildbots. "done" = *Dockerfile is working. 8/15
+archlinux done
+centos8 EOL 2021-12-31, WIP, playbook fails python-dnf issue
+centos9
+debian-bookworm done
+debian-bullseye done
+f34 EOL 2022-06-07
+f35 done
+f36 done
+fedora-aarch64
+fedora-armv7hl
+fedora-rawhide done
+freebsd12
+osx N/A with "standard" hub.docker.com images...
+ubuntu-20.04 done
+ubuntu-22.04 done

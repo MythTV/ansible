@@ -2,7 +2,7 @@
 # Fix for missing mirrors: https://stackoverflow.com/questions/72741508/failed-to-download-metadata-for-repo-appstream
 # Couldn't get dnf to install Ansible, so added it from github.
 FROM centos:centos8
-LABEL CODENAME="N/A" EOL="2021-12-31"
+LABEL CODENAME="N/A" DERIVEDFROM="Red Hat Enterprise Linux 8.5" EOL="2021-12-31"
 RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
     sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* && \
     dnf makecache && \
@@ -20,6 +20,7 @@ RUN git checkout -b stable-2.9 origin/stable-2.9
 RUN make install
 
 WORKDIR /root/source/mythtv-ansible
-# Be sure to adjust .dockerignore as this copies all of .
+# Be .dockerignore is up to date as this copies all of ..
 COPY . ./
+# Turned off because the playbook won't run due to a python3-dnf problem
 # RUN ./mythtv.yml --limit=localhost

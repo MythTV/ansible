@@ -62,6 +62,10 @@ as follows:
 
 &nbsp;&nbsp;&nbsp;```docker images```
 
+## Dockerfiles here have a ```LABEL``` instruction, the contents are printable
+
+&nbsp;&nbsp;&nbsp;```inspect ubuntu:20.04 --format='{{json .Config.Labels}}'```
+
 ## Clean things up
 
 Delete "Exited" *Container*s, delete dangling *Image*s and active *Image*s.
@@ -72,9 +76,9 @@ Delete the ```REPOSITORY:TAG``` before the ```IMAGE ID```. The last two are from
 
 &nbsp;&nbsp;&nbsp;```docker image prune [--force]```
 
-&nbsp;&nbsp;&nbsp;```docker image ```IMAGE ID``` ubuntu:20.04 [--force]```
+&nbsp;&nbsp;&nbsp;```docker image <IMAGE ID> ubuntu:20.04 [--force]```
 
 ## More *Docker* details
 
-the Commad Line Interface and ```Dockerfile``` details are at
+The Commad Line Interface and ```Dockerfile``` details are at
 [docker docs](https://docs.docker.com/reference).

@@ -1,8 +1,9 @@
+# A centos:9 manifest is unknown to hub.docker.com
+# The package manager would probably be dnf too.
 FROM centos:9
-LABEL CODENAME="?" EOL="?"
+LABEL CODENAME="N/A" EOL="N/A"
 RUN yum --assumeyes distribution-synchronization
-RUN yum --assumeyes install centos-release-ansible-29.noarch git vim-enhanced
+RUN yum --assumeyes install centos-release-ansible-29.noarch git tree vim-enhanced
 WORKDIR /root/source/ansible
-COPY ansible.cfg hosts.yml mythtv.yml ./
-COPY roles ./roles/
+COPY ansible.cfg hosts.yml mythtv.yml roles/ ./
 RUN ./mythtv.yml --limit=localhost
