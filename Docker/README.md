@@ -4,27 +4,27 @@
 
 ## Introduction
 
-This was developed/tested on an Ubuntu 22.04 host running _Docker_ version
-20.10.17.  NB The _Docker Context_ (the directory above this README.md)
-**MUST BE** in your $HOME directory if _Docker_ was installed using _snap_!
+This was developed/tested on an Ubuntu 22.04 host running *Docker* version
+20.10.17.  NB The *Docker Context* (the directory above this README.md)
+**MUST BE** in your $HOME directory if *Docker* was installed using *snap*!
 That includes the Ansible repro.
 
 Optionally, do this: `sudo usermod -aG docker ${USER}` and then `sudo`
-won't be needed to run _Docker_ commands. Normal restarting the GUI is required
+won't be needed to run *Docker* commands. Normal restarting the GUI is required
 for it to take affect.
 
-_Full disclosure_, this is the first time the author has used _Docker_,
+*Full disclosure*, this is the first time the author has used *Docker*,
 improvements are welcome.
 
 ## Commands for testing the *MythTV Ansible* repro
 
 The following examples are for Ubuntu 20.04. The `tags` below
-are in the same distribution:release format as the _Image_s at
+are in the same distribution:release format as the *Image*s at
 [dockerhub](https://hub.docker.com).
 
-Everything below is run from the _Docker Context_.
+Everything below is run from the *Docker Context*.
 
-## Build an _Image_
+## Build an *Image*
 
 This command uses instructions in a `distro:version.Dockerfile`. The
 `--file` switch is used to replace the default `Dockerfile` and
@@ -44,18 +44,18 @@ what's wrong. Fix the problem in the `Dockerfile` and/or in the
 `Ansible` task(s). For these tests, failures most likely mean that
 a package name has changed or is no longer available.
 
-_Docker_ only allows `--name`s with alphanumeric characters.
+*Docker* only allows `--name`s with alphanumeric characters.
 
 > `docker run --interactive --tty --name ubuntu2004 ubuntu:20.04`
 
-Start a stopped _Container_
+Start a stopped *Container*
 
-If `docker ps -a` shows a _Container_ has "Exited", attach to it
+If `docker ps -a` shows a *Container* has "Exited", attach to it
 as follows:
 
 > `docker container start --attach --interactive ubuntu:20.04`
 
-## Get the status of all _Container_s
+## Get the status of all *Container*s
 
 > `docker ps -a`
 
@@ -69,7 +69,7 @@ as follows:
 
 ## Clean things up
 
-Delete "Exited" _Container_s, delete dangling _Image_s and active _Image_s.
+Delete "Exited" *Container*s, delete dangling *Image*s and active *Image*s.
 Delete the `REPOSITORY:TAG` before the `IMAGE ID`. The last two are from
 `docker images` output. Use --force to eliminate the prompts.
 
@@ -79,7 +79,7 @@ Delete the `REPOSITORY:TAG` before the `IMAGE ID`. The last two are from
 
 > `docker image <IMAGE ID> ubuntu:20.04 [--force]`
 
-## More _Docker_ details
+## More *Docker* details
 
 The Commad Line Interface and `Dockerfile` details are at
 [docker docs](https://docs.docker.com/reference).
