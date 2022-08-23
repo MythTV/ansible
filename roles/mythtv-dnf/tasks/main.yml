@@ -189,6 +189,7 @@
       - python3-future
       - python3-requests-cache
       - python3-simplejson
+      - python3-setuptools
   when: (ansible_distribution == "Fedora" and ansible_distribution_version|int >= 30) or
         (ansible_distribution == "CentOS") or
         (ansible_distribution == "Rocky")
