@@ -19,7 +19,11 @@
   when: (ansible_distribution == "CentOS" and ansible_distribution_major_version|int > 8) or
         (ansible_distribution == "Rocky" and ansible_distribution_major_version|int > 8)
 
-- include: setup-epel.yml
+- name: setup epel for el
+  dnf:
+    name:
+      epel-release
+    state: present
   when: ansible_distribution == "CentOS" or ansible_distribution == "Rocky"
 
 - include: setup-rpmfusion.yml
