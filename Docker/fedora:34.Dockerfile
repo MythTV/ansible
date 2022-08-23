@@ -1,8 +1,6 @@
-FROM ubuntu:20.04
-LABEL CODELAME="Focal Fossa" EOL="25.04" STATUS="Builds through mythplugins!"
-RUN apt-get update && apt-get install --yes ansible git mlocate python3-apt vim
-
-# This only works with the devel/2022 branch!!!
+FROM fedora:34
+LABEL CODENAME="N/A" EOL="2022-06-07" STATUS="FAILING Ansible package libXxf86vm"
+RUN dnf install --assumeyes ansible git tree vim
 WORKDIR /root/source/ansible
 COPY . ./
 RUN ./mythtv.yml --limit=localhost

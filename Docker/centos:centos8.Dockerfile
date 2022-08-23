@@ -20,7 +20,7 @@ RUN git checkout -b stable-2.9 origin/stable-2.9
 RUN make install
 
 WORKDIR /root/source/mythtv-ansible
-# Be .dockerignore is up to date as this copies all of ..
+# Be sure .dockerignore is up to date as this copies all of ..
 COPY . ./
 # Turned off because the playbook won't run due to a python3-dnf problem
 # RUN ./mythtv.yml --limit=localhost
