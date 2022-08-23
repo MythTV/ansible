@@ -125,18 +125,20 @@
         (ansible_distribution == "CentOS" and ansible_distribution_major_version|int < 9) or
         (ansible_distribution == "Rocky" and ansible_distribution_major_version|int < 9)
 
-- name: add optional build libraries - Centos 8 only
+- name: add optional firewire build libraries
   set_fact:
     dnf_pkg_lst:
       - '{{ dnf_pkg_lst }}'
       - libavc1394-devel
-  when:  ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 8
+  when: (ansible_distribution == "Fedora") or
+        (ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 8 and ansible_distribution_release != "Stream") or
+        (ansible_distribution == "CentOS" and ansible_distribution_major_version|int > 8) or
+        (ansible_distribution == "Rocky")
 
 - name: add optional build libraries - Fedora only
   set_fact:
     dnf_pkg_lst:
       - '{{ dnf_pkg_lst }}'
-      - libavc1394-devel
       - libcec-devel
       - libbluray-devel
       - libbluray-bdj
