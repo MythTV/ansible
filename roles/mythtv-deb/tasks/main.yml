@@ -2,9 +2,10 @@
 
 ---
 
-- name: create a list of deb compilers and build essentials
+- name: create list of packages known to all Debian distributions
   set_fact:
     deb_pkg_lst:
+      # create a list of deb compilers and build essentials
       - git
       - g++
       - make
@@ -15,10 +16,7 @@
       - ccache
       - pkg-config
 
-- name: add mythtv essential build libraries
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
+      # add mythtv essential build libraries
       - uuid-dev
       - libfreetype6-dev
       - libmp3lame-dev
@@ -38,10 +36,7 @@
       - libzip-dev
       - libsoundtouch-dev
 
-- name: add mythtv extra build libraries
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
+      # add mythtv extra build libraries
       - libva-dev
       - libdrm-dev
       - libvdpau-dev
@@ -58,13 +53,7 @@
       - libsystemd-dev
       - libgnutls28-dev
 
-- include_tasks:
-    file: "{{ ansible_distribution | replace(' ', '_') | lower }}.yml"
-
-- name: add mythtv essential perl modules
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
+      #  add mythtv essential perl modules
       - libdbi-perl
       - libdbd-mysql-perl
       - libnet-upnp-perl
@@ -78,16 +67,17 @@
       - libsoap-lite-perl
       - libjson-perl
 
-- name: add mythtv essential plugin libraries
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
+      #  add mythtv essential plugin libraries
       - libvorbis-dev
       - libflac-dev
       - libflac++-dev
       - libtag1-dev
       - libcdio-dev
       - libcdio-paranoia-dev
+
+- name: add unique packages based on distributions
+  include_tasks:
+    file: "{{ ansible_distribution | replace(' ', '_') | lower }}.yml"
 
 - name: final package list
   debug:
