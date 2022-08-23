@@ -2,11 +2,12 @@
 
 ---
 
-- name: enable PowerTools repository
+- name: enable PowerTools repository for el8 variants
   command:
     cmd: dnf config-manager --enable powertools
     warn: false
-  when: (ansible_distribution == "CentOS" and ansible_distribution_major_version|int >= 8) or ansible_distribution == "Rocky"
+  when: (ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 8) or
+        (ansible_distribution == "Rocky" and ansible_distribution_major_version|int == 8)
 
 - name: enable Devel repository
   command:
