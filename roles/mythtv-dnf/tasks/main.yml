@@ -95,7 +95,6 @@
       - libass-devel
       - libiec61883-devel
       - fftw-devel
-      - libcrystalhd-devel
       - systemd-devel
       - xvidcore-devel
       - x264-devel
@@ -103,6 +102,15 @@
       - libvpx-devel
       - gnutls-devel
       - libdav1d-devel
+
+- name: add optional build libraries
+  set_fact:
+    dnf_pkg_list:
+      - '{{ dnf_pkg_lst }}'
+      - libcrystalhd-devel
+  when: (ansible_distribution == "Fedora") or
+        (ansible_distribution == "CentOS" and ansible_distribution_major_version|int < 9) or
+        (ansible_distribution == "Rocky" and ansible_distribution_major_version|int < 9)
 
 - name: add optional build libraries - Centos 8 only
   set_fact:
