@@ -13,7 +13,8 @@
   command:
     cmd: dnf config-manager --enable devel
     warn: false
-  when: (ansible_distribution == "CentOS" and ansible_distribution_major_version|int >= 8) or ansible_distribution == "Rocky"
+  when: (ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 8 and ansible_distribution_release != "Stream") or
+        (ansible_distribution == "Rocky")
 
 - name: enable CRB repository for el9+ variants
   command:
@@ -24,7 +25,14 @@
 
   when: ansible_distribution == "CentOS" or ansible_distribution == "Rocky"
 
-- include_tasks: setup-rpmfusion.yml
+- name: Install epel-next for centos stream
+  dnf:
+    name:
+      epel-next-release
+    state: present
+  when: (ansible_distribution == "CentOS" and ansible_distribution_release == "Stream")
+
+- include: setup-rpmfusion.yml
   when:    ansible_distribution == "Fedora" or ansible_distribution == "CentOS" or ansible_distribution == "Rocky"
 
 - name: create dnf compilers and build essentials list
