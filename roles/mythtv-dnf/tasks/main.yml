@@ -23,6 +23,11 @@
   when: (ansible_distribution == "CentOS" and ansible_distribution_major_version|int > 8) or
         (ansible_distribution == "Rocky" and ansible_distribution_major_version|int > 8)
 
+- name: setup epel for el
+  dnf:
+    name:
+      epel-release
+    state: present
   when: ansible_distribution == "CentOS" or ansible_distribution == "Rocky"
 
 - name: Install epel-next for centos stream
@@ -32,7 +37,7 @@
     state: present
   when: (ansible_distribution == "CentOS" and ansible_distribution_release == "Stream")
 
-- include: setup-rpmfusion.yml
+- include_tasks: setup-rpmfusion.yml
   when:    ansible_distribution == "Fedora" or ansible_distribution == "CentOS" or ansible_distribution == "Rocky"
 
 - name: create dnf compilers and build essentials list

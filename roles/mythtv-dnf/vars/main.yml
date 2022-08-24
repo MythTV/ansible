@@ -1,5 +1,9 @@
 # roles/mythtv-rpm/vars/main.yml
 
+---
+
 rpmfusion_rpm: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
 rpmfusion_rawhide_rpm: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-rawhide.noarch.rpm"
 rpmfusion_el_rpm: "https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+
+...
