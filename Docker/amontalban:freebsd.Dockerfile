@@ -1,4 +1,4 @@
-### This doesn't work......
+### This doesn't work. Can't find a freebsd manifest
 FROM amontalban/freebsd
 LABEL CODELAME="?" EOL="?"
 RUN pkg install ansible git vim

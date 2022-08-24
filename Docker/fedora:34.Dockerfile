@@ -1,5 +1,5 @@
 FROM fedora:34
-LABEL CODENAME="N/A" EOL="2022-06-07" STATUS="FAILING Ansible package libXxf86vm"
+LABEL CODENAME="N/A" EOL="2022-06-07" STATUS="Builds through mythplugins!"
 RUN dnf install --assumeyes ansible git tree vim
 WORKDIR /root/source/ansible
 COPY . ./
@@ -8,7 +8,7 @@ RUN ./mythtv.yml --limit=localhost
 WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
 WORKDIR /root/source/mythtv/mythtv
-RUN git checkout fixes/31
+RUN git checkout fixes/32
 
 RUN ./configure \
     --enable-libx264 \
