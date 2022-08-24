@@ -240,6 +240,23 @@
       - mysql-devel
       - minizip-devel
 
+- name: add mythtv essential plugin libraries for Fedora 30+
+  set_fact:
+    dnf_pkg_lst:
+      - '{{ dnf_pkg_lst }}'
+      - python3-oauth
+  when: (ansible_distribution == "Fedora" and ansible_distribution_version|int >= 30)
+
+- name: add mythtv essential plugin libraries for Fedora 30+ and el
+  set_fact:
+    dnf_pkg_lst:
+      - '{{ dnf_pkg_lst }}'
+      - python3-pycurl
+      - python3-oauthlib
+  when: (ansible_distribution == "Fedora" and ansible_distribution_version|int >= 30) or
+        (ansible_distribution == "CentOS") or
+        (ansible_distribution == "Rocky")
+
 - name: final package list
   debug:
     msg:
