@@ -1,5 +1,7 @@
 FROM centos:7
-LABEL CODENAME="N/A" EOL="2024-06-30" STATUS="Builds through mythplugins!"
+LABEL CODENAME="N/A"
+LABEL EOL="2024-06-30"
+LABEL STATUS="Builds through mythplugins!"
 RUN yum install --assumeyes epel-release
 RUN yum install --assumeyes ansible git vim-enhanced
 

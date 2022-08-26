@@ -1,5 +1,7 @@
 FROM fedora:rawhide
-LABEL CODENAME="rawhide" EOL="N/A" STATUS="Builds through mythplugins!"
+LABEL CODENAME="rawhide"
+LABEL EOL="N/A"
+LABEL STATUS="Builds through mythplugins!"
 RUN dnf install --assumeyes ansible git tree vim
 WORKDIR /root/source/ansible
 COPY . ./

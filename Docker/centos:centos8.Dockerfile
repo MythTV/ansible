@@ -1,7 +1,9 @@
 # centos:latest is Centos Linux 8 AppStream, so use centos8 to be specific
 # Fix for missing mirrors: https://stackoverflow.com/questions/72741508/failed-to-download-metadata-for-repo-appstream
 FROM centos:centos8
-LABEL CODENAME="N/A" DERIVEDFROM="Red Hat Enterprise Linux 8.5" EOL="2021-12-31"
+LABEL CODENAME="N/A" DERIVEDFROM="Red Hat Enterprise Linux 8.5"
+LABEL EOL="2021-12-31"
+LABEL STATUS "Not working"
 RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
     sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* && \
     dnf makecache && \

@@ -1,5 +1,7 @@
 FROM debian:11
-LABEL CODENAME="Bullseye" EOL="15 Aug 2026" STATUS="Builds through mythplugins!"
+LABEL CODENAME="Bullseye"
+LABEL EOL="15 Aug 2026"
+LABEL STATUS="Builds through mythplugins!"
 RUN apt-get update && apt-get install --yes ansible git mlocate python3-apt vim
 WORKDIR /root/source/ansible
 COPY . ./

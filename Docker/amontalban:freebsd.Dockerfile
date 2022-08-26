@@ -1,6 +1,7 @@
-### This doesn't work. Can't find a freebsd manifest
 FROM amontalban/freebsd
-LABEL CODELAME="?" EOL="?"
+LABEL CODENAME="?"
+LABEL EOL="?"
+LABEL STATUS"Not working"
 RUN pkg install ansible git vim
 
 # This only works with the devel/2022 branch!!!

@@ -1,5 +1,7 @@
 FROM ubuntu:22.04
-LABEL CODENAME="Jammy Jellyfish" EOL="27.04" STATUS="Builds through mythplugins!"
+LABEL CODENAME="Jammy Jellyfish"
+LABEL EOL="27.04"
+LABEL STATUS="Builds through mythplugins!"
 ENV TZ=America/Chicago
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update && apt-get install --yes ansible git mlocate python3-apt vim
