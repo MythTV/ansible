@@ -62,6 +62,19 @@
       - python-future
       - python-requests
       - python-oauth
+  when: ansible_distribution != "openSUSE Tumbleweed"
+
+- name: add mythtv essential python modules
+  set_fact:
+    zypper_pkg_lst:
+      - '{{ zypper_pkg_lst }}'
+      - python38-PyMySQL
+      - python38-lxml
+      - python38-urlgrabber
+      - python38-future
+      - python38-requests
+      - python38-oauth2
+  when: ansible_distribution == "openSUSE Tumbleweed"
 
 - name: determine devel:languages:perl repository url (Leap)
   when: ansible_distribution == "openSUSE Leap"

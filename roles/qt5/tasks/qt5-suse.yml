@@ -8,6 +8,15 @@
   tags:
     - qt5
 
+- name: create a list of qt5 WebKit libraries
+  set_fact:
+    zypper_pkg_lst:
+      - libQt5WebKit5-devel
+      - libQt5WebKitWidgets-devel
+  when: ansible_distribution != "openSUSE Tumbleweed"
+  tags:
+    - qt5
+
 # This looks like overkill, but the intent is to provide future maintainers
 # with a template to add more (especially conditional) packages.
 
