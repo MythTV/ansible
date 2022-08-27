@@ -4,9 +4,16 @@
   set_fact:
     zypper_pkg_lst:
       - libqt5-qtbase-devel
+      - libqt5-qtscript-devel
+  tags:
+    - qt5
+
+- name: create a list of qt5 WebKit libraries
+  set_fact:
+    zypper_pkg_lst:
       - libQt5WebKit5-devel
       - libQt5WebKitWidgets-devel
-      - libqt5-qtscript-devel
+  when: ansible_distribution != "openSUSE Tumbleweed"
   tags:
     - qt5
 
