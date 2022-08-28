@@ -1,3 +1,5 @@
+---
+
 - name: create a list of compilers and build essentials
   set_fact:
     zypper_pkg_lst:
@@ -28,6 +30,13 @@
       - libhdhomerun-devel
       - libsamplerate-devel
 
+- name: add mythtv essential build Leap/Tumbleweed libraries
+  set_fact:
+    zypper_pkg_lst:
+      - '{{ zypper_pkg_lst }}'
+      - soundtouch-devel
+  when: ansible_distribution == "openSUSE Leap" or ansible_distribution == "openSUSE Tumbleweed"
+
 - name: add optional build libraries
   set_fact:
     zypper_pkg_lst:
@@ -41,7 +50,7 @@
       - libvdpau-devel
       - libcec-devel
       - libass-devel
-      - libcrystalhd-devel
+      # N/A in Leap 15.3 (at least) libcrystalhd-devel
       - systemd-devel
       - libvpx-devel
       - libbluray-bdj
@@ -62,27 +71,52 @@
       - python-future
       - python-requests
       - python-oauth
-  when: ansible_distribution != "openSUSE Tumbleweed"
+  when: ansible_distribution != "openSUSE Leap" and ansible_distribution != "openSUSE Tumbleweed"
 
 - name: add mythtv essential python modules
   set_fact:
     zypper_pkg_lst:
       - '{{ zypper_pkg_lst }}'
-      - python38-PyMySQL
-      - python38-lxml
-      - python38-urlgrabber
-      - python38-future
-      - python38-requests
-      - python38-oauth2
-  when: ansible_distribution == "openSUSE Tumbleweed"
+      - python3-mysqlclient
+      - python3-lxml
+      - python3-urlgrabber
+      - python3-future
+      - python3-requests
+      - python3-oauth2
+  when: ansible_distribution == "openSUSE Leap" or ansible_distribution == "openSUSE Tumbleweed"
+
+- name: set Suse repository
+  set_fact:
+    suse_repo:
+      "http://download.opensuse.org/repositories/devel:/languages:/perl"
+
+# Current (8/2022) directory formats:
+# 15.4/
+# openSUSE_Leap_15.3/
+# openSUSE_Tumbleweed/
 
 - name: determine devel:languages:perl repository url (Leap)
-  when: ansible_distribution == "openSUSE Leap"
-  set_fact: perl_repo="http://download.opensuse.org/repositories/devel:/languages:/perl/{{ ansible_distribution | regex_replace('\\ ', '_') }}_{{ ansible_distribution_version }}/"
+  set_fact:
+    perl_repo:
+      "{{ suse_repo }}/{{ ansible_distribution | regex_replace('\\ ', '_') }}_{{ ansible_distribution_version }}/"
+  when:
+    - ansible_distribution == "openSUSE Leap"
+    - ansible_distribution_release|int < 4,
+
+
+- name: determine devel:languages:perl repository url (Leap)
+  set_fact:
+    perl_repo:
+      "{{ suse_repo }}/{{ ansible_distribution_version }}"
+  when:
+    - ansible_distribution == "openSUSE Leap"
+    - ansible_distribution_release|int > 3,
 
 - name: determine devel:languages:perl repository url (Tumbleweed)
+  set_fact:
+    perl_repo:
+      "{{ suse_repo }}/{{ ansible_distribution | regex_replace('\\ ', '_') }}/"
   when: ansible_distribution == "openSUSE Tumbleweed"
-  set_fact: perl_repo="http://download.opensuse.org/repositories/devel:/languages:/perl/{{ ansible_distribution | regex_replace('\\ ', '_') }}/"
 
 - name: print perl_repo
   debug: var=perl_repo
@@ -123,6 +157,13 @@
       - libexif-devel
       - dcraw
       - minizip-devel
+
+- name: add mythtv essential zip libraries
+  set_fact:
+    zypper_pkg_lst:
+      - '{{ zypper_pkg_lst }}'
+      - libzip-devel
+  when: ansible_distribution == "openSUSE Leap" or ansible_distribution == "openSUSE Tumbleweed"
 
 - name: final package list
   debug:
