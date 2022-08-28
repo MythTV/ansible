@@ -8,8 +8,8 @@ completed the following:
 - Installed prerequsite packages (like git and ansible) OK
 - Had the MythTV Ansible repro loaded and it executed OK
 - Cloned the MythTV repro and checked out a version OK
-- Built mythtv OK
-- Built mythplugins OK
+- Built/installed mythtv OK
+- Built/installed mythplugins OK
 <br/>
 
 Buildbot Distro Name | MythTV | Status | Notes
@@ -28,6 +28,8 @@ fedora-armv7hl | x |no Dockerfile | No manifest @ hub.docker.com
 fedora-rawhide | 31 | Done |
 freebsd12 | x |FAILING | tried amontalban:freebsd (only manifest available)
 osx | x |no Dockerfile | No manifest @ hub.docker.com
+opensuse:leap | 32 | Done | Not a buildbot distro
+opensuse:tumbleweed | 32 | Done | Not a buildbot distro
 rockylinux:8 | 32 | Done | Not a buildbot distro
 rockylinux:9 | 32 | Done | Not a buildbot distro
 ubuntu-20.04 | 31 | Done |
