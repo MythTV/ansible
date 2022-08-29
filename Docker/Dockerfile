@@ -1,5 +1,12 @@
-FROM fedora:36
-RUN dnf install --assumeyes ansible git tree vim
+# Attempt at a 'common' Dockerfile. There are some unique instructions in some
+# of the *.Dockerfiles that won't make this easy (without passing mulitple ARGs.
+# To use: docker build --build-arg IMAGE=ubuntu:22.04 --tag ubuntu:22.04 .
+ARG IMAGE
+FROM $IMAGE
+ENV TZ=America/Chicago
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get update && apt-get install --yes ansible git mlocate python3-apt vim
+
 WORKDIR /root/source/ansible
 COPY . ./
 RUN ./mythtv.yml --limit=localhost
@@ -14,12 +21,10 @@ RUN ./configure \
     --enable-libmp3lame \
     --enable-nonfree \
     --enable-proc-opt
-# ADJUST THE NEXT LINE. Don't use $(nproc)
 RUN make --jobs=4
 RUN make install
 
 WORKDIR /root/source/mythtv/mythplugins
 RUN ./configure
-# ADJUST THE NEXT LINE. Don't use $(nproc)
 RUN make --jobs=4
 RUN make install

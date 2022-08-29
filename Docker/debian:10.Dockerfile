@@ -1,7 +1,4 @@
 FROM debian:10
-LABEL CODENAME="Buster"
-LABEL EOL="1 Jun 2024"
-LABEL STATUS="Builds through mythplugins!"
 RUN apt-get update && apt-get install --yes ansible git mlocate python3-apt vim
 # Link required because python doesn't exist:
 RUN ln -s /usr/bin/python3 /usr/bin/python

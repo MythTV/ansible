@@ -1,7 +1,4 @@
 FROM fedora:35
-LABEL CODENAME="N/A"
-LABEL EOL="2022-11-15"
-LABEL STATUS="Builds through mythplugins!"
 RUN dnf install --assumeyes ansible git tree vim
 WORKDIR /root/source/ansible
 COPY . ./

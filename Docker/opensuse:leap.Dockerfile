@@ -1,7 +1,4 @@
 FROM opensuse/leap
-LABEL CODENAME="Leap"
-LABEL EOL="November 2022 (for 15.3, 2023 for .4)"
-LABEL STATUS="make fails, can't find QSqlDatabase"
 RUN zypper --non-interactive install ansible git mlocate vim
 
 WORKDIR /root/source/ansible

@@ -1,7 +1,4 @@
 FROM debian:bookworm
-LABEL CODENAME="bookworm"
-LABEL EOL="N/A"
-LABEL STATUS="Builds through mythplugins!"
 LABEL NOTE="This will become debian:12. The --tag and filename should be renamed."
 RUN apt-get update && apt-get install --yes ansible git mlocate python3-apt vim
 WORKDIR /root/source/ansible

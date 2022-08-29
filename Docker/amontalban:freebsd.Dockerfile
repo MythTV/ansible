@@ -1,7 +1,4 @@
 FROM amontalban/freebsd
-LABEL CODENAME="?"
-LABEL EOL="?"
-LABEL STATUS"Not working"
 RUN pkg install ansible git vim
 
 # This only works with the devel/2022 branch!!!

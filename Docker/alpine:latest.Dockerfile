@@ -4,9 +4,6 @@
 # required to add a new role.)
 
 FROM alpine:latest
-LABEL CODENAME="N/A v3.16"
-LABEL EOL="23 May 2022"
-LABEL STATUS="Successful test."
 RUN apk update && apk add --latest ansible less vim
 
 WORKDIR /root/source/ansible

@@ -1,9 +1,6 @@
 # A centos:9 manifest is unknown to hub.docker.com
 # The package manager would probably be dnf too.
 FROM centos:9
-LABEL CODENAME="N/A"
-LABEL EOL="Estimated 2027"
-LABEL STATUS "Not working"
 RUN dnf distribution-synchronization --assumeyes
 RUN dnf install centos-release-ansible-29.noarch git tree vim-enhanced --assumeyes
 

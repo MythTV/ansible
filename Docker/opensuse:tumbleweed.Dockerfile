@@ -1,7 +1,4 @@
 FROM opensuse/tumbleweed
-LABEL CODENAME="Tumbleweed"
-LABEL EOL="Forever"
-LABEL STATUS="Builds through mythplugins!"
 RUN zypper --non-interactive install ansible git vim
 
 WORKDIR /root/source/ansible

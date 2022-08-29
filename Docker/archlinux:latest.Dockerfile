@@ -1,8 +1,5 @@
 FROM archlinux:latest
-LABEL CODENAME="N/A"
-LABEL EOL="N/A"
-LABEL STATUS="Builds through mythplugins!"
-##################### RUN pacman --sync --refresh --sysupgrade --noconfirm
+# Need this too?: RUN pacman --sync --refresh --sysupgrade --noconfirm
 RUN pacman --sync --refresh --sysupgrade --noconfirm ansible git vim
 
 WORKDIR /root/source/ansible

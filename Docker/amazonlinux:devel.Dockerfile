@@ -2,9 +2,6 @@
 # that isn't known to the MythTV playbook. It will fail, but the info
 # from common role is used for adding new distros.
 FROM amazonlinux:devel
-LABEL CODENAME="setenforce"
-LABEL EOL="December 31, 2020"
-LABEL STATUS="Successful test."
 RUN dnf install --assumeyes file git less make python3-packaging python3-setuptools vim
 RUN ln /usr/bin/python3 /usr/bin/python
 

@@ -1,7 +1,4 @@
 FROM rockylinux:9
-LABEL CODENAME="Blue Onyx"
-LABEL EOL="31 May 2025"
-LABEL STATUS="Builds through mythplugins"
 RUN dnf update --assumeyes
 RUN dnf install --assumeyes dnf-plugins-core epel-release
 RUN dnf install --assumeyes ansible git vim

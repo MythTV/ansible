@@ -1,7 +1,4 @@
 FROM rockylinux:8
-LABEL CODENAME="Green Obsidian"
-LABEL EOL="31 May 2024"
-LABEL STATUS="Builds through mythplugins"
 RUN dnf update --assumeyes
 RUN dnf install --assumeyes dnf-plugins-core epel-release
 RUN dnf install --assumeyes ansible git vim
