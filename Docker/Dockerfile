@@ -1,12 +1,12 @@
-# Attempt at a 'common' Dockerfile. There are some unique instructions in some
-# of the *.Dockerfiles that won't make this easy (without passing mulitple ARGs.
-# To use: docker build --build-arg IMAGE=ubuntu:22.04 --tag ubuntu:22.04 .
+# Attempt at a single Dockerfile. There are unique instructions in some of
+# the *.Dockerfiles that won't make this easy (without passing mulitple ARGs).
+# Example: docker build --build-arg IMAGE=ubuntu:20.04 --tag ubuntu:20.04 .
+
 ARG IMAGE
 FROM $IMAGE
-ENV TZ=America/Chicago
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN apt-get update && apt-get install --yes ansible git mlocate python3-apt vim
+RUN apt-get update && apt-get install --yes ansible
 
+# Things that may be common...
 WORKDIR /root/source/ansible
 COPY . ./
 RUN ./mythtv.yml --limit=localhost
@@ -21,10 +21,10 @@ RUN ./configure \
     --enable-libmp3lame \
     --enable-nonfree \
     --enable-proc-opt
-RUN make --jobs=4
+RUN make
 RUN make install
 
 WORKDIR /root/source/mythtv/mythplugins
 RUN ./configure
-RUN make --jobs=4
+RUN make
 RUN make install
