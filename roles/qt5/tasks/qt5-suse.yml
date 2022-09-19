@@ -2,8 +2,6 @@
   set_fact:
     zypper_pkg_lst:
       - libqt5-qtbase-devel
-      - libQt5WebKit5-devel
-      - libQt5WebKitWidgets-devel
       - libqt5-qtscript-devel
   tags:
     - qt5
