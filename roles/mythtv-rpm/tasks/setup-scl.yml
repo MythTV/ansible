@@ -1,5 +1,7 @@
 # roles/mythtv-rpm/tasks/setup-scl.yml
 
+---
+
 - name: setup SCL repositories for CentOS
   yum:
     name:

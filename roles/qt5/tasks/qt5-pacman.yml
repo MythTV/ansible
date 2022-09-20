@@ -1,3 +1,5 @@
+---
+
 - name: install qt5 libraries
   pacman:
     name:

@@ -1,0 +1,85 @@
+#!/usr/bin/env ansible-playbook
+#
+# MythTV playbook. Assumes ansible-playbook can be found in $PATH to
+# make this executable work:
+#
+#    ./mythtv.yml --limit=<host>
+#
+# If not, then run like this:
+#
+#    <your path>/ansible-playbook --limit=<host> mythtv.yml
+#
+# <host> = one of the names under 'hosts:' in the hosts.yml file. See
+# README.md for help.
+
+---
+
+- hosts: mythtv_hosts
+
+  tasks:
+
+    - include_role:
+        name: common
+
+    - include_role:
+        name: mythtv-deb
+      when:
+        - ansible_pkg_mgr == "apt"
+        - not mythtv_tools
+
+    - include_role:
+        name: mythtv-rpm
+      when:
+        - ansible_pkg_mgr == "yum"
+        - not mythtv_tools
+
+    - include_role:
+        name: mythtv-dnf
+      when:
+        - ansible_pkg_mgr == "dnf"
+        - not mythtv_tools
+
+    - include_role:
+        name: mythtv-freebsd
+      when:
+        - ansible_pkg_mgr == "pkgng"
+        - not mythtv_tools
+
+    - include_role:
+        name: mythtv-macports
+      when:
+        - ansible_pkg_mgr == "macports"
+        - not mythtv_tools
+
+    - include_role:
+        name: mythtv-pacman
+      when:
+        - ansible_pkg_mgr == "pacman"
+        - not mythtv_tools
+
+    - include_role:
+        name: mythtv-suse
+      when:
+        - ansible_pkg_mgr == "zypper"
+        - not mythtv_tools
+
+    - include_role:
+        name: qt5
+      when:
+        - not mythtv_tools
+
+    - include_role:
+        name: buildworker
+      when: mythtv_builders
+
+    - include_role:
+        name: cppcheck
+      when: mythtv_tools
+
+    - include_role:
+        name: doxygen
+      when: mythtv_tools
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=6:

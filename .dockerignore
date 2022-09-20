@@ -1,0 +1,10 @@
+.ansible-lint
+.dockerignore
+.git
+.gitignore
+.yamllint.yml
+*.sh
+*.swp
+Docker
+README.md
+requirements.yml

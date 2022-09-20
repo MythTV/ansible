@@ -1,67 +1,81 @@
-# Ansible Playbooks for MythTV
-These are ansible playbooks for setting up MythTV buildworkers.
-They can also be used to install all the necessary packages if
-you wish to build MythTV from source.
+#!/usr/bin/env -S retext --preview
 
-First you need to clone the playbooks, install git if necessary.
-```
-git clone https://github.com/MythTV/ansible
-```
+[//]: # (Install retext from your distribution then ./README.md will look prettier.)
 
-Debian users running Wheezy will need to enable [wheezy-backports](https://wiki.debian.org/Backports)
+## Ansible Playbook for MythTV
+** Only runs on Ansible versions above 2.3. **
+
+This repository contains an Ansible playbook for user's that build MythTV
+from source. It's also used for setting up MythTV buildslaves.
+
+First you need to clone the playbook:
+
+``` git clone https://github.com/MythTV/ansible ```
+
+``` cd <the directory just created>```
+
+Debian users running Wheezy will need to enable
+[wheezy-backports](https://wiki.debian.org/Backports).
 Jessie or later is recommended for 0.28 and above.
 
-### Install the ansible package
-Then install the `ansible` package. Choose the one appropriate
-for your distro
+Install an `ssh` client and server for your distribution. You must be
+able to `ssh` into `localhost` from `localhost`.
 
-* Centos users will need to enable the [EPEL](https://fedoraproject.org/wiki/EPEL) repository in order to be able to install ansible
+### Install the Ansible package
+Choose the appropriate command(s) for your distribution.
+<br>
 
-Distro | Command
--------|--------
-Archlinux |  pacman -S ansible python2 
-Centos | yum install ansible
-Debian (and derivatives) | apt-get install ansible
+Distribution | Command
+:-------|:--------
+Archlinux | pacman -S ansible
+Centos | yum install ansible (enable the [EPEL](https://fedoraproject.org/wiki/EPEL) repository first)
+Debian (and derivatives) | apt install ansible
 Fedora | dnf install ansible
-FreeBSD | pkg install py37-ansible (FreeBSD 13+), pkg install py27-ansible (FreeBSD <= 12)
-MacOSX | See MacOSX Users below
-OpenSuse |  zypper install ansible
+MacOSX | port -v selfupdate; port upgrade outdated; port install py38-ansible
+FreeBSD | pkg install py27-ansible
+OpenSuse | zypper install ansible
 
-### Run the playbooks
-Then run the playbooks as follows.
+Most users will use `Ansible Community` from their distribution.
+`Ansible Core` will require `collections`.  They are defined in
+the included `requirements.yml` file. See it for how to load them.
 
-Please note archlinux users will need to add `--limit archlinux` to these commands
-Alternate hosts files are provided for archlinux, fedora 30 and freebsd users, as these
-platforms have different python requirements. Please replace hosts, with the
-appropriate filename.
+### Running the playbook
+For most distributions, run the playbook as follows. Replace
+`localhost` with the `--limit value` in the table below.
+See `mythtv.yml` for an additional command line if this
+doesn't work for your distribution:
 
-For a normal development system:
-```
-sudo ansible-playbook -i hosts qt5.yml
-```
+``` ./mythtv.yml --limit=localhost ```
+<br>
 
-MacOSX Users (replace python3.8 with the currently available of Python):
-```
+Distribution|--limit value
+:-----------|:------------
+Archlinux | archlinux
+Fedora 30 | f30
+MacOSX (using MacPorts)| macports
+FreeBSD | freebsd
+Builders | builder
+CPP Check and Doxygen | tools
+
+#### MacOSX Users
+
 sudo port -v selfupdate
 sudo port upgrade outdated
-sudo port install py39-ansible
-ansible-playbook-3.9 --extra-vars=ansible_python_interpreter=/opt/local/bin/python3.9 qt5.yml --ask-become-pass
-```
+sudo port install py310-ansible
+./mythtv.yml --limit=localhost
 
-MacOSX Users (optionally specify a databse version as follows):
-```
-ansible-playbook-3.9 --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.9 database_version=mariadb-10.5"  qt5.yml --ask-become-pass
-```
+*optionally specify a database version:
 
-MacOSX Users (optionally do not install qtwebkit as follows):
-```
-ansible-playbook-3.9 --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.9 install_qtwebkit=false"  qt5.yml --ask-become-pass
-```
+``` ./mythtv.yml --extra-vars="database_version=mariadb-10.5" --limit=localhost ```
 
-For a buildworker system:
-```
-sudo ansible-playbook -i hosts buildworker.yml
-```
+*optionally do not install qtwebkit:
 
-### Other Platforms
-We welcome contributions to support additional platforms. Please contact the developers if you are interested in this.
+``` ./mythtv.yml --extra-vars="install_qtwebkit=false" --limit=localhost ```
+
+## Other Platforms
+We welcome contributions to support additional platforms. Please contact lhe
+developers if you are interested in this. Output from the following is needed
+to start.  Note that older versions of Ansible will only work with one filter
+variable (run it once for each of the three items below).
+
+``` ansible --inventory=hosts.yml --module-name=setup --args="filter=ansible_distribution,ansible_distribution_major_version,ansible_pkg_mgr" localhost ```

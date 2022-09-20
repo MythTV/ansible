@@ -1,4 +1,6 @@
-# roles/mythtv-rpm/tasks/main.yml
+# roles/mythtv-dnf/tasks/main.yml
+
+---
 
 - name: enable PowerTools repository for el8 variants
   command:
@@ -35,7 +37,7 @@
     state: present
   when: (ansible_distribution == "CentOS" and ansible_distribution_release == "Stream")
 
-- include: setup-rpmfusion.yml
+- include_tasks: setup-rpmfusion.yml
   when:    ansible_distribution == "Fedora" or ansible_distribution == "CentOS" or ansible_distribution == "Rocky"
 
 - name: create dnf compilers and build essentials list

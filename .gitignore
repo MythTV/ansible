@@ -1,2 +1,6 @@
+# Tools
+*.sh
+# vim etc.
+*.swp
+# for any leftovers...
 qt5.retry
-Docker/

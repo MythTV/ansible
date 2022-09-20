@@ -1,22 +1,24 @@
-- include:  qt5-deb.yml
+---
+
+- include_tasks:  qt5-deb.yml
   when:     ansible_pkg_mgr == "apt"
 
-- include:  qt5-rpm.yml
+- include_tasks:  qt5-rpm.yml
   when:     ansible_pkg_mgr == "yum"
 
-- include:  qt5-dnf.yml
+- include_tasks:  qt5-dnf.yml
   when:     ansible_pkg_mgr == "dnf"
 
-- include:  qt5-macports.yml
+- include_tasks:  qt5-macports.yml
   when:     ansible_pkg_mgr == "macports"
 
-- include:  qt5-pacman.yml
+- include_tasks:  qt5-pacman.yml
   when:     ansible_pkg_mgr == "pacman"
 
-- include:  qt5-pkgng.yml
+- include_tasks:  qt5-pkgng.yml
   when:     ansible_pkg_mgr == "pkgng"
 
-- include:  qt5-suse.yml
+- include_tasks:  qt5-suse.yml
   when:     ansible_pkg_mgr == "zypper"
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

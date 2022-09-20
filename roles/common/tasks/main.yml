@@ -1,0 +1,46 @@
+# These tasks will run before other roles (selected by mythtv.yml) and
+# prevent users from running ALL hosts. The instructions are clear that
+# the --limit=<name> must be used. The debug: prints information useful
+# for diagnosing issues.
+
+---
+
+- fail:
+    msg: "Aborting {{ ansible_hostname }} because the --limit switch wasn't used"
+  when: ansible_limit is undefined
+
+- fail:
+    msg: "Aborting {{ ansible_hostname }} because the --limit= switch was empty"
+  when: not ansible_limit
+
+- fail:
+    msg: "Aborting {{ ansible_hostname }} because the --limit=all switch was used"
+  when: ansible_limit == "all"
+
+- name: Debian information used to select which roles/tasks run
+  debug:
+    msg:
+      - "inventory_hostname:                 {{ inventory_hostname }}"
+      - "ansible_distribution:               {{ ansible_distribution }}"
+      - "ansible_distribution_release:       {{ ansible_distribution_release }}"
+      - "ansible_distribution_major_version: {{ ansible_distribution_major_version }}"
+      - "ansible_lsb.major_release:          {{ ansible_lsb.major_release }}"
+      - "ansible_pkg_mgr:                    {{ ansible_pkg_mgr }}"
+  when:
+    - ansible_distribution_file_parsed is defined
+    - ansible_distribution_file_parsed
+    - ansible_lsb.major_release is defined
+
+- name: Non Debain information used to select which roles/tasks run
+  debug:
+    msg:
+      - "inventory_hostname:                 {{ inventory_hostname }}"
+      - "ansible_distribution:               {{ ansible_distribution }}"
+      - "ansible_distribution_release:       {{ ansible_distribution_release }}"
+      - "ansible_distribution_major_version: {{ ansible_distribution_major_version }}"
+      - "ansible_pkg_mgr:                    {{ ansible_pkg_mgr }}"
+  when: ansible_lsb.major_release is undefined
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

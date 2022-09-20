@@ -1,8 +1,11 @@
 # roles/mythtv-deb/tasks/main.yml
 
-- name: create a list of deb compilers and build essentials
+---
+
+- name: create list of packages known to all Debian distributions
   set_fact:
     deb_pkg_lst:
+      # create a list of deb compilers and build essentials
       - git
       - g++
       - make
@@ -13,24 +16,7 @@
       - ccache
       - pkg-config
 
-- name: add compilers and build essentials 2 (debian)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - libtool-bin
-  when: ansible_distribution == "Debian" and ansible_lsb.major_release|int >= 8
-
-- name: add compilers and build essentials 2 (ubuntu)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - libtool-bin
-  when: ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int >= 15
-
-- name: add mythtv essential build libraries
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
+      # add mythtv essential build libraries
       - uuid-dev
       - libfreetype6-dev
       - libmp3lame-dev
@@ -43,8 +29,6 @@
       - libexiv2-dev
       - libasound2-dev
       - libegl1-mesa-dev
-      # Added OpenGL ES
-      # - libgles2-mesa-dev
       - liblzo2-dev
       - libhdhomerun-dev
       - libsamplerate0-dev
@@ -52,10 +36,7 @@
       - libzip-dev
       - libsoundtouch-dev
 
-- name: add mythtv extra build libraries
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
+      # add mythtv extra build libraries
       - libva-dev
       - libdrm-dev
       - libvdpau-dev
@@ -72,236 +53,7 @@
       - libsystemd-dev
       - libgnutls28-dev
 
-- name: add mythtv extra build libraries (Raspbian Stretch or later)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - libxcb-shm0-dev
-      - libx265-dev
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_lsb.major_release|int >= 9
-    - ansible_lsb.id == "Raspbian"
-
-- name: add mythtv extra build libraries (Raspbian Stretch)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - libcec4-dev
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_lsb.major_release|int == 9
-    - ansible_lsb.id == "Raspbian"
-
-- name: add mythtv extra build libraries (Raspbian Buster or later)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - libcec-dev
-      - hwdata
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_lsb.major_release|int >= 10
-    - ansible_lsb.id == "Raspbian"
-
-- name: add mythtv extra build libraries (Debian)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - libcec-dev
-      - libcrystalhd-dev
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_lsb.id != "Raspbian"
-    - ansible_distribution_release != "bookworm"
-    - ansible_distribution_major_version|int < 11
-
-- name: add mythtv extra build libraries (Debian Bookworm and later)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - libcec-dev
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
-# ^^^ this needs updating once bookworm has a major release version
-
-- name: add mythtv extra build libraries (Debian Stretch and later)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - libbluray-dev
-      - libx265-dev
-  when:
-    - ansible_distribution == "Debian"
-    - (ansible_lsb.major_release|int >= 9 or ansible_lsb.release == "testing")
-
-- name: add mythtv extra build libraries (Ubuntu 16.04 and later)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - libcec-dev
-      - libavc1394-dev
-      - libiec61883-dev
-      - libpulse-dev
-      - libfftw3-dev
-      - libssl-dev
-      - libsystemd-dev
-      - libbluray-dev
-      - libx265-dev
-  when:
-    - ansible_distribution == "Ubuntu"
-    - (ansible_lsb.major_release|int >= 16)
-
-- name: bluray for Mint v20+
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - libbluray-dev
-  when:
-    - (ansible_distribution == "Linux Mint" or ansible_distribution == "Pop!_OS")
-    - (ansible_lsb.major_release|int >= 20)
-
-- name: add mythtv extra build libraries (Ubuntu 16.04 and later, not aarch64)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - libcrystalhd-dev
-  when:
-    - ansible_distribution == "Ubuntu"
-    - (ansible_lsb.major_release|int >= 16)
-    - ansible_architecture != "aarch64"
-
-- name: add mythtv mysql client libraries (Ubuntu)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - libmysqlclient-dev
-  when: ansible_distribution == "Ubuntu"
-
-- name: add mythtv mysql client libraries (Debian - Jessie)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - libmysqlclient-dev
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_lsb.major_release|int == 8
-
-- name: add mythtv mysql client libraries (Debian - Stretch)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - default-libmysqlclient-dev
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_lsb.major_release|int == 9
-
-- name: add mythtv mysql client libraries (Debian - Buster)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - libmariadbclient-dev
-      - libmariadb-dev-compat
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_lsb.major_release|int == 10
-
-- name: add mythtv mysql client libraries (Debian - Bullseye and later)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - default-libmysqlclient-dev
-      - libmariadb-dev-compat
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
-
-- name: add mythtv essential python modules
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - python-mysqldb
-      - python-lxml
-      - python-urlgrabber
-      - python-oauth
-      - python-pycurl
-  when:
-    - ansible_distribution == "Ubuntu"
-    - ansible_lsb.major_release|int < 20
-
-- name: add mythtv essential python modules (Stretch/16.04 and later)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - python-future
-      - python3-future
-      - python-requests
-      - python-requests-cache
-      - python3-requests
-      - python3-requests-cache
-      - python3-mysqldb
-      - python3-lxml
-      - python3-oauth
-      - python-simplejson
-      - python3-simplejson
-  when: (ansible_distribution == "Debian" and
-          (ansible_lsb.major_release|int >= 9 and ansible_distribution_major_version|int < 11) or
-        (ansible_distribution == "Ubuntu" and
-          (ansible_lsb.major_release|int >= 16 and ansible_lsb.major_release|int < 20)))
-
-- name: add mythtv essential python modules (Ubuntu 20.04 and later)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - python3-future
-      - python3-requests
-      - python3-requests-cache
-      - python3-mysqldb
-      - python3-lxml
-      - python3-oauth
-      - python3-pycurl
-      - python3-simplejson
-      - python3-setuptools
-  when:
-    - (ansible_distribution == "Ubuntu") or (ansible_distribution == "Linux Mint")
-    - (ansible_lsb.major_release|int >= 20 )
-
-- name: add mythtv essential python modules (Buster)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - python-future
-      - python3-future
-      - python3-oauth
-      - python3-pycurl
-      - python-requests
-      - python3-requests-cache
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_lsb.major_release|int == 10
-
-- name: add mythtv essential python modules (Buster or later)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - python3-future
-      - python3-oauth
-      - python3-pycurl
-      - python3-requests
-      - python3-requests-cache
-      - python3-lxml
-      - python3-mysqldb
-      - python3-simplejson
-      - python3-setuptools
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
-
-- name: add mythtv essential perl modules
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
+      #  add mythtv essential perl modules
       - libdbi-perl
       - libdbd-mysql-perl
       - libnet-upnp-perl
@@ -315,10 +67,7 @@
       - libsoap-lite-perl
       - libjson-perl
 
-- name: add mythtv essential plugin libraries
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
+      #  add mythtv essential plugin libraries
       - libvorbis-dev
       - libflac-dev
       - libflac++-dev
@@ -326,39 +75,9 @@
       - libcdio-dev
       - libcdio-paranoia-dev
 
-- name: add mythtv essential plugin libraries (Debian or Ubuntu 16+)
-  set_fact:
-    deb_pkg_lst:
-      - '{{ deb_pkg_lst }}'
-      - libminizip-dev
-  when: ansible_distribution == "Debian" or
-        (ansible_distribution == "Ubuntu" and ansible_lsb.major_release|int >= 16)
-
-- name: adjust Ubuntu 22.04 packages
-  block:
-    - set_fact:
-        deb_pkg_lst: '{{ lookup("flattened", deb_pkg_lst ).split(",") }}'
-
-    - set_fact:
-        deb_pkg_lst: "{{ deb_pkg_lst | difference(['libcrystalhd-dev']) }}"
-
-    - set_fact:
-        deb_pkg_lst: "{{ deb_pkg_lst | replace('python3-oauth', 'python3-oauthlib') }}"
-
-  when:
-    - ansible_distribution == "Ubuntu"
-    - ansible_distribution_major_version | int == 22
-
-- name: adjust Debian 12+ packages
-  block:
-    - set_fact:
-        deb_pkg_lst: '{{ lookup("flattened", deb_pkg_lst ).split(",") }}'
-
-    - set_fact:
-        deb_pkg_lst: "{{ deb_pkg_lst | replace('python3-oauth', 'python3-oauthlib') }}"
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 12
+- name: add unique packages based on distributions
+  include_tasks:
+    file: "{{ ansible_distribution | replace(' ', '_') | lower }}.yml"
 
 - name: final package list
   debug:
@@ -371,5 +90,7 @@
       '{{ lookup("flattened", deb_pkg_lst ) }}'
     state:
       present
+
+...
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

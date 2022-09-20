@@ -1,0 +1,59 @@
+# roles/mythtv-deb/tasks/mint.yml
+
+---
+
+- name: add compilers and build essentials 2
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libtool-bin
+
+- name: add mythtv extra build libraries
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libcec-dev
+      - libcec6
+      - libavc1394-dev
+      - libiec61883-dev
+      - libpulse-dev
+      - libfftw3-dev
+      - libssl-dev
+      - libsystemd-dev
+      - libbluray-dev
+      - libx265-dev
+
+- name: add mythtv mysql client libraries
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - default-libmysqlclient-dev
+      # - libmysqlclient-dev
+      - libmariadb-dev
+      - libmariadb-dev-compat
+
+- name: add mythtv essential python modules
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - python3-future
+      - python3-html5lib
+      - python3-requests
+      - python3-requests-cache
+      - python3-mysqldb
+      - python3-lxml
+      - python3-oauth
+      - python3-pycurl
+      - python3-simplejson
+      - python3-setuptools
+
+- name: add mythtv essential plugin libraries
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libminizip-dev
+      - libminizip1
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

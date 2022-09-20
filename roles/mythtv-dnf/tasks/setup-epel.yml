@@ -1,0 +1,14 @@
+# roles/mythtv-rpm/tasks/setup-epel.yml
+
+---
+
+- shell:            /bin/rpm -q --quiet epel-release && echo installed || echo missing
+  args:
+    warn: false
+  register:         epel
+
+- name: setup EPEL repository
+  command:
+    cmd: dnf install -y --nogpgcheck {{ epel_rpm }}
+    warn: false
+  when: epel.stdout == "missing"

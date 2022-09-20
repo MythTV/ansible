@@ -1,5 +1,7 @@
 # roles/buildslave/vars/main.yml
 
+---
+
 # python-twisted-mail is a build dependency for buildbot packages
 twisted_mail_src: "https://kojipkgs.fedoraproject.org//packages/python-twisted-mail/12.2.0/3.fc20/src/python-twisted-mail-12.2.0-3.fc20.src.rpm"
 twisted_mail_rpm: "~/rpmbuild/RPMS/{{ansible_architecture}}/python-twisted-mail-12.2.0-3.el7.{{ansible_architecture}}.rpm"

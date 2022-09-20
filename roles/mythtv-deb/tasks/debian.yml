@@ -1,0 +1,171 @@
+# roles/mythtv-deb/tasks/debian.yml
+
+# https://www.debian.org/releases:
+#   10=Buster, 11=Bullseye, 12 codename=bookworm (becomes Bookworm)
+
+---
+
+- name: add compilers and build essentials 2 (debian)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libtool-bin
+  when: ansible_lsb.major_release|int >= 8
+
+- name: add mythtv extra build libraries (Raspbian Stretch or later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libxcb-shm0-dev
+      - libx265-dev
+  when:
+    - ansible_lsb.major_release|int >= 9
+    - ansible_lsb.id == "Raspbian"
+
+- name: add mythtv extra build libraries (Raspbian Stretch)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libcec4-dev
+  when:
+    - ansible_lsb.major_release|int == 9
+    - ansible_lsb.id == "Raspbian"
+
+- name: add mythtv extra build libraries (Raspbian Buster or later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libcec-dev
+      - hwdata
+  when:
+    - ansible_lsb.major_release|int >= 10
+    - ansible_lsb.id == "Raspbian"
+
+- name: add mythtv extra build libraries
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libcec-dev
+      - libcrystalhd-dev
+  when:
+    - ansible_lsb.id != "Raspbian"
+    - ansible_distribution_release != "bookworm"
+    - ansible_distribution_major_version|int < 11
+
+- name: add mythtv extra build libraries (Bullseye and later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libcec-dev
+  when:
+    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
+
+- name: add mythtv extra build libraries (Stretch and later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libbluray-dev
+      - libx265-dev
+  when:
+    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 9
+
+- name: add mythtv mysql client libraries (Jessie)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libmysqlclient-dev
+  when:
+    - ansible_lsb.major_release|int == 8
+
+- name: add mythtv mysql client libraries (Stretch)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - default-libmysqlclient-dev
+  when:
+    - ansible_lsb.major_release|int == 9
+
+- name: add mythtv mysql client libraries (Buster)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libmariadbclient-dev
+      - libmariadb-dev-compat
+  when:
+    - ansible_lsb.major_release|int == 10
+
+- name: add mythtv mysql client libraries (Bullseye and later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - default-libmysqlclient-dev
+      - libmariadb-dev-compat
+  when:
+    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
+
+- name: add mythtv essential python modules (Stretch/16.04 and later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - python-future
+      - python3-future
+      - python-requests
+      - python-requests-cache
+      - python3-requests
+      - python3-requests-cache
+      - python3-mysqldb
+      - python3-lxml
+      - python3-oauth
+      - python-simplejson
+      - python3-simplejson
+  when:
+    - ansible_lsb.major_release|int >= 9 and ansible_distribution_major_version|int < 11
+
+- name: add mythtv essential python modules (Buster)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - python-future
+      - python3-future
+      - python3-oauth
+      - python3-pycurl
+      - python-requests
+      - python3-requests-cache
+  when:
+    - ansible_lsb.major_release|int == 10
+
+- name: add mythtv essential python modules (Buster or later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - python3-future
+      - python3-oauth
+      - python3-pycurl
+      - python3-requests
+      - python3-requests-cache
+      - python3-lxml
+      - python3-mysqldb
+      - python3-simplejson
+      - python3-setuptools
+  when:
+    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
+
+- name: make adjustments for bookworm or >= 12 package here
+  block:
+    - set_fact:
+        deb_pkg_lst: '{{ lookup("flattened", deb_pkg_lst ).split(",") }}'
+
+    - set_fact:
+        deb_pkg_lst: "{{ deb_pkg_lst | replace('python3-oauth', 'python3-oauthlib') }}"
+  when:
+    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 12
+
+- name: add mythtv essential plugin libraries
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - libminizip-dev
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
