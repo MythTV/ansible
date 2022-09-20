@@ -5,16 +5,15 @@
 ---
 
 skip_list:
-  # - command-instead-of-module
-  # - command-instead-of-shell
+  - command-instead-of-module
+  - command-instead-of-shell
   - unnamed-task
+  - no-changed-when
   # - empty-string-compare
 
 warn_list:
-  - no-changed-when
-
-# - literal-compare
-# - no-jinja-nesting
+  - role-name
+  # no-changed-when
 
 ...
 

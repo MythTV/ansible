@@ -85,20 +85,15 @@
       - python3-oauth2
   when: ansible_distribution == "openSUSE Leap" or ansible_distribution == "openSUSE Tumbleweed"
 
+- name: set Suse repository
+  set_fact:
+    suse_repo:
+      "http://download.opensuse.org/repositories/devel:/languages:/perl"
+
 # Current (8/2022) directory formats:
 # 15.4/
 # openSUSE_Leap_15.3/
 # openSUSE_Tumbleweed/
-
-- name: set Suse repository
-  set_fact:
-    suse_repo:
-      "http://download.opensuse.org/repositories/devel:/languages:/perl"
-
-- name: set Suse repository
-  set_fact:
-    suse_repo:
-      "http://download.opensuse.org/repositories/devel:/languages:/perl"
 
 - name: determine devel:languages:perl repository url (Leap)
   set_fact:

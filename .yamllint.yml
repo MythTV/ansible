@@ -29,7 +29,7 @@ rules:
   # Just warn for long lines
   line-length:
     level: warning
-    max: 135
+    max: 138
 
   octal-values: enable
 
