@@ -74,8 +74,5 @@ sudo port install py310-ansible
 
 ## Other Platforms
 We welcome contributions to support additional platforms. Please contact lhe
-developers if you are interested in this. Output from the following is needed
-to start.  Note that older versions of Ansible will only work with one filter
-variable (run it once for each of the three items below).
-
-``` ansible --inventory=hosts.yml --module-name=setup --args="filter=ansible_distribution,ansible_distribution_major_version,ansible_pkg_mgr" localhost ```
+developers if you are interested in this. Output from a run of ```./mythtv.yml```
+is needed for starters.
