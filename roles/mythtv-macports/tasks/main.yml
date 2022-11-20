@@ -4,7 +4,7 @@
 
 - name: specify a mariadb/mysql version to install
   set_fact:
-    database_version=mariadb-10.5
+    database_version=mysql8
   when:
     database_version is undefined
 - name: check if this is a mariadb based install
@@ -15,6 +15,12 @@
   set_fact:
     database_name=mysql
   when: database_version is search("mysql")
+
+- name: specify a perl version to install
+  set_fact:
+    perl_version=5.34
+  when:
+    perl_version is undefined
 
 - name: setup macports mariadb/mysql variant variables
   set_fact:
@@ -94,19 +100,19 @@
   set_fact:
     macports_pkg_list:
       - '{{ macports_pkg_list }}'
-      - perl5
-      - p5-date-manip
-      - p5-datetime-format-iso8601
-      - p5-dbi
-      - p5-image-size
-      - p5-io-socket-inet6
-      - p5-json
-      - p5-libwww-perl
-      - p5-http-request-ascgi
-      - p5-net-upnp
-      - p5-soap-lite
-      - p5-xml-xpath
-      - p5-xml-simple
+      - perl{{ perl_version }}
+      - p{{ perl_version }}-date-manip
+      - p{{ perl_version }}-datetime-format-iso8601
+      - p{{ perl_version }}-dbi
+      - p{{ perl_version }}-image-size
+      - p{{ perl_version }}-io-socket-inet6
+      - p{{ perl_version }}-json
+      - p{{ perl_version }}-libwww-perl
+      - p{{ perl_version }}-http-request-ascgi
+      - p{{ perl_version }}-net-upnp
+      - p{{ perl_version }}-soap-lite
+      - p{{ perl_version }}-xml-xpath
+      - p{{ perl_version }}-xml-simple
 
 - name: packages from ports
   set_fact:
@@ -128,9 +134,9 @@
       '{{ lookup("flattened", macports_pkg_list) }}'
     update_cache: yes
 
-- name: install p5-dbd-mysql for previously specified mariadb/mysql version
+- name: install p{{ perl_version }}-dbd-mysql for previously specified mariadb/mysql version
   macports:
-    name: 'p5-dbd-mysql'
+    name: 'p{{ perl_version }}-dbd-mysql'
     variant: +{{ mysql_variant }}
 
 - name: select the installed version of mariadb/mysql and python
