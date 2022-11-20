@@ -59,20 +59,20 @@ CPP Check and Doxygen | tools
 
 #### MacOSX Users
 
-sudo port -v selfupdate
-sudo port upgrade outdated
-sudo port install py310-ansible
-./mythtv.yml --limit=localhost
+```sudo port -v selfupdate```<br>
+```sudo port upgrade outdated```<br>
+```sudo port install py310-ansible```<br>
+```./mythtv.yml --limit=localhost```
 
-*optionally specify a database version:
+- Optionally specify a database version:
 
-``` ./mythtv.yml --extra-vars="database_version=mariadb-10.5" --limit=localhost ```
+    ``` ./mythtv.yml --extra-vars="database_version=mariadb-10.5" --limit=localhost ```
 
-*optionally do not install qtwebkit:
+-    Optionally do not install qtwebkit:
 
-``` ./mythtv.yml --extra-vars="install_qtwebkit=false" --limit=localhost ```
+    ``` ./mythtv.yml --extra-vars="install_qtwebkit=false" --limit=localhost ```
 
 ## Other Platforms
-We welcome contributions to support additional platforms. Please contact lhe
+We welcome contributions to support additional platforms. Please contact the
 developers if you are interested in this. Output from a run of ```./mythtv.yml```
 is needed for starters.
