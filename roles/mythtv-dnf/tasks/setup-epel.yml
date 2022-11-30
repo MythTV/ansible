@@ -10,5 +10,4 @@
 - name: setup EPEL repository
   command:
     cmd: dnf install -y --nogpgcheck {{ epel_rpm }}
-    warn: false
   when: epel.stdout == "missing"
