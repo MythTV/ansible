@@ -1,6 +1,6 @@
 #!/usr/bin/env -S retext --preview # Try installing: retext
 
-### Distributions known to the buildbots and some tests.
+### Distributions known to the buildbots plus some tests.
 
 In the Status column, "Done" means that the Dockerfile instructions
 completed the following:
@@ -23,9 +23,10 @@ debian-bookworm (12) | bookworm | N/A | 32 | Done |
 f34 | N/A | 2022-06-07 | 32 | Done |
 f35 | N/A | 2022-11-15 | 32 | Done |
 f36 | N/A | 2023-05-16 | 32 | Done |
+f37 | N/A | 202?-??-?? | 32 | IP |
 fedora-aarch64 | N/A | N/A | x |no Dockerfile | No manifest @ hub.docker.com
 fedora-armv7hl | N/A | N/A | x |no Dockerfile | No manifest @ hub.docker.com
-fedora-rawhide | N/A | N/A | 31 | Done |
+fedora-rawhide | N/A | N/A | 31 | Done | Development release is here
 freebsd12 | N/A | N/A | x |FAILING | tried amontalban:freebsd (only manifest available)
 osx | N/A | N/A | x |no Dockerfile | No manifest @ hub.docker.com
 opensuse:leap | Leap | November 2022 (for 15.3, 2023 for .4) | 32 | Done | Not a buildbot distro

@@ -3,8 +3,6 @@
 ---
 
 - shell:            /bin/rpm -q --quiet epel-release && echo installed || echo missing
-  args:
-    warn: false
   register:         epel
 
 - name: setup EPEL repository
