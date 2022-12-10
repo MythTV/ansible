@@ -77,7 +77,7 @@ Delete the `REPOSITORY:TAG` before the `IMAGE ID`. The last two are from
 
 >`docker image prune [--force]`
 
->`docker image <IMAGE ID> ubuntu:20.04 [--force]`
+>`docker image rm {REPOSITORY:TAG|IMAGE ID} [--force]`
 
 ## More *Docker* details
 
