@@ -79,21 +79,14 @@
   set_fact:
     python_package_suffix:
       '{{ ansible_python.version.major }}{{ ansible_python.version.minor }}'
+    python_exe_suffix:
+      '{{ ansible_python.version.major }}.{{ ansible_python.version.minor }}'
 
 - name: add python essentials
   set_fact:
     macports_pkg_list:
       - '{{ macports_pkg_list }}'
       - python{{ python_package_suffix }}
-      - py{{ python_package_suffix }}-future
-      - py{{ python_package_suffix }}-requests
-      - py{{ python_package_suffix }}-requests-cache
-      - py{{ python_package_suffix }}-lxml
-      - py{{ python_package_suffix }}-oauthlib
-      - py{{ python_package_suffix }}-curl
-      - py{{ python_package_suffix }}-simplejson
-      - py{{ python_package_suffix }}-wheel
-      - py{{ python_package_suffix }}-pymysql
       - py{{ python_package_suffix }}-pip
       - py{{ python_package_suffix }}-virtualenv
 
@@ -115,7 +108,7 @@
       - p{{ perl_version }}-xml-xpath
       - p{{ perl_version }}-xml-simple
 
-- name: packages from ports
+- name: utility packages from ports
   set_fact:
     macports_pkg_list:
       - '{{ macports_pkg_list }}'
@@ -123,6 +116,7 @@
       - libtool
       - lame
       - gnutls
+      - gsed
 
 - name: print final list of ports
   debug:
@@ -147,16 +141,50 @@
     - { group: python,  version: 'python{{ python_package_suffix }}' }
     - { group: python3, version: 'python{{ python_package_suffix }}' }
     - { group: pip3, version: 'pip{{ python_package_suffix }}' }
+    - { group: virtualenv, version: 'virtualenv{{ python_package_suffix }}' }
 
-- name: install py-mysqlclient (for mariadb/mysqldb)
-  macports:
-    name: py{{ python_package_suffix }}-mysqlclient
-    variant: +{{ mysql_variant }}
+- name: create Python virtual environment folder for standard user
+  become: false
+  file:
+      name: ~/.mythtv/python-virtualenv
+      state: directory
 
-- name: install ttvdb4.py compatible version of py-requests
+- name: initiate virtualenv for standard user
+  become: false
   pip:
-      name: requests-cache==0.5.2
-      executable: pip3
+      virtualenv: ~/.mythtv/python-virtualenv
+      virtualenv_python: python{{ python_exe_suffix }}
+      name: 
+        - 'argparse'
+        - 'audiofile'
+        - 'bs4'
+        - 'common'
+        - 'configparser'
+        - 'datetime'
+        - 'discid'
+        - 'et'
+        - 'features'
+        - 'future'
+        - 'HTMLParser'
+        - 'httplib2'
+        - 'importlib_metadata'
+        - 'lxml'
+        - 'markdown'
+        - 'musicbrainzngs'
+        - 'mysqlclient'
+        - 'oauthlib'
+        - 'port'
+        - 'put'
+        - 'py2app'
+        - 'pycurl'
+        - 'python_dateutil'
+        - 'requests'
+        - 'requests_cache==0.5.2'
+        - 'simplejson'
+        - 'traceback2'
+        - 'urllib3'
+        - 'virtualenv'
+        - 'wheel'
   tags: pip
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
