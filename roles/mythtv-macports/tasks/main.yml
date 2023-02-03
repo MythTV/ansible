@@ -146,45 +146,45 @@
 - name: create Python virtual environment folder for standard user
   become: false
   file:
-      name: ~/.mythtv/python-virtualenv
-      state: directory
+    name: ~/.mythtv/python-virtualenv
+    state: directory
 
 - name: initiate virtualenv for standard user
   become: false
   pip:
-      virtualenv: ~/.mythtv/python-virtualenv
-      virtualenv_python: python{{ python_exe_suffix }}
-      name: 
-        - 'argparse'
-        - 'audiofile'
-        - 'bs4'
-        - 'common'
-        - 'configparser'
-        - 'datetime'
-        - 'discid'
-        - 'et'
-        - 'features'
-        - 'future'
-        - 'HTMLParser'
-        - 'httplib2'
-        - 'importlib_metadata'
-        - 'lxml'
-        - 'markdown'
-        - 'musicbrainzngs'
-        - 'mysqlclient'
-        - 'oauthlib'
-        - 'port'
-        - 'put'
-        - 'py2app'
-        - 'pycurl'
-        - 'python_dateutil'
-        - 'requests'
-        - 'requests_cache==0.5.2'
-        - 'simplejson'
-        - 'traceback2'
-        - 'urllib3'
-        - 'virtualenv'
-        - 'wheel'
+    virtualenv: ~/.mythtv/python-virtualenv
+    virtualenv_python: python{{ python_exe_suffix }}
+    name:
+      - 'argparse'
+      - 'audiofile'
+      - 'bs4'
+      - 'common'
+      - 'configparser'
+      - 'datetime'
+      - 'discid'
+      - 'et'
+      - 'features'
+      - 'future'
+      - 'HTMLParser'
+      - 'httplib2'
+      - 'importlib_metadata'
+      - 'lxml'
+      - 'markdown'
+      - 'musicbrainzngs'
+      - 'mysqlclient'
+      - 'oauthlib'
+      - 'port'
+      - 'put'
+      - 'py2app'
+      - 'pycurl'
+      - 'python_dateutil'
+      - 'requests'
+      - 'requests_cache==0.5.2'
+      - 'simplejson'
+      - 'traceback2'
+      - 'urllib3'
+      - 'virtualenv'
+      - 'wheel'
   tags: pip
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
