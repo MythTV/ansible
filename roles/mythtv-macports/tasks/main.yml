@@ -65,6 +65,8 @@
       - libass
       - x264
       - x265
+      - aom
+      - dav1d
       - libvpx
       - minizip
       - apache-ant
