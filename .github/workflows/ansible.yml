@@ -48,6 +48,9 @@ jobs:
           - desc: 'Ubuntu 22.10 (Kinetic Kudu)'
             image: 'ubuntu:22.10'
             ansibleopts: '--limit localhost'
+          - desc: 'Ubuntu 23.04 (Lunar Lobster)'
+            image: 'ubuntu:23.04'
+            ansibleopts: '--limit localhost'
 
           # Debian group
           - desc: 'Debian 11 (Bullseye)'
@@ -58,14 +61,14 @@ jobs:
             ansibleopts: '--limit localhost'
 
           # Fedora group
-          - desc: 'Fedora 35'
-            image: 'fedora:35'
-            ansibleopts: '--limit localhost'
           - desc: 'Fedora 36'
             image: 'fedora:36'
             ansibleopts: '--limit localhost'
           - desc: 'Fedora 37'
             image: 'fedora:37'
+            ansibleopts: '--limit localhost'
+          - desc: 'Fedora 38'
+            image: 'fedora:38'
             ansibleopts: '--limit localhost'
           - desc: 'Fedora Rawhide'
             image: 'fedora:rawhide'

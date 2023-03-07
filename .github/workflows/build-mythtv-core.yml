@@ -3,7 +3,7 @@ name: Build MythTV core variants
 
 #
 # This workflow is intended to provide good coverage
-# quickly to insure that the build "basicall" works.
+# quickly to insure that the build "basically" works.
 #
 # The containers are selected to be from the set of
 # linux distributions and versions that are currently
@@ -53,9 +53,12 @@ jobs:
             image: 'ubuntu:22.04'
             ansibleopts: '--limit localhost'
             configureopts: ''
-
           - desc: 'Ubuntu 22.10 (Kinetic Kudu)'
             image: 'ubuntu:22.10'
+            ansibleopts: '--limit localhost'
+            configureopts: ''
+          - desc: 'Ubuntu 23.04 (Lunar Lobster)'
+            image: 'ubuntu:23.04'
             ansibleopts: '--limit localhost'
             configureopts: ''
 
@@ -70,16 +73,16 @@ jobs:
             configureopts: ''
 
           # Fedora group
-          - desc: 'Fedora 35'
-            image: 'fedora:35'
-            ansibleopts: '--limit localhost'
-            configureopts: ''
           - desc: 'Fedora 36'
             image: 'fedora:36'
             ansibleopts: '--limit localhost'
             configureopts: ''
           - desc: 'Fedora 37'
             image: 'fedora:37'
+            ansibleopts: '--limit localhost'
+            configureopts: ''
+          - desc: 'Fedora 38'
+            image: 'fedora:38'
             ansibleopts: '--limit localhost'
             configureopts: ''
 
