@@ -5,6 +5,10 @@
 ## Ansible Playbook for MythTV
 ** Only runs on Ansible versions above 2.3. **
 
+N.B. 6/7/2023, the directory for Ansible collections has been corrected.
+See requirements.yml and re-run if non Ansible core modules fail (most
+won't need to do this.)
+
 This repository contains an Ansible playbook for user's that build MythTV
 from source. It's also used for setting up MythTV buildslaves.
 
