@@ -61,6 +61,11 @@ FreeBSD | freebsd
 Builders | builder
 CPP Check and Doxygen | tools
 
+### Qt6 Support
+For Qt6 support, add ``` -e "qt6=true" ``` to the end of the command line. E.G.
+
+``` ./mythtv.yml --limit=localhost -e "qt6=true" ```
+
 #### MacOSX Users
 
 ```sudo port -v selfupdate```<br>

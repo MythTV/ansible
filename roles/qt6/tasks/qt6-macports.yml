@@ -1,0 +1,35 @@
+---
+
+# parse out database name and major/minor version
+# database_version is set in the macports main.yml
+- name: specify mysql/mariadb database version to compile against
+  set_fact:  qt_mysql_variant="{{ database_version | regex_replace('-') | regex_replace('\.', '_') }}"
+
+- name: create list of qt6 libraries
+  set_fact:
+    macports_pkg_list:
+      - qt6
+  tags:
+    - qt6
+
+- name: print final qt6 list of ports
+  debug:
+    msg:
+      '{{ lookup("flattened", macports_pkg_list) }}'
+
+- name: install port qt6 packages
+  macports:
+    name:
+      '{{ lookup("flattened", macports_pkg_list) }}'
+    update_cache: yes
+  tags:
+    - qt6
+
+- name: install qt6-mysql-plugin for previously specified mariadb/mysql version
+  macports:
+    name: qt6-mysql-plugin
+    variant: +{{ qt_mysql_variant }}
+  tags:
+    - qt6
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

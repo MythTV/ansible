@@ -1,0 +1,24 @@
+---
+
+- include_tasks:  qt6-deb.yml
+  when:     ansible_pkg_mgr == "apt"
+
+- include_tasks:  qt6-rpm.yml
+  when:     ansible_pkg_mgr == "yum"
+
+- include_tasks:  qt6-dnf.yml
+  when:     ansible_pkg_mgr == "dnf"
+
+- include_tasks:  qt6-macports.yml
+  when:     ansible_pkg_mgr == "macports"
+
+- include_tasks:  qt6-pacman.yml
+  when:     ansible_pkg_mgr == "pacman"
+
+- include_tasks:  qt6-pkgng.yml
+  when:     ansible_pkg_mgr == "pkgng"
+
+- include_tasks:  qt6-suse.yml
+  when:     ansible_pkg_mgr == "zypper"
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

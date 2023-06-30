@@ -1,0 +1,12 @@
+---
+
+- name: install qt6 libraries
+  pacman:
+    name:
+      - qt6-base
+    state:
+      present
+  tags:
+    - qt6
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

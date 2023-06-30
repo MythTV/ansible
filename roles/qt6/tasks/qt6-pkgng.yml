@@ -1,0 +1,18 @@
+---
+
+- name: install essential libraries
+  pkgng:
+    name:
+      - qt6
+      # FreeBSD seems to be missing the Qt6 Sql drivers
+      # - qt6-base_sqldriver-mysql
+      # - qt6-base_sqldriver-sqlite
+    state:
+      present
+  tags:
+    - qt6
+
+- fail:
+    msg: "Missing support for sql plugin driver."
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
