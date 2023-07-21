@@ -7,7 +7,7 @@
   when:     ansible_pkg_mgr == "yum"
 
 - include_tasks:  qt5-dnf.yml
-  when:     ansible_pkg_mgr == "dnf"
+  when:     ansible_pkg_mgr in [ "dnf", "dnf5" ]
 
 - include_tasks:  qt5-macports.yml
   when:     ansible_pkg_mgr == "macports"

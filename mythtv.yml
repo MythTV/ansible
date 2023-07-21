@@ -36,7 +36,7 @@
     - include_role:
         name: mythtv-dnf
       when:
-        - ansible_pkg_mgr == "dnf"
+        - ansible_pkg_mgr in [ "dnf", "dnf5" ]
         - not mythtv_tools
 
     - include_role:
