@@ -62,16 +62,16 @@ jobs:
 
           # Fedora group
           - desc: 'Fedora 36'
-            image: 'fedora:36'
+            image: 'quay.io/fedora/fedora:36'
             ansibleopts: '--limit localhost'
           - desc: 'Fedora 37'
-            image: 'fedora:37'
+            image: 'quay.io/fedora/fedora:37'
             ansibleopts: '--limit localhost'
           - desc: 'Fedora 38'
-            image: 'fedora:38'
+            image: 'quay.io/fedora/fedora:38'
             ansibleopts: '--limit localhost'
           - desc: 'Fedora Rawhide'
-            image: 'fedora:rawhide'
+            image: 'quay.io/fedora/fedora:rawhide'
             ansibleopts: '--limit localhost'
 
           # CentOS group
