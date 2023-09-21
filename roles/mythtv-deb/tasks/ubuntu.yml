@@ -83,6 +83,14 @@
   when:
     - ansible_lsb.major_release|int >= 20
 
+- name: add python3-pip module (23.04 and later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - python3-pip
+  when:
+    - ansible_lsb.major_release|int >= 23
+
 - name: add mythtv essential plugin libraries (16.04 and later)
   set_fact:
     deb_pkg_lst:

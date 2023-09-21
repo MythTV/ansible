@@ -150,6 +150,14 @@
   when:
     - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
 
+- name: add python3-pip module (bookworm and later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - python3-pip
+  when:
+    - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 12
+
 - name: make adjustments for bookworm or >= 12 package here
   block:
     - set_fact:
