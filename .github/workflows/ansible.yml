@@ -161,7 +161,7 @@ jobs:
         if: env.OS_RELEASE_ID == 'arch'
 
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: ansible
 
