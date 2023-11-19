@@ -45,7 +45,8 @@ the included `requirements.yml` file. See it for how to load them.
 
 ### Running the playbook
 For most distributions, run the playbook as follows. Replace
-`localhost` with the `--limit value` in the table below.
+`localhost` with the `--limit value` in the table below if
+required.
 See `mythtv.yml` for an additional command line if this
 doesn't work for your distribution:
 
@@ -54,7 +55,6 @@ doesn't work for your distribution:
 
 Distribution|--limit value
 :-----------|:------------
-Archlinux | archlinux
 Fedora 30 | f30
 MacOSX (using MacPorts)| macports
 FreeBSD | freebsd
