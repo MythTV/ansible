@@ -46,6 +46,7 @@
       - lzo2
       - libsamplerate
       - libzip
+      - '{{ database_version }}'
 
 - name: add optional libraries
   set_fact:
@@ -63,11 +64,8 @@
       - libxml2
       - fftw-3
       - libass
-      - x264
-      - x265
       - aom
       - dav1d
-      - libvpx
       - minizip
       - apache-ant
       - hdhomerun
@@ -75,7 +73,10 @@
       - liberation-fonts
       - dejavu-fonts
       - soundtouch
-      - '{{ database_version }}'
+      - vulkan-headers
+      - vulkan-tools
+      - vulkan-loader
+      - MoltenVK
 
 - name: develop a Python package version suffix
   set_fact:
@@ -119,6 +120,8 @@
       - lame
       - gnutls
       - gsed
+      - texinfo
+      - texi2html
 
 - name: print final list of ports
   debug:
@@ -129,9 +132,9 @@
   macports:
     name:
       '{{ lookup("flattened", macports_pkg_list) }}'
-    update_cache: yes
+    update_cache: true
 
-- name: install p{{ perl_version }}-dbd-mysql for previously specified mariadb/mysql version
+- name: install p{{ perl_version }}-dbd-mysql
   macports:
     name: 'p{{ perl_version }}-dbd-mysql'
     variant: +{{ mysql_variant }}
@@ -139,11 +142,11 @@
 - name: select the installed version of mariadb/mysql and python
   command: 'port select --set {{ item.group }} {{ item.version }}'
   with_list:
-    - { group: mysql,  version: '{{ database_version }}' }
-    - { group: python,  version: 'python{{ python_package_suffix }}' }
-    - { group: python3, version: 'python{{ python_package_suffix }}' }
-    - { group: pip3, version: 'pip{{ python_package_suffix }}' }
-    - { group: virtualenv, version: 'virtualenv{{ python_package_suffix }}' }
+    - {group: mysql, version: '{{ database_version }}'}
+    - {group: python, version: 'python{{ python_package_suffix }}'}
+    - {group: python3, version: 'python{{ python_package_suffix }}'}
+    - {group: pip3, version: 'pip{{ python_package_suffix }}'}
+    - {group: virtualenv, version: 'virtualenv{{ python_package_suffix }}'}
 
 - name: create Python virtual environment folder for standard user
   become: false

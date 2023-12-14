@@ -66,11 +66,12 @@ For Qt6 support, add ``` -e "qt6=true" ``` to the end of the command line. E.G.
 
 ``` ./mythtv.yml --limit=localhost -e "qt6=true" ```
 
-#### MacOSX Users
+#### MacOSX Homebrew Users
+```brew install ansible```<br>
+```./mythtv.yml --limit=localhost```
 
-```sudo port -v selfupdate```<br>
-```sudo port upgrade outdated```<br>
-```sudo port install py310-ansible```<br>
+#### MacOSX MacPorts Users
+```sudo port install py311-ansible```<br>
 ```./mythtv.yml --limit=localhost```
 
 - Optionally specify a database version:
