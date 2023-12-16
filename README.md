@@ -35,7 +35,8 @@ Archlinux | pacman -S ansible
 Centos | yum install ansible (enable the [EPEL](https://fedoraproject.org/wiki/EPEL) repository first)
 Debian (and derivatives) | apt install ansible
 Fedora | dnf install ansible
-MacOSX | port -v selfupdate; port upgrade outdated; port install py310-ansible
+MacOSX (macoports) | port install py311-ansible
+MacOSX (homebrew) | brew install ansible
 FreeBSD | pkg install py27-ansible
 OpenSuse | zypper install ansible
 
@@ -57,6 +58,7 @@ Distribution|--limit value
 :-----------|:------------
 Fedora 30 | f30
 MacOSX (using MacPorts)| macports
+MacOSX (using MacPorts)| homebrew
 FreeBSD | freebsd
 Builders | builder
 CPP Check and Doxygen | tools
