@@ -17,11 +17,11 @@ RUN ./configure \
     --enable-nonfree \
     --enable-proc-opt
 # BE CAREFUL WITH THE NEXT LINE
-RUN make --jobs=4
-RUN make install
-
-WORKDIR /root/source/mythtv/mythplugins
-RUN ./configure
-# BE CAREFUL WITH THE NEXT LINE
-RUN make --jobs=4
-RUN make install
+#RUN make --jobs=4
+#RUN make install
+#
+#WORKDIR /root/source/mythtv/mythplugins
+#RUN ./configure
+## BE CAREFUL WITH THE NEXT LINE
+#RUN make --jobs=4
+#RUN make install

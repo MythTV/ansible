@@ -1,0 +1,226 @@
+# roles/mythtv-homebrew/tasks/main.yml
+
+---
+- name: Get homebrew install prefix
+  command:  brew --prefix
+  register: HB_OUT
+
+- name: set homebrew_prefix fact
+  set_fact:  homebrew_prefix={{ HB_OUT.stdout  }}
+
+- name: specify a mariadb/mysql version to install
+  set_fact:
+    database_version=mysql
+  when:
+    database_version is undefined
+
+- name: check if this is a mariadb based install
+  set_fact:
+    database_name=mariadb
+  when: database_version is search("mariadb")
+
+- name: check if this is a mysql based install
+  set_fact:
+    database_name=mysql
+  when: database_version is search("mysql")
+
+- name: create a list of compilers and build essentials
+  set_fact:
+    homebrew_pkg_list:
+      - ccache
+      - nasm
+      - autoconf
+      - automake
+      - pkgconfig
+
+- name: add essential libraries
+  set_fact:
+    homebrew_pkg_list:
+      - '{{ homebrew_pkg_list }}'
+      - libxml2
+      - taglib
+      - exiv2
+      - libbluray
+      - lzo
+      - libsamplerate
+      - libzip
+      - glslang
+      - openssl@1.1
+      - openssl@3
+      - '{{ database_version }}'
+
+- name: add optional libraries
+  set_fact:
+    homebrew_pkg_list:
+      - '{{ homebrew_pkg_list }}'
+      - openssl
+      - libvpx
+      - x264
+      - x265
+      - XviD
+      - libvorbis
+      - flac
+      - faac
+      - freetype
+      - libxml2
+      - fftw
+      - libass
+      - aom
+      - dav1d
+      - minizip
+      - ant
+      - libhdhomerun
+      - libX11
+      - sound-touch
+      - libcec
+      - zstd
+      - vulkan-headers
+      - vulkan-tools
+      - vulkan-loader
+      - molten-vk
+      - audiofile
+      - libdiscid
+      - http-parser
+
+- name: develop a Python package version suffix
+  set_fact:
+    python_exe_suffix:
+      '{{ ansible_python.version.major }}.{{ ansible_python.version.minor }}'
+
+- name: add python essentials
+  set_fact:
+    homebrew_pkg_list:
+      - '{{ homebrew_pkg_list }}'
+      - 'python@{{ python_exe_suffix }}'
+      - virtualenv
+      - pyenv-virtualenv
+      - python-lxml
+      - python-oauthlib
+      - python-dateutil
+      - python-requests
+      - python-urllib3
+      - python-configargparse
+      - python-markdown
+      - python-cryptography
+
+- name: add perl essentials
+  set_fact:
+    homebrew_pkg_list:
+      - '{{ homebrew_pkg_list }}'
+      - perl
+      - cpanminus
+
+- name: utility packages from ports
+  set_fact:
+    homebrew_pkg_list:
+      - '{{ homebrew_pkg_list }}'
+      - make
+      - libtool
+      - lame
+      - gnutls
+      - gnu-sed
+      - curl
+      - texinfo
+      - texi2html
+
+- name: print final list of ports
+  debug:
+    msg:
+      '{{ lookup("flattened", homebrew_pkg_list) }}'
+
+- name: install packages
+  become: false
+  homebrew:
+    name:
+      '{{ lookup("flattened", homebrew_pkg_list) }}'
+
+- name: add fonts cask to homebrew
+  become: false
+  command: brew tap homebrew/cask-fonts
+
+- name: install dejavu fonts from brew cask
+  become: false
+  command: brew install --cask font-dejavu
+
+- name: install liberation fonts from brew cask
+  become: false
+  command: brew install --cask font-liberation
+
+- name: create Python virtual environment folder for standard user
+  become: false
+  file:
+    name: ~/.mythtv/python-virtualenv
+    state: directory
+
+- name: initiate virtualenv for standard user
+  become: false
+  pip:
+    virtualenv: ~/.mythtv/python-virtualenv
+    name:
+      - argparse
+      - audiofile
+      - bs4
+      - common
+      - configparser
+      - datetime
+      - discid
+      - et
+      - features
+      - future
+      - HTMLParser
+      - httplib2
+      - importlib_metadata
+      - lxml
+      - markdown
+      - musicbrainzngs
+      - mysqlclient
+      - oauthlib
+      - port
+      - put
+      - py2app
+      - pycurl
+      - python_dateutil
+      - requests
+      - requests_cache==0.5.2
+      - simplejson
+      - traceback2
+      - urllib3
+      - virtualenv
+      - wheel
+  tags: pip
+
+- name: cpanm - install Net-SSLeay perl module with special handling for openssl
+  become: false
+  command: cpanm
+    --mirror 'http://cpan.cpantesters.org/'
+    --force
+    --configure-args="--libs='-L{{ homebrew_prefix }}/lib' --inc='-I{{ homebrew_prefix }}/opt/openssl/'"
+    Net::SSLeay
+
+- name: cpanm - install perl modules
+  become: false
+  command: cpanm
+    --mirror 'http://cpan.cpantesters.org/'
+    --force
+    Date::Manip
+    DateTime::Format::ISO8601
+    DBI
+    Image::Size
+    IO::Socket::INET6
+    JSON
+    LWP
+    HTTP::Request::AsCGI
+    Net::UPnP
+    SOAP::Lite
+    XML::XPath
+    XML::Simple
+
+- name: cpanm - install DBD-mysql vwith special handling for mysql8
+  become: false
+  command: cpanm
+    --force
+    --mirror 'http://cpan.cpantesters.org/'
+    --configure-args="--libs='-L{{ homebrew_prefix }}/lib -lssl -lcrypto -lzstd'"
+    DBD::mysql
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

@@ -1,0 +1,23 @@
+---
+
+- name: create list of qt5 libraries
+  set_fact:
+    homebrew_pkg_list:
+      - qt@5
+  tags:
+    - qt5
+
+- name: print final qt5 list of ports
+  debug:
+    msg:
+      '{{ lookup("flattened", homebrew_pkg_list) }}'
+
+- name: install port qt5 packages
+  become: false
+  homebrew:
+    name:
+      '{{ lookup("flattened", homebrew_pkg_list) }}'
+  tags:
+    - qt5
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

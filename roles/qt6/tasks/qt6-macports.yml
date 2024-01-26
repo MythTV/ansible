@@ -3,7 +3,7 @@
 # parse out database name and major/minor version
 # database_version is set in the macports main.yml
 - name: specify mysql/mariadb database version to compile against
-  set_fact:  qt_mysql_variant="{{ database_version | regex_replace('-') | regex_replace('\.', '_') }}"
+  set_fact: qt_mysql_variant="{{ database_version | regex_replace('-') | regex_replace('\.', '_') }}"
 
 - name: create list of qt6 libraries
   set_fact:
@@ -21,7 +21,7 @@
   macports:
     name:
       '{{ lookup("flattened", macports_pkg_list) }}'
-    update_cache: yes
+    update_cache: true
   tags:
     - qt6
 

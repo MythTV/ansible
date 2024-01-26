@@ -1,4 +1,4 @@
-# roles/mythtv-deb/tasks/linux_mint.yml
+# roles/mythtv-deb/tasks/lmde.yml
 
 ---
 
@@ -42,7 +42,7 @@
       - python3-requests-cache
       - python3-mysqldb
       - python3-lxml
-      - python3-oauth
+      - python3-oauthlib
       - python3-pycurl
       - python3-simplejson
       - python3-setuptools

@@ -35,7 +35,8 @@ Archlinux | pacman -S ansible
 Centos | yum install ansible (enable the [EPEL](https://fedoraproject.org/wiki/EPEL) repository first)
 Debian (and derivatives) | apt install ansible
 Fedora | dnf install ansible
-MacOSX | port -v selfupdate; port upgrade outdated; port install py310-ansible
+MacOSX (macoports) | port install py311-ansible
+MacOSX (homebrew) | brew install ansible
 FreeBSD | pkg install py27-ansible
 OpenSuse | zypper install ansible
 
@@ -45,7 +46,8 @@ the included `requirements.yml` file. See it for how to load them.
 
 ### Running the playbook
 For most distributions, run the playbook as follows. Replace
-`localhost` with the `--limit value` in the table below.
+`localhost` with the `--limit value` in the table below if
+required.
 See `mythtv.yml` for an additional command line if this
 doesn't work for your distribution:
 
@@ -54,9 +56,9 @@ doesn't work for your distribution:
 
 Distribution|--limit value
 :-----------|:------------
-Archlinux | archlinux
 Fedora 30 | f30
 MacOSX (using MacPorts)| macports
+MacOSX (using MacPorts)| homebrew
 FreeBSD | freebsd
 Builders | builder
 CPP Check and Doxygen | tools
@@ -66,11 +68,12 @@ For Qt6 support, add ``` -e "qt6=true" ``` to the end of the command line. E.G.
 
 ``` ./mythtv.yml --limit=localhost -e "qt6=true" ```
 
-#### MacOSX Users
+#### MacOSX Homebrew Users
+```brew install ansible```<br>
+```./mythtv.yml --limit=localhost```
 
-```sudo port -v selfupdate```<br>
-```sudo port upgrade outdated```<br>
-```sudo port install py310-ansible```<br>
+#### MacOSX MacPorts Users
+```sudo port install py311-ansible```<br>
 ```./mythtv.yml --limit=localhost```
 
 - Optionally specify a database version:

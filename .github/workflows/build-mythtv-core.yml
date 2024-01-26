@@ -53,12 +53,12 @@ jobs:
             image: 'ubuntu:22.04'
             ansibleopts: '--limit localhost'
             configureopts: ''
-          - desc: 'Ubuntu 22.10 (Kinetic Kudu)'
-            image: 'ubuntu:22.10'
-            ansibleopts: '--limit localhost'
-            configureopts: ''
           - desc: 'Ubuntu 23.04 (Lunar Lobster)'
             image: 'ubuntu:23.04'
+            ansibleopts: '--limit localhost'
+            configureopts: ''
+          - desc: 'Ubuntu 23.10 (Mantic Minotaur)'
+            image: 'ubuntu:23.10'
             ansibleopts: '--limit localhost'
             configureopts: ''
 
@@ -73,10 +73,6 @@ jobs:
             configureopts: ''
 
           # Fedora group
-          - desc: 'Fedora 37'
-            image: 'quay.io/fedora/fedora:37'
-            ansibleopts: '--limit localhost'
-            configureopts: ''
           - desc: 'Fedora 38'
             image: 'quay.io/fedora/fedora:38'
             ansibleopts: '--limit localhost'
@@ -138,7 +134,7 @@ jobs:
         if: env.OS_RELEASE_ID == 'fedora' || env.OS_RELEASE_ID == 'centos' || env.OS_RELEASE_ID == 'rocky'
 
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.workflow_run.head_branch }}
           path: ansible
@@ -148,7 +144,7 @@ jobs:
         run: ansible-playbook ${{ matrix.container.ansibleopts }} ${{ matrix.branch.ansibleopts }} mythtv.yml
 
       - name: Checkout Mythtv/mythtv repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ${{ matrix.branch.repository }}
           ref: ${{ matrix.branch.ref }}

@@ -46,6 +46,12 @@
         - not mythtv_tools
 
     - include_role:
+        name: mythtv-homebrew
+      when:
+        - ansible_pkg_mgr == "homebrew"
+        - not mythtv_tools
+
+    - include_role:
         name: mythtv-macports
       when:
         - ansible_pkg_mgr == "macports"
