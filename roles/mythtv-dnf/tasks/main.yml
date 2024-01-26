@@ -209,10 +209,11 @@
   when: (ansible_distribution == "CentOS" and ansible_distribution_major_version|int > 8) or
         (ansible_distribution == "Rocky" and ansible_distribution_major_version|int > 8)
 
-- name: add python3-pip module - Fedora 39+
+- name: add python3-pip and wheel modules - Fedora 39+
   set_fact:
     dnf_pkg_lst:
       - '{{ dnf_pkg_lst }}'
+      - python3-wheel
       - python3-pip
   when:
     - ansible_distribution == "Fedora" and ansible_distribution_version|int >= 39
