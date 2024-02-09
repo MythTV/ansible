@@ -117,7 +117,7 @@
 
 - name: add optional build libraries
   set_fact:
-    dnf_pkg_list:
+    dnf_pkg_lst:
       - '{{ dnf_pkg_lst }}'
       - libcrystalhd-devel
   when: (ansible_distribution == "Fedora") or
