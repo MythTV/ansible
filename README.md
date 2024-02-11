@@ -69,20 +69,32 @@ For Qt6 support, add ``` -e "qt6=true" ``` to the end of the command line. E.G.
 ``` ./mythtv.yml --limit=localhost -e "qt6=true" ```
 
 #### MacOSX Homebrew Users
-```brew install ansible```<br>
-```./mythtv.yml --limit=localhost```
+``` brew install ansible ```<br>
+``` ./mythtv.yml --limit=localhost ```
+
+To disable the sudo / become prompt run add
+``` ANSIBLE_BECOME=false ANSIBLE_BECOME_ASK_PASS=False ```
+to the beginning of the command line (homebrew is already set to run
+without escalting priveldges in the homebrew playbook). E.G.
+
+``` ANSIBLE_BECOME=false ANSIBLE_BECOME_ASK_PASS=False ./mythtv.yml --limit=localhost ```
+
 
 #### MacOSX MacPorts Users
-```sudo port install py311-ansible```<br>
-```./mythtv.yml --limit=localhost```
+``` sudo port install py311-ansible ```<br>
+``` ./mythtv.yml --limit=localhost ```
 
 - Optionally specify a database version:
 
     ``` ./mythtv.yml --extra-vars="database_version=mariadb-10.5" --limit=localhost ```
 
--    Optionally do not install qtwebkit:
+- Optionally do not install qtwebkit:
 
     ``` ./mythtv.yml --extra-vars="install_qtwebkit=false" --limit=localhost ```
+
+- Optionally specify a different version of python3
+
+   ``` ./mythtv.yml --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.11"  --limit=localhost ```
 
 ## Other Platforms
 We welcome contributions to support additional platforms. Please contact the

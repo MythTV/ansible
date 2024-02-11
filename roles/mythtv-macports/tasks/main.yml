@@ -2,6 +2,13 @@
 
 ---
 
+- name: Get macports install prefix
+  shell:  dirname $(dirname $(which port))
+  register: MP_OUT
+
+- name: set macports_prefix fact
+  set_fact:  macports_prefix={{ MP_OUT.stdout  }}
+
 - name: specify a mariadb/mysql version to install
   set_fact:
     database_version=mysql8
@@ -40,6 +47,7 @@
     macports_pkg_list:
       - '{{ macports_pkg_list }}'
       - libxml2
+      - libxslt
       - taglib
       - exiv2
       - libbluray
@@ -61,7 +69,6 @@
       - flac
       - faac
       - freetype
-      - libxml2
       - fftw-3
       - libass
       - aom
@@ -142,11 +149,29 @@
 - name: select the installed version of mariadb/mysql and python
   command: 'port select --set {{ item.group }} {{ item.version }}'
   with_list:
-    - {group: mysql, version: '{{ database_version }}'}
-    - {group: python, version: 'python{{ python_package_suffix }}'}
-    - {group: python3, version: 'python{{ python_package_suffix }}'}
-    - {group: pip3, version: 'pip{{ python_package_suffix }}'}
-    - {group: virtualenv, version: 'virtualenv{{ python_package_suffix }}'}
+    - { group: mysql, version: '{{ database_version }}' }
+    - { group: python, version: 'python{{ python_package_suffix }}' }
+    - { group: python3, version: 'python{{ python_package_suffix }}' }
+    - { group: pip3, version: 'pip{{ python_package_suffix }}' }
+    - { group: virtualenv, version: 'virtualenv{{ python_package_suffix }}' }
+
+- name: Get mysqlclient libs
+  shell:
+    export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:{{ macports_prefix }}/lib/{{ database_version }}/pkgconfig/ &&
+    {{ macports_prefix }}/bin/pkg-config --libs mysqlclient
+  register: LIBS_OUT
+
+- name: set MYSQLCLIENT_LDFLAGS fact
+  set_fact:  MYSQLCLIENT_LDFLAGS={{ LIBS_OUT.stdout }}
+
+- name: Get mysqlclient cflags
+  shell:
+    export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:{{ macports_prefix }}/lib/{{ database_version }}/pkgconfig/ &&
+    {{ macports_prefix }}/bin/pkg-config --cflags mysqlclient
+  register: CFLAG_OUT
+
+- name: set MYSQLCLIENT_CFLAGS fact
+  set_fact:  MYSQLCLIENT_CFLAGS={{ CFLAG_OUT.stdout }}
 
 - name: create Python virtual environment folder for standard user
   become: false
@@ -190,6 +215,9 @@
       - 'urllib3'
       - 'virtualenv'
       - 'wheel'
+  environment:
+    MYSQLCLIENT_LDFLAGS: "{{ MYSQLCLIENT_LDFLAGS }}"
+    MYSQLCLIENT_CFLAGS: "{{ MYSQLCLIENT_CFLAGS }}"
   tags: pip
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

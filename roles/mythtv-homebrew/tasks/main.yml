@@ -10,7 +10,7 @@
 
 - name: specify a mariadb/mysql version to install
   set_fact:
-    database_version=mysql
+    database_version=mysql@8.0
   when:
     database_version is undefined
 
@@ -38,22 +38,23 @@
     homebrew_pkg_list:
       - '{{ homebrew_pkg_list }}'
       - libxml2
+      - libxslt
       - taglib
       - exiv2
       - libbluray
       - lzo
       - libsamplerate
       - libzip
+      - zlib
+      - libiconv
       - glslang
-      - openssl@1.1
-      - openssl@3
+      - openssl
       - '{{ database_version }}'
 
 - name: add optional libraries
   set_fact:
     homebrew_pkg_list:
       - '{{ homebrew_pkg_list }}'
-      - openssl
       - libvpx
       - x264
       - x265
@@ -62,7 +63,6 @@
       - flac
       - faac
       - freetype
-      - libxml2
       - fftw
       - libass
       - aom
@@ -80,7 +80,6 @@
       - molten-vk
       - audiofile
       - libdiscid
-      - http-parser
 
 - name: develop a Python package version suffix
   set_fact:
@@ -110,7 +109,7 @@
       - perl
       - cpanminus
 
-- name: utility packages from ports
+- name: utility packages from homebrew
   set_fact:
     homebrew_pkg_list:
       - '{{ homebrew_pkg_list }}'
@@ -123,7 +122,7 @@
       - texinfo
       - texi2html
 
-- name: print final list of ports
+- name: print final list of packages
   debug:
     msg:
       '{{ lookup("flattened", homebrew_pkg_list) }}'
@@ -146,6 +145,24 @@
   become: false
   command: brew install --cask font-liberation
 
+- name: Get mysqlclient libs
+  shell:
+    export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"{{ homebrew_prefix }}/opt/{{ database_version }}/lib/pkgconfig/" &&
+    {{ homebrew_prefix }}/bin/pkg-config --libs mysqlclient
+  register: LIBS_OUT
+
+- name: set MYSQLCLIENT_LDFLAGS fact
+  set_fact:  MYSQLCLIENT_LDFLAGS={{ LIBS_OUT.stdout }}
+
+- name: Get mysqlclient cflags
+  shell:
+    export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"{{ homebrew_prefix }}/opt/{{ database_version }}/lib/pkgconfig/" &&
+    {{ homebrew_prefix }}/bin/pkg-config --cflags mysqlclient
+  register: CFLAG_OUT
+
+- name: set MYSQLCLIENT_CFLAGS fact
+  set_fact:  MYSQLCLIENT_CFLAGS={{ CFLAG_OUT.stdout }}
+
 - name: create Python virtual environment folder for standard user
   become: false
   file:
@@ -167,7 +184,6 @@
       - et
       - features
       - future
-      - HTMLParser
       - httplib2
       - importlib_metadata
       - lxml
@@ -187,6 +203,9 @@
       - urllib3
       - virtualenv
       - wheel
+  environment:
+    MYSQLCLIENT_LDFLAGS: "{{ MYSQLCLIENT_LDFLAGS }}"
+    MYSQLCLIENT_CFLAGS: "{{ MYSQLCLIENT_CFLAGS }}"
   tags: pip
 
 - name: cpanm - install Net-SSLeay perl module with special handling for openssl
@@ -217,10 +236,10 @@
 
 - name: cpanm - install DBD-mysql vwith special handling for mysql8
   become: false
-  command: cpanm
+  shell: cpanm
     --force
     --mirror 'http://cpan.cpantesters.org/'
-    --configure-args="--libs='-L{{ homebrew_prefix }}/lib -lssl -lcrypto -lzstd'"
+    --configure-args="--libs='-L{{ homebrew_prefix }}/lib -lssl -lcrypto -lzstd'
+      --mysql_config='{{ homebrew_prefix }}/opt/{{ database_version }}/bin/mysql_config'"
     DBD::mysql
-
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
