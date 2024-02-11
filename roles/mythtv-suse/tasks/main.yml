@@ -15,6 +15,14 @@
       - nasm
       - ccache
 
+- name: add gcc13 for Leap
+  set_fact:
+    zypper_pkg_lst:
+      - '{{ zypper_pkg_lst }}'
+      - gcc13
+      - gcc13-c++
+  when: ansible_distribution == "openSUSE Leap"
+
 - name: add mythtv essential build libraries
   set_fact:
     zypper_pkg_lst:
