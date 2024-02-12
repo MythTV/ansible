@@ -51,6 +51,11 @@
       - pkgconfig
       - which
       - diffutils
+      - cmake
+      - patch
+      - ninja-build
+      - gperf
+      - meson
       # packages in repo for fedora, and in epel for centos7/rhel7
       - nasm
       - ccache
@@ -237,6 +242,8 @@
       - perl-Image-Size
       - perl-Net-UPnP
       - perl(Sys::Hostname)
+      - perl(FindBin)
+      - perl(IPC::Cmd)
 
 - name: add mythtv essential plugin libraries
   set_fact:

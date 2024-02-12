@@ -16,6 +16,11 @@
       - nasm
       - ccache
       - git
+      - cmake
+      - patch
+      - ninja
+      - gperf
+      - meson
 
 - name: add mythtv essential build libraries
   set_fact:
@@ -80,6 +85,8 @@
       - perl-datetime-format-iso8601
       - perl-soap-lite
       - perl-json
+      - perl-findbin
+      - perl-ipc-cmd
 
 - name: add mythtv essential plugin libraries
   set_fact:

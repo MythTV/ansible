@@ -14,6 +14,11 @@
       - pkg-config
       - nasm
       - ccache
+      - cmake
+      - patch
+      - ninja
+      - gperf
+      - meson
 
 - name: add gcc13 for Leap
   set_fact:
@@ -148,6 +153,8 @@
       - perl-JSON
       - perl-Image-Size
       - perl-Net-UPnP
+      - perl(FindBin)
+      - perl(IPC::Cmd)
 
 - name: add mythtv essential plugin libraries
   set_fact:
