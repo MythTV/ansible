@@ -35,7 +35,7 @@ Archlinux | pacman -S ansible
 Centos | yum install ansible (enable the [EPEL](https://fedoraproject.org/wiki/EPEL) repository first)
 Debian (and derivatives) | apt install ansible
 Fedora | dnf install ansible
-MacOSX (macoports) | port install py311-ansible
+MacOSX (macports) | port install py311-ansible
 MacOSX (homebrew) | brew install ansible
 FreeBSD | pkg install py27-ansible
 OpenSuse | zypper install ansible
