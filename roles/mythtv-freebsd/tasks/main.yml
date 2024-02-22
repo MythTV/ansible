@@ -18,6 +18,11 @@
       - autoconf
       - automake
       - pkgconf
+      - cmake
+      - patch
+      - ninja
+      - gperf
+      - meson
 
 - name: add essential libraries
   set_fact:
@@ -99,6 +104,8 @@
       - p5-SOAP-Lite
       - p5-XML-XPath
       - p5-XML-Simple
+      - p5-FindBin-libs
+      - p5-IPC-Cmd
 
 - name: add packages moved to main repository (freebsd11+)
   set_fact:

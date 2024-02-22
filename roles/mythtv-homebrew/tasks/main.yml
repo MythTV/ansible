@@ -32,6 +32,11 @@
       - autoconf
       - automake
       - pkgconfig
+      - cmake
+      - gpatch
+      - ninja
+      - gperf
+      - meson
 
 - name: add essential libraries
   set_fact:
@@ -233,6 +238,9 @@
     SOAP::Lite
     XML::XPath
     XML::Simple
+    FindBin
+    IPC::Cmd
+
 
 - name: cpanm - install DBD-mysql vwith special handling for mysql8
   become: false

@@ -15,6 +15,11 @@
       - libtool
       - ccache
       - pkg-config
+      - cmake
+      - patch
+      - ninja-build
+      - gperf
+      - meson
 
       # add mythtv essential build libraries
       - uuid-dev
@@ -66,6 +71,8 @@
       - libdatetime-format-iso8601-perl
       - libsoap-lite-perl
       - libjson-perl
+      - libfindbin-libs-perl
+      - perl-modules
 
       #  add mythtv essential plugin libraries
       - libvorbis-dev
