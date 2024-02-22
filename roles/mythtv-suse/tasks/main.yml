@@ -94,8 +94,14 @@
       - python3-lxml
       - python3-urlgrabber
       - python3-requests
-      - python3-oauth2
   when: ansible_distribution == "openSUSE Leap" or ansible_distribution == "openSUSE Tumbleweed"
+
+- name: add mythtv essential python modules only available in Leap
+  set_fact:
+    zypper_pkg_lst:
+      - '{{ zypper_pkg_lst }}'
+      - python3-oauth2
+  when: ansible_distribution == "openSUSE Leap"
 
 - name: set Suse repository
   set_fact:
