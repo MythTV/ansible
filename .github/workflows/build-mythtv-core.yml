@@ -45,10 +45,6 @@ jobs:
       matrix:
         container:
           # Ubuntu group
-          - desc: 'Ubuntu 20.04 LTS (Focal Fossa)'
-            image: 'ubuntu:20.04'
-            ansibleopts: '--limit localhost'
-            configureopts: ''
           - desc: 'Ubuntu 22.04 LTS (Jammy Jellyfish)'
             image: 'ubuntu:22.04'
             ansibleopts: '--limit localhost'
@@ -151,7 +147,7 @@ jobs:
           path: mythtv
 
       - name: Checkout ccache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.ccache
           key: ${{ matrix.container.image }}-build-core-ccache-${{ github.sha }}
