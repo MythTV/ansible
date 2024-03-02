@@ -10,7 +10,7 @@
 
 - name: specify a mariadb/mysql version to install
   set_fact:
-    database_version=mysql@8.0
+    database_version=mysql
   when:
     database_version is undefined
 
@@ -31,7 +31,7 @@
       - nasm
       - autoconf
       - automake
-      - pkgconfig
+      - pkg-config
       - cmake
       - gpatch
       - ninja
@@ -83,7 +83,6 @@
       - vulkan-tools
       - vulkan-loader
       - molten-vk
-      - audiofile
       - libdiscid
 
 - name: develop a Python package version suffix
@@ -98,14 +97,6 @@
       - 'python@{{ python_exe_suffix }}'
       - virtualenv
       - pyenv-virtualenv
-      - python-lxml
-      - python-oauthlib
-      - python-dateutil
-      - python-requests
-      - python-urllib3
-      - python-configargparse
-      - python-markdown
-      - python-cryptography
 
 - name: add perl essentials
   set_fact:
@@ -113,6 +104,8 @@
       - '{{ homebrew_pkg_list }}'
       - perl
       - cpanminus
+      - libdbi
+      - libiodbc
 
 - name: utility packages from homebrew
   set_fact:
@@ -184,20 +177,19 @@
       - bs4
       - common
       - configparser
+      - cryptography
       - datetime
       - discid
       - et
       - features
       - future
+      - HTMLParser
       - httplib2
       - importlib_metadata
       - lxml
-      - markdown
       - musicbrainzngs
       - mysqlclient
       - oauthlib
-      - port
-      - put
       - py2app
       - pycurl
       - python_dateutil
@@ -206,7 +198,6 @@
       - simplejson
       - traceback2
       - urllib3
-      - virtualenv
       - wheel
   environment:
     MYSQLCLIENT_LDFLAGS: "{{ MYSQLCLIENT_LDFLAGS }}"
@@ -228,7 +219,6 @@
     --force
     Date::Manip
     DateTime::Format::ISO8601
-    DBI
     Image::Size
     IO::Socket::INET6
     JSON

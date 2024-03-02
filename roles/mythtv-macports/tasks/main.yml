@@ -185,36 +185,33 @@
     virtualenv: ~/.mythtv/python-virtualenv
     virtualenv_python: python{{ python_exe_suffix }}
     name:
-      - 'argparse'
-      - 'audiofile'
-      - 'bs4'
-      - 'common'
-      - 'configparser'
-      - 'datetime'
-      - 'discid'
-      - 'et'
-      - 'features'
-      - 'future'
-      - 'HTMLParser'
-      - 'httplib2'
-      - 'importlib_metadata'
-      - 'lxml'
-      - 'markdown'
-      - 'musicbrainzngs'
-      - 'mysqlclient'
-      - 'oauthlib'
-      - 'port'
-      - 'put'
-      - 'py2app'
-      - 'pycurl'
-      - 'python_dateutil'
-      - 'requests'
-      - 'requests_cache==0.5.2'
-      - 'simplejson'
-      - 'traceback2'
-      - 'urllib3'
-      - 'virtualenv'
-      - 'wheel'
+      - argparse
+      - audiofile
+      - bs4
+      - common
+      - configparser
+      - cryptography
+      - datetime
+      - discid
+      - et
+      - features
+      - future
+      - HTMLParser
+      - httplib2
+      - importlib_metadata
+      - lxml
+      - musicbrainzngs
+      - mysqlclient
+      - oauthlib
+      - py2app
+      - pycurl
+      - python_dateutil
+      - requests
+      - requests_cache==0.5.2
+      - simplejson
+      - traceback2
+      - urllib3
+      - wheel
   environment:
     MYSQLCLIENT_LDFLAGS: "{{ MYSQLCLIENT_LDFLAGS }}"
     MYSQLCLIENT_CFLAGS: "{{ MYSQLCLIENT_CFLAGS }}"
