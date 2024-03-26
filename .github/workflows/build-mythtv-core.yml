@@ -19,10 +19,11 @@ name: Build MythTV core variants
 #
 
 on:                # yamllint disable-line rule:truthy
-  workflow_run:
-    workflows: ["Run ansible-playbook"]
-    types:
-      - completed
+  push:
+
+  pull_request:
+
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -39,7 +40,7 @@ jobs:
       MYTHTV_CONFIG_EXTRA:
       CCACHE_DIR: $HOME/.ccache
       CCACHE_COMPRESS: true
-      CCACHE_MAXSIZE: 1200M
+      CCACHE_MAXSIZE: 250M
 
     strategy:
       matrix:
@@ -75,6 +76,10 @@ jobs:
             configureopts: ''
           - desc: 'Fedora 39'
             image: 'quay.io/fedora/fedora:39'
+            ansibleopts: '--limit localhost'
+            configureopts: ''
+          - desc: 'Fedora 40'
+            image: 'quay.io/fedora/fedora:40'
             ansibleopts: '--limit localhost'
             configureopts: ''
 
@@ -158,7 +163,7 @@ jobs:
 
       - name: Configure core
         working-directory: mythtv/mythtv
-        run: ./configure --prefix=${{ env.MYTHTV_CONFIG_PREFIX }} ${{ env.MYTHTV_CONFIG_EXTRA }} ${{ matrix.container.configureopts }} ${{ matrix.branch.configureopts }}
+        run: ./configure --compile-type=release --enable-debug=0 --disable-debug --prefix=${{ env.MYTHTV_CONFIG_PREFIX }} ${{ env.MYTHTV_CONFIG_EXTRA }} ${{ matrix.container.configureopts }} ${{ matrix.branch.configureopts }}
 
       - name: Make core
         working-directory: mythtv/mythtv
