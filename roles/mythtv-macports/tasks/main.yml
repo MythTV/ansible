@@ -80,10 +80,10 @@
       - liberation-fonts
       - dejavu-fonts
       - soundtouch
-      - vulkan-headers
-      - vulkan-tools
-      - vulkan-loader
-      - MoltenVK
+      #- vulkan-headers
+      #- vulkan-tools
+      #- vulkan-loader
+      #- MoltenVK
 
 - name: develop a Python package version suffix
   set_fact:
