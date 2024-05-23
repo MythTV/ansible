@@ -64,7 +64,7 @@ Builders | builder
 CPP Check and Doxygen | tools
 
 ### Qt6 Support
-For Qt6 support, add ``` -e "qt6=true" ``` to the end of the command line. E.G.
+For Qt6 support, add ``` -e "qt6=true" ``` to the end of the command line. E.g.
 
 ``` ./mythtv.yml --limit=localhost -e "qt6=true" ```
 
@@ -75,7 +75,7 @@ For Qt6 support, add ``` -e "qt6=true" ``` to the end of the command line. E.G.
 To disable the sudo / become prompt run add
 ``` ANSIBLE_BECOME=false ANSIBLE_BECOME_ASK_PASS=False ```
 to the beginning of the command line (homebrew is already set to run
-without escalting priveldges in the homebrew playbook). E.G.
+without escalating privileges in the homebrew playbook). E.g.
 
 ``` ANSIBLE_BECOME=false ANSIBLE_BECOME_ASK_PASS=False ./mythtv.yml --limit=localhost ```
 
