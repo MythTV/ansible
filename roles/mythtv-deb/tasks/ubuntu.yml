@@ -81,7 +81,21 @@
       - python3-simplejson
       - python3-setuptools
   when:
-    - ansible_lsb.major_release|int >= 20
+    - ansible_lsb.major_release|int >= 20 and ansible_lsb.major_release|int < 24
+
+- name: add mythtv essential python modules (20.04 and later)
+  set_fact:
+    deb_pkg_lst:
+      - '{{ deb_pkg_lst }}'
+      - python3-requests
+      - python3-requests-cache
+      - python3-mysqldb
+      - python3-lxml
+      - python3-oauth
+      - python3-pycurl
+      - python3-setuptools
+  when:
+    - ansible_lsb.major_release|int >= 24
 
 - name: add python3-pip module (23.04 and later)
   set_fact:
