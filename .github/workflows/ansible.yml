@@ -74,9 +74,6 @@ jobs:
             ansibleopts: '--limit localhost'
 
           # CentOS group
-          - desc: 'CentOS 8 Stream'
-            image: 'quay.io/centos/centos:stream8'
-            ansibleopts: '--limit localhost'
           - desc: 'CentOS 9 Stream'
             image: 'quay.io/centos/centos:stream9'
             ansibleopts: '--limit localhost'
