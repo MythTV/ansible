@@ -37,6 +37,7 @@
       - taglib
       - exiv2
       - libzip
+      - libmpeg2
       - soundtouch
 
 - name: add mythtv optional build libraries

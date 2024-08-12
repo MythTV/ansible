@@ -74,6 +74,7 @@
       - hdhomerun-devel
       - libsamplerate-devel
       - libzip-devel
+      - libmpeg2-devel
       - expat-devel
       - soundtouch-devel
       # packages in repo for fedora, and in epel for centos7/rhel7

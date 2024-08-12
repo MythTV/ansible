@@ -42,6 +42,7 @@
       - lzo-devel
       - libhdhomerun-devel
       - libsamplerate-devel
+      - libmpeg2-devel
 
 - name: add mythtv essential build Leap/Tumbleweed libraries
   set_fact:

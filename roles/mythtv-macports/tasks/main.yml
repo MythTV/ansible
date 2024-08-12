@@ -54,6 +54,7 @@
       - lzo2
       - libsamplerate
       - libzip
+      - libmpeg2
       - '{{ database_version }}'
 
 - name: add optional libraries

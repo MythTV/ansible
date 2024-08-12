@@ -42,6 +42,7 @@
       - libsamplerate-devel
       - libXNVCtrl-devel
       - soundtouch-devel
+      - libmpeg2-devel
       # packages in repo for fedora, and in epel for centos7/rhel7
       - lame-devel
 

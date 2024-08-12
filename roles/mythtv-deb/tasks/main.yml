@@ -39,6 +39,7 @@
       - libsamplerate0-dev
       - libxnvctrl-dev
       - libzip-dev
+      - libmpeg2-4-dev
       - libsoundtouch-dev
 
       # add mythtv extra build libraries

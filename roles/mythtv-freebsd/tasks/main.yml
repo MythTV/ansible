@@ -38,6 +38,7 @@
       - libsamplerate
       - libcec
       - libzip
+      - libmpeg2
       # for libXNVCtrl
       - nvidia-settings
 
