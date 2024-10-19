@@ -213,6 +213,7 @@
       - traceback2
       - urllib3
       - wheel
+      - setuptools==70.3.0
   environment:
     MYSQLCLIENT_LDFLAGS: "{{ MYSQLCLIENT_LDFLAGS }}"
     MYSQLCLIENT_CFLAGS: "{{ MYSQLCLIENT_CFLAGS }}"
