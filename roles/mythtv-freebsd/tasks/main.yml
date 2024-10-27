@@ -88,7 +88,22 @@
       - py37-urlgrabber
       - py37-requests
       - py37-simplejson
-  when: ansible_distribution_major_version|int >= 13
+  when:
+  - ansible_distribution_major_version|int >= 13
+  - ansible_distribution_major_version|int < 15
+
+- name: add python essentials (FreeBSD 15 or later)
+  set_fact:
+    pkgng_pkg_lst:
+      - '{{ pkgng_pkg_lst }}'
+      - python
+      - py311-lxml
+      - py311-pymysql
+      - py311-oauth
+      - py311-urlgrabber
+      - py311-requests
+      - py311-simplejson
+  when: ansible_distribution_major_version|int >= 15
 
 - name: add perl essentials
   set_fact:
@@ -132,12 +147,20 @@
       - v4l_compat
       - libv4l
       - libva
-      - libva-glx
       - libvdpau
       - libdrm
       - gnutls
       - soundtouch
   when: ansible_distribution_major_version|int >= 13
+
+- name: add packages moved to main repository (freebsd13,14)
+  set_fact:
+    pkgng_pkg_lst:
+      - '{{ pkgng_pkg_lst }}'
+      - libva-glx
+  when:
+  - ansible_distribution_major_version|int >= 13
+  - ansible_distribution_major_version|int < 15
 
 - name: packages from ports
   set_fact:
