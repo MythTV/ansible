@@ -7,7 +7,9 @@
 
 - name: bootstrap ports
   command: /usr/sbin/portsnap extract
-  when: not ports_dir.stat.exists
+  when:
+  - not ports_dir.stat.exists
+  - ansible_distribution_major_version|int <= 12
 
 - name: create a list of compilers and build essentials
   set_fact:
