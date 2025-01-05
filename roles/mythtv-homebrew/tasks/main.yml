@@ -2,26 +2,22 @@
 
 ---
 - name: Get homebrew install prefix
-  command:  brew --prefix
+  command: brew --prefix
   register: HB_OUT
 
-- name: set homebrew_prefix fact
-  set_fact:  homebrew_prefix={{ HB_OUT.stdout  }}
+- name: set pkgmgr_prefix fact
+  set_fact: pkgmgr_prefix={{ HB_OUT.stdout  }}
 
 - name: specify a mariadb/mysql version to install
-  set_fact:
-    database_version=mysql
-  when:
-    database_version is undefined
+  set_fact: database_version=mariadb
+  when: database_version is undefined
 
 - name: check if this is a mariadb based install
-  set_fact:
-    database_name=mariadb
+  set_fact: database_name=mariadb
   when: database_version is search("mariadb")
 
 - name: check if this is a mysql based install
-  set_fact:
-    database_name=mysql
+  set_fact: database_name=mysql
   when: database_version is search("mysql")
 
 - name: create a list of compilers and build essentials
@@ -38,6 +34,8 @@
       - gperf
       - meson
 
+# note that on homebrew, mysql-client
+# is required to get the python mysqlclient working
 - name: add essential libraries
   set_fact:
     homebrew_pkg_list:
@@ -55,6 +53,7 @@
       - glslang
       - openssl
       - '{{ database_version }}'
+      - mysql-client
 
 - name: add optional libraries
   set_fact:
@@ -76,6 +75,7 @@
       - ant
       - libhdhomerun
       - libX11
+      - php
       - sound-touch
       - libcec
       - zstd
@@ -87,14 +87,18 @@
 
 - name: develop a Python package version suffix
   set_fact:
+    python_package_suffix:
+      '{{ ansible_python.version.major }}{{ ansible_python.version.minor }}'
     python_exe_suffix:
       '{{ ansible_python.version.major }}.{{ ansible_python.version.minor }}'
+
 
 - name: add python essentials
   set_fact:
     homebrew_pkg_list:
       - '{{ homebrew_pkg_list }}'
       - 'python@{{ python_exe_suffix }}'
+      - python-setuptools
       - virtualenv
       - pyenv-virtualenv
 
@@ -119,6 +123,8 @@
       - curl
       - texinfo
       - texi2html
+      - font-dejavu
+      - font-liberation
 
 - name: print final list of packages
   debug:
@@ -131,22 +137,11 @@
     name:
       '{{ lookup("flattened", homebrew_pkg_list) }}'
 
-- name: add fonts cask to homebrew
-  become: false
-  command: brew tap homebrew/cask-fonts
-
-- name: install dejavu fonts from brew cask
-  become: false
-  command: brew install --cask font-dejavu
-
-- name: install liberation fonts from brew cask
-  become: false
-  command: brew install --cask font-liberation
 
 - name: Get mysqlclient libs
   shell:
-    export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"{{ homebrew_prefix }}/opt/{{ database_version }}/lib/pkgconfig/" &&
-    {{ homebrew_prefix }}/bin/pkg-config --libs mysqlclient
+    export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"{{ pkgmgr_prefix }}/opt/mysql-client/lib/pkgconfig/" &&
+    {{ pkgmgr_prefix }}/bin/pkg-config --libs mysqlclient
   register: LIBS_OUT
 
 - name: set MYSQLCLIENT_LDFLAGS fact
@@ -154,90 +149,44 @@
 
 - name: Get mysqlclient cflags
   shell:
-    export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"{{ homebrew_prefix }}/opt/{{ database_version }}/lib/pkgconfig/" &&
-    {{ homebrew_prefix }}/bin/pkg-config --cflags mysqlclient
+    export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"{{ pkgmgr_prefix }}/opt/mysql-client/lib/pkgconfig/" &&
+    {{ pkgmgr_prefix }}/bin/pkg-config --cflags mysqlclient
   register: CFLAG_OUT
 
 - name: set MYSQLCLIENT_CFLAGS fact
   set_fact:  MYSQLCLIENT_CFLAGS={{ CFLAG_OUT.stdout }}
 
-- name: create Python virtual environment folder for standard user
-  become: false
-  file:
-    name: ~/.mythtv/python-virtualenv
-    state: directory
+- name: create a list of compilers and build essentials
+  set_fact:
+    cpanm_pkg_list:
+      - Date::Manip
+      - DateTime::Format::ISO8601
+      - Image::Size
+      - IO::Socket::INET6
+      - JSON
+      - LWP
+      - HTTP::Request::AsCGI
+      - Net::UPnP
+      - Net::SSLeay
+      - SOAP::Lite
+      - XML::XPath
+      - XML::Simple
+      - FindBin
+      - IPC::Cmd
 
-- name: initiate virtualenv for standard user
-  become: false
-  pip:
-    virtualenv: ~/.mythtv/python-virtualenv
-    name:
-      - argparse
-      - audiofile
-      - bs4
-      - common
-      - configparser
-      - cryptography
-      - datetime
-      - discid
-      - et
-      - features
-      - future
-      - HTMLParser
-      - httplib2
-      - importlib_metadata
-      - lxml
-      - musicbrainzngs
-      - mysqlclient
-      - oauthlib
-      - py2app
-      - pycurl
-      - python_dateutil
-      - requests
-      - requests_cache==0.5.2
-      - simplejson
-      - traceback2
-      - urllib3
-      - wheel
-  environment:
-    MYSQLCLIENT_LDFLAGS: "{{ MYSQLCLIENT_LDFLAGS }}"
-    MYSQLCLIENT_CFLAGS: "{{ MYSQLCLIENT_CFLAGS }}"
-  tags: pip
-
-- name: cpanm - install Net-SSLeay perl module with special handling for openssl
-  become: false
-  command: cpanm
-    --mirror 'http://cpan.cpantesters.org/'
-    --force
-    --configure-args="--libs='-L{{ homebrew_prefix }}/lib' --inc='-I{{ homebrew_prefix }}/opt/openssl/'"
-    Net::SSLeay
+- name: print final list of cpanm packages
+  debug:
+    msg:
+      '{{ lookup("flattened", cpanm_pkg_list) }}'
 
 - name: cpanm - install perl modules
   become: false
   command: cpanm
     --mirror 'http://cpan.cpantesters.org/'
     --force
-    Date::Manip
-    DateTime::Format::ISO8601
-    Image::Size
-    IO::Socket::INET6
-    JSON
-    LWP
-    HTTP::Request::AsCGI
-    Net::UPnP
-    SOAP::Lite
-    XML::XPath
-    XML::Simple
-    FindBin
-    IPC::Cmd
+    {{  cpanm_pkg_list | join(' ')  }}
+  ignore_errors: yes
+  environment:
+    OPENSSL_PREFIX: "{{ pkgmgr_prefix }}/opt/openssl/"
 
-
-- name: cpanm - install DBD-mysql vwith special handling for mysql8
-  become: false
-  shell: cpanm
-    --force
-    --mirror 'http://cpan.cpantesters.org/'
-    --configure-args="--libs='-L{{ homebrew_prefix }}/lib -lssl -lcrypto -lzstd'
-      --mysql_config='{{ homebrew_prefix }}/opt/{{ database_version }}/bin/mysql_config'"
-    DBD::mysql
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

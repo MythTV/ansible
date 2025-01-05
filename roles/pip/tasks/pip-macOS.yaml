@@ -1,0 +1,46 @@
+# roles/pip/tasks/pip-macOS
+
+# Assumes that these variables are set in the macports or
+# homebrew playbooks:
+#
+#   database_version      - specifies the database being used
+#   python_package_suffix - specifiesd the version of python to use
+#   MYSQLCLIENT_LDFLAGS   - flags to find the mysqlclient dylib
+#   MYSQLCLIENT_CFLAGS    - flags to find the mysqlclient includes
+#
+
+---
+
+- name: specify python exectuables
+  set_fact: py_exe=python{{ python_exe_suffix }}
+
+- name: specify a location to install the python virtual environment
+  set_fact: pvenv_location=~/.mythtv/python-venv{{ python_package_suffix }}
+
+- name: expand the use name in the pyvenv location variable
+  set_fact: pvenv_location={{ pvenv_location | expanduser }}
+
+- name: check for previous python virtual environment
+  stat:
+    path: '{{ pvenv_location }}/pyvenv.cfg'
+  register: CHECK_VENV
+
+- name: clearing previous python virtual environment
+  shell: 'rm -Rf {{ pvenv_location }}'
+  register: CHECK_OUT
+  when: CHECK_VENV.stat.exists
+
+- name: generate the python virtual environment for standard user
+  become: false
+  pip:
+    virtualenv: '{{ pvenv_location }}'
+    virtualenv_python: '{{ py_exe }}'
+    virtualenv_site_packages: false
+    name:
+      '{{ lookup("flattened", python_pkg_list) }}'
+  environment:
+    MYSQLCLIENT_LDFLAGS: "{{ MYSQLCLIENT_LDFLAGS }}"
+    MYSQLCLIENT_CFLAGS: "{{ MYSQLCLIENT_CFLAGS }}"
+  tags: pip
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

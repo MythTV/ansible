@@ -70,6 +70,10 @@
         - not mythtv_tools
 
     - include_role:
+        name: pip
+      when: not mythtv_tools
+
+    - include_role:
         name: qt5
       when:
         - not mythtv_tools
