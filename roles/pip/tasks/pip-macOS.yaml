@@ -11,6 +11,49 @@
 
 ---
 
+- name: create a list of required python packages
+  set_fact:
+    python_pkg_list:
+      - lxml
+      - mysqlclient
+      - oauth
+      - pip>=23.0.1
+      - pycurl
+      - requests
+      - requests-cache
+      - setuptools
+      - urllib3
+      - wheel
+
+- name: add optional python packages
+  set_fact:
+    python_pkg_list:
+      - '{{ python_pkg_list }}'
+      - argparse
+      - audiofile
+      - bs4
+      - common
+      - configparser
+      - cryptography
+      - datetime
+      - discid
+      - et
+      - features
+      - HTMLParser
+      - httplib2
+      - importlib_metadata
+      - markupsafe
+      - musicbrainzngs
+      - oauthlib
+      - python_dateutil
+      - simplejson
+      - traceback2
+
+- name: print final list of python packages
+  debug:
+    msg:
+      '{{ lookup("flattened", python_pkg_list) }}'
+
 - name: specify python exectuables
   set_fact: py_exe=python{{ python_exe_suffix }}
 
