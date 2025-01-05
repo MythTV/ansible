@@ -102,7 +102,6 @@
       - py311-oauth
       - py311-urlgrabber
       - py311-requests
-      - py311-simplejson
   when: ansible_distribution_major_version|int >= 15
 
 - name: add perl essentials

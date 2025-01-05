@@ -36,7 +36,6 @@
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
-      - python3-future
       - python3-html5lib
       - python3-requests
       - python3-requests-cache
@@ -44,7 +43,6 @@
       - python3-lxml
       - python3-oauthlib
       - python3-pycurl
-      - python3-simplejson
       - python3-setuptools
 
 - name: add mythtv essential plugin libraries

@@ -78,7 +78,6 @@
       - python3-lxml
       - python3-oauth
       - python3-pycurl
-      - python3-simplejson
       - python3-setuptools
   when:
     - ansible_lsb.major_release|int >= 20 and ansible_lsb.major_release|int < 24

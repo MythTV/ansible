@@ -145,7 +145,6 @@
       - python3-requests-cache
       - python3-lxml
       - python3-mysqldb
-      - python3-simplejson
       - python3-setuptools
   when:
     - ansible_distribution_release == "bookworm" or ansible_distribution_major_version|int >= 11
