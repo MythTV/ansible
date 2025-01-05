@@ -1,6 +1,6 @@
 ---
 
-- include_tasks:  pip-macOS.yaml
+- include_tasks:  python-macOS.yaml
   when: (ansible_pkg_mgr == "homebrew") or
     (ansible_pkg_mgr == "macports")
 

@@ -70,7 +70,7 @@
         - not mythtv_tools
 
     - include_role:
-        name: pip
+        name: python
       when: not mythtv_tools
 
     - include_role:
