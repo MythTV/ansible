@@ -84,6 +84,5 @@
   environment:
     MYSQLCLIENT_LDFLAGS: "{{ MYSQLCLIENT_LDFLAGS }}"
     MYSQLCLIENT_CFLAGS: "{{ MYSQLCLIENT_CFLAGS }}"
-  tags: pip
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

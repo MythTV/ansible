@@ -1,7 +1,7 @@
 ---
 
-- include_tasks:  python-macOS.yaml
-  when: (ansible_pkg_mgr == "homebrew") or
-    (ansible_pkg_mgr == "macports")
+- include_tasks: python-macOS.yml
+  when:
+    - (ansible_pkg_mgr == "homebrew") or (ansible_pkg_mgr == "macports")
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
