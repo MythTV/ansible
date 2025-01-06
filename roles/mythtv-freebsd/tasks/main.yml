@@ -8,8 +8,8 @@
 - name: bootstrap ports
   command: /usr/sbin/portsnap extract
   when:
-  - not ports_dir.stat.exists
-  - ansible_distribution_major_version|int <= 12
+    - not ports_dir.stat.exists
+    - ansible_distribution_major_version|int <= 12
 
 - name: create a list of compilers and build essentials
   set_fact:
@@ -89,8 +89,8 @@
       - py37-requests
       - py37-simplejson
   when:
-  - ansible_distribution_major_version|int >= 13
-  - ansible_distribution_major_version|int < 15
+    - ansible_distribution_major_version|int >= 13
+    - ansible_distribution_major_version|int < 15
 
 - name: add python essentials (FreeBSD 15 or later)
   set_fact:
@@ -158,8 +158,8 @@
       - '{{ pkgng_pkg_lst }}'
       - libva-glx
   when:
-  - ansible_distribution_major_version|int >= 13
-  - ansible_distribution_major_version|int < 15
+    - ansible_distribution_major_version|int >= 13
+    - ansible_distribution_major_version|int < 15
 
 - name: packages from ports
   set_fact:
