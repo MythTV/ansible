@@ -27,7 +27,7 @@
       - nasm
       - autoconf
       - automake
-      - pkg-config
+      - 'pkg-config'
       - cmake
       - gpatch
       - ninja
@@ -53,7 +53,7 @@
       - glslang
       - openssl
       - '{{ database_version }}'
-      - mysql-client
+      - 'mysql-client'
 
 - name: add optional libraries
   set_fact:
@@ -76,13 +76,13 @@
       - libhdhomerun
       - libX11
       - php
-      - sound-touch
+      - 'sound-touch'
       - libcec
       - zstd
-      - vulkan-headers
-      - vulkan-tools
-      - vulkan-loader
-      - molten-vk
+      - 'vulkan-headers'
+      - 'vulkan-tools'
+      - 'vulkan-loader'
+      - 'molten-vk'
       - libdiscid
 
 - name: develop a Python package version suffix
@@ -118,12 +118,12 @@
       - libtool
       - lame
       - gnutls
-      - gnu-sed
+      - 'gnu-sed'
       - curl
       - texinfo
       - texi2html
-      - font-dejavu
-      - font-liberation
+      - 'font-dejavu'
+      - 'font-liberation'
 
 - name: print final list of packages
   debug:

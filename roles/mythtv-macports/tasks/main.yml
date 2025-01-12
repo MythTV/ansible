@@ -70,17 +70,17 @@
       - flac
       - faac
       - freetype
-      - fftw-3
+      - 'fftw-3'
       - libass
       - php84
       - aom
       - dav1d
       - minizip
-      - apache-ant
+      - 'apache-ant'
       - hdhomerun
-      - xorg-libX11
-      - liberation-fonts
-      - dejavu-fonts
+      - 'xorg-libX11'
+      - 'liberation-fonts'
+      - 'dejavu-fonts'
       - soundtouch
 
 - name: develop a Python package version suffix
@@ -102,19 +102,19 @@
   set_fact:
     macports_pkg_list:
       - '{{ macports_pkg_list }}'
-      - perl{{ perl_version }}
-      - p{{ perl_version }}-date-manip
-      - p{{ perl_version }}-datetime-format-iso8601
-      - p{{ perl_version }}-dbi
-      - p{{ perl_version }}-image-size
-      - p{{ perl_version }}-io-socket-inet6
-      - p{{ perl_version }}-json
-      - p{{ perl_version }}-libwww-perl
-      - p{{ perl_version }}-http-request-ascgi
-      - p{{ perl_version }}-net-upnp
-      - p{{ perl_version }}-soap-lite
-      - p{{ perl_version }}-xml-xpath
-      - p{{ perl_version }}-xml-simple
+      - 'perl{{ perl_version }}'
+      - 'p{{ perl_version }}-date-manip'
+      - 'p{{ perl_version }}-datetime-format-iso8601'
+      - 'p{{ perl_version }}-dbi'
+      - 'p{{ perl_version }}-image-size'
+      - 'p{{ perl_version }}-io-socket-inet6'
+      - 'p{{ perl_version }}-json'
+      - 'p{{ perl_version }}-libwww-perl'
+      - 'p{{ perl_version }}-http-request-ascgi'
+      - 'p{{ perl_version }}-net-upnp'
+      - 'p{{ perl_version }}-soap-lite'
+      - 'p{{ perl_version }}-xml-xpath'
+      - 'p{{ perl_version }}-xml-simple'
 
 - name: utility packages from ports
   set_fact:
