@@ -4,7 +4,7 @@
   set_fact:
     homebrew_pkg_list:
       - qt@6
-      - qt-mysql
+      - 'qt-{{ database_name }}'
   tags:
     - qt6
 

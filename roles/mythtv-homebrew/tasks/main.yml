@@ -54,7 +54,6 @@
       - openssl
       - '{{ database_version }}'
       - mysql-client
-      - 'qt-{{ database_version }}'
 
 - name: add optional libraries
   set_fact:
