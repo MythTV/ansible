@@ -155,7 +155,7 @@
 - name: set MYSQLCLIENT_CFLAGS fact
   set_fact:  MYSQLCLIENT_CFLAGS={{ CFLAG_OUT.stdout }}
 
-- name: create a list of compilers and build essentials
+- name: create a list of perl modules
   set_fact:
     cpanm_pkg_list:
       - Date::Manip
