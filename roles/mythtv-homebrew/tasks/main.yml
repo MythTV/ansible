@@ -62,7 +62,7 @@
       - libvpx
       - x264
       - x265
-      - XviD
+      - xvid
       - libvorbis
       - flac
       - faac
@@ -74,7 +74,7 @@
       - minizip
       - ant
       - libhdhomerun
-      - libX11
+      - libx11
       - php
       - 'sound-touch'
       - libcec
@@ -84,6 +84,7 @@
       - 'vulkan-loader'
       - 'molten-vk'
       - libdiscid
+      - expat
 
 - name: develop a Python package version suffix
   set_fact:
@@ -106,6 +107,7 @@
     homebrew_pkg_list:
       - '{{ homebrew_pkg_list }}'
       - perl
+      - perl-dbd-mysql
       - cpanminus
       - libdbi
       - libiodbc
@@ -160,6 +162,7 @@
     cpanm_pkg_list:
       - Date::Manip
       - DateTime::Format::ISO8601
+      - DBI
       - Image::Size
       - IO::Socket::INET6
       - JSON
