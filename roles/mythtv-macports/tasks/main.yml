@@ -41,6 +41,9 @@
       - autoconf
       - automake
       - pkgconfig
+      - cmake
+      - gpatch
+      - ninja
 
 - name: add essential libraries
   set_fact:
