@@ -1,6 +1,7 @@
 .ansible-lint
 .dockerignore
 .git
+.github
 .gitignore
 .yamllint.yml
 *.sh

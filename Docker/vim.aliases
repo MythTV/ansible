@@ -1,0 +1,74 @@
+#!/usr/bin/bash
+# ^^^^^^^^^^^^^ For shellcheck.
+
+alias ki='docker images'
+alias kps='docker ps --all'
+alias kprune='docker container prune --force; docker image prune --all --force; docker image rm 2>/dev/null'
+
+function kbuild() {
+    if [ ! -f "Docker/${1}.Dockerfile" ]; then
+        echo "Missing kernel:version. Probably need to: cd .., aborting"
+        return 1
+    fi
+    docker build --tag "${1}" --file "Docker/${1}.Dockerfile" .
+}
+
+function kstart () {
+    if [ ! -f "Docker/${1}.Dockerfile" ]; then
+        echo "Missing kernel:version. Probably need to: cd .., aborting"
+        return 1
+     fi
+    CONTAINER_ID="$(docker ps --all | grep "${1}" | cut --delimiter=' ' --field 1)"
+    if [ -z "${CONTAINER_ID}" ]; then
+        echo "Couldn't get a container id for ${1}. Try kps. aborting"
+        return 1
+    fi
+    docker start --interactive "${CONTAINER_ID}"
+}
+
+alias  alpl='kbuild alpine:latest'
+alias  amaz='kbuild amazonlinux:latest '
+alias amont='kbuild amontalban:freebsd '
+alias  arch='kbuild archlinux:latest'
+alias cent7='kbuild centos:7'
+alias cent8='kbuild centos:8'
+alias cent9='kbuild centos:9'
+alias cent8='kbuild centos:centos8'
+alias deb10='kbuild debian:10'
+alias deb11='kbuild debian:11'
+alias deb12='kbuild debian:12'
+alias fed37='kbuild fedora:40'
+alias fed41='kbuild fedora:41'
+alias  fedr='kbuild fedora:rawhide'
+alias  omd4='kbuild openmandriva:4.2'
+alias osusl='kbuild opensuse:leap'
+alias osust='kbuild opensuse:tumbleweed'
+alias rock8='kbuild rockylinux:8'
+alias rock9='kbuild rockylinux:9'
+alias  ub20='kbuild ubuntu:20.04'
+alias  ub22='kbuild ubuntu:22.04'
+alias  ub24='kbuild ubuntu:24.04'
+
+alias ialpl='kstart alpine:latest'
+alias iamaz='kstart amazonlinux:latest '
+alias iamont='kstart amontalban:freebsd '
+alias iarch='kstart archlinux:latest'
+alias icent8='kstart centos:8'
+alias icent7='kstart centos:7'
+alias icent9='kstart centos:9'
+alias icent8='kstart centos:centos8'
+alias ideb10='kstart debian:10'
+alias ideb11='kstart debian:11'
+alias ideb12='kstart debian:12'
+alias ifed37='kstart fedora:40'
+alias ifed41='kstart fedora:41'
+alias ifedr='kstart fedora:rawhide'
+alias iomd4='kstart openmandriva:4.2'
+alias iosusl='kstart opensuse:leap'
+alias iosust='kstart opensuse:tumbleweed'
+alias irock8='kstart rockylinux:8'
+alias irock9='kstart rockylinux:9'
+alias iub20='kstart ubuntu:20.04'
+alias iub22='kstart ubuntu:22.04'
+alias iub24='kstart ubuntu:24.04'
+alias iub24='kstart ubuntu:24.04'

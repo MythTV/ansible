@@ -1,9 +1,6 @@
-FROM centos:7
-LABEL CODENAME="N/A"
-LABEL EOL="2024-06-30"
-LABEL STATUS="Builds through mythplugins!"
-RUN yum install --assumeyes epel-release
-RUN yum install --assumeyes ansible git vim-enhanced
+FROM debian:12
+LABEL CODENAME="Bookworm, stable"
+RUN apt-get update && apt-get install --yes ansible git plocate python3-apt vim
 
 WORKDIR /root/source/ansible
 COPY . ./

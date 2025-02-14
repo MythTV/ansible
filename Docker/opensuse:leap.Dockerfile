@@ -1,5 +1,5 @@
 FROM opensuse/leap
-RUN zypper --non-interactive install ansible git mlocate vim
+RUN zypper --non-interactive install ansible git plocate vim
 
 WORKDIR /root/source/ansible
 COPY . ./

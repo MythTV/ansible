@@ -8,12 +8,13 @@ RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
     dnf --assumeyes install epel-release && \
     dnf makecache && \
     dnf --assumeyes distribution-synchronization && \
-    dnf --assumeyes install git make python3 python3-dnf tree vim-enhanced && \
+    dnf --assumeyes install git python3 python3-dnf tree vim-enhanced && \
     ln --force --symbolic /usr/bin/python3 /usr/bin/python && \
     pip3 --quiet install packaging setuptools-rust
 
 WORKDIR /root/source
 RUN git clone https://github.com/ansible/ansible.git
+
 WORKDIR /root/source/ansible
 RUN git checkout -b stable-2.9 origin/stable-2.9
 RUN make install
@@ -25,20 +26,8 @@ RUN make install
 
 WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
-WORKDIR /root/source/mythtv/mythtv
-RUN git checkout fixes/32
 
-RUN ./configure \
-    --enable-libx264 \
-    --enable-libmp3lame \
-    --enable-nonfree \
-    --enable-proc-opt
-# ADJUST THE NEXT LINE. Don't use $(nproc)
-RUN make --jobs=4
-RUN make install
-
-WORKDIR /root/source/mythtv/mythplugins
-RUN ./configure
-# ADJUST THE NEXT LINE. Don't use $(nproc)
-RUN make --jobs=4
-RUN make install
+WORKDIR /root/source/mythtv
+RUN git checkout fixes/35
+RUN cmake --preset qt5
+RUN cmake --build build-qt5

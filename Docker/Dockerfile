@@ -13,18 +13,8 @@ RUN ./mythtv.yml --limit=localhost
 
 WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
-WORKDIR /root/source/mythtv/mythtv
-RUN git checkout fixes/32
 
-RUN ./configure \
-    --enable-libx264 \
-    --enable-libmp3lame \
-    --enable-nonfree \
-    --enable-proc-opt
-RUN make
-RUN make install
-
-WORKDIR /root/source/mythtv/mythplugins
-RUN ./configure
-RUN make
-RUN make install
+WORKDIR /root/source/mythtv
+RUN git checkout fixes/35
+RUN cmake --preset qt5
+RUN cmake --build build-qt5
