@@ -25,6 +25,8 @@
       - ninja
       - gperf
       - meson
+      - sqlite3
+      - php
 
 - name: add essential libraries
   set_fact:
@@ -102,6 +104,7 @@
       - py311-oauth
       - py311-urlgrabber
       - py311-requests
+      - py311-setuptools
   when: ansible_distribution_major_version|int >= 15
 
 - name: add perl essentials
