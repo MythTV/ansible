@@ -21,6 +21,8 @@
       - ninja
       - gperf
       - meson
+      - sqlite3
+      - php
 
 - name: add mythtv essential build libraries
   set_fact:
@@ -39,6 +41,7 @@
       - libzip
       - libmpeg2
       - soundtouch
+      # libv4l-devel and libv4l-dev don't seem to exist.
 
 - name: add mythtv optional build libraries
   set_fact:
@@ -67,7 +70,7 @@
       # AUR only - urlgrabber
       - python-mysqlclient
       - python-requests
-      - python-setuptools
+      - python-setuptools  # Didn't find a python3-setuptools package
 
 - name: add mythtv essential perl modules
   set_fact:
