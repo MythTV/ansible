@@ -13,17 +13,17 @@ function kbuild() {
     docker build --tag "${1}" --file "Docker/${1}.Dockerfile" .
 }
 
-function kstart () {
+function krun () {
     if [ ! -f "Docker/${1}.Dockerfile" ]; then
         echo "Missing kernel:version. Probably need to: cd .., aborting"
         return 1
      fi
-    CONTAINER_ID="$(docker ps --all | grep "${1}" | cut --delimiter=' ' --field 1)"
-    if [ -z "${CONTAINER_ID}" ]; then
-        echo "Couldn't get a container id for ${1}. Try kps. aborting"
+    NAME="$(echo "${1}" | tr --delete '.:' )"
+    if [ -z "${NAME}" ]; then
+        echo "Couldn't a name for ${1}. Try kps. aborting"
         return 1
     fi
-    docker start --interactive "${CONTAINER_ID}"
+    docker run --interactive --tty --name "${NAME}" "${1}"
 }
 
 alias  alpl='kbuild alpine:latest'
@@ -37,7 +37,7 @@ alias cent8='kbuild centos:centos8'
 alias deb10='kbuild debian:10'
 alias deb11='kbuild debian:11'
 alias deb12='kbuild debian:12'
-alias fed37='kbuild fedora:40'
+alias fed40='kbuild fedora:40'
 alias fed41='kbuild fedora:41'
 alias  fedr='kbuild fedora:rawhide'
 alias  omd4='kbuild openmandriva:4.2'
@@ -49,26 +49,26 @@ alias  ub20='kbuild ubuntu:20.04'
 alias  ub22='kbuild ubuntu:22.04'
 alias  ub24='kbuild ubuntu:24.04'
 
-alias ialpl='kstart alpine:latest'
-alias iamaz='kstart amazonlinux:latest '
-alias iamont='kstart amontalban:freebsd '
-alias iarch='kstart archlinux:latest'
-alias icent8='kstart centos:8'
-alias icent7='kstart centos:7'
-alias icent9='kstart centos:9'
-alias icent8='kstart centos:centos8'
-alias ideb10='kstart debian:10'
-alias ideb11='kstart debian:11'
-alias ideb12='kstart debian:12'
-alias ifed37='kstart fedora:40'
-alias ifed41='kstart fedora:41'
-alias ifedr='kstart fedora:rawhide'
-alias iomd4='kstart openmandriva:4.2'
-alias iosusl='kstart opensuse:leap'
-alias iosust='kstart opensuse:tumbleweed'
-alias irock8='kstart rockylinux:8'
-alias irock9='kstart rockylinux:9'
-alias iub20='kstart ubuntu:20.04'
-alias iub22='kstart ubuntu:22.04'
-alias iub24='kstart ubuntu:24.04'
-alias iub24='kstart ubuntu:24.04'
+alias ralpl='krun alpine:latest'
+alias ramaz='krun amazonlinux:latest '
+alias ramont='krun amontalban:freebsd '
+alias rarch='krun archlinux:latest'
+alias rcent8='krun centos:8'
+alias rcent7='krun centos:7'
+alias rcent9='krun centos:9'
+alias rcent8='krun centos:centos8'
+alias rdeb10='krun debian:10'
+alias rdeb11='krun debian:11'
+alias rdeb12='krun debian:12'
+alias rfed40='krun fedora:40'
+alias rfed41='krun fedora:41'
+alias rfedr='krun fedora:rawhide'
+alias romd4='krun openmandriva:4.2'
+alias rosusl='krun opensuse:leap'
+alias rosust='krun opensuse:tumbleweed'
+alias rrock8='krun rockylinux:8'
+alias rrock9='krun rockylinux:9'
+alias rub20='krun ubuntu:20.04'
+alias rub22='krun ubuntu:22.04'
+alias rub24='krun ubuntu:24.04'
+alias rub24='krun ubuntu:24.04'

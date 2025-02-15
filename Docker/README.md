@@ -46,7 +46,7 @@ a package name has changed or is no longer available.
 
 *Docker* only allows `--name`s with alphanumeric characters.
 
->`docker run --interactive --tty --name ubuntu2004 ubuntu:24.04`
+>`docker run --interactive --tty --name ubuntu2004 ubuntu:20.04`
 
 Start a stopped *Container*
 

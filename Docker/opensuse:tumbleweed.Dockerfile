@@ -1,5 +1,5 @@
 FROM opensuse/tumbleweed
-LABEL CODENAME="Tumpleweed, 'rolling' (forever) release"
+LABEL CODENAME="Tumpleweed, rolling (forever) release"
 RUN zypper --non-interactive install awk ansible git vim
 
 WORKDIR /root/source/ansible
