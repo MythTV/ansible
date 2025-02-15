@@ -19,6 +19,10 @@
       - ninja
       - gperf
       - meson
+      - sqlite3
+      - php
+      - awk
+      - gnutls
 
 - name: add gcc13 for Leap
   set_fact:
@@ -43,6 +47,10 @@
       - libhdhomerun-devel
       - libsamplerate-devel
       - libmpeg2-devel
+      - libv4l-devel
+      - libavc1394-devel
+      - libiec61883-devel
+      - dav1d-devel
 
 - name: add mythtv essential build Leap/Tumbleweed libraries
   set_fact:
@@ -95,6 +103,7 @@
       - python3-lxml
       - python3-urlgrabber
       - python3-requests
+      - python3-setuptools
   when: ansible_distribution == "openSUSE Leap" or ansible_distribution == "openSUSE Tumbleweed"
 
 - name: add mythtv essential python modules only available in Leap
