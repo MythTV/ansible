@@ -59,6 +59,8 @@
       # packages in repo for fedora, and in epel for centos7/rhel7
       - nasm
       - ccache
+      - sqlite3
+      - php
 
 - name: add mythtv essential build libraries
   set_fact:
@@ -79,6 +81,7 @@
       - soundtouch-devel
       # packages in repo for fedora, and in epel for centos7/rhel7
       - lame-devel
+      - libv4l-devel
 
 # Check if user has negativo's nvidia repository enabled
 - shell: /usr/bin/dnf repoinfo -q fedora-nvidia

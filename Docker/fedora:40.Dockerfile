@@ -1,5 +1,6 @@
 FROM fedora:40
 RUN dnf install --assumeyes ansible git tree vim
+
 WORKDIR /root/source/ansible
 COPY . ./
 RUN ./mythtv.yml --limit=localhost
