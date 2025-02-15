@@ -1,4 +1,4 @@
-FROM debian:12
+FROM debian:13
 LABEL CODENAME="Trixie, testing no release date set"
 RUN apt-get update && apt-get install --yes ansible git plocate python3-apt vim
 

@@ -20,6 +20,8 @@
       - ninja-build
       - gperf
       - meson
+      - sqlite3
+      - php
 
       # add mythtv essential build libraries
       - uuid-dev
@@ -41,6 +43,7 @@
       - libzip-dev
       - libmpeg2-4-dev
       - libsoundtouch-dev
+      - libv4l-dev
 
       # add mythtv extra build libraries
       - libva-dev
