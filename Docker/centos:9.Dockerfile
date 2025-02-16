@@ -1,11 +1,11 @@
-# A centos:9 manifest is unknown to hub.docker.com
-# The package manager would probably be dnf too.
-FROM centos:9
+# A centos:stream9 manifest is unknown to hub.docker.com
+FROM quay.io/centos/centos:stream9
 RUN dnf distribution-synchronization --assumeyes
-RUN dnf install centos-release-ansible-29.noarch git tree vim-enhanced --assumeyes
+RUN dnf install --assumeyes ansible-core git tree vim-enhanced
 
 WORKDIR /root/source/ansible
 COPY . ./
+RUN ansible-galaxy collection install --requirements-file=requirements.yml
 RUN ./mythtv.yml --limit=localhost
 
 WORKDIR /root/source

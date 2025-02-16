@@ -3,7 +3,13 @@
 
 alias ki='docker images'
 alias kps='docker ps --all'
-alias kprune='docker container prune --force; docker image prune --all --force; docker image rm 2>/dev/null'
+function kprune () {
+    sudo du -hs /var/lib/docker/overlay2
+    docker container prune --force
+    docker image prune --all --force
+    docker image remove 2>/dev/null
+    sudo du -hs /var/lib/docker/overlay2
+}
 
 function kbuild() {
     if [ ! -f "Docker/${1}.Dockerfile" ]; then
@@ -33,7 +39,6 @@ alias  arch='kbuild archlinux:latest'
 alias cent7='kbuild centos:7'
 alias cent8='kbuild centos:8'
 alias cent9='kbuild centos:9'
-alias cent8='kbuild centos:centos8'
 alias deb10='kbuild debian:10'
 alias deb11='kbuild debian:11'
 alias deb12='kbuild debian:12'
