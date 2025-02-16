@@ -1,0 +1,42 @@
+#!/usr/bin/env ansible-playbook
+
+# Experimental: to run these tasks, change the 'normal' command to:
+#
+#   ./mythtv.yml --extra-vars='{"yay_flag":true}' --limit=localhost
+#
+
+---
+
+- name: add the yay repository
+  ansible.builtin.git:
+    repo: 'https://aur.archlinux.org/yay.git'
+    dest: './yay'
+  tags: never
+
+- name: make the yay package
+  ansible.builtin.command: makepkg -si
+  args:
+    chdir: ./yay
+  tags: never
+
+- name: add the AUR packages NOT CLEAR IF /tmp/yay_build DIR MUST EXIST ALREADY
+  community.general.pacman:
+    name: '{{ item }}'
+    state: present
+    executable: yay
+    extra_args: --builddir /tmp/yay_build
+  loop:
+    - libhdhomerun
+    - perl-net-upnp
+    - python-timeout-decorator
+    - python-requests-cache
+
+...
+
+# Notes, to get yay:
+# pacman -S --needed git base-devel
+# git clone https://aur.archlinux.org/yay.git
+# cd yay
+# makepkg -si
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=4:
