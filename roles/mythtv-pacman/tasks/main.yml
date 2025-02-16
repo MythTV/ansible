@@ -57,7 +57,7 @@
       - libvpx
       - dav1d
       - xvidcore
-      - pulseaudio
+      # pulseaudio  # conflicts with pipewire
       - libavc1394
       - libiec61883
       - lirc
