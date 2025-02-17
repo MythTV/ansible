@@ -7,19 +7,55 @@
 
 ---
 
-- name: add the yay repository
-  ansible.builtin.git:
-    repo: 'https://aur.archlinux.org/yay.git'
-    dest: './yay'
-  tags: never
+- name: define the AUR repository for yay
+  set_fact:
+    yay_repository: 'https://aur.archlinux.org/yay.git'
 
+- name: check if the yay command exists (assumes that yay is in $PATH)
+  ansible.builtin.command: yay
+  check_mode: false
+  changed_when: false
+  register: yay_response
+  ignore_errors: true
+
+- debug:
+    msg: "yay doesn't seem to be on your host (or in your PATH), getting a copy"
+  when: yay_response.rc == 127
+
+- name: download the yay repository
+  become: false
+  ansible.builtin.git:
+    repo: '{{ yay_repository }}'
+    dest: '{{ ansible_user_dir }}/yay_{{ ansible_user_id }}'
+  register: git_response
+  ignore_errors: true
+  when: yay_response.rc > 0
+
+- debug:
+    msg:
+      - 'A copy of the yay repository has been downloaded to {{ ansible_user_dir }}/yay_{{ ansible_user_id }}.'
+      - 'You can use: makepkg -si from that directory to build it.'
+  when: not git_response.failed
+
+- debug:
+    msg: 'Unable to download yay repository from {{ yay_repository }}'
+  when: git_response.failed
+
+# This can't work because makepkg must not run as root AND it prompts for the
+# sudo password after starting. The ansible.builtin.expect module was tested
+# but doesn't seem to work. It is possible to change PACMAN_AUTH=(/usr/bin/true
+# but that seems unsafe.)
 - name: make the yay package
+  become: false
   ansible.builtin.command: makepkg -si
   args:
     chdir: ./yay
   tags: never
 
+# This is also turned off because pacman calls makepkg. See the task above for
+# reasons.
 - name: add the AUR packages NOT CLEAR IF /tmp/yay_build DIR MUST EXIST ALREADY
+  become: false
   community.general.pacman:
     name: '{{ item }}'
     state: present
@@ -30,13 +66,25 @@
     - perl-net-upnp
     - python-timeout-decorator
     - python-requests-cache
+  tags: never
+
+- ansible.builtin.debug:
+    msg: 'Manually run the following commands to add AUR packages:'
+
+- ansible.builtin.debug:
+    msg: 'yay -S {{ item }}'
+  loop:
+    - libhdhomerun
+    - perl-net-upnp
+    - python-timeout-decorator
+    - python-requests-cache
 
 ...
 
 # Notes, to get yay:
-# pacman -S --needed git base-devel
-# git clone https://aur.archlinux.org/yay.git
+# pacman -S --needed git base-devel (done in main.yml)
+# git clone https://aur.archlinux.org/yay.git (done in here)
 # cd yay
-# makepkg -si
+# makepkg -si (can't do)
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=4:

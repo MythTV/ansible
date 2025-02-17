@@ -116,10 +116,7 @@
 - set_fact: yay_flag=false
   when: yay_flag is undefined
 
-- debug:
-    msg: 'extra-vars yay_flag="{{ yay_flag }}"'
-
-- name: add packages from AUR
+- name: attempt to add AUR packages
   ansible.builtin.include_tasks:
     file: ./yay.yml
   when:

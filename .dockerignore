@@ -5,6 +5,7 @@
 .gitignore
 .yamllint.yml
 *.sh
+*.setup.out
 *.swp
-Docker
+**/Docker
 README.md
