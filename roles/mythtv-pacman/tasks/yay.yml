@@ -7,9 +7,10 @@
 
 ---
 
-- name: define the AUR repository for yay
+- name: define the AUR yay repository and buld directory
   set_fact:
     yay_repository: 'https://aur.archlinux.org/yay.git'
+    yay_build_dir: '/tmp/yay_build'
 
 - name: check if the yay command exists (assumes that yay is in $PATH)
   ansible.builtin.command: yay
@@ -19,27 +20,25 @@
   ignore_errors: true
 
 - debug:
-    msg: "yay doesn't seem to be on your host (or in your PATH), getting a copy"
-  when: yay_response.rc == 127
+    msg: "yay wasn't in your $PATH, assuming a copy is needed"
+  when: yay_response is defined and yay_response.failed
 
 - name: download the yay repository
   become: false
   ansible.builtin.git:
     repo: '{{ yay_repository }}'
-    dest: '{{ ansible_user_dir }}/yay_{{ ansible_user_id }}'
+    dest: '{{ yay_build_dir }}'
   register: git_response
   ignore_errors: true
-  when: yay_response.rc > 0
+  when: yay_response is  defined and yay_response.failed
 
 - debug:
-    msg:
-      - 'A copy of the yay repository has been downloaded to {{ ansible_user_dir }}/yay_{{ ansible_user_id }}.'
-      - 'You can use: makepkg -si from that directory to build it.'
-  when: not git_response.failed
+    msg: 'The yay repository has been downloaded to {{ ansible_user_dir }}.'
+  when: git_response is  defined and not git_response.failed
 
 - debug:
     msg: 'Unable to download yay repository from {{ yay_repository }}'
-  when: git_response.failed
+  when: git_response is defined and git_response.failed
 
 # This can't work because makepkg must not run as root AND it prompts for the
 # sudo password after starting. The ansible.builtin.expect module was tested
@@ -60,7 +59,7 @@
     name: '{{ item }}'
     state: present
     executable: yay
-    extra_args: --builddir /tmp/yay_build
+    extra_args: '--builddir {{ yay_build_dir }}'
   loop:
     - libhdhomerun
     - perl-net-upnp
@@ -69,7 +68,16 @@
   tags: never
 
 - ansible.builtin.debug:
-    msg: 'Manually run the following commands to add AUR packages:'
+    msg:
+      - 'You can use: makepkg -si from {{ yay_build_dir }} to build yay.'
+      - 'Then anually run the following commands to add AUR packages:'
+  when: git_response is  defined and not git_response.failed
+
+- ansible.builtin.debug:
+    msg:
+      - "Because the download from: {{ yay_repository }} failed, you'll"
+      - "need to install yay MANUALLY, THEN run:"
+  when: git_response is  defined and git_response.failed
 
 - ansible.builtin.debug:
     msg: 'yay -S {{ item }}'
@@ -87,4 +95,4 @@
 # cd yay
 # makepkg -si (can't do)
 
-# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=4:
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2,80:

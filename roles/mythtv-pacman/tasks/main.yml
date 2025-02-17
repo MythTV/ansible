@@ -118,7 +118,7 @@
 
 - name: attempt to add AUR packages
   ansible.builtin.include_tasks:
-    file: ./yay.yml
+    file: yay.yml
   when:
     - yay_flag is true
 
