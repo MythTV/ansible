@@ -8,9 +8,9 @@
 ---
 
 - name: define the AUR yay repository and buld directory
-  set_fact:
+  ansible.builtin.set_fact:
     yay_repository: 'https://aur.archlinux.org/yay.git'
-    yay_build_dir: '/tmp/yay_build'
+    yay_build_directory: '/tmp/yay_build'
 
 - name: check if the yay command exists (assumes that yay is in $PATH)
   ansible.builtin.command: yay
@@ -19,7 +19,7 @@
   register: yay_response
   ignore_errors: true
 
-- debug:
+- ansible.builtin.debug:
     msg: "yay wasn't in your $PATH, assuming a copy is needed"
   when: yay_response is defined and yay_response.failed
 
@@ -27,17 +27,19 @@
   become: false
   ansible.builtin.git:
     repo: '{{ yay_repository }}'
-    dest: '{{ yay_build_dir }}'
+    dest: '{{ yay_build_directory }}'
   register: git_response
   ignore_errors: true
-  when: yay_response is  defined and yay_response.failed
+  when: yay_response is defined and yay_response.failed
 
-- debug:
-    msg: 'The yay repository has been downloaded to {{ ansible_user_dir }}.'
-  when: git_response is  defined and not git_response.failed
+- ansible.builtin.debug:
+    msg: 'The yay repository has been downloaded to {{ yay_build_directory }}.'
+  when: git_response is defined and not git_response.failed
 
-- debug:
-    msg: 'Unable to download yay repository from {{ yay_repository }}'
+- ansible.builtin.debug:
+    msg:
+      - 'Unable to download yay repository from {{ yay_repository }}'
+      - '{{ git_response.msg }}'
   when: git_response is defined and git_response.failed
 
 # This can't work because makepkg must not run as root AND it prompts for the
@@ -53,13 +55,13 @@
 
 # This is also turned off because pacman calls makepkg. See the task above for
 # reasons.
-- name: add the AUR packages NOT CLEAR IF /tmp/yay_build DIR MUST EXIST ALREADY
+- name: add the AUR packages NOT CLEAR IF extra_args MUST BE INCLUDED
   become: false
   community.general.pacman:
     name: '{{ item }}'
     state: present
     executable: yay
-    extra_args: '--builddir {{ yay_build_dir }}'
+    extra_args: '--builddir {{ yay_build_directory }}'
   loop:
     - libhdhomerun
     - perl-net-upnp
@@ -67,19 +69,22 @@
     - python-requests-cache
   tags: never
 
-- ansible.builtin.debug:
+- name: MANUAL ACTION ITEM
+  ansible.builtin.debug:
     msg:
-      - 'You can use: makepkg -si from {{ yay_build_dir }} to build yay.'
-      - 'Then anually run the following commands to add AUR packages:'
-  when: git_response is  defined and not git_response.failed
+      - 'You can use: makepkg -si from {{ yay_build_directory }} to build yay.'
+      - 'Then manually run the following commands to add AUR packages:'
+  when: git_response is defined and not git_response.failed
 
-- ansible.builtin.debug:
+- name: MANUAL ACTION ITEM
+  ansible.builtin.debug:
     msg:
       - "Because the download from: {{ yay_repository }} failed, you'll"
       - "need to install yay MANUALLY, THEN run:"
-  when: git_response is  defined and git_response.failed
+  when: git_response is defined and git_response.failed
 
-- ansible.builtin.debug:
+- name: MANUAL ACTION ITEM
+  ansible.builtin.debug:
     msg: 'yay -S {{ item }}'
   loop:
     - libhdhomerun
