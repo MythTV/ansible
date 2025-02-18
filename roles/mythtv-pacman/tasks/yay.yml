@@ -11,6 +11,7 @@
   ansible.builtin.set_fact:
     yay_repository: 'https://aur.archlinux.org/yay.git'
     yay_build_directory: '/tmp/yay_build'
+    yay_is_installed: false
 
 - name: check if the yay command exists (assumes that yay is in $PATH)
   ansible.builtin.command: yay
@@ -19,9 +20,13 @@
   register: yay_response
   ignore_errors: true
 
+- set_fact:
+    yay_is_installed: true
+  when: yay_response is defined and not yay_response.failed
+
 - ansible.builtin.debug:
-    msg: "yay wasn't in your $PATH, assuming a copy is needed"
-  when: yay_response is defined and yay_response.failed
+    msg: "yay wasn't in your $PATH, assuming it must be installed from AUR."
+  when: not yay_is_installed
 
 - name: download the yay repository
   become: false
@@ -30,17 +35,17 @@
     dest: '{{ yay_build_directory }}'
   register: git_response
   ignore_errors: true
-  when: yay_response is defined and yay_response.failed
+  when: not yay_is_installed
 
-- ansible.builtin.debug:
-    msg: 'The yay repository has been downloaded to {{ yay_build_directory }}.'
-  when: git_response is defined and not git_response.failed
+- set_fact:
+    yay_repo_loaded: false
 
-- ansible.builtin.debug:
-    msg:
-      - 'Unable to download yay repository from {{ yay_repository }}'
-      - '{{ git_response.msg }}'
-  when: git_response is defined and git_response.failed
+- set_fact:
+    yay_repo_loaded: true
+  when:
+    - git_response is defined
+    - git_response.skipped is undefined
+    - not git_response.failed
 
 # This can't work because makepkg must not run as root AND it prompts for the
 # sudo password after starting. The ansible.builtin.expect module was tested
@@ -72,16 +77,23 @@
 - name: MANUAL ACTION ITEM
   ansible.builtin.debug:
     msg:
-      - 'You can use: makepkg -si from {{ yay_build_directory }} to build yay.'
+      - 'You can run: makepkg -siD {{ yay_build_directory }} to build yay.'
       - 'Then manually run the following commands to add AUR packages:'
-  when: git_response is defined and not git_response.failed
+  when: yay_repo_loaded
 
 - name: MANUAL ACTION ITEM
   ansible.builtin.debug:
     msg:
-      - "Because the download from: {{ yay_repository }} failed, you'll"
-      - "need to install yay MANUALLY, THEN run:"
-  when: git_response is defined and git_response.failed
+      - "Because no download from: {{ yay_repository }} was done, you'll"
+      - "need to install yay manually, THEN run:"
+  when:
+    - not yay_repo_loaded
+    - not yay_is_installed
+
+- name: MANUAL ACTION ITEM
+  ansible.builtin.debug:
+    msg: 'Run the following commands to add AUR packages:'
+  when: yay_is_installed
 
 - name: MANUAL ACTION ITEM
   ansible.builtin.debug:
