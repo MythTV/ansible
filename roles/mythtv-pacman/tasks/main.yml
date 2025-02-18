@@ -113,13 +113,12 @@
     state:
       present
 
-- set_fact: yay_flag=false
-  when: yay_flag is undefined
+# - set_fact: yay_flag=false
 
 - name: attempt to add AUR packages
   ansible.builtin.include_tasks:
     file: yay.yml
-  when:
-    - yay_flag is true
+  # when:
+  #   - yay_flag is true
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

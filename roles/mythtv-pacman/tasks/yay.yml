@@ -1,10 +1,5 @@
 #!/usr/bin/env ansible-playbook
 
-# Experimental: to run these tasks, change the 'normal' command to:
-#
-#   ./mythtv.yml --extra-vars='{"yay_flag":true}' --limit=localhost
-#
-
 ---
 
 - name: define variables used for AUR/yay work
@@ -25,7 +20,8 @@
   register: yay_response
   ignore_errors: true
 
-- set_fact:
+- name: mark yay installed
+  set_fact:
     yay_is_installed: true
   when: yay_response is defined and not yay_response.failed
 
@@ -42,48 +38,23 @@
   ignore_errors: true
   when: not yay_is_installed
 
-- set_fact:
+- name: assume the yay repo is not loaded
+  set_fact:
     yay_repo_loaded: false
 
-- set_fact:
+- name: if the AUR download succeeded, then the repo is available
+  set_fact:
     yay_repo_loaded: true
   when:
     - git_response is defined
     - git_response.skipped is undefined
     - not git_response.failed
 
-# This can't work because makepkg must not run as root AND it prompts for the
-# sudo password after starting. The ansible.builtin.expect module was tested
-# but doesn't seem to work. It is possible to change PACMAN_AUTH=(/usr/bin/true
-# but that seems unsafe.)
-- name: make the yay package
-  become: false
-  ansible.builtin.command: makepkg -si
-  args:
-    chdir: ./yay
-  tags: never
-
-# This is also turned off because pacman calls makepkg. See the task above for
-# reasons.
-- name: add the AUR packages NOT CLEAR IF extra_args MUST BE INCLUDED
-  become: false
-  community.general.pacman:
-    name: '{{ item }}'
-    state: present
-    executable: yay
-    extra_args: '--builddir {{ yay_build_directory }}'
-  loop:
-    - libhdhomerun
-    - perl-net-upnp
-    - python-timeout-decorator
-    - python-requests-cache
-  tags: never
-
 - name: MANUAL ACTION ITEM
   ansible.builtin.debug:
     msg:
-      - 'You can run: makepkg -siD {{ yay_build_directory }} to build yay.'
-      - 'Then manually run the following commands to add AUR packages:'
+      - 'You can run: makepkg -siD {{ yay_build_directory }} to build yay. Then'
+      - 'manually run the following commands to add AUR packages:'
   when: yay_repo_loaded
 
 - name: MANUAL ACTION ITEM
@@ -102,7 +73,7 @@
 
 - name: MANUAL ACTION ITEM
   ansible.builtin.debug:
-    msg: 'yay -S {{ lookup("flattened", aur_package_list) }}'
+    msg: 'yay -S {{ lookup("flattened", aur_package_list) | regex_replace(",", " ") }}'
 
 ...
 
