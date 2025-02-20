@@ -8,4 +8,5 @@
 *.setup.out
 *.swp
 **/Docker
+Dockerfile
 README.md

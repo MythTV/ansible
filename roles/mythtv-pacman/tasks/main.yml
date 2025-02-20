@@ -67,10 +67,12 @@
     pacman_pkg_lst:
       - '{{ pacman_pkg_lst }}'
       - python-lxml
-      # AUR only - urlgrabber
+      # urlgrabber Available from AUR
       - python-mysqlclient
       - python-requests
-      - python-setuptools  # Didn't find a python3-setuptools package
+      - python-setuptools
+      - python-pip
+      - python-wheel
 
 - name: add mythtv essential perl modules
   set_fact:

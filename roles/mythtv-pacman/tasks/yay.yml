@@ -7,7 +7,7 @@
     yay_repository: 'https://aur.archlinux.org/yay.git'
     yay_build_directory: '/tmp/yay_build'
     yay_is_installed: false
-    aur_package_list:
+    aur_packages:
       - libhdhomerun
       - perl-net-upnp
       - python-timeout-decorator
@@ -42,7 +42,7 @@
   set_fact:
     yay_repo_loaded: false
 
-- name: if the AUR download succeeded, then the repo is available
+- name: the AUR download succeeded, mark the repo available
   set_fact:
     yay_repo_loaded: true
   when:
@@ -54,26 +54,26 @@
   ansible.builtin.debug:
     msg:
       - 'You can run: makepkg -siD {{ yay_build_directory }} to build yay. Then'
-      - 'manually run the following commands to add AUR packages:'
+      - 'manually run the following command to add AUR packages:'
   when: yay_repo_loaded
 
 - name: MANUAL ACTION ITEM
   ansible.builtin.debug:
     msg:
       - "Because no download from: {{ yay_repository }} was done, you'll"
-      - "need to install yay manually, THEN run:"
+      - "need to get yay yourself, Then run:"
   when:
     - not yay_repo_loaded
     - not yay_is_installed
 
 - name: MANUAL ACTION ITEM
   ansible.builtin.debug:
-    msg: 'Run the following commands to add AUR packages:'
+    msg: 'Run the following command to add AUR packages:'
   when: yay_is_installed
 
 - name: MANUAL ACTION ITEM
   ansible.builtin.debug:
-    msg: 'yay -S {{ lookup("flattened", aur_package_list) | regex_replace(",", " ") }}'
+    msg: 'yay -S {{ lookup("flattened", aur_packages) | regex_replace(",", " ") }}'
 
 ...
 
