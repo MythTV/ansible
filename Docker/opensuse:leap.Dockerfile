@@ -9,6 +9,7 @@ RUN ./mythtv.yml --limit=localhost
 
 WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
+
 WORKDIR /root/source/mythtv/mythtv
 RUN git checkout fixes/34
 

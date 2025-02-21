@@ -1,5 +1,10 @@
 FROM archlinux:latest
-RUN pacman --sync --refresh --sysupgrade --noconfirm ansible git vim
+ARG MY_USER_AND_GROUP
+RUN pacman --sync --refresh --sysupgrade --noconfirm ansible git vim \
+    && ln --symbolic --force /usr/bin/vim /usr/bin/vi \
+    && groupadd --force --system sudo \
+    && useradd ${MY_USER_AND_GROUP} || true \
+    && usermod --append --groups sudo ${MY_USER_AND_GROUP}
 
 WORKDIR /root/source/ansible
 COPY . ./
@@ -9,6 +14,6 @@ WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
 
 WORKDIR /root/source/mythtv
-RUN git checkout fixes/35
-RUN cmake --preset qt5
-RUN cmake --build build-qt5
+RUN git checkout fixes/35 \
+    && cmake --preset qt5 \
+    && VIRTUAL_ENV=/usr/local/lib/mythtv/venv cmake --build build-qt5

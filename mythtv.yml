@@ -73,6 +73,11 @@
         name: python
       when: not mythtv_tools
 
+    # TODO: TEMPORARILY CREATE THE venv ONLY FOR pacman
+    - include_role:
+        name: venv
+      when: not mythtv_tools and ansible_pkg_mgr == "pacman"
+
     - include_role:
         name: qt5
       when:

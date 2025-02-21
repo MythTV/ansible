@@ -1,4 +1,5 @@
 FROM ubuntu:24.04
+LABEL CODENAME="Nobel"
 ENV TZ=America/Chicago
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt update && apt install --yes ansible git plocate vim

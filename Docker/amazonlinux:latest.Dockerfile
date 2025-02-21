@@ -2,9 +2,9 @@
 # That's about it as lots of the required packages aren't available.
 
 FROM amazonlinux:latest
-RUN dnf install --assumeyes file ansible git less cmake pip python3-packaging python3-setuptools vim
-RUN ln /usr/bin/python3 /usr/bin/python
-RUN ln /usr/bin/vim /usr/bin/vi
+RUN dnf install --assumeyes file ansible git less cmake pip python3-packaging python3-setuptools vim \
+    && ln /usr/bin/python3 /usr/bin/python \
+    && ln /usr/bin/vim /usr/bin/vi
 
 WORKDIR /root/source/ansible
 COPY . ./
@@ -39,10 +39,10 @@ RUN ./mythtv.yml --limit=localhost
 # 3.061   msg: Failed to install some of the specified packages
 
 # Won't get here.
-WORKDIR /root/source
-RUN git clone https://github.com/MythTV/mythtv.git
-
-WORKDIR /root/source/mythtv
-RUN git checkout fixes/35
-RUN cmake --preset qt5
-RUN cmake --build build-qt5
+#WORKDIR /root/source
+#RUN git clone https://github.com/MythTV/mythtv.git
+#
+#WORKDIR /root/source/mythtv
+#RUN git checkout fixes/35 \
+#    && cmake --preset qt5 \
+#    && cmake --build build-qt5

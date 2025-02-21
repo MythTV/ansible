@@ -1,0 +1,27 @@
+# 2025/02/20 1st try at universal tasks that <<should>> work for any
+# distribution. Runs after the 'normal' packages have been installed
+# Python and pip should be there. NB Early testing shows that Debian
+# hosts must: apt install python3.12-venv.
+
+---
+
+- name: create a python virtual environment
+  ansible.builtin.command:
+    cmd: 'python -m venv {{ venv_path }}'
+
+- name: add essential python modules in a virtual environment
+  ansible.builtin.pip:
+    name: '{{ item }}'
+    virtualenv: '{{ venv_path }}'
+    # virtualenv_site_packages: yes
+  loop:
+    - lxml
+    - mysqlclient
+    - requests
+    - setuptools
+    - pip
+    - wheel
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

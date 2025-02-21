@@ -1,8 +1,7 @@
 #!/usr/bin/bash
 # ^^^^^^^^^^^^^ For shellcheck.
 
-alias ki='docker images'
-alias kps='docker ps --all'
+alias ks='docker images;docker ps --all'
 function kprune () {
     sudo du -hs /var/lib/docker/overlay2
     docker container prune --force
@@ -11,31 +10,36 @@ function kprune () {
     sudo du -hs /var/lib/docker/overlay2
 }
 
+# 2/18/2025, docker no longer works with --file Docker/image_name
 function kbuild() {
-    if [ ! -f "Docker/${1}.Dockerfile" ]; then
-        echo "Missing kernel:version. Probably need to: cd .., aborting"
+    IMAGE="Docker/${1}.Dockerfile"
+
+    if [ ! -f "${IMAGE}" ]; then
+        echo "Missing kernel:version. check Docker/${1}, aborting"
         return 1
     fi
-    docker build --tag "${1}" --file "Docker/${1}.Dockerfile" .
+    cp "${IMAGE}" Dockerfile
+    docker build --build-arg MY_USER_AND_GROUP="${USER}" --tag "${1}" .
 }
 
-function krun () {
+function kattach () {
     if [ ! -f "Docker/${1}.Dockerfile" ]; then
-        echo "Missing kernel:version. Probably need to: cd .., aborting"
+        echo "Missing kernel:version, aborting"
         return 1
      fi
-    NAME="$(echo "${1}" | tr --delete '.:' )"
-    if [ -z "${NAME}" ]; then
-        echo "Couldn't a name for ${1}. Try kps. aborting"
+    TAG="$(echo "${1}" | tr --delete '.:' )"
+    if [ -z "${TAG}" ]; then
+        echo "Couldn't create the tag for ${1}. Try kps. aborting"
         return 1
     fi
-    docker run --interactive --tty --name "${NAME}" "${1}"
+    docker rm "${TAG}" 2> /dev/null
+    docker run --detach --interactive --tty --name "${TAG}" "${1}" && docker attach "${TAG}"
 }
 
 alias  alpl='kbuild alpine:latest'
 alias  amaz='kbuild amazonlinux:latest '
 alias amont='kbuild amontalban:freebsd '
-alias  arch='kbuild archlinux:latest'
+alias  archl='kbuild archlinux:latest'
 alias cent7='kbuild centos:7'
 alias cent8='kbuild centos:8'
 alias cent9='kbuild centos:9'
@@ -54,26 +58,25 @@ alias  ub20='kbuild ubuntu:20.04'
 alias  ub22='kbuild ubuntu:22.04'
 alias  ub24='kbuild ubuntu:24.04'
 
-alias ralpl='krun alpine:latest'
-alias ramaz='krun amazonlinux:latest '
-alias ramont='krun amontalban:freebsd '
-alias rarch='krun archlinux:latest'
-alias rcent8='krun centos:8'
-alias rcent7='krun centos:7'
-alias rcent9='krun centos:9'
-alias rcent8='krun centos:centos8'
-alias rdeb10='krun debian:10'
-alias rdeb11='krun debian:11'
-alias rdeb12='krun debian:12'
-alias rfed40='krun fedora:40'
-alias rfed41='krun fedora:41'
-alias rfedr='krun fedora:rawhide'
-alias romd4='krun openmandriva:4.2'
-alias rosusl='krun opensuse:leap'
-alias rosust='krun opensuse:tumbleweed'
-alias rrock8='krun rockylinux:8'
-alias rrock9='krun rockylinux:9'
-alias rub20='krun ubuntu:20.04'
-alias rub22='krun ubuntu:22.04'
-alias rub24='krun ubuntu:24.04'
-alias rub24='krun ubuntu:24.04'
+alias ralpl='kattach alpine:latest'
+alias ramaz='kattach amazonlinux:latest '
+alias ramont='kattach amontalban:freebsd '
+alias rarchl='kattach archlinux:latest'
+alias rcent7='kattach centos:7'
+alias rcent8='kattach centos:8'
+alias rcent9='kattach centos:9'
+alias rdeb10='kattach debian:10'
+alias rdeb11='kattach debian:11'
+alias rdeb12='kattach debian:12'
+alias rfed40='kattach fedora:40'
+alias rfed41='kattach fedora:41'
+alias rfedr='kattach fedora:rawhide'
+alias romd4='kattach openmandriva:4.2'
+alias rosusl='kattach opensuse:leap'
+alias rosust='kattach opensuse:tumbleweed'
+alias rrock8='kattach rockylinux:8'
+alias rrock9='kattach rockylinux:9'
+alias rub20='kattach ubuntu:20.04'
+alias rub22='kattach ubuntu:22.04'
+alias rub24='kattach ubuntu:24.04'
+alias rub24='kattach ubuntu:24.04'
