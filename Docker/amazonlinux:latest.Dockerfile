@@ -2,13 +2,14 @@
 # That's about it as lots of the required packages aren't available.
 
 FROM amazonlinux:latest
-RUN dnf install --assumeyes file ansible git less cmake pip python3-packaging python3-setuptools vim \
+RUN dnf distro-sync --assumeyes \
+    && dnf install --assumeyes file ansible git less cmake pip python3-packaging python3-setuptools vim \
     && ln /usr/bin/python3 /usr/bin/python \
     && ln /usr/bin/vim /usr/bin/vi
 
 WORKDIR /root/source/ansible
 COPY . ./
-RUN ./mythtv.yml --limit=localhost
+RUN ./mythtv.yml --limit=localhost --extra-vars='{"venv_active":true}'
 
 ## Above fails with:
 # 3.061 TASK [mythtv-dnf : install packages] *******************************************

@@ -12,7 +12,7 @@ RUN git checkout -b stable-2.15 origin/stable-2.15 \
 
 WORKDIR /root/source/ansible
 COPY . ./
-RUN ./mythtv.yml --limit=localhost
+RUN ./mythtv.yml --limit=localhost --extra-vars='{"venv_active":true}'
 
 WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git

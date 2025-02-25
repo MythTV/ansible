@@ -1,12 +1,16 @@
 #!/usr/bin/bash
 # ^^^^^^^^^^^^^ For shellcheck.
 
-alias ks='docker images;docker ps --all'
+alias ks='echo;docker images;echo;docker ps --all'
+
 function kprune () {
     sudo du -hs /var/lib/docker/overlay2
+    echo
     docker container prune --force
+    echo
     docker image prune --all --force
-    docker image remove 2>/dev/null
+    echo
+    # docker image remove 2>/dev/null
     sudo du -hs /var/lib/docker/overlay2
 }
 
@@ -18,7 +22,7 @@ function kbuild() {
         echo "Missing kernel:version. check Docker/${1}, aborting"
         return 1
     fi
-    cp "${IMAGE}" Dockerfile
+    cp --preserve "${IMAGE}" Dockerfile
     docker build --build-arg MY_USER_AND_GROUP="${USER}" --tag "${1}" .
 }
 
@@ -33,7 +37,7 @@ function kattach () {
         return 1
     fi
     docker rm "${TAG}" 2> /dev/null
-    docker run --detach --interactive --tty --name "${TAG}" "${1}" && docker attach "${TAG}"
+    docker run --detach --hostname "${TAG}" --interactive --tty --name "${TAG}" "${1}" && docker attach "${TAG}"
 }
 
 alias  alpl='kbuild alpine:latest'
@@ -46,6 +50,7 @@ alias cent9='kbuild centos:9'
 alias deb10='kbuild debian:10'
 alias deb11='kbuild debian:11'
 alias deb12='kbuild debian:12'
+alias deb13='kbuild debian:13'
 alias fed40='kbuild fedora:40'
 alias fed41='kbuild fedora:41'
 alias  fedr='kbuild fedora:rawhide'
@@ -57,6 +62,7 @@ alias rock9='kbuild rockylinux:9'
 alias  ub20='kbuild ubuntu:20.04'
 alias  ub22='kbuild ubuntu:22.04'
 alias  ub24='kbuild ubuntu:24.04'
+alias  ub25='kbuild ubuntu:25.04'
 
 alias ralpl='kattach alpine:latest'
 alias ramaz='kattach amazonlinux:latest '
@@ -68,6 +74,7 @@ alias rcent9='kattach centos:9'
 alias rdeb10='kattach debian:10'
 alias rdeb11='kattach debian:11'
 alias rdeb12='kattach debian:12'
+alias rdeb13='kbuild debian:13'
 alias rfed40='kattach fedora:40'
 alias rfed41='kattach fedora:41'
 alias rfedr='kattach fedora:rawhide'
@@ -79,4 +86,4 @@ alias rrock9='kattach rockylinux:9'
 alias rub20='kattach ubuntu:20.04'
 alias rub22='kattach ubuntu:22.04'
 alias rub24='kattach ubuntu:24.04'
-alias rub24='kattach ubuntu:24.04'
+alias rub25='kattach ubuntu:25.04'

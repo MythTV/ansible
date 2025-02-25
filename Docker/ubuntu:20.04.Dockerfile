@@ -2,17 +2,32 @@ FROM ubuntu:20.04
 LABEL CODENAME="Focal"
 ENV TZ=America/Chicago
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
-    && echo $TZ > /etc/timezone
-    && apt-get update && apt-get install --yes ansible git plocate python3-apt vim
+    && echo $TZ > /etc/timezone \
+    && apt-get update \
+    && apt-get install --yes apt-utils ansible git python3-apt vim
 
+# Ubuntu 20.04 can't: pip install mysqlclient
 WORKDIR /root/source/ansible
 COPY . ./
-RUN ./mythtv.yml --limit=localhost
+RUN ./mythtv.yml --limit=localhost --extra-vars='{"venv_active":true}'
 
 WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
 
-WORKDIR /root/source/mythtv
-RUN git checkout fixes/34 \
-    && cmake --preset qt5 \
-    && cmake --build build-qt5
+# Looks like cmake v3.16.3 doesn't have the --preset switch, so use make
+WORKDIR /root/source/mythtv/mythtv
+RUN git checkout fixes/35 \
+    && ./configure \
+        --enable-libx264 \
+        --enable-libmp3lame \
+        --enable-nonfree \
+        --enable-proc-opt \
+    && make --jobs=4 \
+    && make install
+
+WORKDIR /root/source/mythtv/mythplugins
+RUN ./configure && make --jobs=4 && make install
+
+#    && cmake --preset qt5
+#    && cmake --build build-qt5
+#    && VIRTUAL_ENV=/usr/local cmake --build build-qt5

@@ -7,7 +7,7 @@ RUN dnf update --assumeyes \
 WORKDIR /root/source/ansible
 COPY . ./
 RUN ansible-galaxy collection install --requirements-file=requirements.yml \
-    && ./mythtv.yml --limit=localhost
+    && ./mythtv.yml --limit=localhost --extra-vars='{"venv_active":true}'
 
 WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
@@ -19,11 +19,11 @@ RUN git checkout fixes/34 \
         --enable-libmp3lame \
         --enable-nonfree \
         --enable-proc-opt \
-    && make --jobs \
+    && make --jobs=4 \
     && make install
 
 WORKDIR /root/source/mythtv/mythplugins
-RUN ./configure && make --jobs && make install
+RUN ./configure && make --jobs=4 && make install
 
 # Issue using cmake, can't find overlay.h (bluray)
 # WORKDIR /root/source/mythtv

@@ -35,7 +35,8 @@ opensuse:leap | Leap | November 2022 (for 15.3, 2023 for .4) | 32 | Done | Not a
 opensuse:tumbleweed | Tumbleweed | "Forever" | 32 | Done | Not a buildbot distro
 rockylinux:8 | Green Obsidian | 31 May 2024 | 32 | Done | Not a buildbot distro
 rockylinux:9 | Blue Onyx | 31 May 2025 | 32 | Done | Not a buildbot distro
-ubuntu-20.04 | Focal Fossa | 25.04 | 31 | Done |
-ubuntu-22.04 | Jammy Jellyfish | 27.04 | 32 | Done |
+ubuntu-20.04 | Focal Fossa | 25.04 | 31 | Failed | Ansible 2.9.6 got version: 5.12.8 qmake for Qt 5.15.2 or newer not found.
+ubuntu-22.04 | Jammy Jellyfish | 27.04 | 34 | Done, NO Python Bindings! | Ansible=2.10.8
+ubuntu-24.04 | Noble Numbat | 29.04 | 35 | Done | Ansible=2.16.3
 alpine:latest | N/A | 23 May 2022 | N/A | T-OK | Test with unknown package manager
 amazonlinux:devel | setenforce? | December 31, 2020 | N/A | T-OK | Test with unknown distro

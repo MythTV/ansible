@@ -4,7 +4,7 @@
 
 ARG IMAGE
 FROM $IMAGE
-RUN apt-get update && apt-get install --yes ansible
+RUN apt-get update && apt-get install --yes ansible cmake
 
 # Things that may be common...
 WORKDIR /root/source/ansible
@@ -15,6 +15,6 @@ WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
 
 WORKDIR /root/source/mythtv
-RUN git checkout fixes/35
-RUN cmake --preset qt5
-RUN cmake --build build-qt5
+RUN git checkout fixes/35 \
+    && cmake --preset qt5 \
+    && VIRTUAL_ENV=/usr/local cmake --build build-qt5

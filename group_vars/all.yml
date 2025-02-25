@@ -1,0 +1,8 @@
+---
+
+venv_path: /usr/local
+venv_disabled: true
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=6:

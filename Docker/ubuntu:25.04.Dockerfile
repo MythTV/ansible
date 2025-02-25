@@ -1,9 +1,9 @@
-FROM centos:7
-LABEL CODENAME="N/A"
-LABEL EOL="2024-06-30"
-LABEL STATUS="Builds through mythplugins!"
-RUN yum install --assumeyes epel-release \
-    && yum install --assumeyes ansible git vim-enhanced
+FROM ubuntu:25.04
+LABEL CODENAME="Plucky"
+ENV TZ=America/Chicago
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
+    && apt install --yes apt-utils ansible git plocate vim
+# && apt update \
 
 WORKDIR /root/source/ansible
 COPY . ./

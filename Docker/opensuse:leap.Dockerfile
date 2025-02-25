@@ -1,11 +1,11 @@
-FROM opensuse/leap
+FROM opensuse/leap:latest
 LABEL CODENAME="Leap, 'regular' release"
 LABEL FAILED_CONFIGURE="MythTV requires GCC 8 or better."
 RUN zypper --non-interactive install awk ansible git plocate vim
 
 WORKDIR /root/source/ansible
 COPY . ./
-RUN ./mythtv.yml --limit=localhost
+RUN ./mythtv.yml --limit=localhost --extra-vars='{"venv_active":true}'
 
 WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
