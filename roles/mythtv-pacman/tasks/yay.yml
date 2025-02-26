@@ -38,11 +38,11 @@
   ignore_errors: true
   when: not yay_is_installed
 
-- name: assume the yay repo is not loaded
+- name: start by marking the yay repo not loaded
   set_fact:
     yay_repo_loaded: false
 
-- name: the AUR download succeeded, mark the repo available
+- name: yay repo downloaded from AUR OK, mark repo loaded
   set_fact:
     yay_repo_loaded: true
   when:

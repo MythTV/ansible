@@ -30,4 +30,5 @@ RUN ./configure && make --jobs=4 && make install
 
 #    && cmake --preset qt5
 #    && cmake --build build-qt5
-#    && VIRTUAL_ENV=/usr/local cmake --build build-qt5
+#    && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5
+######### line from 22.04 with python 3.10.2 may not be correct   && cmake --build build-qt5 -DMYTH_BINDINGS_INSTALL_ROOT=/usr/local/dist

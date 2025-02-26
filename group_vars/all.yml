@@ -1,7 +1,8 @@
 ---
 
-venv_path: /usr/local
-venv_disabled: true
+# These are for the Python Virtual Environment:
+venv_path: /usr/local/dist
+venv_active: false
 
 ...
 

@@ -23,4 +23,4 @@ RUN git checkout fixes/34 \
 WORKDIR /root/source/mythtv/mythplugins
 RUN ./configure \
     && make --jobs=4 \
-    && VIRTUAL_ENV=/usr/local cmake --build build-qt5
+    && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5

@@ -29,4 +29,4 @@ RUN ./configure && make --jobs=4 && make install
 # WORKDIR /root/source/mythtv
 # RUN git checkout fixes/35
 # RUN cmake -DENABLE_BDJAVA=OFF --preset qt5
-# RUN cmake --build build-qt5
+# RUN/dist cmake --build build-qt5

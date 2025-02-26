@@ -98,5 +98,5 @@ without escalating privileges in the homebrew playbook). E.g.
 
 ## Other Platforms
 We welcome contributions to support additional platforms. Please contact the
-developers if you are interested in this. Output from a run of ```./mythtv.yml```
+developers if you are interested in this. Output from a run of ```./mythtv.yml ...```
 is needed for starters.

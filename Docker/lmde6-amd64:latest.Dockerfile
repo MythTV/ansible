@@ -1,6 +1,7 @@
-FROM opensuse/tumbleweed:latest
-LABEL CODENAME="Tumpleweed, rolling (forever) release"
-RUN zypper --non-interactive install awk ansible git vim
+FROM linuxmintd/lmde6-amd64:latest
+LABEL CODENAME="Faye"
+RUN apt-get update \
+    && apt-get install --yes apt-utils ansible git plocate python3-apt vim
 
 WORKDIR /root/source/ansible
 COPY . ./
@@ -13,9 +14,3 @@ WORKDIR /root/source/mythtv
 RUN git checkout fixes/35 \
     && cmake --preset qt5 \
     && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5
-
-#    Reports:
-#-   Package 'aom' not found
-#-   Package 'sdl2' not found
-#    Not added to ansible, they don't exist in tumbleweed:
-

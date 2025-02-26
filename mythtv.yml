@@ -73,10 +73,13 @@
         name: python
       when: not mythtv_tools
 
-    # TODO: TEMPORARILY CREATE THE venv ONLY FOR pacman
+    # TODO: TEMPORARILY CREATE ALLOW TURNING venv ON/OFF
+    # Change venv_active to false in group_vars/all.yml
+    # to disable the feature. Could be an --extra-vars
+    # switch too.
     - include_role:
         name: venv
-      when: not mythtv_tools and ansible_pkg_mgr == "pacman"
+      when: venv_active
 
     - include_role:
         name: qt5
