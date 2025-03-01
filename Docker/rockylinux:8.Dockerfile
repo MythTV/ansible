@@ -13,20 +13,22 @@ WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
 
 WORKDIR /root/source/mythtv/mythtv
-RUN git checkout fixes/34 \
+RUN git checkout fixes/35 \
     && ./configure \
         --enable-libx264 \
         --enable-libmp3lame \
         --enable-nonfree \
         --enable-proc-opt \
-    && make --jobs=4 \
+    && VIRTUAL_ENV=/usr/local/dist make --jobs=8 \
     && make install
 
 WORKDIR /root/source/mythtv/mythplugins
-RUN ./configure && make --jobs=4 && make install
+RUN ./configure \
+    && make --jobs=8 \
+    && make install
 
 # Issue using cmake, can't find overlay.h (bluray)
 # WORKDIR /root/source/mythtv
-# RUN git checkout fixes/35
-# RUN cmake -DENABLE_BDJAVA=OFF --preset qt5
-# RUN/dist cmake --build build-qt5
+# RUN git checkout fixes/35 \
+#    && cmake -DENABLE_BDJAVA=OFF --preset qt5 \
+#    && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5

@@ -17,7 +17,9 @@ RUN ./mythtv.yml --limit=localhost --extra-vars='{"venv_active":true}'
 WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
 
-#WORKDIR /root/source/mythtv
-#RUN git checkout fixes/35 \
-#    && cmake --preset qt5 \
+# buld fails because FFmpeg can't find libiec61883 (even though it and
+# libiec61883-devel are installed
+WORKDIR /root/source/mythtv
+RUN git checkout fixes/35 \
+    && cmake --preset qt5
 #    && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5

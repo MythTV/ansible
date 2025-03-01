@@ -27,11 +27,11 @@ function kbuild() {
 }
 
 function kattach () {
-    if [ ! -f "Docker/${1}.Dockerfile" ]; then
-        echo "Missing kernel:version, aborting"
-        return 1
-     fi
-    TAG="$(echo "${1}" | tr --delete '.:' )"
+#    if [ ! -f "Docker/${1}.Dockerfile" ]; then
+#        echo "Missing kernel:version, aborting"
+#        return 1
+#     fi
+    TAG="$(echo "${1}" | tr --delete '.:/' )"
     if [ -z "${TAG}" ]; then
         echo "Couldn't create the tag for ${1}. Try kps. aborting"
         return 1
@@ -44,7 +44,6 @@ alias  alpl='kbuild alpine:latest'
 alias  amaz='kbuild amazonlinux:latest '
 alias amont='kbuild amontalban:freebsd '
 alias  archl='kbuild archlinux:latest'
-alias cent7='kbuild centos:7'
 alias cent8='kbuild centos:8'
 alias cent9='kbuild centos:9'
 alias deb10='kbuild debian:10'
@@ -69,7 +68,6 @@ alias ralpl='kattach alpine:latest'
 alias ramaz='kattach amazonlinux:latest '
 alias ramont='kattach amontalban:freebsd '
 alias rarchl='kattach archlinux:latest'
-alias rcent7='kattach centos:7'
 alias rcent8='kattach centos:8'
 alias rcent9='kattach centos:9'
 alias rdeb10='kattach debian:10'

@@ -11,7 +11,7 @@ WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
 
 WORKDIR /root/source/mythtv/mythtv
-RUN git checkout fixes/34
+RUN git checkout fixes/35
 
 # make and cmake fail, gcc13 exists, but gcc links to gcc8
 # RUN ./configure \

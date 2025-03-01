@@ -17,4 +17,4 @@ RUN git clone https://github.com/MythTV/mythtv.git
 WORKDIR /root/source/mythtv
 RUN git checkout fixes/34 \
     && cmake --preset qt5 \
-    && cmake --build build-qt5 -DMYTH_BINDINGS_INSTALL_ROOT=/usr/local/dist
+    && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5 ######## -DMYTH_BINDINGS_INSTALL_ROOT=/usr/local/dist

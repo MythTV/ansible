@@ -4,12 +4,14 @@
 # hosts must: apt install python3.12-venv. But python3-venv works at
 # least in v25.04, Debian 11,
 
+# Debian 10's python is 2.7, so we can't use ansible_python.executable.
+# It also doesn't recognize FQCNs or fully qualified collection names.
 ---
 
 - name: create a python virtual environment
-  ansible.builtin.command:
+  command:
     argv:
-      - '{{ ansible_python.executable }}'
+      - python3
       - '-m'
       - 'venv'
       - '{{ venv_path }}'
@@ -17,28 +19,28 @@
   ignore_errors: true
 
 - name: add essential python modules to the virtual environment
-  ansible.builtin.pip:
+  pip:
     name: '{{ item }}'
     virtualenv: '{{ venv_path }}'
   loop:
     - lxml
-    - mysqlclient
+    - mysqlclient # Requires Python.h
     - requests
-    - pip    # This was probably done already by creating the venv
-    - setuptools  # As above
-    - wheel  # This was probably included by the pip module
+    - pip         # This gets done by creating the venv
+    - setuptools
+    - wheel
   register: pip_result
   ignore_errors: true
   when: venv_result.rc == 0
 
 - name: venv success, print the venv path used
-  ansible.builtin.debug:
+  debug:
     msg:
-      - 'A Python virtual environment was installed in: {{ venv_path }}.'
+      - 'A Python Virtual Environment was installed in: {{ venv_path }}.'
   when: venv_result.rc == 0
 
 - name: venv error case, explain what happened
-  ansible.builtin.debug:
+  debug:
     msg:
       - 'pip was unable to create a Python Virtual Environment. Either this'
       - 'playbook needs updating or manual venv installation is required.'

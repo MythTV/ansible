@@ -17,10 +17,16 @@ RUN git checkout fixes/34 \
         --enable-libmp3lame \
         --enable-nonfree \
         --enable-proc-opt \
+    && . /usr/local/dist/bin/activate \
     && make --jobs=4 \
     && make install
 
 WORKDIR /root/source/mythtv/mythplugins
 RUN ./configure \
     && make --jobs=4 \
-    && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5
+    && make install
+
+#WORKDIR /root/source/mythtv
+#RUN git checkout fixes/35 \
+#    && cmake --preset qt5 \
+#    && VIRTUAL_ENV=/usr/local/dist/dist cmake --build build-qt5

@@ -8,10 +8,10 @@
     yay_build_directory: '/tmp/yay_build'
     yay_is_installed: false
     aur_packages:
-      - libhdhomerun
       - perl-net-upnp
       - python-timeout-decorator
       - python-requests-cache
+      - libhdhomerun
 
 - name: check if the yay command exists (assumes yay can be found in $PATH)
   ansible.builtin.command: yay --version
@@ -74,6 +74,7 @@
 - name: MANUAL ACTION ITEM
   ansible.builtin.debug:
     msg: 'yay -S {{ lookup("flattened", aur_packages) | regex_replace(",", " ") }}'
+    # msg: 'yay -S {{ list_o_strings | flatten() | regex_replace(",", " ") }}'
 
 ...
 

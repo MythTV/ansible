@@ -22,7 +22,7 @@ RUN git checkout fixes/35 \
         --enable-libmp3lame \
         --enable-nonfree \
         --enable-proc-opt \
-    && make --jobs=4 \
+    && VIRTUAL_ENV=/usr/local/dist make --jobs=4 \
     && make install
 
 WORKDIR /root/source/mythtv/mythplugins

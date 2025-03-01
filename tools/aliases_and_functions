@@ -1,0 +1,41 @@
+# Ansible Add Package. Good for testing that a single package can be added
+# without running the entire playbook. Note that the module name is: package
+# rather than one like apt, dnf, pacman... This works for all systems.
+
+function aap () {
+    if [ -z "${1}" ]; then
+        echo "aap: needs a package name"
+        return 1
+    fi
+
+    ansible localhost --module-name package --args "name='${1}' state='present'"
+}
+
+# Build and also examine Python Virtual Environment
+function mbuild () {
+    deactivate || true
+    rm -rf ./build-qt5
+    cmake --preset qt5
+    VIRTURL_ENV=/usr/local/dist cmake --build build-qt5
+    echo "Activate venv, expect MythTV IN list:"
+    . /usr/local/dist/bin/activate
+    pip list
+    python3 -c "import MythTV" || true
+    echo "Deactivate venv, expect MythTV NOT IN list:"
+    deactivate
+    pip list
+}
+
+# Read ansible aliases:
+alias raa=". /etc/ansible/mythtv-ansible/Docker/aliases"
+
+# Activate the Python Virtual Environment
+alias aenv=". /usr/local/dist/bin/activate"
+
+# Run Ansible with venv_active:
+alias avenv="./mythtv.yml --limit=localhost --extra-vars='{\"venv_active\":true}'"
+
+# Additional convenience items:
+alias ll='ls -l --color=auto --group-directories-first'
+alias lr='ls -lrt --color=auto --group-directories-first'
+alias lsdist='ls -lrt --color=auto --group-directories-first /usr/local/dist'
