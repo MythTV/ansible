@@ -105,7 +105,7 @@
 - name: reject the libxnvctrl package for aarch64 hosts, e.g. RPis
   ansible.builtin.set_fact:
     pacman_pkg_lst: '{{ pacman_pkg_lst | flatten() | reject("search", "libxnvctrl ") }}'
-  when ansible_architecture == ' aarch64'
+  when: ansible_architecture == 'aarch64'
 
 - name: final package list
   debug:
