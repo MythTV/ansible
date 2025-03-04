@@ -1,8 +1,8 @@
 FROM debian:10
 LABEL CODENAME="Buster, Archived"
 RUN apt-get update \
-    && apt-get install --yes apt-utils ansible git python3-apt vim \
-    && ln -s /usr/bin/python3 /usr/bin/python
+    && apt-get install --yes apt-utils ansible git python3 python3-apt vim #\
+    # && ln -s /usr/bin/python3 /usr/bin/python
 
 WORKDIR /root/source/ansible
 COPY . ./

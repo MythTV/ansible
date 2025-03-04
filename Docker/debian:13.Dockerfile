@@ -2,8 +2,6 @@ FROM debian:trixie
 # Missing: g++              <----------------------------------
 # Missing: libcrystalhd-dev <----------------------------------
 # Missing: libfreetype6-dev <----------------------------------
-# FROM debian:13 doesn't exist
-# FROM debian:unstable is missing:
 
 LABEL CODENAME="Trixie, probably v13,  testing no release date set"
 RUN apt-get update \
@@ -11,7 +9,7 @@ RUN apt-get update \
 
 WORKDIR /root/source/ansible
 COPY . ./
-RUN ./mythtv.yml --limit=localhost --extra-vars='{"venv_active":true}'
+#RUN ./mythtv.yml --limit=localhost --extra-vars='{"venv_active":true}'
 
 #WORKDIR /root/source
 #RUN git clone https://github.com/MythTV/mythtv.git

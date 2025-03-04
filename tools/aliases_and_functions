@@ -1,14 +1,24 @@
+# To read these tools in, type: . tools/aliases_and_functions
+# That's <DOT> <SPACE> tools/aliases_and_functions
+# Really: . to<TAB>/a<TAB> should work to auto complete the above
+
 # Ansible Add Package. Good for testing that a single package can be added
 # without running the entire playbook. Note that the module name is: package
 # rather than one like apt, dnf, pacman... This works for all systems.
 
 function aap () {
     if [ -z "${1}" ]; then
-        echo "aap: needs a package name"
+        echo "usage: aap package [optional manager (like apt, dnf, pacman etc)]"
         return 1
     fi
 
-    ansible localhost --module-name package --args "name='${1}' state='present'"
+    if [ -n "${2}" ]; then
+        MANAGER="${2}"
+    else
+        MANAGER="package"
+    fi
+
+    ansible localhost --module-name "${MANAGER}" --args "name='${1}' state='present'"
 }
 
 # Build and also examine Python Virtual Environment
@@ -17,25 +27,25 @@ function mbuild () {
     rm -rf ./build-qt5
     cmake --preset qt5
     VIRTURL_ENV=/usr/local/dist cmake --build build-qt5
-    echo "Activate venv, expect MythTV IN list:"
+    echo "Activate venv, expect MythTV to be found:"
     . /usr/local/dist/bin/activate
-    pip list
-    python3 -c "import MythTV" || true
-    echo "Deactivate venv, expect MythTV NOT IN list:"
+    pip show MythTV
+    echo "Now DEACTIVATE venv and expect a WARNING that the MythTV package is NOT found:"
     deactivate
-    pip list
+    pip show MythTV
 }
 
 # Read ansible aliases:
 alias raa=". /etc/ansible/mythtv-ansible/Docker/aliases"
 
 # Activate the Python Virtual Environment
-alias aenv=". /usr/local/dist/bin/activate"
+alias avenv=". /usr/local/dist/bin/activate"
 
-# Run Ansible with venv_active:
-alias avenv="./mythtv.yml --limit=localhost --extra-vars='{\"venv_active\":true}'"
+# Run Ansible with the venv_active variable set to true:
+alias rvenv="./mythtv.yml --limit=localhost --extra-vars='{\"venv_active\":true}'"
 
 # Additional convenience items:
 alias ll='ls -l --color=auto --group-directories-first'
 alias lr='ls -lrt --color=auto --group-directories-first'
 alias lsdist='ls -lrt --color=auto --group-directories-first /usr/local/dist'
+alias lsdistm='ls -lrt --color=auto --group-directories-first /usr/local/dist/lib/python*/site-packages/MythTV'
