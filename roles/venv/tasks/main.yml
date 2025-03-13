@@ -5,13 +5,13 @@
 # least in v25.04, Debian 11,
 
 # Debian 10's python is 2.7, so we can't use ansible_python.executable.
-# It also doesn't recognize FQCNs or fully qualified collection names.
+# 2.7 also doesn't recognize FQCNs or fully qualified collection names.
 ---
 
 - name: create a python virtual environment
   command:
     argv:
-      - python3
+      - '{{ ansible_python.executable }}'
       - '-m'
       - 'venv'
       - '{{ venv_path }}'
@@ -24,20 +24,20 @@
     virtualenv: '{{ venv_path }}'
   loop:
     - lxml
-    - mysqlclient # Requires Python.h
+    - mysqlclient  # Requires Python.h
     - requests
-    - pip         # This gets done by creating the venv
+    - pip          # This gets done by creating the venv
     - setuptools
     - wheel
   register: pip_result
   ignore_errors: true
-  when: venv_result.rc == 0
+  when: not venv_result.failed or (venv_result.rc  is defined and venv_result.rc == 0)
 
 - name: venv success, print the venv path used
   debug:
     msg:
-      - 'A Python Virtual Environment was installed in: {{ venv_path }}.'
-  when: venv_result.rc == 0
+      - 'A Python Virtual Environment was installed in: {{ venv_path }}'
+  when: not venv_result.failed or (venv_result.rc  is defined and venv_result.rc == 0)
 
 - name: venv error case, explain what happened
   debug:
@@ -45,7 +45,7 @@
       - 'pip was unable to create a Python Virtual Environment. Either this'
       - 'playbook needs updating or manual venv installation is required.'
       - '{{ venv_path }} is the path this task used.'
-  when: venv_result.rc > 0
+  when: venv_result.failed or (venv_result.rc  is defined and venv_result.rc > 0)
 
 ...
 

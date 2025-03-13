@@ -20,7 +20,6 @@
       - ninja-build
       - gperf
       - meson
-      - sqlite3
       - php
 
       # add mythtv essential build libraries

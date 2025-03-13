@@ -7,6 +7,7 @@
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libtool-bin
+      - sqlite3
 
 - name: add mythtv extra build libraries
   set_fact:
@@ -22,6 +23,8 @@
       - libsystemd-dev
       - libbluray-dev
       - libx265-dev
+      - libsqlite3
+      - libsqlite3-dev
 
 - name: add mythtv mysql client libraries
   set_fact:
@@ -44,6 +47,8 @@
       - python3-oauth
       - python3-pycurl
       - python3-setuptools
+      - python3-pip
+      - python3-venv
 
 - name: add mythtv essential plugin libraries
   set_fact:

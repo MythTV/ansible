@@ -7,6 +7,7 @@
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libtool-bin
+      - sqlite3
   when: ansible_lsb.major_release|int >= 15
 
 - name: add mythtv extra build libraries (16.04 and later)
@@ -19,6 +20,7 @@
       - libpulse-dev
       - libbluray-dev
       - libx265-dev
+      - libsqlite3-dev
   when:
     - ansible_lsb.major_release|int >= 16
 
@@ -79,10 +81,13 @@
       - python3-oauth
       - python3-pycurl
       - python3-setuptools
+      - python3-venv
+      - python3-wheel
+      - python3-dev
   when:
     - ansible_lsb.major_release|int >= 20 and ansible_lsb.major_release|int < 24
 
-- name: add mythtv essential python modules (20.04 and later)
+- name: add mythtv essential python modules (24.04 and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -96,13 +101,15 @@
   when:
     - ansible_lsb.major_release|int >= 24
 
-- name: add python3-pip module (23.04 and later)
+- name: add python3-pip module (20.04 and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
+      - python3-venv
+      - python3-wheel
       - python3-pip
   when:
-    - ansible_lsb.major_release|int >= 23
+    - ansible_lsb.major_release|int >= 20
 
 - name: add mythtv essential plugin libraries (16.04 and later)
   set_fact:
