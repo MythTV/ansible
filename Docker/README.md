@@ -35,7 +35,16 @@ allows use of the unique file names here.
 If the `build` succeeds, the test is done, this Ansible repro will run on
 the selected Linux distribution.
 
+BUT, if . Docker/aliases is typed, then just typing ub24 or fed41 etc.
+will run the Dockerfile.
+
+Type: lias|grep kbuild to see a list of known aliases.
+
 ## Run an interactive layer
+
+Before reading the below, the aliases read in above can also be
+used. Just prepend an 'r' to the above to run what was just
+created.
 
 If the above fails, comment out the failing instruction(s) in the
 `Dockerfile` and re-run the `build`. Then, run a new session
@@ -78,6 +87,8 @@ Delete the `REPOSITORY:TAG` before the `IMAGE ID`. The last two are from
 >`docker image prune [--force]`
 
 >`docker image rm {REPOSITORY:TAG|IMAGE ID} [--force]`
+
+Alias kprune does all of the above.
 
 ## More *Docker* details
 
