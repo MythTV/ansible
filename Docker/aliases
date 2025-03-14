@@ -31,7 +31,7 @@ function kattach () {
 #        echo "Missing kernel:version, aborting"
 #        return 1
 #     fi
-    TAG="$(echo "${1}" | tr --delete '.:/' )"
+    TAG="$(echo "${1}" | tr --delete '.:/')"
     if [ -z "${TAG}" ]; then
         echo "Couldn't create the tag for ${1}. Try kps. aborting"
         return 1
@@ -63,6 +63,7 @@ alias  ub20='kbuild ubuntu:20.04'
 alias  ub22='kbuild ubuntu:22.04'
 alias  ub24='kbuild ubuntu:24.04'
 alias  ub25='kbuild ubuntu:25.04'
+alias  ubdev='kbuild ubuntu:devel'
 
 alias ralpl='kattach alpine:latest'
 alias ramaz='kattach amazonlinux:latest '
@@ -87,3 +88,4 @@ alias rub20='kattach ubuntu:20.04'
 alias rub22='kattach ubuntu:22.04'
 alias rub24='kattach ubuntu:24.04'
 alias rub25='kattach ubuntu:25.04'
+alias rubdev='kattach ubuntu:devel'
