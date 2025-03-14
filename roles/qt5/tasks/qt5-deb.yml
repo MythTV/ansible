@@ -6,11 +6,16 @@
   set_fact:
     deb_pkg_lst:
       - libqt5core5a
-      - libqt5webkit5-dev
       - libqt5opengl5-dev
       - libqt5script5
       - qtscript5-dev
       - qt5-qmake
+
+- name: care for qtwebkit
+  set_fact:
+    deb_pkg_lst: '{{ deb_pkg_lst + ["libqt5webkit5-dev"] }}'
+  when:
+    ansible_distribution == 'Ubuntu' and ansible_lsb.major_release|int <= 24
 
 # This looks like overkill, but the intent is to provide future maintainers
 # with a template to add more (especially conditional) packages.
@@ -29,7 +34,7 @@
 - name: install deb qt5 packages
   apt:
     name:
-      '{{ lookup("flattened", deb_pkg_lst ) }}'
+      '{{ lookup("flattened", deb_pkg_lst) }}'
     state: present
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
