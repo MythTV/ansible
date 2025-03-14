@@ -115,7 +115,7 @@
 - name: install packages
   pacman:
     name:
-      '{{ lookup("flattened", pacman_pkg_lst ) }}'
+      '{{ lookup("flattened", pacman_pkg_lst) }}'
     state:
       present
 

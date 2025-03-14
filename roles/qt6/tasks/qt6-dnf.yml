@@ -32,7 +32,7 @@
 - name: install dnf qt6 packages
   dnf:
     name:
-      '{{ lookup("flattened", dnf_pkg_lst ) }}'
+      '{{ lookup("flattened", dnf_pkg_lst) }}'
     state: present
   tags:
     - qt6

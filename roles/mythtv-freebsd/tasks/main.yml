@@ -204,7 +204,7 @@
 - name: install packages
   pkgng:
     name:
-      '{{ lookup("flattened", pkgng_pkg_lst ) }}'
+      '{{ lookup("flattened", pkgng_pkg_lst) }}'
     state:
       present
 

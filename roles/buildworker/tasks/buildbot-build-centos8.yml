@@ -41,7 +41,7 @@
 - name: install dnf buildbot build depends packages
   dnf:
     name:
-      '{{ lookup("flattened", dnf_pkg_lst ) }}'
+      '{{ lookup("flattened", dnf_pkg_lst) }}'
     state: present
   when: buildbot.stdout == "missing" and build_buildbot.stdout == "missing"
 

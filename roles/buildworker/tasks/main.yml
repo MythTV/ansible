@@ -109,7 +109,10 @@
     - ansible_distribution_major_version|int >= 13
 
 - name: create buildworker user
-  user: name=buildworker state=present generate_ssh_key=yes
+  user:
+    name: buildworker
+    state: present
+    generate_ssh_key: yes
 
 - name: setup ccache max cache size
   command: su - buildworker -c 'ccache -M 10G'
@@ -121,8 +124,16 @@
   command: su - buildworker -c 'test -d ~/mythtv || mkdir ~/mythtv'
 
 - name: install worker startup script
-  copy: src={{ ansible_distribution }}-start-buildworker.sh dest=~buildworker/bin/start-buildworker.sh mode=0755 owner=buildworker
+  copy:
+    src: '{{ ansible_distribution }}-start-buildworker.sh'
+    dest: ~buildworker/bin/start-buildworker.sh
+    mode: u=rwx,go=rx
+    owner: buildworker
 
-- cron: name="autostart worker at reboot" user=buildworker special_time=reboot job=$HOME/bin/start-buildworker.sh
+- cron:
+    name: "autostart worker at reboot"
+    user: buildworker
+    special_time: reboot
+    job: "$HOME/bin/start-buildworker.sh"
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

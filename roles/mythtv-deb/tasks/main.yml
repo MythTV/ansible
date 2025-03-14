@@ -97,7 +97,7 @@
 - name: install packages
   apt:
     name:
-      '{{ lookup("flattened", deb_pkg_lst ) }}'
+      '{{ lookup("flattened", deb_pkg_lst) }}'
     state:
       present
 

@@ -7,31 +7,32 @@
   register: MP_OUT
 
 - name: set pkgmgr_prefix fact
-  set_fact: pkgmgr_prefix={{ MP_OUT.stdout  }}
+  set_fact:
+    pkgmgr_prefix: '{{ MP_OUT.stdout }}'
 
 - name: specify a mariadb/mysql version to install
   set_fact:
-    database_version=mysql8
+    database_version: mysql8
   when:
     database_version is undefined
 - name: check if this is a mariadb based install
   set_fact:
-    database_name=mariadb
+    database_name: mariadb
   when: database_version is search("mariadb")
 - name: check if this is a mysql based install
   set_fact:
-    database_name=mysql
+    database_name: mysql
   when: database_version is search("mysql")
 
 - name: specify a perl version to install
   set_fact:
-    perl_version=5.34
+    perl_version: 5.34
   when:
     perl_version is undefined
 
 - name: setup macports mariadb/mysql variant variables
   set_fact:
-    mysql_variant="{{ database_version | regex_replace('-') | regex_replace('\.', '_') }}"
+    mysql_variant: "{{ database_version | regex_replace('-') | regex_replace('\\.', '_') }}"
 
 - name: create a list of compilers and build essentials
   set_fact:
@@ -164,7 +165,8 @@
   register: LIBS_OUT
 
 - name: set MYSQLCLIENT_LDFLAGS fact
-  set_fact: MYSQLCLIENT_LDFLAGS={{ LIBS_OUT.stdout }}
+  set_fact:
+    MYSQLCLIENT_LDFLAGS: '{{ LIBS_OUT.stdout }}'
 
 - name: Get mysqlclient cflags
   shell:
@@ -173,6 +175,7 @@
   register: CFLAG_OUT
 
 - name: set MYSQLCLIENT_CFLAGS fact
-  set_fact: MYSQLCLIENT_CFLAGS={{ CFLAG_OUT.stdout }}
+  set_fact:
+    MYSQLCLIENT_CFLAGS: '{{ CFLAG_OUT.stdout }}'
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

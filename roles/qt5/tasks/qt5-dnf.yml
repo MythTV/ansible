@@ -34,7 +34,7 @@
 - name: install dnf qt5 packages
   dnf:
     name:
-      '{{ lookup("flattened", dnf_pkg_lst ) }}'
+      '{{ lookup("flattened", dnf_pkg_lst) }}'
     state: present
   tags:
     - qt5

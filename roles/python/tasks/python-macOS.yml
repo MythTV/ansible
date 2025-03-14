@@ -55,23 +55,26 @@
       '{{ lookup("flattened", python_pkg_list) }}'
 
 - name: specify python exectuables
-  set_fact: py_exe={{ pkgmgr_prefix }}/bin/python{{ python_exe_suffix }}
+  set_fact:
+    py_exe: '{{ pkgmgr_prefix }}/bin/python{{ python_exe_suffix }}'
 
 - name: specify a location to install the python virtual environment
-  set_fact: pvenv_location=~/.mythtv/python-venv{{ python_package_suffix }}
+  set_fact:
+    pvenv_location: '~/.mythtv/python-venv{{ python_package_suffix }}'
 
 - name: expand the user name in the pyvenv location variable
-  set_fact: pvenv_location={{ pvenv_location | expanduser }}
+  set_fact:
+    pvenv_location: '{{ pvenv_location | expanduser }}'
 
 - name: check for previous python virtual environment
   stat:
     path: '{{ pvenv_location }}/pyvenv.cfg'
-  register: CHECK_VENV
+  register: check_venv
 
 - name: clearing previous python virtual environment
   shell: 'rm -Rf {{ pvenv_location }}'
-  register: CHECK_OUT
-  when: CHECK_VENV.stat.exists
+  register: check_out
+  when: check_venv.stat.exists
 
 - name: generate the python virtual environment for standard user
   become: false

@@ -25,7 +25,7 @@
 - name: install deb qt6 packages
   apt:
     name:
-      '{{ lookup("flattened", deb_pkg_lst ) }}'
+      '{{ lookup("flattened", deb_pkg_lst) }}'
     state: present
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

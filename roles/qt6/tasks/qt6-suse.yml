@@ -28,7 +28,7 @@
 - name: install zypper qt6 packages
   zypper:
     name:
-      '{{ lookup("flattened", zypper_pkg_lst ) }}'
+      '{{ lookup("flattened", zypper_pkg_lst) }}'
     state:
       present
   tags:

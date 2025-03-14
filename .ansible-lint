@@ -4,17 +4,24 @@
 
 ---
 
+offline: true
+
 skip_list:
   - command-instead-of-module
   - command-instead-of-shell
-  - unnamed-task
+  - fqcn
+  - line-length
+  - name
   - no-changed-when
-  # - empty-string-compare
+  - unnamed-task
 
 warn_list:
+  - ignore-errors
+  - latest[git]
+  - no-free-form
   - role-name
-  # no-changed-when
+  - var-naming[pattern]
 
 ...
 
-# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=6:
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=3:

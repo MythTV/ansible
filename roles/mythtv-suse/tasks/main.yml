@@ -146,10 +146,15 @@
   when: ansible_distribution == "openSUSE Tumbleweed"
 
 - name: print perl_repo
-  debug: var=perl_repo
+  debug:
+    var: perl_repo
 
 - name: enable devel:languages:perl repository
-  zypper_repository: name=devel_languages_perl repo={{ perl_repo }} state=present auto_import_keys=yes
+  zypper_repository:
+    name: devel_languages_perl
+    repo: '{{ perl_repo }}'
+    state: present
+    auto_import_keys: yes
 
 - name: add mythtv essential perl modules
   set_fact:
@@ -202,7 +207,7 @@
 - name: install packages
   zypper:
     name:
-      '{{ lookup("flattened", zypper_pkg_lst ) }}'
+      '{{ lookup("flattened", zypper_pkg_lst) }}'
     state:
       present
 
