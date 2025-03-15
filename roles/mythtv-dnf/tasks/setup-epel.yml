@@ -2,7 +2,7 @@
 
 ---
 
-- shell:            /bin/rpm -q --quiet epel-release && echo installed || echo missing
+- shell:            /bin/rpm -q --quiet epel-release && echo installed || echo missing  # noqa command-instead-of-module
   register:         epel
 
 - name: setup EPEL repository

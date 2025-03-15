@@ -2,7 +2,7 @@
 
 ---
 
-- shell:  /bin/rpm -q --quiet buildbot-worker && echo installed || echo missing
+- shell:  /bin/rpm -q --quiet buildbot-worker && echo installed || echo missing  # noqa command-instead-of-module
   register:         buildbot
 
 - shell:            /bin/test -f {{ bb_rpm_el8 }}  && echo built || echo missing
@@ -50,7 +50,7 @@
   when:     buildbot.stdout == "missing" and build_buildbot.stdout == "missing"
 
 - name:     install buildbot after local build
-  command:  yum -y localinstall {{ bb_rpm_el8 }}
+  command:  yum -y localinstall {{ bb_rpm_el8 }}  # noqa command-instead-of-module
   when:     buildbot.stdout == "missing"
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

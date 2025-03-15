@@ -2,19 +2,19 @@
 
 ---
 
-- shell:            /bin/rpm -q --quiet python-twisted-mail && echo installed || echo missing
+- shell:            /bin/rpm -q --quiet python-twisted-mail && echo installed || echo missing   # noqa command-instead-of-module
   register:         twisted_mail
 
 - shell:            /bin/test -f {{ twisted_mail_rpm }}  && echo built || echo missing
   register:         build_twisted_mail
 
-- shell:            /bin/rpm -q --quiet python-twisted-names && echo installed || echo missing
+- shell:            /bin/rpm -q --quiet python-twisted-names && echo installed || echo missing  # noqa command-instead-of-module
   register:         twisted_names
 
-- shell:            /bin/test -f {{ twisted_names_rpm }}  && echo built || echo missing
+- shell:            /bin/test -f {{ twisted_names_rpm }}  && echo built || echo missing         # noqa command-instead-of-module
   register:         build_twisted_names
 
-- shell:            /bin/rpm -q --quiet buildbot-slave && echo installed || echo missing
+- shell:            /bin/rpm -q --quiet buildbot-slave && echo installed || echo missing        # noqa command-instead-of-module
   register:         buildbot
 
 - shell:            /bin/test -f {{ bb_rpm }}  && echo built || echo missing
@@ -53,7 +53,7 @@
   when:     twisted_names.stdout == "missing" and build_twisted_names.stdout == "missing"
 
 - name:     install extra python-twisted rpms after local build
-  command:  yum -y localinstall {{ twisted_mail_rpm }} {{ twisted_names_rpm }}
+  command:  yum -y localinstall {{ twisted_mail_rpm }} {{ twisted_names_rpm }}  # noqa command-instead-of-module
   when:     twisted_mail.stdout == "missing" or twisted_names.stdout == "missing"
 
 - name:     build buildbot
@@ -61,7 +61,7 @@
   when:     buildbot.stdout == "missing" and build_buildbot.stdout == "missing"
 
 - name:     install buildbot after local build
-  command:  yum -y localinstall {{ bb_rpm }}
+  command:  yum -y localinstall {{ bb_rpm }}  # noqa command-instead-of-module
   when:     buildbot.stdout == "missing"
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

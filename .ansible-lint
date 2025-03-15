@@ -1,25 +1,22 @@
-# To run: ansible-lint mythtv.yml
+# To lint the entire playbook, run with:
+#
+#       ansible-lint --format=full mythtv.yml 2>&1 | less
 #
 # Documentation: https://ansible-lint.readthedocs.io/en/latest/default_rules
+#
 
 ---
 
-offline: true
+offline: false
 
 skip_list:
-  - command-instead-of-module
-  - command-instead-of-shell
   - fqcn
-  - line-length
-  - name
-  - no-changed-when
-  - unnamed-task
-
-warn_list:
   - ignore-errors
   - latest[git]
-  - no-free-form
-  - role-name
+  - name
+  - no-changed-when
+
+warn_list:
   - var-naming[pattern]
 
 ...

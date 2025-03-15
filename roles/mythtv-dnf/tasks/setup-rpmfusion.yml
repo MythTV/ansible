@@ -2,7 +2,7 @@
 
 ---
 
-- shell:            /bin/rpm -q --quiet rpmfusion-free-release && echo installed || echo missing
+- shell:            /bin/rpm -q --quiet rpmfusion-free-release && echo installed || echo missing  # noqa command-instead-of-module
   register:         rpmfusion
 
 - shell:            /usr/bin/grep -qi Rawhide /etc/fedora-release && echo rawhide || echo release

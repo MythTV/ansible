@@ -45,6 +45,8 @@ alias avenv=". /usr/local/dist/bin/activate"
 alias rvenv="./mythtv.yml --limit=localhost --extra-vars='{\"venv_active\":true}'"
 
 # Additional convenience items:
+alias ad='ansible-doc'
+alias anl='ansible-lint --format full mythtv.yml 2>&1 | less'
 alias ll='ls -l --color=auto --group-directories-first'
 alias lr='ls -lrt --color=auto --group-directories-first'
 alias lsdist='ls -lrt --color=auto --group-directories-first /usr/local/dist'

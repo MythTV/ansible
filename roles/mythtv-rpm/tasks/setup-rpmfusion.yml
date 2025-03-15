@@ -2,13 +2,13 @@
 
 ---
 
-- shell:            /bin/rpm -q --quiet rpmfusion-free-release && echo installed || echo missing
+- shell:            /bin/rpm -q --quiet rpmfusion-free-release && echo installed || echo missing  # noqa command-instead-of-module
   register:         rpmfusion
 
 - name: setup RPMFusion repository for Fedora
-  command: yum localinstall -y --nogpgcheck {{ rpmfusion_rpm }}
+  command: yum localinstall -y --nogpgcheck {{ rpmfusion_rpm }}  # noqa command-instead-of-module
   when: ansible_distribution == "Fedora" and rpmfusion.stdout == "missing"
 
 - name: setup RPMFusion repository for CentOS
-  command: yum localinstall -y --nogpgcheck {{ rpmfusion_el_rpm }}
+  command: yum localinstall -y --nogpgcheck {{ rpmfusion_el_rpm }}  # noqa command-instead-of-module
   when: ansible_distribution == "CentOS" and rpmfusion.stdout == "missing"
