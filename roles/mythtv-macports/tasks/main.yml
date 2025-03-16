@@ -4,11 +4,11 @@
 
 - name: Get macports install prefix
   shell: dirname $(dirname $(which port))
-  register: MP_OUT
+  register: mp_out
 
 - name: set pkgmgr_prefix fact
   set_fact:
-    pkgmgr_prefix: '{{ MP_OUT.stdout }}'
+    pkgmgr_prefix: '{{ mp_out.stdout }}'
 
 - name: specify a mariadb/mysql version to install
   set_fact:
@@ -162,20 +162,20 @@
   shell:
     export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:{{ pkgmgr_prefix }}/lib/{{ database_version }}/pkgconfig/ &&
     {{ pkgmgr_prefix }}/bin/pkg-config --libs mysqlclient
-  register: LIBS_OUT
+  register: libs_out
 
-- name: set MYSQLCLIENT_LDFLAGS fact
+- name: set mysqlclient_ldflags fact
   set_fact:
-    MYSQLCLIENT_LDFLAGS: '{{ LIBS_OUT.stdout }}'
+    mysqlclient_ldflags: '{{ libs_out.stdout }}'
 
 - name: Get mysqlclient cflags
   shell:
     export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:{{ pkgmgr_prefix }}/lib/{{ database_version }}/pkgconfig/ &&
     {{ pkgmgr_prefix }}/bin/pkg-config --cflags mysqlclient
-  register: CFLAG_OUT
+  register: cflag_out
 
-- name: set MYSQLCLIENT_CFLAGS fact
+- name: set mysqlclient_cflags fact
   set_fact:
-    MYSQLCLIENT_CFLAGS: '{{ CFLAG_OUT.stdout }}'
+    mysqlclient_cflags: '{{ cflag_out.stdout }}'
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

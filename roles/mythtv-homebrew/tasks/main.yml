@@ -3,11 +3,11 @@
 ---
 - name: Get homebrew install prefix
   command: brew --prefix
-  register: HB_OUT
+  register: hb_out
 
 - name: set pkgmgr_prefix fact
   set_fact:
-    pkgmgr_prefix: '{{ HB_OUT.stdout }}'
+    pkgmgr_prefix: '{{ hb_out.stdout }}'
 
 - name: specify a mariadb/mysql version to install
   set_fact:
@@ -147,21 +147,21 @@
   shell:
     export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"{{ pkgmgr_prefix }}/opt/mysql-client/lib/pkgconfig/" &&
     {{ pkgmgr_prefix }}/bin/pkg-config --libs mysqlclient
-  register: LIBS_OUT
+  register: libs_out
 
-- name: set MYSQLCLIENT_LDFLAGS fact
+- name: set mysqlclient_ldflags fact
   set_fact:
-    MYSQLCLIENT_LDFLAGS: '{{ LIBS_OUT.stdout }}'
+    mysqlclient_ldflags: '{{ libs_out.stdout }}'
 
 - name: Get mysqlclient cflags
   shell:
     export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"{{ pkgmgr_prefix }}/opt/mysql-client/lib/pkgconfig/" &&
     {{ pkgmgr_prefix }}/bin/pkg-config --cflags mysqlclient
-  register: CFLAG_OUT
+  register: cflag_out
 
-- name: set MYSQLCLIENT_CFLAGS fact
+- name: set mysqlclient_cflags fact
   set_fact:
-    MYSQLCLIENT_CFLAGS: '{{ CFLAG_OUT.stdout }}'
+    mysqlclient_cflags: '{{ cflag_out.stdout }}'
 
 - name: create a list of perl modules
   set_fact:

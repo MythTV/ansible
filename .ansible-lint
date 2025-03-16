@@ -16,9 +16,8 @@ skip_list:
   - name
   - no-changed-when
 
-warn_list:
-  - var-naming[pattern]
-
+# warn_list:
+# - none right now
 ...
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=3:
