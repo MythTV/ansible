@@ -1,5 +1,19 @@
 ---
 
+# TEMPORARILY ALLOW TURNING venv ON/OFF except for macOS. venv_active is set
+# to false in group_vars/all.yml to disable the feature. To activate it add:
+#   --extra-vars='{"venv_active":true}' to the ./mythtv.yml command line.
+
+- include_tasks:
+    file: python-venv.yml
+    apply:
+      tags: venv
+  when:
+    - venv_active
+    - ansible_pkg_mgr != 'homebrew'
+    - ansible_pkg_mgr != 'macports'
+  tags: venv
+
 - include_tasks: python-macOS.yml
   when:
     - (ansible_pkg_mgr == "homebrew") or (ansible_pkg_mgr == "macports")

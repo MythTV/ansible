@@ -73,19 +73,6 @@
         name: python
       when: not mythtv_tools
 
-    # TEMPORARILY ALLOW TURNING venv ON/OFF.
-    # venv_active is set to false in group_vars/all.yml
-    # to disable the feature. For activate with:
-    #   --extra-vars='{"venv_active":true}'
-    # May need to turn off for homebrew/macports
-
-    - include_role:
-        name: venv
-        apply:
-          tags: venv
-      when: venv_active
-      tags: venv
-
     - include_role:
         name: qt5
       when:
