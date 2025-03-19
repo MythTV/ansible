@@ -139,6 +139,7 @@
       - python-requests
       - python3-requests-cache
       - python3-venv
+      - python3-virtualenv
       - python3-dev
   when:
     - ansible_lsb.major_release|int == 10
@@ -155,6 +156,7 @@
       - python3-mysqldb
       - python3-setuptools
       - python3-venv
+      - python3-virtualenv
       - python3-dev
   when:
     - ansible_distribution_release == "trixie" or ansible_distribution_major_version|int >= 11

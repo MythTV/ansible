@@ -82,6 +82,7 @@
       - python3-pycurl
       - python3-setuptools
       - python3-venv
+      - python3-virtualenv
       - python3-wheel
       - python3-dev
   when:
@@ -98,6 +99,10 @@
       - python3-oauth
       - python3-pycurl
       - python3-setuptools
+      - python3-venv
+      - python3-virtualenv
+      - python3-wheel
+      - python3-dev
   when:
     - ansible_lsb.major_release|int >= 24
 

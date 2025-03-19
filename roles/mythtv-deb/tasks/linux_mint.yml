@@ -23,7 +23,6 @@
       - libsystemd-dev
       - libbluray-dev
       - libx265-dev
-      - libsqlite3
       - libsqlite3-dev
 
 - name: add mythtv mysql client libraries
@@ -49,6 +48,17 @@
       - python3-setuptools
       - python3-pip
       - python3-venv
+      - python3-virtualenv
+
+- name: make adjustments for oauth
+  when:
+    - ansible_distribution_major_version|int >= 22
+  block:
+    - set_fact:
+        deb_pkg_lst: '{{ lookup("flattened", deb_pkg_lst).split(",") }}'
+
+    - set_fact:
+        deb_pkg_lst: "{{ deb_pkg_lst | replace('python3-oauth', 'python3-oauthlib') }}"
 
 - name: add mythtv essential plugin libraries
   set_fact:
