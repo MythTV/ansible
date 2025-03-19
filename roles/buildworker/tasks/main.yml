@@ -3,7 +3,7 @@
 ---
 
 - name: install python twisted - Fedora
-  yum:
+  package:
     name:
       - python-twisted
     state:
@@ -11,7 +11,7 @@
   when: ansible_distribution == "Fedora"
 
 - name: install python twisted - CentOS
-  yum:
+  package:
     name:
       - python-twisted-core
       - python-twisted-web
@@ -21,7 +21,7 @@
   when: ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 7
 
 - name: ensure cron installed - Fedora
-  yum:
+  package:
     name:
       - cronie
     state:
@@ -30,7 +30,7 @@
 
 # no buildbot in centos7 or epel7...
 - name: install buildworker (rpm)
-  yum:
+  package:
     name:
       - buildbot-worker
     state:

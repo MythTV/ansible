@@ -146,7 +146,7 @@
       '{{ lookup("flattened", yum_pkg_lst) }}'
 
 - name: install packages
-  yum:
+  package:
     name:
       '{{ lookup("flattened", yum_pkg_lst) }}'
     state:

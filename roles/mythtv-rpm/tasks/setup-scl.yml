@@ -3,7 +3,7 @@
 ---
 
 - name: setup SCL repositories for CentOS
-  yum:
+  package:
     name:
       'centos-release-scl,centos-release-scl-rh'
     state:

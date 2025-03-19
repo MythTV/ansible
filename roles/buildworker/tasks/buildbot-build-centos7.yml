@@ -21,7 +21,7 @@
   register:         build_buildbot
 
 - name: install buildbot build requirements
-  yum:
+  package:
     name:
       - python-zope-interface
       - python-twisted-core

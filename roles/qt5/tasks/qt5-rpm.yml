@@ -28,7 +28,7 @@
       '{{ lookup("flattened", yum_pkg_lst) }}'
 
 - name: install rpm qt5 packages
-  yum:
+  package:
     name:
       '{{ lookup("flattened", yum_pkg_lst) }}'
     state:
