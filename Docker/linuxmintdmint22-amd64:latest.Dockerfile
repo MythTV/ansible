@@ -1,11 +1,12 @@
-FROM quay.io/fedora/fedora:rawhide
+FROM linuxmintd/mint22-amd64:latest
 ARG NOBUILD=0
-LABEL CODENAME="Rawhide"
-RUN dnf5 install --assumeyes ansible git plocate tree vim
+LABEL CODENAME="fillMEin, /etc/lsb said this was Ubuntu noble"
+RUN apt-get update \
+    && apt-get install --yes apt-utils ansible git plocate python3-apt vim
 
 WORKDIR /root/source/ansible
 COPY . ./
-RUN ./mythtv.yml --limit=localhost --extra-vars='{"venv_active":true}'
+RUN ./mythtv.yml --limit=localhost --extra-vars='{"venv_active":true}' --extra-vars='{"use_old_roles":true}'
 
 WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git

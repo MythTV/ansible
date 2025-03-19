@@ -2,15 +2,6 @@
 
 ---
 
-- name: try to get the virtual environment package
-  package:
-    name: '{{ item }}'
-  register: package_result
-  ignore_errors: true
-  loop:
-    - python3-virtualenv
-    - python-virtualenv  # for Archlinux
-
 - name: generate the Python Virtual Environment for all users
   pip:
     virtualenv: '{{ venv_path }}'
@@ -19,27 +10,25 @@
       pip  # Need at least one name: or a requirements: argument and file
   register: pip_result
   ignore_errors: true
-  when: not package_result.results[0].failed or not package_result.results[1].failed
 
 - name: venv success, MANUAL ACTION ITEM
   debug:
-    msg:
-      - 'A Python Virtual Environment was installed in: {{ venv_path }}'
-      - 'Remember to change the shebang of any personal Python programs that'
-      - 'import the MythTV module to: #!{{ venv_path }}/bin/python'
+    msg: >-
+      A Python Virtual Environment was installed. Remember to change
+      the shebang of any personal Python programs that import the
+      MythTV module to: #!{{ venv_path }}/bin/python once cmake is
+      run with: VIRTUAL_ENV={{ venv_path }} cmake --build ...
   when:
     - not pip_result.failed or (pip_result.rc is defined and pip_result.rc == 0)
-    - not package_result.results[0].failed or not package_result.results[1].failed
 
 - name: venv error case, MANUAL ACTION ITEM
   debug:
-    msg:
-      - 'This role was unable to create a Python Virtual Environment. Either this'
-      - 'playbook needs updating or manual venv installation is required. Do that'
-      - 'with: python -m venv {{ venv_path }}'
+    msg: >-
+      This role was unable to create a Python Virtual Environment. Either this
+      playbook needs updating or manual venv installation is required. Do that
+      with: virtualenv --system-site-packages {{ venv_path }}
   when:
     - pip_result.failed or (pip_result.rc is defined and pip_result.rc > 0)
-    - package_result.results[0].failed or package_result.results[1].failed
 
 ...
 

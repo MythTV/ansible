@@ -1,4 +1,5 @@
 FROM opensuse/leap:latest
+ARG NOBUILD=0
 LABEL CODENAME="Leap, 'regular' release"
 LABEL FAILED_CONFIGURE="MythTV requires GCC 8 or better."
 RUN zypper --non-interactive install awk ansible git plocate vim
@@ -11,7 +12,13 @@ WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
 
 WORKDIR /root/source/mythtv/mythtv
-RUN git checkout fixes/35
+RUN if [ "${NOBUILD}" -eq 1 ]; then \
+        echo "Not doing a build." ;\
+    else \
+        git checkout fixes/35 \
+        && cmake --preset qt5 \
+        && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5 ;\
+    fi
 
 # make and cmake fail, gcc13 exists, but gcc links to gcc8
 # RUN ./configure \

@@ -1,4 +1,5 @@
 FROM quay.io/centos/centos:stream
+ARG NOBUILD=0
 LABEL DERIVEDFROM="RHEL 8 Public Upstream Development Branch"
 RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
     && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* \
@@ -20,6 +21,11 @@ RUN git clone https://github.com/MythTV/mythtv.git
 # buld fails because FFmpeg can't find libiec61883 (even though it and
 # libiec61883-devel are installed
 WORKDIR /root/source/mythtv
-RUN git checkout fixes/35
-#     && cmake --preset qt5
-#    && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5
+
+RUN if [ $(true) ]; then \
+        echo "Not doing a build." ;\
+    else \
+        git checkout fixes/35 \
+        && cmake --preset qt5 \
+        && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5 ;\
+    fi

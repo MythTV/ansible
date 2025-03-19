@@ -11,6 +11,10 @@
 #
 # <host> = one of the names under 'hosts:' in the hosts.yml file. See
 # README.md for help.
+#
+#     Adding: --extra-vars='{"use_old_roles":false}' turns on the new single role
+#     Adding: --extra-vars='{"venv_active":true}' builds a Python venv
+#
 
 ---
 
@@ -22,51 +26,65 @@
         name: common
 
     - include_role:
+        name: mythtv
+      when:
+        - not use_old_roles
+        - not mythtv_tools
+
+    - include_role:
         name: mythtv-deb
       when:
         - ansible_pkg_mgr == "apt"
+        - use_old_roles
         - not mythtv_tools
 
     - include_role:
         name: mythtv-rpm
       when:
         - ansible_pkg_mgr == "yum"
+        - use_old_roles
         - not mythtv_tools
 
     - include_role:
         name: mythtv-dnf
       when:
         - ansible_pkg_mgr in [ "dnf", "dnf5" ]
+        - use_old_roles
         - not mythtv_tools
 
     - include_role:
         name: mythtv-freebsd
       when:
         - ansible_pkg_mgr == "pkgng"
+        - use_old_roles
         - not mythtv_tools
 
     - include_role:
         name: mythtv-homebrew
       when:
         - ansible_pkg_mgr == "homebrew"
+        - use_old_roles
         - not mythtv_tools
 
     - include_role:
         name: mythtv-macports
       when:
         - ansible_pkg_mgr == "macports"
+        - use_old_roles
         - not mythtv_tools
 
     - include_role:
         name: mythtv-pacman
       when:
         - ansible_pkg_mgr == "pacman"
+        - use_old_roles
         - not mythtv_tools
 
     - include_role:
         name: mythtv-suse
       when:
         - ansible_pkg_mgr == "zypper"
+        - use_old_roles
         - not mythtv_tools
 
     - include_role:
@@ -77,12 +95,14 @@
         name: qt5
       when:
         - not mythtv_tools
+        - use_old_roles
         - not qt6
 
     - include_role:
         name: qt6
       when:
         - not mythtv_tools
+        - use_old_roles
         - qt6
 
     - include_role:

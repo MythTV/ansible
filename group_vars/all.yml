@@ -1,5 +1,9 @@
 ---
 
+# This keeps the original roles active. Keep it set to true
+# for now. See roles/mythtv/tasks/main.yml for detail.
+use_old_roles: true
+
 # These are for the Python Virtual Environment:
 venv_path: /usr/local/dist
 venv_active: false

@@ -1,4 +1,5 @@
 FROM debian:12
+ARG NOBUILD=0
 LABEL CODENAME="Bookworm, stable"
 RUN apt-get update \
     && apt-get install --yes apt-utils ansible git plocate python3-apt vim
@@ -11,6 +12,10 @@ WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
 
 WORKDIR /root/source/mythtv
-RUN git checkout fixes/35 \
-    && cmake --preset qt5 \
-    && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5
+RUN if [ "${NOBUILD}" -eq 1 ]; then \
+        echo "Not doing a build." ;\
+    else \
+        git checkout fixes/35 \
+        && cmake --preset qt5 \
+        && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5 ;\
+    fi

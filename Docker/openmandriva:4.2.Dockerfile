@@ -1,4 +1,5 @@
 FROM openmandriva/4.2:latest
+ARG NOBUILD=0
 RUN dnf install --assumeyes git make python-packaging python-setuptools vim
 
 # Last checked, OpenMandriva only has Ansible 1.6 in their repositories,
@@ -18,7 +19,13 @@ WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
 
 WORKDIR /root/source/mythtv/mythtv
-RUN git checkout fixes/35
+RUN if [ $(true) ]; then \
+        echo "Not doing a build." ;\
+    else \
+        git checkout fixes/35 \
+        && cmake --preset qt5 \
+        && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5 ;\
+    fi
 
 # RUN ./configure \
 #     --enable-libx264 \

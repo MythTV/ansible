@@ -26,7 +26,7 @@ function mbuild () {
     deactivate || true
     rm -rf ./build-qt5
     cmake --preset qt5
-    VIRTURL_ENV=/usr/local/dist cmake --build build-qt5
+    VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5
     echo "Activate venv, expect MythTV to be found:"
     . /usr/local/dist/bin/activate
     pip show MythTV
@@ -41,8 +41,10 @@ alias raa=". /etc/ansible/mythtv-ansible/Docker/aliases"
 # Activate the Python Virtual Environment
 alias avenv=". /usr/local/dist/bin/activate"
 
-# Run Ansible with the venv_active variable set to true:
+# Turn on the Virtual Environment feature:
 alias rvenv="./mythtv.yml --limit=localhost --extra-vars='{\"venv_active\":true}'"
+# Turn on the above AND the new roles layout:
+alias svenv="./mythtv.yml --limit=localhost --extra-vars='{\"venv_active\":true}' --extra-vars='{\"use_old_roles\":false}'"
 
 # Additional convenience items:
 alias ad='ansible-doc'

@@ -2,6 +2,7 @@
 # That's about it as lots of the required packages aren't available.
 
 FROM amazonlinux:latest
+ARG NOBUILD=0
 RUN dnf distro-sync --assumeyes \
     && dnf install --assumeyes file ansible git less cmake pip python3-packaging python3-setuptools vim \
     && ln /usr/bin/python3 /usr/bin/python \
@@ -11,6 +12,14 @@ WORKDIR /root/source/ansible
 COPY . ./
 RUN ./mythtv.yml --limit=localhost --extra-vars='{"venv_active":true}'
 
+# Never build here, at least for now.
+RUN if [ $(true) ]; then \
+        echo "Not doing a build." ;\
+    else \
+        git checkout fixes/35 \
+        && cmake --preset qt5 \
+        && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5 ;\
+    fi
 ## Above fails with:
 # 3.061 TASK [mythtv-dnf : install packages] *******************************************
 # 3.061 fatal: [localhost]: FAILED! => changed=false

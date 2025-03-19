@@ -1,4 +1,5 @@
 FROM ubuntu:22.04
+ARG NOBUILD=0
 LABEL CODENAME="Jammy"
 ENV TZ=America/Chicago
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
@@ -15,6 +16,10 @@ RUN git clone https://github.com/MythTV/mythtv.git
 
 # 22.04 has python v3.10
 WORKDIR /root/source/mythtv
-RUN git checkout fixes/34 \
-    && cmake --preset qt5 \
-    && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5 ######## -DMYTH_BINDINGS_INSTALL_ROOT=/usr/local/dist
+RUN if [ "${NOBUILD}" -eq 1 ]; then \
+        echo "Not doing a build." ;\
+    else \
+        git checkout fixes/35 \
+        && cmake --preset qt5 \
+        && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5 ;\
+    fi

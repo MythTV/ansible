@@ -1,0 +1,72 @@
+---
+
+packages:
+  - lsb-release
+  - cronie
+  - base-devel
+  - nasm
+  - ccache
+  - git
+  - cmake
+  - patch
+  - ninja
+  - gperf
+  - meson
+  - sqlite3
+  - php
+  - lame
+  - libbluray
+  - libxnvctrl
+  - libsamplerate
+  - libxv
+  - libxinerama
+  - libxrandr
+  - libxml2
+  - taglib
+  - exiv2
+  - libzip
+  - libmpeg2
+  - soundtouch
+  - libcec
+  - libass
+  - libvdpau
+  - libva
+  - x264
+  - x265
+  - libvpx
+  - dav1d
+  - xvidcore
+  - libavc1394
+  - libiec61883
+  - lirc
+  - python-lxml
+  - python-mysqlclient
+  - python-requests
+  - python-setuptools
+  - python-pip
+  - python-virtualenv
+  - python-wheel
+  - perl-dbi
+  - perl-dbd-mysql
+  - perl-io-socket-inet6
+  - perl-date-manip
+  - perl-xml-simple
+  - perl-xml-xpath
+  - perl-image-size
+  - perl-datetime-format-iso8601
+  - perl-soap-lite
+  - perl-json
+  - perl-findbin
+  - perl-ipc-cmd
+  - flac
+  - libcdio
+  - libcdio-paranoia
+  - libmariadbclient
+  - python-pycurl
+  - python-oauthlib
+  - qt5-base
+  - qt5-script
+
+...
+
+#

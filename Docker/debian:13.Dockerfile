@@ -1,4 +1,5 @@
 FROM debian:trixie
+ARG NOBUILD=0
 # Removed from ansible:libcrystalhd-dev libfreetype6-dev python3-future
 
 LABEL CODENAME="Trixie becomes v13,  testing no release date set"
@@ -14,6 +15,10 @@ WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
 
 WORKDIR /root/source/mythtv
-RUN git checkout fixes/35 \
-    && cmake --preset qt5 \
-    && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5
+RUN if [ "${NOBUILD}" -eq 1 ]; then \
+        echo "Not doing a build." ;\
+    else \
+        git checkout fixes/35 \
+        && cmake --preset qt5 \
+        && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5 ;\
+    fi

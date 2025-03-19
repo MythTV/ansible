@@ -1,0 +1,57 @@
+# roles/mythtv/tasks/main.yml
+
+# WIP: a single set of tasks for ALL package managers/distributions/versions.
+# Develop the proper list of package names for the above and then install
+# them. The goal here is to clean up years of kruft by keeping unique lists
+# of packages. No more 'where ansible_distribution_major_version' checks etc.
+
+---
+
+- name: create package manager, distibution and version facts
+  set_fact:
+    current_pkgmgr: '{{ ansible_pkg_mgr }}'
+    current_distro: '{{ ansible_distribution | replace(" ", "_") | lower }}'
+    current_versno: '{{ ansible_distribution_major_version }}'
+
+- name: set version to rolling for Archlinux
+  set_fact:
+    current_versno: 'rolling'
+  when: ansible_distribution == 'Archlinux'
+
+- name: adjust for Debian testing versions, trixie now, adjust when required
+  set_fact:
+    current_versno: '{{ current_distro | lower }}'
+  when: ansible_distribution == 'trixie'
+
+- name: see if the list of packages has been created
+  stat:
+    path: '{{ playbook_dir }}/roles/mythtv/vars/{{ current_pkgmgr }}/{{ current_distro }}/{{ current_versno }}.yml'
+  register: stat_results
+
+- name: the list of packages is missing MANUAL ACTION ITEM
+  debug:
+    msg: >-
+      No {{ current_pkgmgr }}/{{ current_distro }}/{{ current_versno }}.yml file
+      One can be copied and adjusted for a new release. Aborting!
+  when: not stat_results.stat.exists
+
+- name: now abort because of the above
+  meta: end_play
+  when: not stat_results.stat.exists
+
+- name: 'pull in the package list for "{{ current_pkgmgr }}/{{ current_distro }}/{{ current_versno }}"'
+  include_vars:
+    dir: '{{ current_pkgmgr }}/{{ current_distro }}'
+    files_matching: '{{ current_versno }}.yml'
+
+- name: final package list
+  debug:
+    var: lookup("flattened", packages)
+
+- name: 'install packages using {{ current_pkgmgr }}'
+  package:
+    name: '{{ lookup("flattened", packages) }}'
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
