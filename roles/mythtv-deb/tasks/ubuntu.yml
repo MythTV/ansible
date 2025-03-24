@@ -2,7 +2,7 @@
 
 ---
 
-- name: add compilers and build essentials 2
+- name: ubuntu | Add compilers and build essentials 2
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -10,7 +10,7 @@
       - sqlite3
   when: ansible_lsb.major_release|int >= 15
 
-- name: add mythtv extra build libraries (16.04 and later)
+- name: ubuntu | Add mythtv extra build libraries (16.04 and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -24,7 +24,7 @@
   when:
     - ansible_lsb.major_release|int >= 16
 
-- name: add mythtv extra build libraries (16.04 and later, not aarch64)
+- name: ubuntu | Add mythtv extra build libraries (16.04 and later, not aarch64)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -33,13 +33,13 @@
     - ansible_lsb.major_release|int >= 16
     - ansible_architecture != "aarch64"
 
-- name: add mythtv mysql client libraries
+- name: ubuntu | Add mythtv mysql client libraries
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libmysqlclient-dev
 
-- name: add mythtv essential python modules
+- name: ubuntu | Add mythtv essential python modules
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -51,7 +51,7 @@
   when:
     - ansible_lsb.major_release|int < 20
 
-- name: add mythtv essential python modules (16.04 to 19.10)
+- name: ubuntu | Add mythtv essential python modules (16.04 to 19.10)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -69,7 +69,7 @@
   when:
     - ansible_lsb.major_release|int >= 16 and ansible_lsb.major_release|int < 20
 
-- name: add mythtv essential python modules (20.04 and later)
+- name: ubuntu | Add mythtv essential python modules (20.04 and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -88,7 +88,7 @@
   when:
     - ansible_lsb.major_release|int >= 20 and ansible_lsb.major_release|int < 24
 
-- name: add mythtv essential python modules (24.04 and later)
+- name: ubuntu | Add mythtv essential python modules (24.04 and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -106,7 +106,7 @@
   when:
     - ansible_lsb.major_release|int >= 24
 
-- name: add python3-pip module (20.04 and later)
+- name: ubuntu | Add python3-pip module (20.04 and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -116,7 +116,7 @@
   when:
     - ansible_lsb.major_release|int >= 20
 
-- name: add mythtv essential plugin libraries (16.04 and later)
+- name: ubuntu | Add mythtv essential plugin libraries (16.04 and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -124,17 +124,20 @@
   when:
     - ansible_lsb.major_release|int >= 16
 
-- name: adjust 22+ packages
+- name: ubuntu | Adjust 22+ packages
   when:
     - ansible_distribution_major_version | int >= 22
   block:
-    - set_fact:
+    - name: ubuntu | Flatten package list
+      set_fact:
         deb_pkg_lst: '{{ lookup("flattened", deb_pkg_lst).split(",") }}'
 
-    - set_fact:
+    - name: ubuntu | Treat libcrystalhd-dev
+      set_fact:
         deb_pkg_lst: "{{ deb_pkg_lst | difference(['libcrystalhd-dev']) }}"
 
-    - set_fact:
+    - name: ubuntu | Convert Python oauth to oauthlib
+      set_fact:
         deb_pkg_lst: "{{ deb_pkg_lst | replace('python3-oauth', 'python3-oauthlib') }}"
 
 ...

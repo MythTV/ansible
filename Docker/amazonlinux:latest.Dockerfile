@@ -13,7 +13,7 @@ COPY . ./
 RUN ./mythtv.yml --limit=localhost --extra-vars='{"venv_active":true}'
 
 # Never build here, at least for now.
-RUN if [ $(true) ]; then \
+RUN if [ "${NOBUILD}" -eq 1 ]; then \
         echo "Not doing a build." ;\
     else \
         git checkout fixes/35 \

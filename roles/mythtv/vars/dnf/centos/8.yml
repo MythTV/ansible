@@ -1,3 +1,5 @@
+# File: roles/mythtv/vars/dnf/centos/8.yml
+
 ---
 
 packages:
@@ -56,9 +58,6 @@ packages:
   - libdav1d-devel
   - libcec-devel
   - libcrystalhd-devel
-  - libavc1394-devel
-  - libbluray-devel
-  - libbluray-bdj
   - python3-lxml
   - python3-libselinux
   - python3-requests-cache
@@ -66,9 +65,6 @@ packages:
   - python3-setuptools
   - python3-devel
   - python3-mysql
-  - python3-wheel
-  - python3-pip
-  - python3-virtualenv
   - perl-ExtUtils-MakeMaker
   - perl-DBI
   - perl-DBD-MySQL
@@ -93,7 +89,6 @@ packages:
   - libcdio-paranoia-devel
   - mysql-devel
   - minizip-devel
-  - python3-oauth
   - python3-pycurl
   - python3-oauthlib
 
@@ -105,4 +100,4 @@ qt5_packages:
 
 ...
 
-# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=4:
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=3:

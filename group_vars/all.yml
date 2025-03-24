@@ -1,13 +1,17 @@
 ---
 
-# This keeps the original roles active. Keep it set to true
-# for now. See roles/mythtv/tasks/main.yml for detail.
+# Text for manual action items:
+manual_action_text: 'MANUAL ACTION REQUIRED'
+
+# See mythtv.yml and roles/mythtv/tasks/main.yml for detail. This keeps the
+# original roles active. Keep it set to true for now:
 use_old_roles: true
 
-# These are for the Python Virtual Environment:
-venv_path: /usr/local/dist
-venv_active: false
+# Python Virtual Environment. Keep 'active' set to false for now.
+venv:
+  active: false
+  path: ~/.virtualenvs/mythtv
 
 ...
 
-# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=6:
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=80:

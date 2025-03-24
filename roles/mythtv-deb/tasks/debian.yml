@@ -5,7 +5,7 @@
 
 ---
 
-- name: add compilers and build essentials 2 (debian)
+- name: debian | add compilers and build essentials 2 (debian)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -14,7 +14,7 @@
       - libsqlite3-dev
   when: ansible_distribution_release == "trixie" or ansible_distribution_major_version|int >= 8
 
-- name: add mythtv extra build libraries (Raspbian Stretch or later)
+- name: debian | add mythtv extra build libraries (Raspbian Stretch or later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -24,7 +24,7 @@
     - ansible_lsb.major_release|int >= 9
     - ansible_lsb.id == "Raspbian"
 
-- name: add mythtv extra build libraries (Raspbian Stretch)
+- name: debian | add mythtv extra build libraries (Raspbian Stretch)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -33,7 +33,7 @@
     - ansible_lsb.major_release|int == 9
     - ansible_lsb.id == "Raspbian"
 
-- name: add mythtv extra build libraries (Raspbian Buster or later)
+- name: debian | add mythtv extra build libraries (Raspbian Buster or later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -43,7 +43,7 @@
     - ansible_lsb.major_release|int >= 10
     - ansible_lsb.id == "Raspbian"
 
-- name: add mythtv extra build libraries
+- name: debian | add mythtv extra build libraries
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -54,12 +54,12 @@
     - ansible_distribution_release != "bookworm"
     - ansible_distribution_major_version|int < 11
 
-- name: reject the libcrystalhd-dev for trixie (13)
+- name: debian | reject the libcrystalhd-dev for trixie (13)
   ansible.builtin.set_fact:
     deb_pkg_lst: '{{ deb_pkg_lst | flatten() | reject("search", "libcrystalhd-dev") }}'
   when: ansible_distribution_release == "trixie" or ansible_distribution_major_version|int > 12
 
-- name: add mythtv extra build libraries (Bullseye and later)
+- name: debian | add mythtv extra build libraries (Bullseye and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -67,7 +67,7 @@
   when:
     - ansible_distribution_release == "trixie" or ansible_distribution_major_version|int >= 11
 
-- name: add mythtv extra build libraries (Stretch and later)
+- name: debian | add mythtv extra build libraries (Stretch and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -76,7 +76,7 @@
   when:
     - ansible_distribution_release == "trixie" or ansible_distribution_major_version|int >= 9
 
-- name: add mythtv mysql client libraries (Jessie)
+- name: debian | add mythtv mysql client libraries (Jessie)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -84,7 +84,7 @@
   when:
     - ansible_lsb.major_release|int == 8
 
-- name: add mythtv mysql client libraries (Stretch)
+- name: debian | add mythtv mysql client libraries (Stretch)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -92,7 +92,7 @@
   when:
     - ansible_lsb.major_release|int == 9
 
-- name: add mythtv mysql client libraries (Buster)
+- name: debian | add mythtv mysql client libraries (Buster)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -101,7 +101,7 @@
   when:
     - ansible_lsb.major_release|int == 10
 
-- name: add mythtv mysql client libraries (Bullseye and later)
+- name: debian | add mythtv mysql client libraries (Bullseye and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -110,7 +110,7 @@
   when:
     - ansible_distribution_release == "trixie" or ansible_distribution_major_version|int >= 11
 
-- name: add mythtv essential python modules (Stretch/16.04 and later)
+- name: debian | add mythtv essential python modules (Stretch/16.04 and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -128,7 +128,7 @@
   when:
     - ansible_lsb.major_release|int >= 9 and ansible_distribution_major_version|int < 11
 
-- name: add mythtv essential python modules (Buster)
+- name: debian | add mythtv essential python modules (Buster)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -144,7 +144,7 @@
   when:
     - ansible_lsb.major_release|int == 10
 
-- name: add mythtv essential python modules (Buster or later)
+- name: debian | add mythtv essential python modules (Buster or later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -161,7 +161,7 @@
   when:
     - ansible_distribution_release == "trixie" or ansible_distribution_major_version|int >= 11
 
-- name: add python3-pip module (trixie and later)
+- name: debian | add python3-pip module (trixie and later)
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -169,7 +169,7 @@
   when:
     - ansible_distribution_release == "trixie" or ansible_distribution_major_version|int >= 10
 
-- name: make adjustments for trixie or >= 12 package here
+- name: debian | make adjustments for trixie or >= 12 package here
   when:
     - ansible_distribution_release == "trixie" or ansible_distribution_major_version|int >= 12
   block:
@@ -179,7 +179,7 @@
     - set_fact:
         deb_pkg_lst: "{{ deb_pkg_lst | replace('python3-oauth', 'python3-oauthlib') }}"
 
-- name: add mythtv essential plugin libraries
+- name: debian | add mythtv essential plugin libraries
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'

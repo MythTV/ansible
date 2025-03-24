@@ -14,7 +14,7 @@ RUN git clone https://github.com/MythTV/mythtv.git
 # Not in my list of distros at github, stopping here due to:
 # qmake for Qt 5.12 or newer not found when configure runs.
 WORKDIR /root/source/mythtv/mythtv
-RUN if [ $(true) ]; then \
+RUN if [ "${NOBUILD}" -eq 1 ]; then \
         echo "Not doing a build." ;\
     else \
         git checkout fixes/35 \

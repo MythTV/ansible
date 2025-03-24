@@ -7,51 +7,70 @@
 
 ---
 
-- name: create package manager, distibution and version facts
+- name: Create generic package manager, distibution and version facts
   set_fact:
-    current_pkgmgr: '{{ ansible_pkg_mgr }}'
-    current_distro: '{{ ansible_distribution | replace(" ", "_") | lower }}'
-    current_versno: '{{ ansible_distribution_major_version }}'
+    g_pkgmgr: '{{ ansible_pkg_mgr }}'
+    g_distro: '{{ ansible_distribution | replace(" ", "_") | lower }}'
+    g_versno: '{{ ansible_distribution_major_version }}'
 
-- name: set version to rolling for Archlinux
+- name: Set version to rolling for Archlinux
   set_fact:
-    current_versno: 'rolling'
+    g_versno: 'rolling'
   when: ansible_distribution == 'Archlinux'
 
-- name: adjust for Debian testing versions, trixie now, adjust when required
+- name: Adjust for Debian testing versions. Update for new releases.
   set_fact:
-    current_versno: '{{ current_distro | lower }}'
+    g_versno: '{{ g_distro | lower }}'
   when: ansible_distribution == 'trixie'
 
-- name: see if the list of packages has been created
+- name: See if a list of packages has been created
   stat:
-    path: '{{ playbook_dir }}/roles/mythtv/vars/{{ current_pkgmgr }}/{{ current_distro }}/{{ current_versno }}.yml'
+    path: '{{ playbook_dir }}/roles/mythtv/vars/{{ g_pkgmgr }}/{{ g_distro }}/{{ g_versno }}.yml'
   register: stat_results
 
-- name: the list of packages is missing MANUAL ACTION ITEM
+- name: 'The list of packages is missing. {{ manual_action_text }}'
   debug:
     msg: >-
-      No {{ current_pkgmgr }}/{{ current_distro }}/{{ current_versno }}.yml file
-      One can be copied and adjusted for a new release. Aborting!
+      No {{ g_pkgmgr }}/{{ g_distro }}/{{ g_versno }}.yml file. One can
+      be copied and adjusted for a new release. Files are stored under:
+      {{ playbook_dir }}/roles/mythtv/vars.
+      Openining an issue at: https://github.com/MythTV/ansible/issues is the
+      best way to have new package lists added to the project. Be sure to add
+      the output of the: 'Include the following on all trouble tickets...'
+      section from this play.  Aborting!
   when: not stat_results.stat.exists
 
-- name: now abort because of the above
+- name: Abort because of the above
   meta: end_play
   when: not stat_results.stat.exists
 
-- name: 'pull in the package list for "{{ current_pkgmgr }}/{{ current_distro }}/{{ current_versno }}"'
+- name: 'Pull in the package list for "{{ g_pkgmgr }}/{{ g_distro }}/{{ g_versno }}"'
   include_vars:
-    dir: '{{ current_pkgmgr }}/{{ current_distro }}'
-    files_matching: '{{ current_versno }}.yml'
+    dir: '{{ g_pkgmgr }}/{{ g_distro }}'
+    files_matching: '{{ g_versno }}.yml'
 
-- name: final package list
+- name: Add qt5 packages
+  set_fact:
+    packages:
+      - '{{ packages }}'
+      - '{{ qt5_packages }}'
+  when: (qt6 is undefined or not qt6) and qt5_packages is defined
+
+- name: Add qt6 packages
+  set_fact:
+    packages:
+      - '{{ packages }}'
+      - '{{ qt6_packages }}'
+  when: qt6 is defined and qt6 and qt6_packages is defined
+
+- name: Final package list
   debug:
     var: lookup("flattened", packages)
 
-- name: 'install packages using {{ current_pkgmgr }}'
+- name: Install the packages
   package:
     name: '{{ lookup("flattened", packages) }}'
 
 ...
 
-# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2,80:

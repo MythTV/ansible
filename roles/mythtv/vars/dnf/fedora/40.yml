@@ -1,3 +1,5 @@
+# File: roles/mythtv/vars/dnf/centos/8.yml
+
 ---
 
 packages:
@@ -61,6 +63,7 @@ packages:
   - libbluray-bdj
   - python3-lxml
   - python3-libselinux
+  - python3-pip
   - python3-requests-cache
   - python3-simplejson
   - python3-setuptools
@@ -68,7 +71,6 @@ packages:
   - python3-mysql
   - python3-wheel
   - python3-pip
-  - python3-virtualenv
   - perl-ExtUtils-MakeMaker
   - perl-DBI
   - perl-DBD-MySQL
@@ -97,7 +99,7 @@ packages:
   - python3-pycurl
   - python3-oauthlib
 
-qt5_packages:
+qt5_packages:  # these are fillers, not from fedora, may be correct or not
   - qt5-qtbase-devel
   - qt5-qtwebkit-devel
   - qt5-qtscript-devel
@@ -105,4 +107,4 @@ qt5_packages:
 
 ...
 
-# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=4:
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=3:

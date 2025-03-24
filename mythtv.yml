@@ -18,7 +18,8 @@
 
 ---
 
-- hosts: mythtv_hosts
+- name: 'MythTV'
+  hosts: mythtv_hosts
 
   tasks:
 

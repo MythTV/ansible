@@ -9,15 +9,21 @@
 
 offline: false
 
+enable_list:
+  - name[prefix]  # This is an opt-in rule, uncomment to enable
+
 skip_list:
   - fqcn
   - ignore-errors
   - latest[git]
-  - name
+  - name[casing]
+  - name[missing]
+  - name[prefix]
+  - name[template]
   - no-changed-when
 
 # warn_list:
-# - none right now
+
 ...
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=3:

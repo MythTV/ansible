@@ -94,3 +94,28 @@ Alias kprune does all of the above.
 
 The Commad Line Interface and `Dockerfile` details are at
 [docker docs](https://docs.docker.com/reference).
+
+## Installing Docker in another partition
+If too many images are in play, oom errors are likely to fire.
+Relocating Docker to another filesystem prevents that. The
+following examples show the changes made:
+
+`sudo systemctl stop docker.{socket,service}`
+
+`$ Change /etc/fstab:`
+>`UUID=12345678-1234-1234-1234-0123456789ab /srv/docker ext4 defaults,noatime 0 2`
+
+`sudo mount -a`
+
+`sudo mkdir /srv/docker/data`
+
+`$ Add/change /etc/docker/daemon.json to include:`
+>`{`
+
+>`    "data-root": "/srv/docker/data"`
+
+>`}`
+
+`sudo mv /var/lib/docker/* /srv/docker/data`
+
+`sudo systemctl start docker.{socket,service}`

@@ -90,6 +90,8 @@ packages:
   - libdatetime-format-iso8601-perl
   - libfreetype6-dev
   - python3-mysqldb
+
+qt5_packages:
   - libqt5core5a
   - libqt5opengl5-dev
   - libqt5script5
@@ -97,6 +99,10 @@ packages:
   - qt5-qmake
   - libqt5webkit5-dev
   - libqt5sql5-mysql
+
+qt6_packages:
+  - qt6-base-dev
+  - libqt6sql6-mysql
 
 ...
 

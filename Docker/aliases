@@ -19,11 +19,11 @@ function kbuild() {
     IMAGE="Docker/${1}.Dockerfile"
 
     if [ ! -f "${IMAGE}" ]; then
-        echo "Missing kernel:version. check Docker/${1}, aborting"
+        echo "Missing distribution:version. check Docker/${1}, aborting"
         return 1
     fi
     cp --preserve "${IMAGE}" Dockerfile
-    docker build --build-arg MY_USER_AND_GROUP="${USER}",NOBUILD="${2}" --tag "${1}" .
+    docker build --build-arg MY_USER_AND_GROUP="${USER}" --build-arg NOBUILD="${2}" --tag "${1}" .
 }
 
 function kattach () {

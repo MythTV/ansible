@@ -64,9 +64,11 @@ packages:
   - libmariadbclient
   - python-pycurl
   - python-oauthlib
+
+qt5_packages:
   - qt5-base
   - qt5-script
 
 ...
 
-#
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=4:

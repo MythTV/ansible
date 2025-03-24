@@ -22,6 +22,7 @@ function aap () {
 }
 
 # Build and also examine Python Virtual Environment
+# CentOS 8 doesn't have pip, only pip3 even in venv
 function mbuild () {
     deactivate || true
     rm -rf ./build-qt5
@@ -29,10 +30,10 @@ function mbuild () {
     VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5
     echo "Activate venv, expect MythTV to be found:"
     . /usr/local/dist/bin/activate
-    pip show MythTV
+    pip3 show MythTV
     echo "Now DEACTIVATE venv and expect a WARNING that the MythTV package is NOT found:"
     deactivate
-    pip show MythTV
+    pip3 show MythTV
 }
 
 # Read ansible aliases:
@@ -43,13 +44,14 @@ alias avenv=". /usr/local/dist/bin/activate"
 
 # Turn on the Virtual Environment feature:
 alias rvenv="./mythtv.yml --limit=localhost --extra-vars='{\"venv_active\":true}'"
-# Turn on the above AND the new roles layout:
+# Turn on the above AND the new roles layout with qt5 or 6:
 alias svenv="./mythtv.yml --limit=localhost --extra-vars='{\"venv_active\":true}' --extra-vars='{\"use_old_roles\":false}'"
+alias svenv6="./mythtv.yml --limit=localhost --extra-vars='{\"venv_active\":true}' --extra-vars='{\"use_old_roles\":false}' --extra-vars='{\"qt6\":true}'"
 
 # Additional convenience items:
 alias ad='ansible-doc'
-alias anl='ansible-lint --format full mythtv.yml 2>&1 | less'
+alias anl='ansible-lint --format full --profile production mythtv.yml'
 alias ll='ls -l --color=auto --group-directories-first'
 alias lr='ls -lrt --color=auto --group-directories-first'
-alias lsdist='ls -lrt --color=auto --group-directories-first /usr/local/dist'
-alias lsdistm='ls -lrt --color=auto --group-directories-first /usr/local/dist/lib/python*/site-packages/MythTV'
+alias lsvenv='ls -lrt --color=auto --group-directories-first ~/.virtualenvs/mythtv'
+alias lsvenvm='ls -lrt --color=auto --group-directories-first ~/.virtualenvs/mythtv/lib/python*/site-packages/MythTV'

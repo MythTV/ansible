@@ -64,9 +64,10 @@ Builders | builder
 CPP Check and Doxygen | tools
 
 ### Qt6 Support
-For Qt6 support, add ``` -e "qt6=true" ``` to the end of the command line. E.g.
+For Qt6 support, run the playbook like this:
 
-``` ./mythtv.yml --limit=localhost -e "qt6=true" ```
+``` ./mythtv.yml --limit=localhost --extra-vars='{"qt6":true}' ```
+
 
 #### MacOSX Homebrew Users
 ``` brew install ansible ```<br>

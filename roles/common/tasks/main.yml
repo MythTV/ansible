@@ -6,18 +6,18 @@
 ---
 
 - fail:
-    msg: "Aborting {{ ansible_hostname }} because the --limit switch wasn't used"
+    msg: "Aborting play because the --limit switch wasn't used"
   when: ansible_limit is undefined
 
 - fail:
-    msg: "Aborting {{ ansible_hostname }} because the --limit= switch was empty"
+    msg: "Aborting play because the --limit= switch was empty"
   when: not ansible_limit
 
 - fail:
-    msg: "Aborting {{ ansible_hostname }} because the --limit=all switch was used"
+    msg: "Aborting play because the --limit=all switch was used"
   when: ansible_limit == "all"
 
-- name: LSB information used to select which roles/tasks run
+- name: Include the following on all trouble tickets or questions
   debug:
     msg:
       - "inventory_hostname:                 {{ inventory_hostname }}"
@@ -29,10 +29,8 @@
       - "ansible_version.full:               {{ ansible_version.full }}"
   when:
     - ansible_lsb.major_release is defined
-    # ansible_distribution_file_parsed is defined
-    # ansible_distribution_file_parsed
 
-- name: Non LSB information used to select which roles/tasks run
+- name: Include the following on all trouble tickets or questions
   debug:
     msg:
       - "inventory_hostname:                 {{ inventory_hostname }}"

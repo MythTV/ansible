@@ -14,7 +14,7 @@ WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
 
 WORKDIR /root/source/mythtv/mythtv
-RUN if [ $(true) ]; then \
+RUN if [ "${NOBUILD}" -eq 1 ]; then \
         echo "Not doing a build." ;\
     else \
         git checkout fixes/35 \
