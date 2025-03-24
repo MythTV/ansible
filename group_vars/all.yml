@@ -8,9 +8,8 @@ manual_action_text: 'MANUAL ACTION REQUIRED'
 use_old_roles: true
 
 # Python Virtual Environment. Keep 'active' set to false for now.
-venv:
-  active: false
-  path: ~/.virtualenvs/mythtv
+venv_active: false
+venv_path: ~/.virtualenvs/mythtv
 
 ...
 
