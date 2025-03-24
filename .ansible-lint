@@ -9,17 +9,22 @@
 
 offline: false
 
-enable_list:
-  - name[prefix]  # This is an opt-in rule, uncomment to enable
+enable_list:  # These are opt-in rules, uncomment to enable
+  - name[prefix]
+  - empty-string-compare
+  - no-log-password
+  - no-prompting
+  - no-same-owner
 
 skip_list:
   - fqcn
   - ignore-errors
-  - latest[git]
   - name[missing]
   - no-changed-when
 
-# warn_list:
+warn_list:
+  - latest[git]
+  - name[prefix]
 
 ...
 

@@ -30,7 +30,7 @@
     msg: "yay wasn't in your $PATH, assuming it must be installed from AUR."
   when: not yay_is_installed
 
-- name: yay | Download the yay repository
+- name: yay | Download the yay repository  # noqa latest[git]
   become: false
   git:
     repo: '{{ yay_repository }}'

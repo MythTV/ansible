@@ -56,10 +56,10 @@ doesn't work for your distribution:
 
 Distribution|--limit value
 :-----------|:------------
-Fedora 30 | f30
+Fedora 30 | f30 (36 went EOL on 2023/05/16)
 MacOSX (using MacPorts)| macports
 MacOSX (using MacPorts)| homebrew
-FreeBSD | freebsd
+FreeBSD | freebsd (was for python2.7 only)
 Builders | builder
 CPP Check and Doxygen | tools
 
