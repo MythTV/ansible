@@ -32,7 +32,8 @@
     msg: >-
       This role was unable to create a Python Virtual Environment. Either this
       playbook needs updating or manual venv installation is required. Do that
-      with: python3 -m venv --system-site-packages {{ venv_path }}
+      with: python3 -m venv --system-site-packages {{ venv_path }} and resolve
+      errors.
   when: command_result.failed or
        (command_result.rc is defined and command_result.rc > 0)
 

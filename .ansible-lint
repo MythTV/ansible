@@ -16,10 +16,7 @@ skip_list:
   - fqcn
   - ignore-errors
   - latest[git]
-  - name[casing]
   - name[missing]
-  - name[prefix]
-  - name[template]
   - no-changed-when
 
 # warn_list:

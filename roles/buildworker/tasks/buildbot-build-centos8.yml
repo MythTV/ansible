@@ -8,7 +8,7 @@
 - shell:            /bin/test -f {{ bb_rpm_el8 }}  && echo built || echo missing
   register:         build_buildbot
 
-- name: create a list of build requirements
+- name: buildbot-build-centos8 | Create a list of build requirements
   set_fact:
     dnf_pkg_lst:
       - python3-devel
@@ -33,23 +33,23 @@
       - mercurial
       - subversion
 
-- name: final dnf buildbot build depends package list
+- name: buildbot-build-centos8 | Final dnf buildbot build depends package list
   debug:
     msg:
       '{{ lookup("flattened", dnf_pkg_lst) }}'
 
-- name: install dnf buildbot build depends packages
+- name: buildbot-build-centos8 | Install dnf buildbot build depends packages
   dnf:
     name:
       '{{ lookup("flattened", dnf_pkg_lst) }}'
     state: present
   when: buildbot.stdout == "missing" and build_buildbot.stdout == "missing"
 
-- name: build buildbot packages
+- name: buildbot-build-centos8 | Build buildbot packages
   command: rpmbuild --rebuild {{ bb_src_el8 }}
   when:     buildbot.stdout == "missing" and build_buildbot.stdout == "missing"
 
-- name:     install buildbot after local build
+- name: buildbot-build-centos8 | Install buildbot after local build
   command:  yum -y localinstall {{ bb_rpm_el8 }}  # noqa command-instead-of-module
   when:     buildbot.stdout == "missing"
 

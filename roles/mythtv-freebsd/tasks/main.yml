@@ -1,17 +1,17 @@
 ---
 
-- name: check if ports bootstrapped
+- name: Check if ports bootstrapped
   stat:
     path: /usr/ports
   register: ports_dir
 
-- name: bootstrap ports
+- name: Bootstrap ports
   command: /usr/sbin/portsnap extract
   when:
     - not ports_dir.stat.exists
     - ansible_distribution_major_version|int <= 12
 
-- name: create a list of compilers and build essentials
+- name: Create a list of compilers and build essentials
   set_fact:
     pkgng_pkg_lst:
       - git
@@ -28,7 +28,7 @@
       - sqlite3
       - php
 
-- name: add essential libraries
+- name: Add essential libraries
   set_fact:
     pkgng_pkg_lst:
       - '{{ pkgng_pkg_lst }}'
@@ -46,7 +46,7 @@
       # for libXNVCtrl
       - nvidia-settings
 
-- name: add optional libraries
+- name: Add optional libraries
   set_fact:
     pkgng_pkg_lst:
       - '{{ pkgng_pkg_lst }}'
@@ -68,7 +68,7 @@
       - pulseaudio
       - minizip
 
-- name: add python essentials (FreeBSD 12 or earlier)
+- name: Add python essentials (FreeBSD 12 or earlier)
   set_fact:
     pkgng_pkg_lst:
       - '{{ pkgng_pkg_lst }}'
@@ -79,7 +79,7 @@
       - py27-urlgrabber
   when: ansible_distribution_major_version|int <= 12
 
-- name: add python essentials (FreeBSD 13 or later)
+- name: Add python essentials (FreeBSD 13 or later)
   set_fact:
     pkgng_pkg_lst:
       - '{{ pkgng_pkg_lst }}'
@@ -94,7 +94,7 @@
     - ansible_distribution_major_version|int >= 13
     - ansible_distribution_major_version|int < 15
 
-- name: add python essentials (FreeBSD 15 or later)
+- name: Add python essentials (FreeBSD 15 or later)
   set_fact:
     pkgng_pkg_lst:
       - '{{ pkgng_pkg_lst }}'
@@ -107,7 +107,7 @@
       - py311-setuptools
   when: ansible_distribution_major_version|int >= 15
 
-- name: add perl essentials
+- name: Add perl essentials
   set_fact:
     pkgng_pkg_lst:
       - '{{ pkgng_pkg_lst }}'
@@ -127,14 +127,14 @@
       - p5-FindBin-libs
       - p5-IPC-Cmd
 
-- name: add packages moved to main repository (freebsd11+)
+- name: Add packages moved to main repository (freebsd11+)
   set_fact:
     pkgng_pkg_lst:
       - '{{ pkgng_pkg_lst }}'
       - subversion
   when: ansible_distribution_major_version|int >= 11
 
-- name: add packages moved to main repository (freebsd12+)
+- name: Add packages moved to main repository (freebsd12+)
   set_fact:
     pkgng_pkg_lst:
       - '{{ pkgng_pkg_lst }}'
@@ -142,7 +142,7 @@
       - libtool
   when: ansible_distribution_major_version|int >= 12
 
-- name: add packages moved to main repository (freebsd13+)
+- name: Add packages moved to main repository (freebsd13+)
   set_fact:
     pkgng_pkg_lst:
       - '{{ pkgng_pkg_lst }}'
@@ -155,7 +155,7 @@
       - soundtouch
   when: ansible_distribution_major_version|int >= 13
 
-- name: add packages moved to main repository (freebsd13,14)
+- name: Add packages moved to main repository (freebsd13,14)
   set_fact:
     pkgng_pkg_lst:
       - '{{ pkgng_pkg_lst }}'
@@ -164,19 +164,19 @@
     - ansible_distribution_major_version|int >= 13
     - ansible_distribution_major_version|int < 15
 
-- name: packages from ports
+- name: Packages from ports
   set_fact:
     ports_pkg_lst:
       - audio/lame
 
-- name: add packages from ports (freebsd 10 and earlier)
+- name: Add packages from ports (freebsd 10 and earlier)
   set_fact:
     ports_pkg_lst:
       - '{{ ports_pkg_lst }}'
       - devel/subversion
   when: ansible_distribution_major_version|int <= 10
 
-- name: add packages from ports (freebsd 11 and earlier)
+- name: Add packages from ports (freebsd 11 and earlier)
   set_fact:
     ports_pkg_lst:
       - '{{ ports_pkg_lst }}'
@@ -184,7 +184,7 @@
       - libtool
   when: ansible_distribution_major_version|int <= 11
 
-- name: add packages from ports (freebsd 12 and earlier)
+- name: Add packages from ports (freebsd 12 and earlier)
   set_fact:
     ports_pkg_lst:
       - '{{ ports_pkg_lst }}'
@@ -196,24 +196,24 @@
       - security/gnutls
   when: ansible_distribution_major_version|int <= 12
 
-- name: final package list
+- name: Final package list
   debug:
     msg:
       '{{ lookup("flattened", pkgng_pkg_lst) }}'
 
-- name: install packages
+- name: Install packages
   pkgng:
     name:
       '{{ lookup("flattened", pkgng_pkg_lst) }}'
     state:
       present
 
-- name: final package list (from ports)
+- name: Final package list (from ports)
   debug:
     msg:
       '{{ lookup("flattened", ports_pkg_lst) }}'
 
-- name: install packages from ports
+- name: Install packages from ports
   portinstall:
     name:
       '{{ lookup("flattened", ports_pkg_lst) }}'

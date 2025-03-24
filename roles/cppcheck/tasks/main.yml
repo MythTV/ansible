@@ -1,38 +1,38 @@
 ---
 
-- name: package list
+- name: Package list
   set_fact:
     cppcheck_pkg_lst:
       - cppcheck
       - rsync
 
-- name: distro specific packages (Fedora)
+- name: Distro specific packages (Fedora)
   set_fact:
     cppcheck_pkg_lst:
       - '{{ cppcheck_pkg_lst }}'
       - perl-Switch
   when:    ansible_distribution == "Fedora"
 
-- name: distro specific packages (Ubuntu)
+- name: Distro specific packages (Ubuntu)
   set_fact:
     cppcheck_pkg_lst:
       - '{{ cppcheck_pkg_lst }}'
       - libswitch-perl
   when:    ansible_distribution == "Ubuntu"
 
-- name: final package list
+- name: Final package list
   debug:
     msg:
       '{{ lookup("flattened", cppcheck_pkg_lst) }}'
 
-- name: install packages (Fedora)
+- name: Install packages (Fedora)
   dnf:
     name:
       '{{ lookup("flattened", cppcheck_pkg_lst) }}'
     state: present
   when:    ansible_distribution == "Fedora"
 
-- name: install packages (Ubuntu)
+- name: Install packages (Ubuntu)
   apt:
     name:
       '{{ lookup("flattened", cppcheck_pkg_lst) }}'

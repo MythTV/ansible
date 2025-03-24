@@ -11,7 +11,7 @@
 - include_tasks: setup-scl.yml
   when:    ansible_distribution == "CentOS"
 
-- name: create a list of compilers and build essentials
+- name: Create a list of compilers and build essentials
   set_fact:
     yum_pkg_lst:
       - git
@@ -27,7 +27,7 @@
       - nasm
       - ccache
 
-- name: add mythtv essential build libraries
+- name: Add mythtv essential build libraries
   set_fact:
     yum_pkg_lst:
       - '{{ yum_pkg_lst }}'
@@ -46,7 +46,7 @@
       # packages in repo for fedora, and in epel for centos7/rhel7
       - lame-devel
 
-- name: add optional build libraries
+- name: Add optional build libraries
   set_fact:
     yum_pkg_lst:
       - '{{ yum_pkg_lst }}'
@@ -71,20 +71,20 @@
       - libdav1d-devel
       - libzip-devel
 
-- name: add mythtv essential python modules
+- name: Add mythtv essential python modules
   set_fact:
     yum_pkg_lst:
       - '{{ yum_pkg_lst }}'
       - python-lxml
 
-- name: add mythtv essential python modules - Fedora only
+- name: Add mythtv essential python modules - Fedora only
   set_fact:
     yum_pkg_lst:
       - '{{ yum_pkg_lst }}'
       - python-oauth
   when: ansible_distribution == "Fedora"
 
-- name: add mythtv essential python modules - CentOS only
+- name: Add mythtv essential python modules - CentOS only
   set_fact:
     yum_pkg_lst:
       - '{{ yum_pkg_lst }}'
@@ -102,7 +102,7 @@
       - python36-requests
   when: ansible_distribution == "CentOS"
 
-- name: add mythtv essential perl modules
+- name: Add mythtv essential perl modules
   set_fact:
     yum_pkg_lst:
       - '{{ yum_pkg_lst }}'
@@ -121,7 +121,7 @@
       - perl-Image-Size
       - perl-Net-UPnP
 
-- name: add mythtv essential plugin libraries
+- name: Add mythtv essential plugin libraries
   set_fact:
     yum_pkg_lst:
       - '{{ yum_pkg_lst }}'
@@ -133,19 +133,19 @@
       - mysql-devel
       - minizip-devel
 
-- name: add devtoolset-9 for CentOS
+- name: Add devtoolset-9 for CentOS
   set_fact:
     yum_pkg_lst:
       - '{{ yum_pkg_lst }}'
       - devtoolset-9
   when: ansible_distribution == "CentOS"
 
-- name: final package list
+- name: Final package list
   debug:
     msg:
       '{{ lookup("flattened", yum_pkg_lst) }}'
 
-- name: install packages
+- name: Install packages
   package:
     name:
       '{{ lookup("flattened", yum_pkg_lst) }}'

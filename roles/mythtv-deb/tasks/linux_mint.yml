@@ -2,14 +2,14 @@
 
 ---
 
-- name: add compilers and build essentials 2
+- name: linux_mint | Add compilers and build essentials 2
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libtool-bin
       - sqlite3
 
-- name: add mythtv extra build libraries
+- name: linux_mint | Add mythtv extra build libraries
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -25,7 +25,7 @@
       - libx265-dev
       - libsqlite3-dev
 
-- name: add mythtv mysql client libraries
+- name: linux_mint | Add mythtv mysql client libraries
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -34,7 +34,7 @@
       - libmariadb-dev
       - libmariadb-dev-compat
 
-- name: add mythtv essential python modules
+- name: linux_mint | Add mythtv essential python modules
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -50,7 +50,7 @@
       - python3-venv
       - python3-virtualenv
 
-- name: make adjustments for oauth
+- name: linux_mint | Make adjustments for oauth
   when:
     - ansible_distribution_major_version|int >= 22
   block:
@@ -60,7 +60,7 @@
     - set_fact:
         deb_pkg_lst: "{{ deb_pkg_lst | replace('python3-oauth', 'python3-oauthlib') }}"
 
-- name: add mythtv essential plugin libraries
+- name: linux_mint | Add mythtv essential plugin libraries
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'

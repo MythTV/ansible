@@ -2,13 +2,13 @@
 
 ---
 
-- name: create a list of essential system utils
+- name: Create a list of essential system utils
   set_fact:
     pacman_pkg_lst:
       - lsb-release
       - cronie
 
-- name: add compilers and build essentials
+- name: Add compilers and build essentials
   set_fact:
     pacman_pkg_lst:
       - '{{ pacman_pkg_lst }}'
@@ -24,7 +24,7 @@
       - sqlite3
       - php
 
-- name: add mythtv essential build libraries
+- name: Add mythtv essential build libraries
   set_fact:
     pacman_pkg_lst:
       - '{{ pacman_pkg_lst }}'
@@ -43,7 +43,7 @@
       - soundtouch
       # libv4l-devel and libv4l-dev don't seem to exist.
 
-- name: add mythtv optional build libraries
+- name: Add mythtv optional build libraries
   set_fact:
     pacman_pkg_lst:
       - '{{ pacman_pkg_lst }}'
@@ -61,7 +61,7 @@
       - libiec61883
       - lirc
 
-- name: add mythtv essential python modules
+- name: Add mythtv essential python modules
   set_fact:
     pacman_pkg_lst:
       - '{{ pacman_pkg_lst }}'
@@ -73,7 +73,7 @@
       - python-pip
       - python-wheel
 
-- name: add mythtv essential perl modules
+- name: Add mythtv essential perl modules
   set_fact:
     pacman_pkg_lst:
       - '{{ pacman_pkg_lst }}'
@@ -91,7 +91,7 @@
       - perl-findbin
       - perl-ipc-cmd
 
-- name: add mythtv essential plugin libraries
+- name: Add mythtv essential plugin libraries
   set_fact:
     pacman_pkg_lst:
       - '{{ pacman_pkg_lst }}'
@@ -102,24 +102,24 @@
       - python-pycurl
       - python-oauthlib
 
-- name: reject the libxnvctrl package for aarch64 hosts, e.g. RPis
+- name: Reject the libxnvctrl package for aarch64 hosts, e.g. RPis
   ansible.builtin.set_fact:
     pacman_pkg_lst: '{{ pacman_pkg_lst | flatten() | reject("search", "libxnvctrl") }}'
   when: ansible_architecture == 'aarch64'
 
-- name: final package list
+- name: Final package list
   debug:
     msg:
       '{{ lookup("flattened", pacman_pkg_lst) }}'
 
-- name: install packages
+- name: Install packages
   pacman:
     name:
       '{{ lookup("flattened", pacman_pkg_lst) }}'
     state:
       present
 
-- name: attempt to add AUR packages
+- name: Attempt to add AUR packages
   ansible.builtin.include_tasks:
     file: yay.yml
 

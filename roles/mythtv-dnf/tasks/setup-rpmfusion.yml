@@ -8,7 +8,7 @@
 - shell:            /usr/bin/grep -qi Rawhide /etc/fedora-release && echo rawhide || echo release
   register:         rawhide
 
-- name: setup RPMFusion repository (Fedora rawhide)
+- name: setup-rpmfusion | Setup RPMFusion repository (Fedora rawhide)
   command:
     cmd: dnf install -y --nogpgcheck {{ rpmfusion_rawhide_rpm }}
   when:
@@ -16,7 +16,7 @@
     - rpmfusion.stdout == "missing"
     - rawhide.stdout == "rawhide"
 
-- name: setup RPMFusion repository (Fedora release versions)
+- name: setup-rpmfusion | Setup RPMFusion repository (Fedora release versions)
   command:
     cmd: dnf install -y --nogpgcheck {{ rpmfusion_rpm }}
   when:
@@ -24,7 +24,7 @@
     - rpmfusion.stdout == "missing"
     - rawhide.stdout == "release"
 
-- name: setup RPMFusion repository (CentOS release versions)
+- name: setup-rpmfusion | Setup RPMFusion repository (CentOS release versions)
   command:
     cmd: dnf install -y --nogpgcheck {{ rpmfusion_el_rpm }}
   when:

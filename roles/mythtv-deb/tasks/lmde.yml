@@ -2,14 +2,14 @@
 
 ---
 
-- name: add compilers and build essentials 2
+- name: lmde | Add compilers and build essentials 2
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libtool-bin
       - sqlite3
 
-- name: add mythtv extra build libraries
+- name: lmde | Add mythtv extra build libraries
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -25,7 +25,7 @@
       - libx265-dev
       - libsqlite3-dev
 
-- name: add mythtv mysql client libraries
+- name: lmde | Add mythtv mysql client libraries
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -34,7 +34,7 @@
       - libmariadb-dev
       - libmariadb-dev-compat
 
-- name: add mythtv essential python modules
+- name: lmde | Add mythtv essential python modules
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -50,7 +50,7 @@
       - python3-venv
       - python3-virtualenv
 
-- name: add mythtv essential plugin libraries
+- name: lmde | Add mythtv essential plugin libraries
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'

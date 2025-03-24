@@ -1,6 +1,6 @@
 ---
 
-- name: install essential libraries
+- name: qt6-pkgng | Install essential libraries
   pkgng:
     name:
       - qt6

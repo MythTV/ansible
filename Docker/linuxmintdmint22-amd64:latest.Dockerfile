@@ -19,3 +19,14 @@ RUN if [ "${NOBUILD}" -eq 1 ]; then \
         && cmake --preset qt5 \
         && VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5 ;\
     fi
+
+# TASK [common : Include the following on all trouble tickets or questions] ******
+# ok: [localhost] => {
+#     "msg": [
+#         "inventory_hostname:                 localhost",
+#         "ansible_distribution:               Ubuntu", <-------------
+#         "ansible_distribution_release:       noble",  <-------------
+#         "ansible_distribution_major_version: 24",     <-------------
+#         "ansible_lsb.major_release:          24",     <-------------
+#         "ansible_pkg_mgr:                    apt",
+#         "ansible_version.full:               2.16.3"

@@ -44,7 +44,7 @@
   meta: end_play
   when: not stat_results.stat.exists
 
-- name: 'Pull in the package list for "{{ g_pkgmgr }}/{{ g_distro }}/{{ g_versno }}"'
+- name: 'Pull in the package list for "{{ g_pkgmgr }}/{{ g_distro }}/{{ g_versno }}"'  # noqa name[template]
   include_vars:
     dir: '{{ g_pkgmgr }}/{{ g_distro }}'
     files_matching: '{{ g_versno }}.yml'

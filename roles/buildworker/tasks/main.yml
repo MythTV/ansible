@@ -2,7 +2,7 @@
 
 ---
 
-- name: install python twisted - Fedora
+- name: Install python twisted - Fedora
   package:
     name:
       - python-twisted
@@ -10,7 +10,7 @@
       present
   when: ansible_distribution == "Fedora"
 
-- name: install python twisted - CentOS
+- name: Install python twisted - CentOS
   package:
     name:
       - python-twisted-core
@@ -20,7 +20,7 @@
       present
   when: ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 7
 
-- name: ensure cron installed - Fedora
+- name: Ensure cron installed - Fedora
   package:
     name:
       - cronie
@@ -29,7 +29,7 @@
   when: ansible_distribution == "Fedora"
 
 # no buildbot in centos7 or epel7...
-- name: install buildworker (rpm)
+- name: Install buildworker (rpm)
   package:
     name:
       - buildbot-worker
@@ -43,7 +43,7 @@
 - include_tasks: buildbot-build-centos8.yml
   when: ansible_distribution == "CentOS" and ansible_distribution_major_version|int == 8
 
-- name: install buildworker (deb)
+- name: Install buildworker (deb)
   apt:
     name:
       - buildbot-worker
@@ -51,7 +51,7 @@
       present
   when: ansible_pkg_mgr == "apt"
 
-- name: install buildworker (pacman)
+- name: Install buildworker (pacman)
   pacman:
     name:
       - buildbot-worker
@@ -59,7 +59,7 @@
       present
   when: ansible_pkg_mgr == "pacman"
 
-- name: install buildslave from ports
+- name: Install buildslave from ports
   portinstall:
     name:
       - devel/buildbot-slave
@@ -67,7 +67,7 @@
       present
   when: ansible_distribution == "FreeBSD" and ansible_distribution_major_version|int <= 9
 
-- name: install buildbot-worker
+- name: Install buildbot-worker
   pkgng:
     name:
       - py27-buildbot-worker
@@ -78,7 +78,7 @@
     - ansible_distribution_major_version|int >= 10
     - ansible_distribution_major_version|int <= 12
 
-- name: install buildbot-worker
+- name: Install buildbot-worker
   pkgng:
     name:
       - py37-buildbot-worker
@@ -88,7 +88,7 @@
     - ansible_distribution == "FreeBSD"
     - ansible_distribution_major_version|int >= 13
 
-- name: buildbot worker support libraries
+- name: Buildbot worker support libraries
   pkgng:
     name:
       - py27-service_identity
@@ -98,7 +98,7 @@
     - ansible_distribution == "FreeBSD"
     - ansible_distribution_major_version|int <= 12
 
-- name: buildbot worker support libraries
+- name: Buildbot worker support libraries
   pkgng:
     name:
       - py37-service_identity
@@ -108,22 +108,22 @@
     - ansible_distribution == "FreeBSD"
     - ansible_distribution_major_version|int >= 13
 
-- name: create buildworker user
+- name: Create buildworker user
   user:
     name: buildworker
     state: present
     generate_ssh_key: yes
 
-- name: setup ccache max cache size
+- name: Setup ccache max cache size
   command: su - buildworker -c 'ccache -M 10G'
 
-- name: create buildworker ~/bin
+- name: Create buildworker ~/bin
   command: su - buildworker -c 'test -d ~/bin || mkdir ~/bin'
 
-- name: create buildworker ~/bin
+- name: Create buildworker ~/bin
   command: su - buildworker -c 'test -d ~/mythtv || mkdir ~/mythtv'
 
-- name: install worker startup script
+- name: Install worker startup script
   copy:
     src: '{{ ansible_distribution }}-start-buildworker.sh'
     dest: ~buildworker/bin/start-buildworker.sh

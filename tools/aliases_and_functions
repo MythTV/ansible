@@ -50,7 +50,7 @@ alias svenv6="./mythtv.yml --limit=localhost --extra-vars='{\"venv_active\":true
 
 # Additional convenience items:
 alias ad='ansible-doc'
-alias anl='ansible-lint --format full --profile production mythtv.yml'
+alias anl='ansible-lint --format full mythtv.yml'
 alias ll='ls -l --color=auto --group-directories-first'
 alias lr='ls -lrt --color=auto --group-directories-first'
 alias lsvenv='ls -lrt --color=auto --group-directories-first ~/.virtualenvs/mythtv'

@@ -1,6 +1,6 @@
 ---
 
-- name: create a list of qt5 libraries
+- name: qt5-suse | Create a list of qt5 libraries
   set_fact:
     zypper_pkg_lst:
       - libqt5-qtbase-devel
@@ -8,7 +8,7 @@
   tags:
     - qt5
 
-- name: create a list of qt5 WebKit libraries
+- name: qt5-suse | Create a list of qt5 WebKit libraries
   set_fact:
     zypper_pkg_lst:
       - '{{ zypper_pkg_lst }}'
@@ -21,7 +21,7 @@
 # This looks like overkill, but the intent is to provide future maintainers
 # with a template to add more (especially conditional) packages.
 
-- name: add qt5 runtime dependencies
+- name: qt5-suse | Add qt5 runtime dependencies
   set_fact:
     zypper_pkg_lst:
       - '{{ zypper_pkg_lst }}'
@@ -29,14 +29,14 @@
   tags:
     - qt5
 
-- name: final zypper qt5 package list
+- name: qt5-suse | Final zypper qt5 package list
   debug:
     msg:
       '{{ lookup("flattened", zypper_pkg_lst) }}'
   tags:
     - qt5
 
-- name: install zypper qt5 packages
+- name: qt5-suse | Install zypper qt5 packages
   zypper:
     name:
       '{{ lookup("flattened", zypper_pkg_lst) }}'

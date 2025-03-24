@@ -5,6 +5,6 @@
 - shell:            /bin/rpm -q --quiet epel-release-7 && echo installed || echo missing  # noqa command-instead-of-module
   register:         epel
 
-- name: setup EPEL repository
+- name: setup-epel | Setup EPEL repository
   command: yum localinstall -y --nogpgcheck {{ epel_rpm }}  # noqa command-instead-of-module
   when: epel.stdout == "missing"

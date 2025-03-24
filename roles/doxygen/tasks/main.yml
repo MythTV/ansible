@@ -1,25 +1,25 @@
 ---
 
-- name: package list
+- name: Package list
   set_fact:
     doxygen_pkg_lst:
       - doxygen
       - graphviz
       - rsync
 
-- name: final package list
+- name: Final package list
   debug:
     msg:
       '{{ lookup("flattened", doxygen_pkg_lst) }}'
 
-- name: install packages (Fedora)
+- name: Install packages (Fedora)
   dnf:
     name:
       '{{ lookup("flattened", doxygen_pkg_lst) }}'
     state: present
   when:    ansible_distribution == "Fedora"
 
-- name: install packages (Ubuntu)
+- name: Install packages (Ubuntu)
   apt:
     name:
       '{{ lookup("flattened", doxygen_pkg_lst) }}'

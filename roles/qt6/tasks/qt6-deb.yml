@@ -2,7 +2,7 @@
 
 ---
 
-- name: create a list of deb qt6 packages
+- name: qt6-deb | Create a list of deb qt6 packages
   set_fact:
     deb_pkg_lst:
       - qt6-base-dev
@@ -11,18 +11,18 @@
 # This looks like overkill, but the intent is to provide future maintainers
 # with a template to add more (especially conditional) packages.
 
-- name: add the qt6 mythtv essential runtime libraries
+- name: qt6-deb | Add the qt6 mythtv essential runtime libraries
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libqt6sql6-mysql
 
-- name: final deb qt6 package list
+- name: qt6-deb | Final deb qt6 package list
   debug:
     msg:
       '{{ lookup("flattened", deb_pkg_lst) }}'
 
-- name: install deb qt6 packages
+- name: qt6-deb | Install deb qt6 packages
   apt:
     name:
       '{{ lookup("flattened", deb_pkg_lst) }}'

@@ -1,18 +1,18 @@
 ---
 
-- name: create list of qt5 libraries
+- name: qt5-homebrew | Create list of qt5 libraries
   set_fact:
     homebrew_pkg_list:
       - qt@5
   tags:
     - qt5
 
-- name: print final qt5 list of ports
+- name: qt5-homebrew | Print final qt5 list of ports
   debug:
     msg:
       '{{ lookup("flattened", homebrew_pkg_list) }}'
 
-- name: install port qt5 packages
+- name: qt5-homebrew | Install port qt5 packages
   become: false
   homebrew:
     name:

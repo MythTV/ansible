@@ -5,26 +5,26 @@
   command: brew --prefix
   register: hb_out
 
-- name: set pkgmgr_prefix fact
+- name: Set pkgmgr_prefix fact
   set_fact:
     pkgmgr_prefix: '{{ hb_out.stdout }}'
 
-- name: specify a mariadb/mysql version to install
+- name: Specify a mariadb/mysql version to install
   set_fact:
     database_version: mariadb
   when: database_version is undefined
 
-- name: check if this is a mariadb based install
+- name: Check if this is a mariadb based install
   set_fact:
     database_name: mariadb
   when: database_version is search("mariadb")
 
-- name: check if this is a mysql based install
+- name: Check if this is a mysql based install
   set_fact:
     database_name: mysql
   when: database_version is search("mysql")
 
-- name: create a list of compilers and build essentials
+- name: Create a list of compilers and build essentials
   set_fact:
     homebrew_pkg_list:
       - ccache
@@ -40,7 +40,7 @@
 
 # note that on homebrew, mysql-client
 # is required to get the python mysqlclient working
-- name: add essential libraries
+- name: Add essential libraries
   set_fact:
     homebrew_pkg_list:
       - '{{ homebrew_pkg_list }}'
@@ -59,7 +59,7 @@
       - '{{ database_version }}'
       - 'mysql-client'
 
-- name: add optional libraries
+- name: Add optional libraries
   set_fact:
     homebrew_pkg_list:
       - '{{ homebrew_pkg_list }}'
@@ -90,14 +90,14 @@
       - libdiscid
       - expat
 
-- name: develop a Python package version suffix
+- name: Develop a Python package version suffix
   set_fact:
     python_package_suffix:
       '{{ ansible_python.version.major }}{{ ansible_python.version.minor }}'
     python_exe_suffix:
       '{{ ansible_python.version.major }}.{{ ansible_python.version.minor }}'
 
-- name: add python essentials
+- name: Add python essentials
   set_fact:
     homebrew_pkg_list:
       - '{{ homebrew_pkg_list }}'
@@ -106,7 +106,7 @@
       - virtualenv
       - pyenv-virtualenv
 
-- name: add perl essentials
+- name: Add perl essentials
   set_fact:
     homebrew_pkg_list:
       - '{{ homebrew_pkg_list }}'
@@ -116,7 +116,7 @@
       - libdbi
       - libiodbc
 
-- name: utility packages from homebrew
+- name: Utility packages from homebrew
   set_fact:
     homebrew_pkg_list:
       - '{{ homebrew_pkg_list }}'
@@ -131,12 +131,12 @@
       - 'font-dejavu'
       - 'font-liberation'
 
-- name: print final list of packages
+- name: Print final list of packages
   debug:
     msg:
       '{{ lookup("flattened", homebrew_pkg_list) }}'
 
-- name: install packages
+- name: Install packages
   become: false
   homebrew:
     name:
@@ -149,7 +149,7 @@
     {{ pkgmgr_prefix }}/bin/pkg-config --libs mysqlclient
   register: libs_out
 
-- name: set mysqlclient_ldflags fact
+- name: Set mysqlclient_ldflags fact
   set_fact:
     mysqlclient_ldflags: '{{ libs_out.stdout }}'
 
@@ -159,11 +159,11 @@
     {{ pkgmgr_prefix }}/bin/pkg-config --cflags mysqlclient
   register: cflag_out
 
-- name: set mysqlclient_cflags fact
+- name: Set mysqlclient_cflags fact
   set_fact:
     mysqlclient_cflags: '{{ cflag_out.stdout }}'
 
-- name: create a list of perl modules
+- name: Create a list of perl modules
   set_fact:
     cpanm_pkg_list:
       - Date::Manip
@@ -182,12 +182,12 @@
       - FindBin
       - IPC::Cmd
 
-- name: print final list of cpanm packages
+- name: Print final list of cpanm packages
   debug:
     msg:
       '{{ lookup("flattened", cpanm_pkg_list) }}'
 
-- name: cpanm - install perl modules
+- name: Cpanm - install perl modules
   become: false
   command: cpanm
     --mirror 'http://cpan.cpantesters.org/'

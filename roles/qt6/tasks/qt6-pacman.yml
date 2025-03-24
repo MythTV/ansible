@@ -1,6 +1,6 @@
 ---
 
-- name: install qt6 libraries
+- name: qt6-pacman | Install qt6 libraries
   pacman:
     name:
       - qt6-base

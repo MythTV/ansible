@@ -2,7 +2,7 @@
 
 ---
 
-- name: setup SCL repositories for CentOS
+- name: setup-scl | Setup SCL repositories for CentOS
   package:
     name:
       'centos-release-scl,centos-release-scl-rh'

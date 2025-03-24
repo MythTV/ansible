@@ -1,6 +1,6 @@
 ---
 
-- name: install qt5 libraries
+- name: qt5-pacman | Install qt5 libraries
   pacman:
     name:
       - qt5-base

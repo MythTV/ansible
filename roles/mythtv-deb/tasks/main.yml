@@ -2,7 +2,7 @@
 
 ---
 
-- name: create list of packages known to all Debian distributions
+- name: Create list of packages known to all Debian distributions
   set_fact:
     deb_pkg_lst:
       # create a list of deb compilers and build essentials
@@ -85,16 +85,16 @@
       - libcdio-dev
       - libcdio-paranoia-dev
 
-- name: add unique packages based on distributions
+- name: Add unique packages based on distributions
   include_tasks:
     file: "{{ ansible_distribution | replace(' ', '_') | lower }}.yml"
 
-- name: final package list
+- name: Final package list
   debug:
     msg:
       '{{ lookup("flattened", deb_pkg_lst) }}'
 
-- name: install packages
+- name: Install packages
   apt:
     name:
       '{{ lookup("flattened", deb_pkg_lst) }}'
