@@ -1,0 +1,7 @@
+Debian testing releases have no version number. But their codename is
+available. For example as of this writing, Trixie is a testing version
+and will become v13.
+
+Create a numeric <version>.yml file for the next release and a symbolic
+link from the codename to it. The single role will detect the missing
+version number and replace it with the (lower case) codename.

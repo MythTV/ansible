@@ -1,15 +1,16 @@
 # To lint the entire playbook, run with:
 #
-#       ansible-lint --format=full mythtv.yml 2>&1 | less
+#   ansible-lint --format=full mythtv.yml
 #
-# Documentation: https://ansible-lint.readthedocs.io/en/latest/default_rules
+# Documentation: right clicking on a rule in the output will open
+# a web page for that rule.
 #
 
 ---
 
 offline: false
 
-enable_list:  # These are opt-in rules, uncomment to enable
+enable_list:  # These are opt-in rules
   - name[prefix]
   - empty-string-compare
   - no-log-password
@@ -28,4 +29,4 @@ warn_list:
 
 ...
 
-# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=3:
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=0:

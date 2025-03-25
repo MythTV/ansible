@@ -14,10 +14,10 @@
   when: not ansible_limit
 
 - fail:
-    msg: "Aborting play because the --limit=all switch was used"
+    msg: "Aborting play because --limit=all was used"
   when: ansible_limit == "all"
 
-- name: Please include the following with any questions
+- name: "{{ instruction_text }}:"
   debug:
     msg:
       - "inventory_hostname:                 {{ inventory_hostname }}"
@@ -30,7 +30,7 @@
   when:
     - ansible_lsb.major_release is defined
 
-- name: Please include the following with any questions
+- name: "{{ instruction_text }}:"
   debug:
     msg:
       - "inventory_hostname:                 {{ inventory_hostname }}"
@@ -43,4 +43,4 @@
 
 ...
 
-# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2,80:

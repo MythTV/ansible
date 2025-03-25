@@ -27,9 +27,9 @@ function mbuild () {
     deactivate || true
     rm -rf ./build-qt5
     cmake --preset qt5
-    VIRTUAL_ENV=/usr/local/dist cmake --build build-qt5
+    VIRTUAL_ENV=~/.virtualenvs/mythtv cmake --build build-qt5
     echo "Activate venv, expect MythTV to be found:"
-    . /usr/local/dist/bin/activate
+    . $VIRTUAL_ENV/bin/activate
     pip3 show MythTV
     echo "Now DEACTIVATE venv and expect a WARNING that the MythTV package is NOT found:"
     deactivate
@@ -40,7 +40,7 @@ function mbuild () {
 alias raa=". /etc/ansible/mythtv-ansible/Docker/aliases"
 
 # Activate the Python Virtual Environment
-alias avenv=". /usr/local/dist/bin/activate"
+alias avenv=". ~/.virtualenvs/mythtv/bin/activate"
 
 # Turn on the Virtual Environment feature:
 alias rvenv="./mythtv.yml --limit=localhost --extra-vars='{\"venv_active\":true}'"

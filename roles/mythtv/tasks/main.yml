@@ -1,54 +1,53 @@
 # roles/mythtv/tasks/main.yml
 
 # WIP: a single set of tasks for ALL package managers/distributions/versions.
-# Develop the proper list of package names for the above and then install
-# them. The goal here is to clean up years of kruft by keeping unique lists
-# of packages. No more 'where ansible_distribution_major_version' checks etc.
+# Develop a list of package names for the above and then install them.
 
 ---
 
 - name: Set Single Role package manager, distibution and version facts
   set_fact:
-    g_pkgmgr: '{{ ansible_pkg_mgr }}'
-    g_distro: '{{ ansible_distribution | regex_replace("[/ ]", "_") | lower }}'
-    g_versno: '{{ ansible_distribution_major_version }}'
+    sr_pkgmgr: '{{ ansible_pkg_mgr }}'
+    sr_distro: '{{ ansible_distribution | regex_replace("[/ ]", "_") | lower }}'
+    sr_versno: '{{ ansible_distribution_major_version }}'
 
 - name: Set version to rolling for Archlinux
   set_fact:
-    g_versno: 'rolling'
+    sr_versno: 'rolling'
   when: ansible_distribution == 'Archlinux'
 
-- name: Adjust for Debian testing versions. Update for new releases.
+- name: If a Debian version is not numeric, use its codename as a version
   set_fact:
-    g_versno: '{{ g_distro | lower }}'
-  when: ansible_distribution == 'trixie'
+    sr_versno: '{{ ansible_distribution_release | lower }}'
+  when:
+    - ansible_distribution == 'Debian'
+    - ansible_distribution_major_version | type_debug != "int"
 
 - name: See if a list of packages has been created
   stat:
-    path: '{{ playbook_dir }}/roles/mythtv/vars/{{ g_pkgmgr }}/{{ g_distro }}/{{ g_versno }}.yml'
+    path: '{{ playbook_dir }}/roles/mythtv/vars/{{ sr_pkgmgr }}/{{ sr_distro }}/{{ sr_versno }}.yml'
   register: stat_results
 
-# If the instructions in roles/common/tasks/main.yml change, then fix them here.
 - name: 'The list of packages is missing. {{ manual_action_text }}'
   debug:
     msg: >-
-      No {{ g_pkgmgr }}/{{ g_distro }}/{{ g_versno }}.yml file. One can
+      No {{ sr_pkgmgr }}/{{ sr_distro }}/{{ sr_versno }}.yml file. One can
       be copied and adjusted for a new release. Files are stored under:
       {{ playbook_dir }}/roles/mythtv/vars.
       Openining an issue at: https://github.com/MythTV/ansible/issues is the
       best way to have new package lists added to the project. Be sure to add
-      the output of the: 'Please include the following with any questions'
-      section from this play.  Aborting!
+      the output of the: {{ instruction_text }} section from this play.
+      Aborting!
   when: not stat_results.stat.exists or use_old_rules_failure_test
 
 - name: Abort because of the above
   meta: end_play
   when: not stat_results.stat.exists
 
-- name: 'Pull in the package list for "{{ g_pkgmgr }}/{{ g_distro }}/{{ g_versno }}"'  # noqa name[template]
+- name: 'Pull in the package list for "{{ sr_pkgmgr }}/{{ sr_distro }}/{{ sr_versno }}"'  # noqa name[template]
   include_vars:
-    dir: '{{ g_pkgmgr }}/{{ g_distro }}'
-    files_matching: '{{ g_versno }}.yml'
+    dir: '{{ sr_pkgmgr }}/{{ sr_distro }}'
+    files_matching: '{{ sr_versno }}.yml'
 
 - name: Add qt5 packages
   set_fact:

@@ -12,8 +12,11 @@
 # <host> = one of the names under 'hosts:' in the hosts.yml file. See
 # README.md for help.
 #
-#     Adding: --extra-vars='{"use_old_roles":false}' turns on the new single role
-#     Adding: --extra-vars='{"venv_active":true}' builds a Python venv
+#     Adding: --extra-vars='{"use_old_roles": false}' turns on the new single role
+#     Adding: --extra-vars='{"venv_active": true}' builds a Python venv
+#     The default path is: ~/.virtualenvs/mythtv and it is stored in venv_path
+#     It can be changed with: --extra-vars='{"venv_path": 'your path choice here'}'
+#     as long as your user has write permission to whatever path is selected.
 #
 
 ---

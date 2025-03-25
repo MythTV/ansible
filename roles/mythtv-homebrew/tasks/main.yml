@@ -187,7 +187,7 @@
     msg:
       '{{ lookup("flattened", cpanm_pkg_list) }}'
 
-- name: Cpanm - install perl modules  # noqa ignore-errors
+- name: CPANM - install perl modules  # noqa ignore-errors
   become: false
   command: cpanm
     --mirror 'http://cpan.cpantesters.org/'
