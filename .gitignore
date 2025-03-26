@@ -5,6 +5,7 @@
 Dockerfile
 # vim etc.
 *.swp
+*~
 # for any leftovers...
 qt5.retry
 # If retry_files_enabled=False gets changed in ansible.cfg
