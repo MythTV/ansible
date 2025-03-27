@@ -2,13 +2,13 @@
 
 ---
 
-- name: add compilers and build essentials 2
+- name: pureos | Add compilers and build essentials 2
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
       - libtool-bin
 
-- name: add mythtv extra build libraries
+- name: pureos | Add mythtv extra build libraries
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -23,7 +23,7 @@
       - libbluray-dev
       - libx265-dev
 
-- name: add mythtv mysql client libraries
+- name: pureos | Add mythtv mysql client libraries
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -32,7 +32,7 @@
       - libmariadb-dev
       - libmariadb-dev-compat
 
-- name: add mythtv essential python modules
+- name: pureos | Add mythtv essential python modules
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
@@ -47,7 +47,7 @@
       - python3-simplejson
       - python3-setuptools
 
-- name: add mythtv essential plugin libraries
+- name: pureos | Add mythtv essential plugin libraries
   set_fact:
     deb_pkg_lst:
       - '{{ deb_pkg_lst }}'
