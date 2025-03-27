@@ -6,7 +6,6 @@
 ---
 
 - name: python-venv | Create Python Virtual Environment
-  become: false
   command:
     argv:
       - '{{ discovered_interpreter_python }}'
@@ -14,28 +13,30 @@
       - venv
       - --system-site-packages
       # --without-pip
-      - '{{ venv_path }}'
+      - '{{ venv_path | expanduser }}'
   register: command_result
   ignore_errors: true
 
 - name: 'python-venv | Successfully created a venv, {{ manual_action_text }}'
   debug:
     msg: >-
-      A Python Virtual Environment was created.
-      Before building MythTV, do: export VIRTUAL_ENV={{ venv_path }} first.
-      Then run cmake or make as usual. Remember to change the shebang of
-      any personal Python programs that import the MythTV module to:
-      #!{{ venv_path }}/bin/python
+      A Python Virtual Environment was created.  Before building MythTV,
+      do: export VIRTUAL_ENV={{ venv_path | expanduser }} first. Then
+      run cmake or make as usual. Remember to change the shebang of any
+      personal Python programs that import the MythTV module to:
+      #!{{ venv_path | expanduser }}/bin/python
+  when: not command_result.failed or
+        (command_result.rc is defined and command_result.rc == 0)
 
 - name: 'python-venv | Error creating a venv, {{ manual_action_text }}'
   debug:
     msg: >-
       This role was unable to create a Python Virtual Environment. Either this
       playbook needs updating or manual venv installation is required. Do that
-      with: python3 -m venv --system-site-packages {{ venv_path }} and resolve
-      errors.
+      with: python3 -m venv --system-site-packages {{ venv_path | expanduser }}
+      and resolve errors.
   when: command_result.failed or
-       (command_result.rc is defined and command_result.rc > 0)
+        (command_result.rc is defined and command_result.rc > 0)
 
 ...
 

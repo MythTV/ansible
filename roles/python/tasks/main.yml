@@ -7,6 +7,7 @@
 - include_tasks:
     file: python-venv.yml
     apply:
+      become: false
       tags: venv
   when:
     - venv_active
