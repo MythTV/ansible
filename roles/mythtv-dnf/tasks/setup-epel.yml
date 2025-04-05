@@ -2,10 +2,15 @@
 
 ---
 
-- shell:            /bin/rpm -q --quiet epel-release && echo installed || echo missing  # noqa command-instead-of-module
-  register:         epel
+# - shell:            /bin/rpm -q --quiet epel-release && echo installed || echo missing  # noqa command-instead-of-module
+#   register:         epel
 
-- name: setup-epel | Setup EPEL repository
-  command:
-    cmd: dnf install -y --nogpgcheck {{ epel_rpm }}
-  when: epel.stdout == "missing"
+# - name: setup-epel | Setup EPEL repository
+#   command:
+#     cmd: dnf install -y --nogpgcheck {{ epel_rpm }}
+#   when: epel.stdout == "missing"
+
+- name: setup-epel | Setup EPEL repository  # TODO, clean up if working
+  dnf:
+    disable_gpg_check: true
+    name: '{{ epel_rpm }}'

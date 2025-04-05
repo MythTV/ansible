@@ -23,9 +23,16 @@
     - rpmfusion.stdout == "missing"
     - rawhide.stdout == "release"
 
-- name: setup-rpmfusion | Setup RPMFusion repository (CentOS release versions)
-  command:
-    cmd: dnf install -y --nogpgcheck {{ rpmfusion_el_rpm }}
+# - name: setup-rpmfusion | Setup RPMFusion repository (CentOS release versions)
+#   command:
+#     cmd: dnf install -y --nogpgcheck {{ rpmfusion_el_rpm }}
+#   when:
+#     - ansible_distribution == "CentOS" or ansible_distribution == "Rocky"
+#     - rpmfusion.stdout == "missing"
+
+- name: setup-rpmfusion | Setup RPMFusion repository (CentOS release versions)  # TODO, clean up if working
+  dnf:
+    disable_gpg_check: true
+    name: '{{ rpmfusion_el_rpm }}'
   when:
     - ansible_distribution == "CentOS" or ansible_distribution == "Rocky"
-    - rpmfusion.stdout == "missing"
