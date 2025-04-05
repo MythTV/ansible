@@ -1,0 +1,48 @@
+---
+
+- name: zypper_opensuse_tumbleweed | Set Suse repository
+  set_fact:
+    suse_repo:
+      "http://download.opensuse.org/repositories/devel:/languages:/perl"
+
+# Current (8/2022) directory formats:
+# 15.4/
+# openSUSE_Leap_15.3/
+# openSUSE_Tumbleweed/
+
+- name: zypper_opensuse_tumbleweed | Determine devel:languages:perl repository url (Leap)
+  set_fact:
+    perl_repo:
+      "{{ suse_repo }}/{{ ansible_distribution | regex_replace('\\ ', '_') }}_{{ ansible_distribution_version }}/"
+  when:
+    - ansible_distribution == "openSUSE Leap"
+    - ansible_distribution_release|int < 4,
+
+- name: zypper_opensuse_tumbleweed | Determine devel:languages:perl repository url (Leap)
+  set_fact:
+    perl_repo:
+      "{{ suse_repo }}/{{ ansible_distribution_version }}"
+  when:
+    - ansible_distribution == "openSUSE Leap"
+    - ansible_distribution_release|int > 3,
+
+- name: zypper_opensuse_tumbleweed | Determine devel:languages:perl repository url (Tumbleweed)
+  set_fact:
+    perl_repo:
+      "{{ suse_repo }}/{{ ansible_distribution | regex_replace('\\ ', '_') }}/"
+  when: ansible_distribution == "openSUSE Tumbleweed"
+
+- name: zypper_opensuse_tumbleweed | Print perl_repo
+  debug:
+    var: perl_repo
+
+- name: zypper_opensuse_tumbleweed | Enable devel:languages:perl repository
+  zypper_repository:
+    name: devel_languages_perl
+    repo: '{{ perl_repo }}'
+    state: present
+    auto_import_keys: yes
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

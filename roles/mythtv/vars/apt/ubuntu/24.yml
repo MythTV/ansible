@@ -103,6 +103,7 @@ qt5_packages:
 qt6_packages:
   - qt6-base-dev
   - libqt6sql6-mysql
+  - qt6-webengine-dev
 
 ...
 

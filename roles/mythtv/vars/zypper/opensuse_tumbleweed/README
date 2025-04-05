@@ -1,0 +1,8 @@
+openSUSE Tumbleweed uses rolling release versions. Ansible setup returns:
+
+    ansible_distribution": "openSUSE Tumbleweed"
+    ansible_distribution_major_version: 20250403
+    ansible_distribution_release: ""
+    ansible_distribution_version: 20250403
+
+The only version file here will be rolling.yml

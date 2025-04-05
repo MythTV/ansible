@@ -1,4 +1,4 @@
-# File: roles/mythtv/vars/dnf/fedora/40.yml
+# File: roles/mythtv/vars/dnf/rocky/9.yml
 
 ---
 
@@ -57,7 +57,6 @@ packages:
   - gnutls-devel
   - libdav1d-devel
   - libcec-devel
-  - libcrystalhd-devel
   - libavc1394-devel
   - libbluray-devel
   - libbluray-bdj
@@ -68,9 +67,7 @@ packages:
   - python3-simplejson
   - python3-setuptools
   - python3-devel
-  - python3-mysql
-  - python3-wheel
-  - python3-pip
+  - python3-mysqlclient
   - perl-ExtUtils-MakeMaker
   - perl-DBI
   - perl-DBD-MySQL
@@ -95,16 +92,14 @@ packages:
   - libcdio-paranoia-devel
   - mysql-devel
   - minizip-devel
-  - python3-oauth
   - python3-pycurl
   - python3-oauthlib
 
-qt5_packages:  # these are fillers, from fedora 39, may be correct or not
+qt5_packages:
   - qt5-qtbase-devel
   - qt5-qtwebkit-devel
   - qt5-qtscript-devel
   - qt5-qtbase-mysql
-
 ...
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=3:

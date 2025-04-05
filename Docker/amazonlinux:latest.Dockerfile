@@ -10,7 +10,7 @@ RUN dnf distro-sync --assumeyes \
 
 WORKDIR /root/source/ansible
 COPY . ./
-RUN ./mythtv.yml --limit=localhost --extra-vars='{"venv_active":true}'
+RUN ./mythtv.yml --limit=localhost --extra-vars='{"venv_active": true}'
 
 # Never build here, at least for now.
 RUN if [ "${NOBUILD}" -eq 1 ]; then \

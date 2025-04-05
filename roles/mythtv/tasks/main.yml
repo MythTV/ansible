@@ -1,20 +1,22 @@
 # roles/mythtv/tasks/main.yml
 
 # WIP: a single set of tasks for ALL package managers/distributions/versions.
-# Develop a list of package names for the above and then install them.
+# Run any special setup tasks, develop a list of package names for the above
+# and then install them.
 
 ---
 
-- name: Set Single Role package manager, distibution and version facts
+- name: Set Single Role for all package managers, distibutions and versions
   set_fact:
     sr_pkgmgr: '{{ ansible_pkg_mgr }}'
     sr_distro: '{{ ansible_distribution | regex_replace("[/ ]", "_") | lower }}'
     sr_versno: '{{ ansible_distribution_major_version }}'
+    sr_dir:    '{{ playbook_dir }}/roles/mythtv'
 
-- name: Set version to rolling for Archlinux
+- name: Set version to rolling for Archlinux and SUSE Tumbleweed
   set_fact:
     sr_versno: 'rolling'
-  when: ansible_distribution == 'Archlinux'
+  when: sr_distro == 'archlinux' or sr_distro == 'opensuse_tumbleweed'
 
 - name: If a Debian version is not numeric, use its codename as a version
   set_fact:
@@ -23,10 +25,20 @@
     - ansible_distribution == 'Debian'
     - ansible_distribution_major_version | type_debug != "int"
 
+- name: See if special setup tasks exist
+  stat:
+    path:  '{{ sr_dir }}/tasks/{{ sr_pkgmgr }}_{{ sr_distro }}.yml'
+  register: special_stat_results
+
+- name: Run special setup tasks
+  include_tasks:
+    file: '{{ sr_pkgmgr }}_{{ sr_distro }}.yml'
+  when: special_stat_results.stat.exists
+
 - name: See if a list of packages has been created
   stat:
-    path: '{{ playbook_dir }}/roles/mythtv/vars/{{ sr_pkgmgr }}/{{ sr_distro }}/{{ sr_versno }}.yml'
-  register: stat_results
+    path: '{{ sr_dir }}/vars/{{ sr_pkgmgr }}/{{ sr_distro }}/{{ sr_versno }}.yml'
+  register: package_stat_results
 
 - name: 'The list of packages is missing. {{ manual_action_text }}'
   debug:
@@ -37,17 +49,16 @@
       Openining an issue at: https://github.com/MythTV/ansible/issues is the
       best way to have new package lists added to the project. Be sure to add
       the output of the: {{ instruction_text }} section from this play.
-      Aborting!
-  when: not stat_results.stat.exists or use_old_rules_failure_test
+  when: not package_stat_results.stat.exists or use_old_rules_failure_test
 
-- name: Abort because of the above
+- name: Exit because of the above
   meta: end_play
-  when: not stat_results.stat.exists
+  when: not package_stat_results.stat.exists
 
-- name: 'Pull in the package list for "{{ sr_pkgmgr }}/{{ sr_distro }}/{{ sr_versno }}"'  # noqa name[template]
+- name: 'Load packages for "{{ sr_pkgmgr }}/{{ sr_distro }}/{{ sr_versno }}"'  # noqa name[template]
   include_vars:
     dir: '{{ sr_pkgmgr }}/{{ sr_distro }}'
-    files_matching: '{{ sr_versno }}.yml'
+    files_matching: '^{{ sr_versno }}.yml'
 
 - name: Add qt5 packages
   set_fact:

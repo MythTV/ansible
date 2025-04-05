@@ -4,14 +4,14 @@
 alias ks='echo;docker images;echo;docker ps --all'
 
 function kprune () {
-    sudo du -hs /var/lib/docker/overlay2
+    sudo du -hs /srv/docker/data/overlay2
     echo
     docker container prune --force
     echo
     docker image prune --all --force
     echo
     # docker image remove 2>/dev/null
-    sudo du -hs /var/lib/docker/overlay2
+    sudo du -hs /srv/docker/data/overlay2
 }
 
 # 2/18/2025, docker no longer works with --file Docker/name.Dockerfile
@@ -52,8 +52,11 @@ alias deb12='kbuild debian:12 1'
 alias deb13='kbuild debian:13 1'
 alias lmde6='kbuild lmde6-amd64:latest 1'
 alias  lm22='kbuild linuxmintdmint22-amd64:latest 1'
+alias fed39='kbuild fedora:39 1'
 alias fed40='kbuild fedora:40 1'
 alias fed41='kbuild fedora:41 1'
+alias fed42='kbuild fedora:42 1'
+alias fed43='kbuild fedora:43 1'
 alias  fedr='kbuild fedora:rawhide 1'
 alias  omd4='kbuild openmandriva:4.2 1'
 alias osusl='kbuild opensuse:leap 1'
@@ -78,8 +81,11 @@ alias rdeb12='kattach debian:12'
 alias rdeb13='kattach debian:13'
 alias rlmde6='kattach lmde6-amd64:latest'
 alias  rlm22='kattach linuxmintdmint22-amd64:latest'
+alias rfed39='kattach fedora:39'
 alias rfed40='kattach fedora:40'
 alias rfed41='kattach fedora:41'
+alias rfed42='kattach fedora:42'
+alias rfed43='kattach fedora:43'
 alias  rfedr='kattach fedora:rawhide'
 alias  romd4='kattach openmandriva:4.2'
 alias rosusl='kattach opensuse:leap'

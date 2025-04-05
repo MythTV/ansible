@@ -1,4 +1,4 @@
-# File: roles/mythtv/vars/dnf/fedora/40.yml
+# File: roles/mythtv/vars/dnf/fedora/39.yml
 
 ---
 
@@ -70,7 +70,6 @@ packages:
   - python3-devel
   - python3-mysql
   - python3-wheel
-  - python3-pip
   - perl-ExtUtils-MakeMaker
   - perl-DBI
   - perl-DBD-MySQL
@@ -99,7 +98,7 @@ packages:
   - python3-pycurl
   - python3-oauthlib
 
-qt5_packages:  # these are fillers, from fedora 39, may be correct or not
+qt5_packages:
   - qt5-qtbase-devel
   - qt5-qtwebkit-devel
   - qt5-qtscript-devel

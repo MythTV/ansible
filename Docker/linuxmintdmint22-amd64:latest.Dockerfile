@@ -6,7 +6,7 @@ RUN apt-get update \
 
 WORKDIR /root/source/ansible
 COPY . ./
-RUN ./mythtv.yml --limit=localhost --extra-vars='{"venv_active":true}' --extra-vars='{"use_old_roles":true}'
+RUN ./mythtv.yml --limit=localhost --extra-vars='{"venv_active": true}' --extra-vars='{"use_old_roles": true}'
 
 WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git

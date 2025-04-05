@@ -1,0 +1,107 @@
+---
+
+packages:
+  - git
+  - g++
+  - make
+  - build-essential
+  - nasm
+  - automake
+  - libtool
+  - ccache
+  - pkg-config
+  - cmake
+  - patch
+  - ninja-build
+  - gperf
+  - meson
+  - php
+  - uuid-dev
+  - libfreetype6-dev
+  - libmp3lame-dev
+  - libxv-dev
+  - libxxf86vm-dev
+  - libxinerama-dev
+  - libxrandr-dev
+  - libxml2-dev
+  - libavahi-compat-libdnssd-dev
+  - libexiv2-dev
+  - libasound2-dev
+  - libegl1-mesa-dev
+  - liblzo2-dev
+  - libhdhomerun-dev
+  - libsamplerate0-dev
+  - libxnvctrl-dev
+  - libzip-dev
+  - libmpeg2-4-dev
+  - libsoundtouch-dev
+  - libv4l-dev
+  - libva-dev
+  - libdrm-dev
+  - libvdpau-dev
+  - libass-dev
+  - libxvidcore-dev
+  - libx264-dev
+  - libvpx-dev
+  - libbluray-bdj
+  - libavc1394-dev
+  - libiec61883-dev
+  - libpulse-dev
+  - libfftw3-dev
+  - libssl-dev
+  - libsystemd-dev
+  - libgnutls28-dev
+  - libdbi-perl
+  - libdbd-mysql-perl
+  - libnet-upnp-perl
+  - libwww-perl
+  - libio-socket-inet6-perl
+  - libdate-manip-perl
+  - libxml-simple-perl
+  - libxml-xpath-perl
+  - libimage-size-perl
+  - libdatetime-format-iso8601-perl
+  - libsoap-lite-perl
+  - libjson-perl
+  - libfindbin-libs-perl
+  - perl-modules
+  - libvorbis-dev
+  - libflac-dev
+  - libflac++-dev
+  - libtag1-dev
+  - libcdio-dev
+  - libcdio-paranoia-dev
+  - libtool-bin
+  - sqlite3
+  - libsqlite3-dev
+  - libcec-dev
+  - libbluray-dev
+  - libx265-dev
+  - default-libmysqlclient-dev
+  - libmariadb-dev-compat
+  - python3-oauth
+  - python3-pycurl
+  - python3-requests
+  - python3-requests-cache
+  - python3-lxml
+  - python3-mysqldb
+  - python3-setuptools
+  - python3-venv
+  - python3-virtualenv
+  - python3-dev
+  - python3-pip
+  - libminizip-dev
+
+qt5_packages:
+  - libqt5core5a
+  - libqt5opengl5-dev
+  - libqt5script5
+  - qtscript5-dev
+  - qt5-qmake
+  - libqt5sql5-mysql
+
+qt6_packages:
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=4:

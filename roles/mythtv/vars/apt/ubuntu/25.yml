@@ -97,8 +97,12 @@ qt5_packages:
   - libqt5script5
   - qtscript5-dev
   - qt5-qmake
-  - libqt5webkit5-dev
   - libqt5sql5-mysql
+
+qt6_packages:
+  - qt6-base-dev
+  - libqt6sql6-mysql
+  - qt6-webengine-dev
 
 ...
 
