@@ -6,6 +6,7 @@
   set_fact:
     dnf_pkg_lst:
       - qt6-qtbase-devel
+      - qt6-qtwebengine-devel
       # packages in repo for fedora, and in epel for centos7/rhel7
       # - none yet
   tags:

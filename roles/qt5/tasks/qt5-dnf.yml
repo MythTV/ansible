@@ -8,6 +8,7 @@
       - qt5-qtbase-devel
       - qt5-qtwebkit-devel
       - qt5-qtscript-devel
+      - qt5-qtwebengine-devel
       # packages in repo for fedora, and in epel for centos7/rhel7
       # - none yet
   tags:
