@@ -89,10 +89,6 @@ without escalating privileges in the homebrew playbook). E.g.
 
     ``` ./mythtv.yml --extra-vars="database_version=mariadb-10.5" --limit=localhost ```
 
-- Optionally do not install qtwebkit:
-
-    ``` ./mythtv.yml --extra-vars="install_qtwebkit=false" --limit=localhost ```
-
 - Optionally specify a different version of python3
 
    ``` ./mythtv.yml --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.11"  --limit=localhost ```

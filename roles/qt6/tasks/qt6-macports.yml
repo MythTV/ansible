@@ -10,6 +10,7 @@
   set_fact:
     macports_pkg_list:
       - qt6
+      - qt6-qtwebengine
   tags:
     - qt6
 
