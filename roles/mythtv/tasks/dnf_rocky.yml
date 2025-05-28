@@ -1,0 +1,8 @@
+# roles/mythtv/tasks/dnf_centos.yml
+
+---
+
+- name: dnf_rocky | Setup RPMFusion repository (Rocky release versions)
+  dnf:
+    disable_gpg_check: true
+    name: '{{ rpmfusion_el_rpm }}'

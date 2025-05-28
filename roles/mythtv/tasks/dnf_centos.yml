@@ -1,0 +1,7 @@
+# roles/mythtv/tasks/dnf_centos.yml
+
+---
+
+- name: dnf_centos | Enable CRB repository for el9+ variants
+  command:
+    cmd: dnf config-manager --enable crb
