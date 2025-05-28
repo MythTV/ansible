@@ -5,10 +5,27 @@
 
 ---
 
+- name: python-venv | Try to use discovered_interpreter_python
+  set_fact:
+    using_python_version: '{{ discovered_interpreter_python }}'
+  when: discovered_interpreter_python is defined
+
+- name: python-venv | Choose alternate python if required
+  set_fact:
+    using_python_version: '{{ ansible_python.executable }}'
+  when:
+    - discovered_interpreter_python is undefined
+    - ansible_python.executable is defined
+
+- fail:
+    msg: "Python executable not found, aborting."
+  when: using_python_version is undefined
+  ignore_errors: true
+
 - name: python-venv | Create Python Virtual Environment
   command:
     argv:
-      - '{{ discovered_interpreter_python }}'
+      - '{{ using_python_version }}'
       - -m
       - venv
       - --system-site-packages
@@ -20,7 +37,7 @@
 - name: 'python-venv | Successfully created a venv, {{ manual_action_text }}'
   debug:
     msg: >-
-      A Python Virtual Environment was created.  Before building MythTV,
+      A Python Virtual Environment was created. Before building MythTV,
       do: export VIRTUAL_ENV={{ venv_path | expanduser }} first. Then
       run cmake or make as usual. Remember to change the shebang of any
       personal Python programs that import the MythTV module to:

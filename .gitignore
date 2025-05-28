@@ -4,6 +4,7 @@ tags
 *.sh
 *~
 Dockerfile
+TODO
 # vim etc.
 *.swp
 *~
