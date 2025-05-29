@@ -83,9 +83,9 @@ packages:
   - perl-JSON
   - perl-Image-Size
   - perl-Net-UPnP
-  - perl(Sys::Hostname)
-  - perl(FindBin)
-  - perl(IPC::Cmd)
+  - perl-Sys-Hostname
+  - perl-FindBin
+  - perl-IPC-Cmd
   - libvorbis-devel
   - flac-devel
   - taglib-devel
