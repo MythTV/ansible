@@ -1,3 +1,8 @@
+# "ansible_distribution:               Devuan",
+# "ansible_distribution_release:       daedalus",
+# "ansible_distribution_major_version: 5",
+# "ansible_lsb.major_release:          5",
+
 ---
 
 packages:
@@ -49,7 +54,6 @@ packages:
   - libpulse-dev
   - libfftw3-dev
   - libssl-dev
-  - libsystemd-dev
   - libgnutls28-dev
   - libdbi-perl
   - libdbd-mysql-perl
