@@ -130,7 +130,7 @@
   block:
     - name: ubuntu | Flatten package list
       set_fact:
-        deb_pkg_lst: '{{ lookup("flattened", deb_pkg_lst).split(",") }}'
+        deb_pkg_lst: '{{ lookup("flattened", deb_pkg_lst) }}'
 
     - name: ubuntu | Treat libcrystalhd-dev
       set_fact:
