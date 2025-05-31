@@ -258,6 +258,20 @@
       - perl(FindBin)
       - perl(IPC::Cmd)
 
+- name: Adjust perl package names for versions above 40
+  when:
+    - ansible_distribution == "Fedora"
+    - ansible_distribution_version|int > 40
+  block:
+    - set_fact:
+        dnf_pkg_lst: '{{ lookup("flattened", dnf_pkg_lst) }}'
+    - set_fact:
+        dnf_pkg_lst: "{{ dnf_pkg_lst | replace('perl(Sys::Hostname)', 'perl-Sys-Hostname') }}"
+    - set_fact:
+        dnf_pkg_lst: "{{ dnf_pkg_lst | replace('perl(FindBin)', 'perl-FindBin') }}"
+    - set_fact:
+        dnf_pkg_lst: "{{ dnf_pkg_lst | replace('perl(IPC::Cmd)', 'perl-IPC-Cmd') }}"
+
 - name: Add mythtv essential plugin libraries
   set_fact:
     dnf_pkg_lst:
