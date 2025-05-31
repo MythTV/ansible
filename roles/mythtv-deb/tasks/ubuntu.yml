@@ -134,7 +134,7 @@
 
     - name: ubuntu | Treat libcrystalhd-dev
       set_fact:
-        deb_pkg_lst: "{{ deb_pkg_lst | difference(['libcrystalhd-dev']) }}"
+        deb_pkg_lst: "{{ deb_pkg_lst | replace('libcrystalhd-dev,', '') }}"
 
     - name: ubuntu | Convert Python oauth to oauthlib
       set_fact:

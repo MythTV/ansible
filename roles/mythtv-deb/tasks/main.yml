@@ -89,15 +89,18 @@
   include_tasks:
     file: "{{ ansible_distribution | replace(' ', '_') | lower }}.yml"
 
+- name: Flatten package lists
+  set_fact:
+    deb_pkg_lst: '{{ lookup("flattened", deb_pkg_lst) }}'
+
 - name: Final package list
   debug:
-    msg:
-      '{{ lookup("flattened", deb_pkg_lst) }}'
+    msg: 'FPL={{ deb_pkg_lst }}'
 
 - name: Install packages
   apt:
     name:
-      '{{ lookup("flattened", deb_pkg_lst) }}'
+      '{{ deb_pkg_lst }}'
     state:
       present
 
