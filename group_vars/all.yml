@@ -6,7 +6,7 @@ instruction_text: 'Please include the following with any issues or questions'
 
 # See mythtv.yml and roles/mythtv/tasks/main.yml for detail. This keeps the
 # original roles active. Keep it set to true for now:
-use_old_roles: false
+use_old_roles: true
 use_old_rules_failure_test: false
 
 # Python Virtual Environment. Keep 'active' set to false for now.
