@@ -2,10 +2,12 @@
 
 ---
 
-- shell:            /bin/rpm -q --quiet rpmfusion-free-release && echo installed || echo missing  # noqa command-instead-of-module
+- name: dnf_fedora -rpmfusion | Check rpm-free-release
+  shell:            /bin/rpm --quiet --query rpmfusion-free-release && echo installed || echo missing  # noqa command-instead-of-module
   register:         rpmfusion
 
-- shell:            /usr/bin/grep -qi Rawhide /etc/fedora-release && echo rawhide || echo release
+- name: dnf_fedora -rpmfusion | Check Rawhide /etc/fedora-release
+  shell:            /usr/bin/grep -qi Rawhide /etc/fedora-release && echo rawhide || echo release
   register:         rawhide
 
 - name: dnf_fedora | Enable the RPM Fusion repository
@@ -13,26 +15,14 @@
     name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
     disable_gpg_check: true
     state: present
-  when: ansible_distribution == 'Fedora'
 
 - name: dnf_fedora | Setup RPMFusion repository (Fedora release versions)
   command:
     cmd: dnf install -y --nogpgcheck {{ rpmfusion_rpm }}
   when:
-    - ansible_distribution == "Fedora"
     - rpmfusion.stdout == "missing"
     - rawhide.stdout == "release"
 
-# - name: dnf_fedora | Setup RPMFusion repository (CentOS release versions)
-#   command:
-#     cmd: dnf install -y --nogpgcheck {{ rpmfusion_el_rpm }}
-#   when:
-#     - ansible_distribution == "CentOS" or ansible_distribution == "Rocky"
-#     - rpmfusion.stdout == "missing"
+...
 
-- name: dnf_fedora | Setup RPMFusion repository (CentOS release versions)  # TODO, clean up if working
-  dnf:
-    disable_gpg_check: false
-    name: '{{ rpmfusion_el_rpm }}'
-  when:
-    - ansible_distribution == "CentOS" or ansible_distribution == "Rocky"
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=3:

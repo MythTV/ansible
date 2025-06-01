@@ -2,7 +2,11 @@
 
 ---
 
-- name: dnf_rocky | Setup RPMFusion repository (Rocky release versions)
+- name: dnf_centos | Setup RPMFusion repository (CentOS release versions)
   dnf:
     disable_gpg_check: true
     name: '{{ rpmfusion_el_rpm }}'
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=3:

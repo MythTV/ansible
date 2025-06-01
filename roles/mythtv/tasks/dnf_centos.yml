@@ -5,3 +5,8 @@
 - name: dnf_centos | Enable CRB repository for el9+ variants
   command:
     cmd: dnf config-manager --enable crb
+  when: ansible_distribution_major_version|int > 8
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=3:
