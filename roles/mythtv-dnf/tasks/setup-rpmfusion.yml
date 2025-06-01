@@ -8,11 +8,20 @@
 - shell:            /usr/bin/grep -qi Rawhide /etc/fedora-release && echo rawhide || echo release
   register:         rawhide
 
-- name: setup-rpmfusion | Enable the RPM Fusion repository
-  dnf:
-    name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
-    disable_gpg_check: true
-    state: present
+# This is correct, but it doesn't work with Fedora v41:
+# - name: setup-rpmfusion | Enable the RPM Fusion repository
+#   dnf:
+#     name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+#     disable_gpg_check: true
+#     state: present
+#   when: ansible_distribution == 'Fedora'
+
+- name: setup-rpmfusion | Enable the RPM Fusion repository, see above  # noqa command-instead-of-module
+  command:
+    argv:
+      - dnf
+      - install
+      - 'https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm'
   when: ansible_distribution == 'Fedora'
 
 - name: setup-rpmfusion | Setup RPMFusion repository (Fedora release versions)

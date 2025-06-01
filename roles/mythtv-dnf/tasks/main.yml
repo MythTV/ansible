@@ -264,7 +264,7 @@
     - ansible_distribution_version|int > 40
   block:
     - set_fact:
-        dnf_pkg_lst: '{{ lookup("flattened", dnf_pkg_lst) }}'
+        dnf_pkg_lst: '{{ dnf_pkg_lst | flatten() }}'
     - set_fact:
         dnf_pkg_lst: "{{ dnf_pkg_lst | replace('perl(Sys::Hostname)', 'perl-Sys-Hostname') }}"
     - set_fact:
