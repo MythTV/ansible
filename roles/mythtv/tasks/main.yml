@@ -10,7 +10,7 @@
   set_fact:
     sr_pkgmgr: '{{ ansible_pkg_mgr }}'
     sr_distro: '{{ ansible_distribution | regex_replace("[/ ]", "_") | lower }}'
-    sr_versno: '{{ ansible_distribution_major_version }}'
+    sr_versno: '{{ ansible_distribution_major_version | int }}'
     sr_dir:    '{{ playbook_dir }}/roles/mythtv'
 
 - name: Set version to rolling for Archlinux and SUSE Tumbleweed
@@ -21,9 +21,7 @@
 - name: If a Debian version is not numeric, use its codename as a version
   set_fact:
     sr_versno: '{{ ansible_distribution_release | lower }}'
-  when:
-    - ansible_distribution == 'Debian'
-    - ansible_distribution_major_version | type_debug != "int"
+  when: sr_distro == 'debian' and (sr_versno == 0)
 
 - name: See if special setup tasks exist
   stat:
@@ -74,13 +72,17 @@
       - '{{ qt6_packages }}'
   when: qt6 is defined and qt6 and qt6_packages is defined
 
+- name: Flatten package lists
+  set_fact:
+    packages: '{{ packages | flatten() }}'
+
 - name: Final package list
   debug:
-    var: lookup('flattened', packages)
+    msg: 'FPL={{ packages }}'
 
 - name: Install the packages
   package:
-    name: "{{ lookup('flattened', packages) }}"
+    name: '{{ packages }}'
 
 ...
 
