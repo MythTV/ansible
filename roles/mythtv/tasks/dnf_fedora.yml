@@ -2,11 +2,11 @@
 
 ---
 
-- name: dnf_fedora -rpmfusion | Check rpm-free-release
+- name: dnf_fedora | Check rpm-free-release
   shell:            /bin/rpm --quiet --query rpmfusion-free-release && echo installed || echo missing  # noqa command-instead-of-module
   register:         rpmfusion
 
-- name: dnf_fedora -rpmfusion | Check Rawhide /etc/fedora-release
+- name: dnf_fedora | Check Rawhide /etc/fedora-release
   shell:            /usr/bin/grep -qi Rawhide /etc/fedora-release && echo rawhide || echo release
   register:         rawhide
 

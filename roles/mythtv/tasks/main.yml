@@ -10,15 +10,14 @@
   set_fact:
     pkgmgr: '{{ ansible_pkg_mgr }}'
     distro: '{{ ansible_distribution | regex_replace("[/ ]", "_") | lower }}'
+    drelse: '{{ ansible_distribution_release | lower }}'
     versno: '{{ ansible_distribution_major_version | int }}'
     my_dir: '{{ playbook_dir }}/roles/mythtv'
 
-- name: Care for empty ansible_distribution_release names
+- name: Care for empty drelse names
   set_fact:
-    ansible_distribution_release: 'NA'
-  when:
-    - ansible_distribution_release is defined
-    - ansible_distribution_release == ''
+    drelse: 'na'
+  when: not drelse
 
 - name: See if special setup tasks exist
   stat:
@@ -35,7 +34,7 @@
     file: '{{ item }}'
   with_first_found:
     - '{{ pkgmgr }}/{{ distro }}/{{ versno }}.yml'
-    - '{{ pkgmgr }}/{{ distro }}/{{ ansible_distribution_release | lower }}'
+    - '{{ pkgmgr }}/{{ distro }}/{{ drelse }}'
     - '{{ pkgmgr }}/{{ distro }}/rolling.yml'
     - missing.yml
   register: include_vars_results
@@ -43,7 +42,7 @@
 - name: 'The list of packages is missing. {{ manual_action_text }}'
   when:
     - include_vars_results.results[0] is defined
-    - include_vars_results.results[0].failed == true or
+    - include_vars_results.results[0].failed or
       include_vars_results.results[0].item is search("missing.yml")
   block:
     - debug:
@@ -85,5 +84,5 @@
 
 ...
 
-#:!./mythtv.yml -l localhost -e '{"use_old_roles": false}' -e '{"venv_active": true}'
+# :!./mythtv.yml -l localhost -e '{"use_old_roles": false}' -e '{"venv_active": true}'
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2,80:

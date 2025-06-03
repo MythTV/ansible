@@ -2,24 +2,24 @@
 
 ---
 
-- name: dnf5_fedora -rpmfusion | Check rpm-free-release
+- name: dnf5_fedora | Check rpm-free-release
   shell:            /bin/rpm --quiet --query rpmfusion-free-release && echo installed || echo missing  # noqa command-instead-of-module
   register:         rpmfusion
 
-- name: dnf5_fedora -rpmfusion | Check Rawhide /etc/fedora-release
+- name: dnf5_fedora | Check Rawhide /etc/fedora-release
   shell:            /usr/bin/grep -qi Rawhide /etc/fedora-release && echo rawhide || echo release
   register:         rawhide
 
 # TODO: correct, but it doesn't work with Fedora v41. Uncomment and delete next
 # when Fedora 41+ is fixed.
-# - name: dnf5_fedora -rpmfusion | Enable the RPM Fusion repository
+# - name: dnf5_fedora | Enable the RPM Fusion repository
 #   dnf:
 #     name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
 #     disable_gpg_check: true
 #     state: present
 
 # TODO: See above.
-- name: dnf5_fedora -rpmfusion | Enable the RPM Fusion repository  # noqa command-instead-of-module
+- name: dnf5_fedora | Enable the RPM Fusion repository  # noqa command-instead-of-module
   command:
     argv:
       - dnf
