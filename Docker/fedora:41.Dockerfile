@@ -8,7 +8,7 @@ COPY . ./
 
 ################### WORKDIR /root/source
 ################### RUN git clone https://github.com/MythTV/mythtv.git
-################### 
+###################
 ################### WORKDIR /root/source/mythtv
 ################### RUN if [ "${NOBUILD}" -eq 1 ]; then \
 ###################         echo "Not doing a build." ;\

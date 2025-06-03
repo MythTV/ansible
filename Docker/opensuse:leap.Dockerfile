@@ -29,7 +29,7 @@ RUN if [ "${NOBUILD}" -eq 1 ]; then \
 # # BE CAREFUL WITH THE NEXT LINE
 # RUN make --jobs=4
 # RUN make install
-# 
+#
 # WORKDIR /root/source/mythtv/mythplugins
 # RUN ./configure
 # # # BE CAREFUL WITH THE NEXT LINE

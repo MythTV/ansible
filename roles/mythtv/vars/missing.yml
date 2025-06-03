@@ -1,10 +1,16 @@
-# roles/mythtv/vars
+# roles/mythtv/vars/missing.yml
+
+# This is used by ../tasks/main.yml to care for the case of missing package
+# lists.
 
 ---
 
-why_is_this_here: >-
-  A nearly empty YAML file here to prevent the "with_first_found:"
-  conditional in ../tasks/main.yml from failing if the other choices
-  aren't found.
+missing_package_message: >-
+  One can be copied from an existing distribution and modified as required. To
+  get this added to the MythTV Ansible repository, open an issue at
+  https://github.com/MythTV/ansible/issues. Be sure to include the
+  output at the beginning of this run marked
 
 ...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=80:

@@ -7,7 +7,7 @@ WORKDIR /root/source/ansible
 COPY . ./
 RUN ansible-galaxy collection install --requirements-file=requirements.yml \
     && ./mythtv.yml --limit=localhost --extra-vars='{"venv_active": true}' --extra-vars='{"use_old_roles": false}'
- 
+
 WORKDIR /root/source
 RUN git clone https://github.com/MythTV/mythtv.git
 

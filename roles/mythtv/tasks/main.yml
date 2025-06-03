@@ -14,47 +14,35 @@
     versno: '{{ ansible_distribution_major_version | int }}'
     my_dir: '{{ playbook_dir }}/roles/mythtv'
 
-- name: Care for empty drelse names
-  set_fact:
-    drelse: 'na'
-  when: not drelse
-
 - name: See if special setup tasks exist
   stat:
     path:  '{{ my_dir }}/tasks/{{ pkgmgr }}_{{ distro }}.yml'
   register: special_stat_results
 
-- name: Run special setup tasks
+- name: Run any special setup tasks
   include_tasks:
     file: '{{ pkgmgr }}_{{ distro }}.yml'
   when: special_stat_results.stat.exists
 
-- name: 'Load packages for "{{ pkgmgr }}/{{ distro }}/{{ versno }}"'  # noqa name[template]
+- name: 'Load packages for: "{{ pkgmgr }}/{{ distro }}/{{ versno }}"'  # noqa name[template]
   include_vars:
     file: '{{ item }}'
   with_first_found:
     - '{{ pkgmgr }}/{{ distro }}/{{ versno }}.yml'
-    - '{{ pkgmgr }}/{{ distro }}/{{ drelse }}'
+    - '{{ pkgmgr }}/{{ distro }}/{{ drelse }}.yml'
     - '{{ pkgmgr }}/{{ distro }}/rolling.yml'
     - missing.yml
-  register: include_vars_results
 
-- name: 'The list of packages is missing. {{ manual_action_text }}'
-  when:
-    - include_vars_results.results[0] is defined
-    - include_vars_results.results[0].failed or
-      include_vars_results.results[0].item is search("missing.yml")
+- name: Warn the user and end this play
+  when: packages is undefined
   block:
-    - debug:
-        msg: >-
-          No {{ pkgmgr }}/{{ distro }}/{{ versno }}.yml file. One can
-          be copied and adjusted for a new release. Files are stored under:
-          {{ playbook_dir }}/roles/mythtv/vars.
-          Openining an issue at: https://github.com/MythTV/ansible/issues is the
-          correct way to have new package lists added to the project. Be sure to
-          add the output of the: {{ instruction_text }} section from this play.
+    - name: 'Missing package alert: {{ manual_action_text }}'
+      debug:
+        msg: '{{ playbook_dir }}/roles/mythtv/vars/{{ pkgmgr }}/{{ distro }}/{{ versno }}.yml is missing.
+        {{ missing_package_message }}: {{ instruction_text }}'
 
-    - meta: end_play
+    - name: Ending this play
+      meta: end_play
 
 - name: Add qt5 packages
   set_fact:

@@ -15,14 +15,14 @@ RUN sed -i 's/^mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
 WORKDIR /root/source/ansible
 COPY . ./
 #  RUN ./mythtv.yml --limit=localhost --extra-vars='{"venv_active": true}' --extra-vars='{"use_old_roles": false}'
-#  
+#
 #  WORKDIR /root/source
 #  RUN git clone https://github.com/MythTV/mythtv.git
-#  
+#
 #  # buld fails because FFmpeg can't find libiec61883 (even though it and
 #  # libiec61883-devel are installed
 #  WORKDIR /root/source/mythtv
-#  
+#
 #  RUN if [ "${NOBUILD}" -eq 1 ]; then \
 #          echo "Not doing a build." ;\
 #      else \
