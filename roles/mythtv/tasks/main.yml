@@ -11,12 +11,18 @@
     pkgmgr: '{{ ansible_pkg_mgr }}'
     distro: '{{ ansible_distribution | regex_replace("[/ ]", "_") | lower }}'
     versno: '{{ ansible_distribution_major_version | int }}'
-    dir:    '{{ playbook_dir }}/roles/mythtv'
-    packages_were_loaded: false
+    my_dir: '{{ playbook_dir }}/roles/mythtv'
+
+- name: Care for empty ansible_distribution_release names
+  set_fact:
+    ansible_distribution_release: 'NA'
+  when:
+    - ansible_distribution_release is defined
+    - ansible_distribution_release == ''
 
 - name: See if special setup tasks exist
   stat:
-    path:  '{{ dir }}/tasks/{{ pkgmgr }}_{{ distro }}.yml'
+    path:  '{{ my_dir }}/tasks/{{ pkgmgr }}_{{ distro }}.yml'
   register: special_stat_results
 
 - name: Run special setup tasks
@@ -34,28 +40,22 @@
     - missing.yml
   register: include_vars_results
 
-- name: Mark package loaded
-  set_fact:
-    packages_were_loaded: true
+- name: 'The list of packages is missing. {{ manual_action_text }}'
   when:
     - include_vars_results.results[0] is defined
-    - include_vars_results.results[0].failed == false
-    - include_vars_results.results[0].item is not search("missing.yml")
+    - include_vars_results.results[0].failed == true or
+      include_vars_results.results[0].item is search("missing.yml")
+  block:
+    - debug:
+        msg: >-
+          No {{ pkgmgr }}/{{ distro }}/{{ versno }}.yml file. One can
+          be copied and adjusted for a new release. Files are stored under:
+          {{ playbook_dir }}/roles/mythtv/vars.
+          Openining an issue at: https://github.com/MythTV/ansible/issues is the
+          correct way to have new package lists added to the project. Be sure to
+          add the output of the: {{ instruction_text }} section from this play.
 
-- name: 'The list of packages is missing. {{ manual_action_text }}'
-  debug:
-    msg: >-
-      No {{ pkgmgr }}/{{ distro }}/{{ versno }}.yml file. One can
-      be copied and adjusted for a new release. Files are stored under:
-      {{ playbook_dir }}/roles/mythtv/vars.
-      Openining an issue at: https://github.com/MythTV/ansible/issues is the
-      correct way to have new package lists added to the project. Be sure to
-      add the output of the: {{ instruction_text }} section from this play.
-  when: not packages_were_loaded
-
-- name: Exit because no packages were found
-  meta: end_play
-  when: not packages_were_loaded
+    - meta: end_play
 
 - name: Add qt5 packages
   set_fact:
@@ -85,4 +85,5 @@
 
 ...
 
+#:!./mythtv.yml -l localhost -e '{"use_old_roles": false}' -e '{"venv_active": true}'
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2,80:

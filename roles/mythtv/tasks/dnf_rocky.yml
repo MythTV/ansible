@@ -1,8 +1,23 @@
-# roles/mythtv/tasks/dnf_centos.yml
+# roles/mythtv/tasks/dnf_rocky.yml
 
 ---
 
-- name: dnf_centos | Setup RPMFusion repository (CentOS release versions)
+- name: dnf_rocky | Enable PowerTools repository for el8 variants
+  command:
+    cmd: dnf config-manager --enable powertools
+  when: ansible_distribution_major_version | int == 8
+
+- name: dnf_rocky | Enable Devel repository
+  command:
+    cmd: dnf config-manager --enable devel
+
+- name: dnf_rocky | Setup epel for el
+  dnf:
+    name:
+      epel-release
+    state: present
+
+- name: dnf_rocky | Setup RPMFusion repository (CentOS release versions)
   dnf:
     disable_gpg_check: true
     name: '{{ rpmfusion_el_rpm }}'
