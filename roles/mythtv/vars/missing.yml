@@ -1,0 +1,10 @@
+# roles/mythtv/vars
+
+---
+
+why_is_this_here: >-
+  A nearly empty YAML file here to prevent the "with_first_found:"
+  conditional in ../tasks/main.yml from failing if the other choices
+  aren't found.
+
+...

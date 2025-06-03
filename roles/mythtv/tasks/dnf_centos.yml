@@ -2,10 +2,42 @@
 
 ---
 
+- name: dnf_centos | Enable PowerTools repository for el8 variants
+  command:
+    cmd: dnf config-manager --enable powertools
+  when: ansible_distribution_major_version | int == 8
+
+- name: dnf_centos | Enable Devel repository
+  command:
+    cmd: dnf config-manager --enable devel
+  when:
+    - ansible_distribution_major_version | int == 8
+    - ansible_distribution_release != "Stream"
+
 - name: dnf_centos | Enable CRB repository for el9+ variants
   command:
     cmd: dnf config-manager --enable crb
-  when: ansible_distribution_major_version|int > 8
+  when: ansible_distribution_major_version | int > 8
+
+- name: dnf_centos | Setup epel for el
+  dnf:
+    name:
+      epel-release
+    state: present
+
+- name: dnf_centos | Install epel-next for centos stream
+  dnf:
+    name:
+      epel-next-release
+    state: present
+  when:
+    - ansible_distribution_release == "Stream"
+    - ansible_distribution_major_version | int <= 9
+
+- name: dnf_centos | Setup RPMFusion repository (CentOS release versions)
+  dnf:
+    disable_gpg_check: true
+    name: '{{ rpmfusion_el_rpm }}'
 
 ...
 

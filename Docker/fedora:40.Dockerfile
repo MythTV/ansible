@@ -1,5 +1,6 @@
 FROM quay.io/fedora/fedora:40
 ARG NOBUILD=0
+LABEL EOL="2025-05-13"
 RUN dnf install --assumeyes ansible git tree vim
 
 WORKDIR /root/source/ansible

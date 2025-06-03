@@ -1,4 +1,4 @@
-# roles/mythtv-rpm/tasks/setup-epel.yml
+# roles/mythtv-dnf/tasks/setup-epel.yml
 
 ---
 

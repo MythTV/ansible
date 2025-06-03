@@ -23,12 +23,12 @@
 - name: qt6-rpm | Final rpm qt6 package list
   debug:
     msg:
-      '{{ lookup("flattened", yum_pkg_lst) }}'
+      '{{ yum_pkg_lst | flatten() }}'
 
 - name: qt6-rpm | Install rpm qt6 packages
   package:
     name:
-      '{{ lookup("flattened", yum_pkg_lst) }}'
+      '{{ yum_pkg_lst | flatten() }}'
     state:
       present
   tags:

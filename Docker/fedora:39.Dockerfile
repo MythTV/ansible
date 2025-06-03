@@ -1,4 +1,5 @@
 FROM quay.io/fedora/fedora:39
+LABEL EOL="2024-11-26"
 ARG NOBUILD=0
 RUN dnf install --assumeyes ansible git tree vim
 

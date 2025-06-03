@@ -8,55 +8,54 @@
 
 - name: Set Single Role for all package managers, distibutions and versions
   set_fact:
-    sr_pkgmgr: '{{ ansible_pkg_mgr }}'
-    sr_distro: '{{ ansible_distribution | regex_replace("[/ ]", "_") | lower }}'
-    sr_versno: '{{ ansible_distribution_major_version | int }}'
-    sr_dir:    '{{ playbook_dir }}/roles/mythtv'
-
-- name: Set version to rolling for Archlinux and SUSE Tumbleweed
-  set_fact:
-    sr_versno: 'rolling'
-  when: sr_distro == 'archlinux' or sr_distro == 'opensuse_tumbleweed'
-
-- name: If a Debian version is not numeric, use its codename as a version
-  set_fact:
-    sr_versno: '{{ ansible_distribution_release | lower }}'
-  when: sr_distro == 'debian' and (sr_versno == 0)
+    pkgmgr: '{{ ansible_pkg_mgr }}'
+    distro: '{{ ansible_distribution | regex_replace("[/ ]", "_") | lower }}'
+    versno: '{{ ansible_distribution_major_version | int }}'
+    dir:    '{{ playbook_dir }}/roles/mythtv'
+    packages_were_loaded: false
 
 - name: See if special setup tasks exist
   stat:
-    path:  '{{ sr_dir }}/tasks/{{ sr_pkgmgr }}_{{ sr_distro }}.yml'
+    path:  '{{ dir }}/tasks/{{ pkgmgr }}_{{ distro }}.yml'
   register: special_stat_results
 
 - name: Run special setup tasks
   include_tasks:
-    file: '{{ sr_pkgmgr }}_{{ sr_distro }}.yml'
+    file: '{{ pkgmgr }}_{{ distro }}.yml'
   when: special_stat_results.stat.exists
 
-- name: See if a list of packages has been created
-  stat:
-    path: '{{ sr_dir }}/vars/{{ sr_pkgmgr }}/{{ sr_distro }}/{{ sr_versno }}.yml'
-  register: package_stat_results
+- name: 'Load packages for "{{ pkgmgr }}/{{ distro }}/{{ versno }}"'  # noqa name[template]
+  include_vars:
+    file: '{{ item }}'
+  with_first_found:
+    - '{{ pkgmgr }}/{{ distro }}/{{ versno }}.yml'
+    - '{{ pkgmgr }}/{{ distro }}/{{ ansible_distribution_release | lower }}'
+    - '{{ pkgmgr }}/{{ distro }}/rolling.yml'
+    - missing.yml
+  register: include_vars_results
+
+- name: Mark package loaded
+  set_fact:
+    packages_were_loaded: true
+  when:
+    - include_vars_results.results[0] is defined
+    - include_vars_results.results[0].failed == false
+    - include_vars_results.results[0].item is not search("missing.yml")
 
 - name: 'The list of packages is missing. {{ manual_action_text }}'
   debug:
     msg: >-
-      No {{ sr_pkgmgr }}/{{ sr_distro }}/{{ sr_versno }}.yml file. One can
+      No {{ pkgmgr }}/{{ distro }}/{{ versno }}.yml file. One can
       be copied and adjusted for a new release. Files are stored under:
       {{ playbook_dir }}/roles/mythtv/vars.
       Openining an issue at: https://github.com/MythTV/ansible/issues is the
-      best way to have new package lists added to the project. Be sure to add
-      the output of the: {{ instruction_text }} section from this play.
-  when: not package_stat_results.stat.exists or use_old_rules_failure_test
+      correct way to have new package lists added to the project. Be sure to
+      add the output of the: {{ instruction_text }} section from this play.
+  when: not packages_were_loaded
 
-- name: Exit because of the above
+- name: Exit because no packages were found
   meta: end_play
-  when: not package_stat_results.stat.exists
-
-- name: 'Load packages for "{{ sr_pkgmgr }}/{{ sr_distro }}/{{ sr_versno }}"'  # noqa name[template]
-  include_vars:
-    dir: '{{ sr_pkgmgr }}/{{ sr_distro }}'
-    files_matching: '^{{ sr_versno }}.yml'
+  when: not packages_were_loaded
 
 - name: Add qt5 packages
   set_fact:
@@ -78,7 +77,7 @@
 
 - name: Final package list
   debug:
-    msg: 'FPL={{ packages }}'
+    msg: '{{ packages }}'
 
 - name: Install the packages
   package:
