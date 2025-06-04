@@ -17,6 +17,7 @@ venv_path: ~/.virtualenvs/mythtv
 
 
 # From: roles/mythtv-rpm/vars/main.yml and roles/mythtv-dnf/vars/main.yml
+# and now used by roles/mythtv/tasks/<package manager>_<distribution>.yml
 rpm_url: "https://mirrors.rpmfusion.org"
 rpmfusion_rpm: "{{ rpm_url }}/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
 rpmfusion_rawhide_rpm: "{{ rpm_url }}/free/fedora/rpmfusion-free-release-rawhide.noarch.rpm"
