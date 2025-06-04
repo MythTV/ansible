@@ -1,36 +1,34 @@
 # roles/mythtv/tasks/main.yml
 
-# WIP: a single set of tasks for ALL package managers/distributions/versions.
-# Run any special setup tasks, develop a list of package names for the above
-# and then install them.
+# Single set of tasks for ALL package managers/distributions/versions.
+
+# Runs any special setup tasks, loads a list of packages plus some for
+# Qt5 (or Qt6 if requested) and then install them.
 
 ---
 
 - name: Set Single Role for all package managers, distibutions and versions
   set_fact:
-    pkgmgr: '{{ ansible_pkg_mgr }}'
     distro: '{{ ansible_distribution | regex_replace("[/ ]", "_") | lower }}'
-    drelse: '{{ ansible_distribution_release | lower }}'
-    versno: '{{ ansible_distribution_major_version | int }}'
-    my_dir: '{{ playbook_dir }}/roles/mythtv'
+    version: '{{ ansible_distribution_major_version | int }}'
 
 - name: See if special setup tasks exist
   stat:
-    path:  '{{ my_dir }}/tasks/{{ pkgmgr }}_{{ distro }}.yml'
+    path:  '{{ playbook_dir }}/roles/mythtv/tasks/{{ ansible_pkg_mgr }}_{{ distro }}.yml'
   register: special_stat_results
 
 - name: Run any special setup tasks
   include_tasks:
-    file: '{{ pkgmgr }}_{{ distro }}.yml'
+    file: '{{ ansible_pkg_mgr }}_{{ distro }}.yml'
   when: special_stat_results.stat.exists
 
-- name: 'Load packages for: "{{ pkgmgr }}/{{ distro }}/{{ versno }}"'  # noqa name[template]
+- name: 'Load packages for: "{{ distro }}/{{ version }}"'  # noqa name[template]
   include_vars:
     file: '{{ item }}'
   with_first_found:
-    - '{{ pkgmgr }}/{{ distro }}/{{ versno }}.yml'
-    - '{{ pkgmgr }}/{{ distro }}/{{ drelse }}.yml'
-    - '{{ pkgmgr }}/{{ distro }}/rolling.yml'
+    - '{{ distro }}/{{ version }}.yml'
+    - '{{ distro }}/{{ ansible_distribution_release | lower }}.yml'
+    - '{{ distro }}/rolling.yml'
     - missing.yml
 
 - name: Warn the user and end this play
@@ -38,20 +36,20 @@
   block:
     - name: 'Missing package alert: {{ manual_action_text }}'
       debug:
-        msg: '{{ playbook_dir }}/roles/mythtv/vars/{{ pkgmgr }}/{{ distro }}/{{ versno }}.yml is missing.
+        msg: './roles/mythtv/vars/{{ distro }}/{{ version }}.yml is missing.
         {{ missing_package_message }}: {{ instruction_text }}'
 
     - name: Ending this play
       meta: end_play
 
-- name: Add qt5 packages
+- name: 'Optionally add qt5 packages (the default)'
   set_fact:
     packages:
       - '{{ packages }}'
       - '{{ qt5_packages }}'
   when: (qt6 is undefined or not qt6) and qt5_packages is defined
 
-- name: Add qt6 packages
+- name: Optionally add qt6 packages
   set_fact:
     packages:
       - '{{ packages }}'
