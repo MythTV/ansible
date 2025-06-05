@@ -1,25 +1,31 @@
 The user_options.yml file is NOT maintained by git. It's here for
 users to add information unique to their MythTV Ansible playbook
-runs.
+runs. A git pull won't overwrite it.
 
-The Ansible precedence list can be found here:
+Variables set here will override those in the all.yml file in this
+directory. The full Ansible precedence list can be found here:
 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html
+Command line settings (like: --extra-vars='{"qt6": true}') would override settings
+here.
 
-The contents of a user_options.yml file would look like the following -
-everything between the long underscore lines:
-_____________________________________________________________________
+The contents of a user_options.yml file could look like the following -
+things between the long underscore lines:
+_______________________________________________________________________
 
 ---
 
-# Create a Python Virtual Environment:
+# Set to false to enable use of the Single Role
+use_old_roles: false
+
+# Set to true to create a Python Virtual Environment:
 venv_active: true
 
 # Change the default Virtual Environment path from ~/.virtualenvs/mythtv
 # to somewhere else:
 # venv_path: /something/you_prefer
 
-# Turn this on to load Qt6 packages rather than Qt5:
+# Set this to true to load Qt6 packages rather than Qt5:
 qt6: false
 
 ...
-_____________________________________________________________________
+_______________________________________________________________________

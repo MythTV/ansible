@@ -12,13 +12,6 @@
 # <host> = one of the names under 'hosts:' in the hosts.yml file. See
 # README.md for help.
 #
-# The following will get removed or moved to README.md
-#     With: --extra-vars='{"qt6": true}'             # Single Role WIP for Qt6
-#     With: --extra-vars='{"use_old_roles": false}'  # Single Role WIP
-#     With: --extra-vars='{"venv_active": true}'     # Builds a Python venv
-#     With: --extra-vars='{"venv_path": 'new path'}' # Allows changing the
-#           default venv_path which is ~/.virtualenvs/mythtv
-#
 
 ---
 
