@@ -1,0 +1,82 @@
+#!/usr/bin/env ansible-playbook
+
+---
+
+- name: pacman_archlinux | Define variables used for AUR/yay work
+  set_fact:
+    yay_repository: 'https://aur.archlinux.org/yay.git'
+    yay_build_directory: '/tmp/yay_build'
+    yay_is_installed: false
+    aur_packages:
+      - perl-net-upnp
+      - python-timeout-decorator
+      - python-requests-cache
+      - libhdhomerun
+
+- name: pacman_archlinux | Check if the yay command exists (assumes yay can be found in $PATH)
+  command: yay --version
+  check_mode: false
+  changed_when: false
+  register: yay_response
+  ignore_errors: true
+
+- name: pacman_archlinux | Mark yay installed
+  set_fact:
+    yay_is_installed: true
+  when: yay_response is defined and not yay_response.failed
+
+- name: pacman_archlinux | Check PATH for yay
+  debug:
+    msg: "yay wasn't in your $PATH, assuming it must be installed from AUR."
+  when: not yay_is_installed
+
+- name: pacman_archlinux | Download the yay repository  # noqa latest[git]
+  become: false
+  git:
+    repo: '{{ yay_repository }}'
+    dest: '{{ yay_build_directory }}'
+  register: git_response
+  ignore_errors: true
+  when: not yay_is_installed
+
+- name: pacman_archlinux | Start by marking the yay repo not loaded
+  set_fact:
+    yay_repo_loaded: false
+
+- name: pacman_archlinux | Mark yay repo download from AUR OK
+  set_fact:
+    yay_repo_loaded: true
+  when:
+    - git_response is defined
+    - git_response.skipped is undefined
+    - not git_response.failed
+
+- name: pacman_archlinux | '{{ manual_action_text }}'
+  debug:
+    msg:
+      - 'You can run: makepkg -siD {{ yay_build_directory }} to build yay. Then'
+      - 'manually run the following command to add AUR packages:'
+  when: yay_repo_loaded
+
+- name: pacman_archlinux | '{{ manual_action_text }}'
+  debug:
+    msg:
+      - "Because no download from: {{ yay_repository }} was done, you'll"
+      - "need to get yay yourself, Then run:"
+  when:
+    - not yay_repo_loaded
+    - not yay_is_installed
+
+- name: pacman_archlinux | '{{ manual_action_text }}'
+  debug:
+    msg: 'Run the following command to add AUR packages:'
+  when: yay_is_installed
+
+- name: pacman_archlinux | '{{ manual_action_text }}'
+  debug:
+    msg: 'yay -S {{ lookup("flattened", aur_packages) | regex_replace(",", " ") }}'
+    # msg: 'yay -S {{ list_o_strings | flatten() | regex_replace(",", " ") }}'
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2,80:

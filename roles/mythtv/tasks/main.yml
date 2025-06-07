@@ -1,26 +1,23 @@
 # roles/mythtv/tasks/main.yml
 
-# Single set of tasks for ALL package managers/distributions/versions.
+# Single set of tasks for all package managers/distributions/versions
+# except mac.
 
-# Runs any special setup tasks, loads a list of packages plus some for
-# Qt5 (or Qt6 if requested) and then install them.
+# Runs any special setup tasks, loads a list of packages and then install them.
 
 ---
 
-- name: Set Single Role for all package managers, distibutions and versions
+- name: Set distro and version values
   set_fact:
     distro: '{{ ansible_distribution | regex_replace("[/ ]", "_") | lower }}'
     version: '{{ ansible_distribution_major_version | int }}'
 
-- name: See if special setup tasks exist
-  stat:
-    path:  '{{ playbook_dir }}/roles/mythtv/tasks/{{ ansible_pkg_mgr }}_{{ distro }}.yml'
-  register: special_stat_results
-
-- name: Run any special setup tasks
+- name: 'Run any special tasks'
   include_tasks:
-    file: '{{ ansible_pkg_mgr }}_{{ distro }}.yml'
-  when: special_stat_results.stat.exists
+    file: '{{ item }}'
+  with_first_found:
+    - files: '{{ ansible_pkg_mgr }}_{{ distro }}.yml'
+      skip: true
 
 - name: 'Load packages for: "{{ distro }}/{{ version }}"'  # noqa name[template]
   include_vars:
@@ -31,7 +28,7 @@
     - '{{ distro }}/rolling.yml'
     - missing.yml
 
-- name: Warn the user and end this play
+- name: No package list, warn the user and end this play
   when: packages is undefined
   block:
     - name: 'Missing package alert: {{ manual_action_text }}'
@@ -56,9 +53,16 @@
       - '{{ qt6_packages }}'
   when: qt6 is defined and qt6 and qt6_packages is defined
 
+- name: Optionally add local_user_packages
+  set_fact:
+    packages:
+      - '{{ packages }}'
+      - '{{ local_user_packages }}'
+  when: local_user_packages is defined
+
 - name: Flatten package lists
   set_fact:
-    packages: '{{ packages | flatten() }}'
+    packages: '{{ packages | flatten() | sort }}'
 
 - name: Final package list
   debug:
@@ -70,7 +74,4 @@
 
 ...
 
-# :!./mythtv.yml -l localhost -e '{"use_old_roles": false}'
-# :!./mythtv.yml -l localhost -e '{"use_old_roles": false}' -e '{"venv_active": true}'
-# :!./mythtv.yml -l localhost
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2,80:

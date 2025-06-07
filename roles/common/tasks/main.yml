@@ -45,9 +45,8 @@
   include_vars:
     file: '{{ item }}'
   with_first_found:
-    - group_vars/user_options.yml
-    - /dev/null
-  ignore_errors: true
+    - files: group_vars/user_options.yml
+      skip: true
 
 ...
 
