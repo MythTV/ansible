@@ -26,7 +26,7 @@
       - gperf
       - meson
       - sqlite3
-      - php
+      - php84
 
 - name: Add essential libraries
   set_fact:
@@ -84,12 +84,12 @@
     pkgng_pkg_lst:
       - '{{ pkgng_pkg_lst }}'
       - python
-      - py37-lxml
-      - py37-pymysql
-      - py37-oauth
-      - py37-urlgrabber
-      - py37-requests
-      - py37-simplejson
+      - py311-lxml
+      - py311-pymysql
+      - py311-oauth
+      - py311-urlgrabber
+      - py311-requests
+      - py311-simplejson
   when:
     - ansible_distribution_major_version|int >= 13
     - ansible_distribution_major_version|int < 15
