@@ -18,12 +18,12 @@ First you need to clone the playbook:
 
 ``` cd <the directory just created>```
 
-Debian users running Wheezy will need to enable
+Debian users running Wheezy (v7, obsolete stable release) will need to enable
 [wheezy-backports](https://wiki.debian.org/Backports).
 Jessie or later is recommended for 0.28 and above.
 
 Install an `ssh` client and server for your distribution. You must be
-able to `ssh` into `localhost` from `localhost`.
+able to `ssh` into `localhost` from `localhost` without a password.
 
 ### Install the Ansible package
 Choose the appropriate command(s) for your distribution.
@@ -37,7 +37,7 @@ Debian (and derivatives) | apt install ansible
 Fedora | dnf install ansible
 MacOSX (macports) | port install py-ansible
 MacOSX (homebrew) | brew install ansible
-FreeBSD | pkg install py27-ansible
+FreeBSD | pkg install py311-ansible
 OpenSuse | zypper install ansible
 
 Most users will use `Ansible Community` from their distribution.
@@ -64,7 +64,7 @@ Builders | builder
 CPP Check and Doxygen | tools
 
 ### Qt6 Support
-For Qt6 support, run the playbook like this:
+For Qt6 support, add --extra-vars similar to this:
 
 ``` ./mythtv.yml --limit=localhost --extra-vars='{"qt6":true}' ```
 
@@ -93,7 +93,13 @@ without escalating privileges in the homebrew playbook). E.g.
 
    ``` ./mythtv.yml --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.11"  --limit=localhost ```
 
-## Other Platforms
-We welcome contributions to support additional platforms. Please contact the
-developers if you are interested in this. Output from a run of ```./mythtv.yml ...```
-is needed for starters.
+### User Options
+There is a README file under group_vars that explains how some of the options
+used in this playbook can be set. Most users won't need to create the file
+explained in the README.
+
+### Other Platforms
+We welcome contributions to support additional platforms. Please open an issue and/or
+a pull request at
+https://github.com/MythTV/ansible/issues if you are interested in this.
+The output from a run of ```./mythtv.yml ...``` is needed for starters.

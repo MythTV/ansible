@@ -6,6 +6,7 @@
 .yamllint.yml
 *.sh
 *.setup.out
+**.swo
 **.swp
 *~
 **/Docker

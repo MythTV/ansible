@@ -1,0 +1,90 @@
+# This is a copy of 14.yml
+
+---
+
+packages:
+  - cmake
+  - git
+  - gcc14  # Used a symlink to gcc
+  - gmake
+  - ninja
+  - dav1d
+  - fontconfig
+  - aom
+  - exiv2
+  - gnutls
+  - sdl2
+  - libGLU
+  - soundtouch
+  - libass
+  - libbluray
+  - libdrm
+  - freetype2
+  - libhdhomerun
+  - lzo2
+  - lame
+  - libsamplerate
+  - taglib
+  - libva
+  - libvdpau
+  - libvpx
+  - libxml2
+  - libzip
+  - qt5-linguist
+  - p5-DBD-mysql
+  - p5-DBI
+  - p5-HTTP-Request-Params
+  - p5-IO-Socket-INET6
+  - p5-LWP-UserAgent-Determined
+  - p5-Net-UPnP
+  - p5-XML-Simple
+  - perl5
+  - devel/pkgconf
+  - py311-lxml
+  - py311-mysqlclient
+  - py311-requests-cache
+  - py311-requests
+  - py311-setuptools
+  - py311-sqlite3
+  - python3
+  - wget
+  - xcb
+  - libXext
+  - libXinerama
+  - xorgproto
+  - xrandr
+  - xv
+  - libXxf86vm
+  - yasm
+  # libasound
+  # libsndio
+  # libqtiff
+  # libexpat            # expat?
+  # libfftw3_threads    # fftw3?
+  # libfftw3f           # fftw3?
+  # libpulse
+  # input.h             # libinput
+  # libjack
+  # libmysqlclient.21   # mysql91-client?
+  # libqsqlmysql
+  # tv_check
+  # x11
+
+qt5_packages:
+  - qt5-core
+  - qt5-dbus
+  - qt5-gui
+  - qt5-multimedia
+  - qt5-network
+  - qt5-opengl
+  - qt5-sql
+  - qt5-widgets
+  - qt5-Xml
+  - qt5-buildtools
+  - qt5-qmake
+  - qt5-script
+  # qt5-base            # qt6-base, no qt5? or linux-rl9-qt5-qtbase
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=4:
