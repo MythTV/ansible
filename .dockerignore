@@ -12,4 +12,5 @@
 **/Docker
 Dockerfile
 README.md
+remote_hosts.yml
 tags

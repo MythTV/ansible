@@ -2,8 +2,9 @@
 .github/workflows/build-mythtv-all.yml
 Dockerfile
 Docker
-tags
 group_vars/user_options.yml
+tags
+remote_hosts.yml
 *~
 *.setup.out
 *.sh
