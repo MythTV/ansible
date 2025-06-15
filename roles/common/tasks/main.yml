@@ -2,6 +2,10 @@
 # prevent users from running ALL hosts. The instructions are clear that
 # the --limit=<name> must be used. The debug: prints information useful
 # for diagnosing issues.
+#
+# Next, print some valuable debugging information
+#
+# Finally, load any user specific variables (not under git control).
 
 ---
 

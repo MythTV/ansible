@@ -6,11 +6,10 @@
 .yamllint.yml
 *.sh
 *.setup.out
-**.swo
-**.swp
+**.sw[nop]
 *~
 **/Docker
 Dockerfile
 README.md
-remote_hosts.yml
+rhosts.yml
 tags

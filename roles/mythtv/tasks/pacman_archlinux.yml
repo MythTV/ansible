@@ -75,7 +75,6 @@
 - name: pacman_archlinux | '{{ manual_action_text }}'
   debug:
     msg: 'yay -S {{ lookup("flattened", aur_packages) | regex_replace(",", " ") }}'
-    # msg: 'yay -S {{ list_o_strings | flatten() | regex_replace(",", " ") }}'
 
 ...
 

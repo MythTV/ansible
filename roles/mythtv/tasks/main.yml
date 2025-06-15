@@ -62,11 +62,11 @@
 
 - name: Flatten package lists
   set_fact:
-    packages: '{{ packages | flatten() | sort }}'
+    packages: '{{ lookup("flattened", packages) }}'
 
 - name: Final package list
   debug:
-    msg: '{{ packages }}'
+    var: packages
 
 - name: Install the packages
   package:

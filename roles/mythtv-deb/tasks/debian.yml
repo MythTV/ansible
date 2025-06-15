@@ -175,7 +175,6 @@
   block:
     - set_fact:
         deb_pkg_lst: '{{ lookup("flattened", deb_pkg_lst) }}'
-        # deb_pkg_lst: '{{ deb_pkg_lst | flatten() }}'
 
     - set_fact:
         deb_pkg_lst: "{{ deb_pkg_lst | replace('python3-oauth', 'python3-oauthlib') }}"

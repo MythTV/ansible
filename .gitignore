@@ -4,12 +4,11 @@ Dockerfile
 Docker
 group_vars/user_options.yml
 tags
-remote_hosts.yml
+rhosts.yml
 *~
 *.setup.out
 *.sh
-**.swo
-**.swp
+**.sw[nop]
 # If retry_files_enabled=False gets changed in ansible.cfg
 mythtv.retry
 qt5.retry
