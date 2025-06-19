@@ -3,6 +3,9 @@
 # This is used by ../tasks/main.yml to care for the case of missing package
 # lists.
 
+##### BE SURE TO UPDATE THE following if the URL to the MythTV Ansible issues
+##### list changes!
+
 ---
 
 missing_package_message: >-

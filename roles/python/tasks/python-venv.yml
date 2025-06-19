@@ -1,8 +1,5 @@
 # Included by: roles/python/tasks/main.yml
 
-##### BE SURE TO UPDATE THE 'Error creating a new venv' task below if
-##### the url to the MythTV ansible issues list changes!
-
 ---
 
 - name: python-venv | Try to use discovered_interpreter_python

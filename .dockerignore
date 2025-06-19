@@ -3,8 +3,8 @@
 .git
 .github
 .gitignore
+.sh
 .yamllint.yml
-*.sh
 *.setup.out
 **.sw[nop]
 *~

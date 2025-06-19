@@ -6,21 +6,20 @@ Variables set here will override those in the all.yml file in this
 directory. The full Ansible precedence list can be found here:
 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html
 
-Command line settings (like: --extra-vars='{"qt6": true}') would override settings
-here.
+Command line settings (E.g. --extra-vars='{"qt6": true}') would override
+settings here.
 
-The contents of a user_options.yml file could contain things between the long
-underscore lines (which have the default values listed). Choose, and uncomment
-none, one, some or all.
+Copy the contents between the _____ lines below. Uncomment/change/delete as
+required.
 _______________________________________________________________________
 
 ---
 
 # Set to true to enable use of the Single Role
-# use_old_roles: true
+# use_old_roles: false
 
 # Set to true to create a Python Virtual Environment:
-# venv_active: true
+# venv_active: false
 
 # Change the default Virtual Environment path to somewhere else:
 # venv_path: ~/.virtualenvs/mythtv
@@ -31,9 +30,10 @@ _______________________________________________________________________
 # Optional local packages. DANGER: No attempt is made to verify that additions
 # here available with the distribution in use.
 
-#local_user_packages (there are no default packages):
-#  - example1
-#  - example2
+# Add packages as desired:
+#local_user_packages
+#  - some_package
+#  - another_package
 
 ...
 

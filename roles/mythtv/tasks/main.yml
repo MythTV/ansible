@@ -19,7 +19,7 @@
     - files: '{{ ansible_pkg_mgr }}_{{ distro }}.yml'
       skip: true
 
-- name: 'Load packages for: "{{ distro }}/{{ version }}"'  # noqa name[template]
+- name: Load distribution/version packages.
   include_vars:
     file: '{{ item }}'
   with_first_found:

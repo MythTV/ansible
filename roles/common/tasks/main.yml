@@ -9,17 +9,18 @@
 
 ---
 
-- fail:
-    msg: "Aborting play because the --limit switch wasn't used"
-  when: ansible_limit is undefined
-
-- fail:
-    msg: "Aborting play because the --limit= switch was empty"
-  when: not ansible_limit
-
-- fail:
-    msg: "Aborting play because --limit=all was used"
-  when: ansible_limit == "all"
+- name: "Don't do limit checks if using rhosts.yml"
+  when:  inventory_file is not search("/rhosts.yml$")
+  block:
+    - fail:
+        msg: "Aborting play because the --limit switch wasn't used"
+      when: ansible_limit is undefined
+    - fail:
+        msg: "Aborting play because the --limit= switch was empty"
+      when: not ansible_limit
+    - fail:
+        msg: "Aborting play because --limit=all was used"
+      when: ansible_limit == "all"
 
 - name: "{{ instruction_text }}:"
   debug:
@@ -45,7 +46,7 @@
       - "ansible_version.full:               {{ ansible_version.full }}"
   when: ansible_lsb.major_release is undefined
 
-- name: Load a user_options.yml file if it exists
+- name: Load user_options.yml
   include_vars:
     file: '{{ item }}'
   with_first_found:

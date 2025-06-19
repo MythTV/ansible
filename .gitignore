@@ -1,5 +1,6 @@
 # Part 3 of workflows:
 .github/workflows/build-mythtv-all.yml
+.sh
 Dockerfile
 Docker
 group_vars/user_options.yml
@@ -7,7 +8,6 @@ tags
 rhosts.yml
 *~
 *.setup.out
-*.sh
 **.sw[nop]
 # If retry_files_enabled=False gets changed in ansible.cfg
 mythtv.retry
