@@ -89,6 +89,7 @@
       - 'molten-vk'
       - libdiscid
       - expat
+      - libdvdcss
 
 - name: Develop a Python package version suffix
   set_fact:

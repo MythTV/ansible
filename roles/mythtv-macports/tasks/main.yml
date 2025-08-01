@@ -86,6 +86,7 @@
       - 'liberation-fonts'
       - 'dejavu-fonts'
       - soundtouch
+      - libdvdcss
 
 - name: Develop a Python package version suffix
   set_fact:
