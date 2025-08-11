@@ -86,7 +86,6 @@ packages:
  - sqlite3
  - libsqlite3-dev
  - libcec-dev
- - libcec-dev
  - libbluray-dev
  - libx265-dev
  - default-libmysqlclient-dev
