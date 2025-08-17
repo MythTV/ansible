@@ -19,7 +19,7 @@ _______________________________________________________________________
 # use_old_roles: false
 
 # Set to true to create a Python Virtual Environment:
-# venv_active: false
+# venv_active: true
 
 # Change the default Virtual Environment path to somewhere else:
 # venv_path: ~/.virtualenvs/mythtv

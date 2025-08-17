@@ -63,6 +63,14 @@ FreeBSD | freebsd (was for python2.7 only)
 Builders | builder
 CPP Check and Doxygen | tools
 
+### Python Virtual Environment
+By default, the playbook will create a file named ~/.virtualenvs/mythtv
+and print instructions for building MythTV using it. The following
+changes are allowed:
+
+```--extra-vars='{"venv_path":"other_path_choice"}' ```
+```--extra-vars='{"venv_active":false}' ```
+
 ### Qt6 Support
 For Qt6 support, add --extra-vars similar to this:
 

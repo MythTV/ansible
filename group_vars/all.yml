@@ -4,20 +4,19 @@
 manual_action_text: 'MANUAL ACTION REQUIRED'
 instruction_text: 'Please include the following with any issues or questions'
 
-# See mythtv.yml and roles/mythtv/tasks/main.yml for detail. This keeps the
-# original roles active. Keep it set to true for now:
-use_old_roles: true
+# See mythtv.yml and roles/mythtv/tasks/main.yml for detail (both will go away):
+use_old_roles: false
 use_old_rules_failure_test: false
 
-# Python Virtual Environment. Keep 'active' set to false for now.
+# Python Virtual Environment.
 # 2025/03/24, turned this on and ALL actions at github worked.
-# turning it off again. Need to verify the path is OK with everyone.
-venv_active: false
+# Need to verify the path is OK with everyone.
+venv_active: true
 venv_path: ~/.virtualenvs/mythtv
 
 
 # From: roles/mythtv-rpm/vars/main.yml and roles/mythtv-dnf/vars/main.yml
-# and now used by roles/mythtv/tasks/<package manager>_<distribution>.yml
+# and now used by roles/mythtv/tasks/<distribution>.yml
 rpm_url: "https://mirrors.rpmfusion.org"
 rpmfusion_rpm: "{{ rpm_url }}/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
 rpmfusion_rawhide_rpm: "{{ rpm_url }}/free/fedora/rpmfusion-free-release-rawhide.noarch.rpm"
