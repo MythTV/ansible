@@ -105,6 +105,7 @@ qt5_packages:
 qt6_packages:
   - qt6-qtbase-devel
   - qt6-qtbase-mysql
+  - qt6-qtwebengine-devel
 
 ...
 
