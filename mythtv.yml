@@ -61,14 +61,14 @@
         name: mythtv-homebrew
       when:
         - ansible_pkg_mgr == "homebrew"
-        - use_old_roles
+        - not use_old_roles
         - not mythtv_tools
 
     - include_role:
         name: mythtv-macports
       when:
         - ansible_pkg_mgr == "macports"
-        - use_old_roles
+        - not use_old_roles
         - not mythtv_tools
 
     - include_role:
