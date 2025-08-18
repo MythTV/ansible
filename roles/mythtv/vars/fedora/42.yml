@@ -102,6 +102,10 @@ qt5_packages:
   - qt5-qtscript-devel
   - qt5-qtbase-mysql
 
+qt6_packages:
+  - qt6-qtbase-devel
+  - qt6-qtbase-mysql
+
 ...
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=4:

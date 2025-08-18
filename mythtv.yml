@@ -26,6 +26,7 @@
     - include_role:
         name: mythtv
       when:
+        - ansible_pkg_mgr != "homebrew" and ansible_pkg_mgr != "macports"
         - not use_old_roles
         - not mythtv_tools
 
@@ -61,14 +62,12 @@
         name: mythtv-homebrew
       when:
         - ansible_pkg_mgr == "homebrew"
-        - not use_old_roles
         - not mythtv_tools
 
     - include_role:
         name: mythtv-macports
       when:
         - ansible_pkg_mgr == "macports"
-        - not use_old_roles
         - not mythtv_tools
 
     - include_role:
@@ -93,14 +92,14 @@
         name: qt5
       when:
         - not mythtv_tools
-        - use_old_roles
+        - ansible_pkg_mgr == "homebrew" or ansible_pkg_mgr == "macports"
         - not qt6
 
     - include_role:
         name: qt6
       when:
         - not mythtv_tools
-        - use_old_roles
+        - ansible_pkg_mgr == "homebrew" or ansible_pkg_mgr == "macports"
         - qt6
 
     - include_role:
