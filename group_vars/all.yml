@@ -6,7 +6,7 @@ instruction_text: 'Please include the following with any issues or questions'
 
 # See mythtv.yml and roles/mythtv/tasks/main.yml for detail (both will go away):
 use_old_roles: false
-use_old_rules_failure_test: false
+use_old_roles_failure_test: false
 
 # Python Virtual Environment.
 # 2025/03/24, turned this on and ALL actions at github worked.
