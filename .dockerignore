@@ -11,5 +11,6 @@
 **/Docker
 Dockerfile
 README.md
+rhosts.sample
 rhosts.yml
 tags

@@ -11,7 +11,7 @@ use_old_roles_failure_test: false
 # Python Virtual Environment.
 # 2025/03/24, turned this on and ALL actions at github worked.
 # Need to verify the path is OK with everyone.
-venv_active: true
+venv_active: false
 venv_path: ~/.virtualenvs/mythtv
 
 
