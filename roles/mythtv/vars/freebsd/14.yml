@@ -12,6 +12,7 @@ packages:
   - fftw3-float
   - flac
   - freetype2
+  - gcc
   - git
   - gmake
   - gnutls
@@ -31,6 +32,7 @@ packages:
   - libvpx
   - libvpx
   - libXinerama
+  - libXxf86vm
   - libxml2
   - libxml2
   - libzip
