@@ -1,10 +1,10 @@
 # rhosts.sample (remote hosts) an Inventory file.
 #
 # Rename this file rhosts.yml so that changes to rhosts.sample won't clobber
-# any changes you make to that file.
+# any changes you make to this file.
 #
 # It can live on a host that doesn't even have MythTV running on it (remove
-# localhost below if that's the # case). ssh access is required to all remote
+# localhost below if that's the case). ssh access is required to all remote
 # hosts. This is the way Ansible is typically used.
 #
 # Next, change the hostnames below to your own. Delete names/IPs you don't use.

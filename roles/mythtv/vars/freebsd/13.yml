@@ -1,4 +1,4 @@
-# This is just an untested copy of 14.yml
+# v13
 
 ---
 
@@ -79,6 +79,14 @@ packages:
   - x264
   - x265
   - xvid
+  - libcdio
+  - qt5-testlib
+  - qt5-scripttools
+  - sdl2
+  - jackit
+  - avahi-libdns
+  - py311-pip
+  - py311-mysqlclient
 
 qt5_packages:
   - qt5-core

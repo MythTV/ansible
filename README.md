@@ -64,12 +64,14 @@ Builders | builder
 CPP Check and Doxygen | tools
 
 ### Python Virtual Environment
-By default, the playbook will not create a file named ~/.virtualenvs/mythtv
-and print instructions for building MythTV using it. The following changes
-can be used to create the venv and change it's path:
+By default, the playbook will not create a virtual environment for the MythTV
+Python modules. Virtual environments are the recommended solution for
+non-system Python code. Use your favorite search engine to see
+lots of discussions about using venvs. To create a venv and and print
+instructions for building MythTV using it, use following:
 
 ```--extra-vars='{"venv_active":true}' ```
-```--extra-vars='{"venv_path":"other_path_choice"}' ```
+```--extra-vars='{"venv_path":"something other than ~/.virtualenvs/mythtv"}' ```
 
 ### Qt6 Support
 For Qt6 support, add this:
