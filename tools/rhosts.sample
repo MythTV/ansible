@@ -1,0 +1,55 @@
+# rhosts.sample (remote hosts). An Inventory file.
+#
+# Copy this file to ../rhosts.yml. Make local changes there (so that changes
+# to rhosts.sample won't clobber your work.)
+#
+# This playbook can live on a host that doesn't even have MythTV running on it
+# (remove localhost below if that's the case). ssh access is required to each
+# host. This is the way Ansible is typically used.
+#
+# Next, change the hostnames below to your own. Delete names/IPs you don't use.
+#
+# To run type:
+#
+#   ./mythtv.yml --inventory rhosts.yml  [--limit <group or hostname>]
+#
+#   Usage of the optional --limit switch:
+#
+#       * without it ALL hosts will be done, including hosts under children:
+#       * with --limit xyz only host xyz will be done
+#       * with --limit abc,xyz only hosts abc and xyz will be done
+#       * with --limit ijk_group, all members of ijk_group will be done
+
+---
+
+mythtv_hosts:
+
+  # Variables can be set here too.
+  vars:
+    mythtv_builders: false  # Don't change this
+    mythtv_tools: false     # Don't change this
+    use_old_roles: false    # Don't change this
+    qt6: false
+
+  hosts:
+    localhost:  # Keep, if this host needs MythTV built on it.
+    mc0:
+    ofc0:
+    opi0:
+
+  # Optional groups of hosts can exist, like "rpi" and "docker" below:
+  children:
+    rpi:
+      hosts:
+        rpi[1:3]:  # rpi1 through rpi3, an example of a range of hostnames
+        rpi4:
+          ansible_become_method: su  # Host didn't have sudo installed
+        rpi5:
+
+    docker:
+      hosts:
+        172.17.0.[2:9]:  # An example using IPs rather than hostnames
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=80:

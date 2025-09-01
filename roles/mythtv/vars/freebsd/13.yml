@@ -87,6 +87,7 @@ packages:
   - avahi-libdns
   - py311-pip
   - py311-mysqlclient
+  - py311-setuptools
 
 qt5_packages:
   - qt5-core
