@@ -1,0 +1,36 @@
+---
+
+pip_packages:
+  - lxml
+  - mysqlclient
+  - oauth
+  - pip>=23.0.1
+  - pycurl
+  - requests
+  - 'requests-cache'
+  - setuptools
+  - urllib3
+  - wheel
+  - argparse
+  - audiofile
+  - bs4
+  - common
+  - configparser
+  - cryptography
+  - datetime
+  - discid
+  - et
+  - features
+  - HTMLParser
+  - httplib2
+  - importlib_metadata
+  - markupsafe
+  - musicbrainzngs
+  - oauthlib
+  - python_dateutil
+  - simplejson
+  - traceback2
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=4:

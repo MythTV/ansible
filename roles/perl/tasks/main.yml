@@ -1,0 +1,35 @@
+# roles/perl/tasks/main.yml
+#
+# allow installation of perl modules via ansible's cpanm capability
+#
+
+---
+
+# ALLOW TURNING cpanm ON/OFF except for homebrew. cpanm_active is set
+# to false in group_vars/all.yml to disable the feature. To activate it add:
+#   --extra-vars='{"cpanm_active":true}' to the ./mythtv.yml command line.
+
+- name: 'Load cpanm modules.'
+  include_vars:
+    file: '{{ item }}'
+  with_first_found:
+    - 'cpanm.yml'
+
+- name: 'Run any special tasks'
+  include_tasks:
+    file: '{{ item }}'
+  with_first_found:
+    - files: '{{ ansible_pkg_mgr }}_{{ distro }}.yml'
+      skip: true
+
+- name: 'Optionally perform any installation operations'
+  include_tasks:
+    file: '{{ item }}'
+  with_first_found:
+    - files: '{{ distro }}_cpanm_install.yml'
+    - files: 'cpanm_install.yml'
+      skip: true
+  when: cpanm_active is defined and cpanm_active
+  tags: cpanm
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

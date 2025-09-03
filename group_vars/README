@@ -18,6 +18,9 @@ _______________________________________________________________________
 # Set to true to enable use of the Single Role
 # use_old_roles: false
 
+# Set to true to install perl modules using cpanm
+# cpanm_active: false
+
 # Set to true to create a Python Virtual Environment:
 # venv_active: false
 

@@ -35,8 +35,8 @@ Archlinux | pacman -S ansible
 Centos | yum install ansible (enable the [EPEL](https://fedoraproject.org/wiki/EPEL) repository first)
 Debian (and derivatives) | apt install ansible
 Fedora | dnf install ansible
-MacOSX (macports) | port install py-ansible
-MacOSX (homebrew) | brew install ansible
+macOS (macports) | port install py-ansible
+macOS (homebrew) | brew install ansible
 FreeBSD | pkg install py311-ansible
 OpenSuse | zypper install ansible
 
@@ -57,8 +57,8 @@ doesn't work for your distribution:
 Distribution|--limit value
 :-----------|:------------
 Fedora 30 | f30 (36 went EOL on 2023/05/16)
-MacOSX (using MacPorts)| macports
-MacOSX (using MacPorts)| homebrew
+macOS (using macports)| macports
+macOS (using homebrew)| homebrew
 FreeBSD | freebsd (was for python2.7 only)
 Builders | builder
 CPP Check and Doxygen | tools
@@ -73,35 +73,34 @@ instructions for building MythTV using it, use following:
 ```--extra-vars='{"venv_active":true}' ```
 ```--extra-vars='{"venv_path":"something other than ~/.virtualenvs/mythtv"}' ```
 
-### Qt6 Support
+### Qt6 Support (non-macOS)
 For Qt6 support, add this:
 
 ``` --extra-vars='{"qt6":true}' ```
 
+### Qt5 Support (macOS)
+Qt6 is the default for macOS on both macports and homebrew.  To enable Qt5 for
+macports or homebrew, add this:
 
-#### MacOSX Homebrew Users
-``` brew install ansible ```<br>
-``` ./mythtv.yml --limit=localhost ```
+``` --extra-vars='{"qt5":true}' ```
 
+#### macOS Homebrew Users
 To disable the sudo / become prompt run add
 ``` ANSIBLE_BECOME=false ANSIBLE_BECOME_ASK_PASS=False ```
 to the beginning of the command line (homebrew is already set to run
 without escalating privileges in the homebrew playbook). E.g.
 
-``` ANSIBLE_BECOME=false ANSIBLE_BECOME_ASK_PASS=False ./mythtv.yml --limit=localhost ```
+```ANSIBLE_BECOME=false ANSIBLE_BECOME_ASK_PASS=False ./mythtv.yml --limit=localhost ```
 
 
-#### MacOSX MacPorts Users
-``` sudo port install py-ansible ```<br>
-``` ./mythtv.yml --limit=localhost ```
+#### macOS MacPorts Users
+By default macports uses mysql8 as the database. To specify a different database:
 
-- Optionally specify a database version:
+``` ./mythtv.yml --extra-vars="database_version=mariadb-10.5" --limit=localhost ```
 
-    ``` ./mythtv.yml --extra-vars="database_version=mariadb-10.5" --limit=localhost ```
+To specify a custom version of python3:
 
-- Optionally specify a different version of python3
-
-   ``` ./mythtv.yml --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.11"  --limit=localhost ```
+``` ./mythtv.yml --extra-vars="ansible_python_interpreter=/opt/local/bin/python3.14"  --limit=localhost ```
 
 ### User Options
 There is a README file under group_vars that explains how some of the options

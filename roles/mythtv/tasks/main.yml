@@ -26,6 +26,7 @@
     - '{{ distro }}/{{ version }}.yml'
     - '{{ distro }}/{{ ansible_distribution_release | lower }}.yml'
     - '{{ distro }}/rolling.yml'
+    - '{{ distro }}/{{ ansible_pkg_mgr }}.yml'
     - missing.yml
 
 - name: No package list, warn the user and end this play
@@ -71,6 +72,13 @@
 - name: Install the packages
   package:
     name: '{{ packages }}'
+
+- name: 'Optionally perform any package manager specific post installation operations'
+  include_tasks:
+    file: '{{ item }}'
+  with_first_found:
+    - files: '{{ ansible_pkg_mgr }}_{{ distro }}_post.yml'
+      skip: true
 
 ...
 

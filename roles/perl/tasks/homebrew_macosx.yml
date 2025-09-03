@@ -1,0 +1,14 @@
+# roles/pip/tasks/homebrew_macosx.yml
+
+# Currently only homebrew requires instalation via cpanm.
+# One issue is that is that it cpanm needs to be pointed to
+# the correct versions of openssl.
+
+---
+
+- name: homebrew_macosx | Specify python exectuables
+  set_fact:
+    openssl_path: "{{ pkgmgr_prefix }}/opt/openssl/"
+  when: ansible_pkg_mgr != 'homebrew'
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

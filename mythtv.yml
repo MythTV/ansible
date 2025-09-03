@@ -26,7 +26,6 @@
     - include_role:
         name: mythtv
       when:
-        - ansible_pkg_mgr != "homebrew" and ansible_pkg_mgr != "macports"
         - not use_old_roles
         - not mythtv_tools
 
@@ -59,18 +58,6 @@
         - not mythtv_tools
 
     - include_role:
-        name: mythtv-homebrew
-      when:
-        - ansible_pkg_mgr == "homebrew"
-        - not mythtv_tools
-
-    - include_role:
-        name: mythtv-macports
-      when:
-        - ansible_pkg_mgr == "macports"
-        - not mythtv_tools
-
-    - include_role:
         name: mythtv-pacman
       when:
         - ansible_pkg_mgr == "pacman"
@@ -85,6 +72,12 @@
         - not mythtv_tools
 
     - include_role:
+        name: perl
+      when:
+        - cpanm_active is defined and cpanm_active
+        - not mythtv_tools
+
+    - include_role:
         name: python
       when: not mythtv_tools
 
@@ -92,14 +85,14 @@
         name: qt5
       when:
         - not mythtv_tools
-        - ansible_pkg_mgr == "homebrew" or ansible_pkg_mgr == "macports"
+        - use_old_roles
         - not qt6
 
     - include_role:
         name: qt6
       when:
         - not mythtv_tools
-        - ansible_pkg_mgr == "homebrew" or ansible_pkg_mgr == "macports"
+        - use_old_roles
         - qt6
 
     - include_role:

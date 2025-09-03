@@ -1,8 +1,27 @@
+# roles/python/tasks/main.yml
+#
+# generate a python virtual environment and optionally install python packages into
+# the venv via pip3
+#
 ---
 
 # TEMPORARILY ALLOW TURNING venv ON/OFF except for macOS. venv_active is set
 # to false in group_vars/all.yml to disable the feature. To activate it add:
 #   --extra-vars='{"venv_active":true}' to the ./mythtv.yml command line.
+
+
+- name: 'Load python packages.'
+  include_vars:
+    file: '{{ item }}'
+  with_first_found:
+    - 'pip3.yml'
+
+- name: 'Run any distro special tasks'
+  include_tasks:
+    file: '{{ item }}'
+  with_first_found:
+    - files: '{{ distro }}.yml'
+      skip: true
 
 - include_tasks:
     file: python-venv.yml
@@ -11,12 +30,13 @@
       tags: venv
   when:
     - venv_active
-    - ansible_pkg_mgr != 'homebrew'
-    - ansible_pkg_mgr != 'macports'
   tags: venv
 
-- include_tasks: python-macOS.yml
-  when:
-    - (ansible_pkg_mgr == "homebrew") or (ansible_pkg_mgr == "macports")
+- name: 'Optionally perform any installation operations'
+  include_tasks:
+    file: '{{ item }}'
+  with_first_found:
+    - files: '{{ distro }}_install.yml'
+      skip: true
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

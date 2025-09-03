@@ -8,12 +8,15 @@ instruction_text: 'Please include the following with any issues or questions'
 use_old_roles: false
 use_old_roles_failure_test: false
 
+# Perl CPANM installation
+# added for situations where the package manger does not provide perl modules (e.g. homebrew)
+cpanm_active: false
+
 # Python Virtual Environment.
 # 2025/03/24, turned this on and ALL actions at github worked.
 # Need to verify the path is OK with everyone.
 venv_active: false
 venv_path: ~/.virtualenvs/mythtv
-
 
 # From: roles/mythtv-rpm/vars/main.yml and roles/mythtv-dnf/vars/main.yml
 # and now used by roles/mythtv/tasks/<distribution>.yml

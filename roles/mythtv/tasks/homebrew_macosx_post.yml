@@ -1,0 +1,32 @@
+# roles/mythtv/tasks/homebrew_macosx_post.yml
+#
+# homebrew requires some additional help finding mysqlclient
+# These need to be set after the mysqlclient package is installed.
+#
+
+---
+
+# locate mysqlclient to aide the linker and compilers
+- name: 'homebrew_macosx_post | Get mysqlclient libs'
+  shell:
+    export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"{{ pkgmgr_prefix }}/opt/mysql-client/lib/pkgconfig/" &&
+    {{ pkgmgr_prefix }}/bin/pkg-config --libs mysqlclient
+  register: libs_out
+
+- name: 'homebrew_macosx_post | Set mysqlclient_ldflags fact'
+  set_fact:
+    mysqlclient_ldflags: '{{ libs_out.stdout }}'
+
+- name: 'homebrew_macosx_post | Get mysqlclient cflags'
+  shell:
+    export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"{{ pkgmgr_prefix }}/opt/mysql-client/lib/pkgconfig/" &&
+    {{ pkgmgr_prefix }}/bin/pkg-config --cflags mysqlclient
+  register: cflag_out
+
+- name: 'homebrew_macosx_post | Set mysqlclient_cflags fact'
+  set_fact:
+    mysqlclient_cflags: '{{ cflag_out.stdout }}'
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=3:
