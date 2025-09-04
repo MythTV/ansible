@@ -1,0 +1,89 @@
+# TASK [common : Please include the following with any issues or questions] ****************
+# [localhost] => {
+#     "msg": [
+#         "inventory_hostname:                 localhost",
+#         "ansible_distribution:               MacOSX",
+#         "ansible_distribution_release:       24.6.0",
+#         "ansible_distribution_major_version: 15",
+#         "ansible_pkg_mgr:                    macports",
+#         "ansible_version.full:               2.18.1"
+
+---
+
+packages:
+ - 'apache-ant'
+ - aom
+ - autoconf
+ - automake
+ - ccache
+ - cmake
+ - dav1d
+ - '{{ database_version }}'
+ - 'dejavu-fonts'
+ - exiv2
+ - faac
+ - 'fftw-3'
+ - flac
+ - freetype
+ - gmake
+ - gnutls
+ - gpatch
+ - gsed
+ - hdhomerun
+ - lame
+ - libass
+ - libbluray
+ - libdvdcss
+ - 'liberation-fonts'
+ - libmpeg2
+ - libsamplerate
+ - libtool
+ - libvorbis
+ - libvpx
+ - libxml2
+ - libxslt
+ - libzip
+ - lzo2
+ - minizip
+ - nasm
+ - ninja
+ - openssl
+ - 'perl{{ perl_version }}'
+ - 'p{{ perl_version }}-date-manip'
+ - 'p{{ perl_version }}-datetime-format-iso8601'
+ - 'p{{ perl_version }}-dbi'
+ - 'p{{ perl_version }}-http-request-ascgi'
+ - 'p{{ perl_version }}-image-size'
+ - 'p{{ perl_version }}-io-socket-inet6'
+ - 'p{{ perl_version }}-json'
+ - 'p{{ perl_version }}-libwww-perl'
+ - 'p{{ perl_version }}-net-upnp'
+ - 'p{{ perl_version }}-soap-lite'
+ - 'p{{ perl_version }}-xml-simple'
+ - 'p{{ perl_version }}-xml-xpath'
+ - php84
+ - pkgconfig
+ - python{{ python_package_suffix }}
+ - py{{ python_package_suffix }}-pip
+ - py{{ python_package_suffix }}-virtualenv
+ - soundtouch
+ - taglib
+ - texi2html
+ - texinfo
+ - x264
+ - x265
+ - 'xorg-libX11'
+ - XviD
+
+qt5_packages:
+ - qt5
+ - qt5-qtscript
+ - qt5-qtwebengine
+
+qt6_packages:
+ - qt6
+ - qt6-qtwebengine
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=4:

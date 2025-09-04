@@ -1,0 +1,92 @@
+# TASK [common : Please include the following with any issues or questions] ****************
+# [localhost] => {
+#     "msg": [
+#         "inventory_hostname:                 localhost",
+#         "ansible_distribution:               MacOSX",
+#         "ansible_distribution_release:       24.6.0",
+#         "ansible_distribution_major_version: 15",
+#         "ansible_pkg_mgr:                    homebrew",
+#         "ansible_version.full:               2.18.8"
+---
+
+packages:
+ - ant
+ - aom
+ - autoconf
+ - automake
+ - ccache
+ - cmake
+ - cpanminus
+ - curl
+ - dav1d
+ - '{{ database_version }}'
+ - exiv2
+ - expat
+ - faac
+ - fftw
+ - flac
+ - 'font-dejavu'
+ - 'font-liberation'
+ - freetype
+ - glslang
+ - 'gnu-sed'
+ - gnutls
+ - gpatch
+ - gperf
+ - lame
+ - libass
+ - libbluray
+ - libcec
+ - libdbi
+ - libdiscid
+ - libdvdcss
+ - libhdhomerun
+ - libiconv
+ - libiodbc
+ - libsamplerate
+ - libtool
+ - libvorbis
+ - libvpx
+ - libx11
+ - libxml2
+ - libxslt
+ - libzip
+ - lzo
+ - make
+ - meson
+ - minizip
+ - 'molten-vk'
+ - 'mysql-client'
+ - nasm
+ - ninja
+ - openssl
+ - perl
+ - perl-dbd-mysql
+ - php
+ - 'pkg-config'
+ - 'python@{{ python_exe_suffix }}'
+ - pyenv-virtualenv
+ - python-setuptools
+ - 'sound-touch'
+ - taglib
+ - texi2html
+ - texinfo
+ - virtualenv
+ - 'vulkan-headers'
+ - 'vulkan-loader'
+ - 'vulkan-tools'
+ - x264
+ - x265
+ - xvid
+ - zlib
+ - zstd
+
+qt5_packages:
+ - qt@5
+
+qt6_packages:
+ - qt@6
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=4:

@@ -1,0 +1,59 @@
+# roles/mythtv/tasks/macports_macosx_post.yml
+#
+# macports needs to "select" the correct mysql, python, and php executables to function properly
+#
+# Setup any port variants unable to be installed via ansible package
+#
+# macports requires some additional help finding mysqlclient
+# These need to be set after the mysqlclient package is installed.
+#
+
+---
+
+# select the correct executables
+- name: macports_macosx_post | Select the installed version of mariadb/mysql and python
+  command: 'port select --set {{ item.group }} {{ item.version }}'
+  with_list:
+    - { group: mysql, version: '{{ database_version }}' }
+    - { group: python, version: 'python{{ python_package_suffix }}' }
+    - { group: python3, version: 'python{{ python_package_suffix }}' }
+    - { group: pip3, version: 'pip{{ python_package_suffix }}' }
+    - { group: php, version: 'php84' }
+    - { group: virtualenv, version: 'virtualenv{{ python_package_suffix }}' }
+
+# package is unable to install variants as the input is specific to macports.  Install
+# any required variants now (e.g. dbd-mysql and qt-mysqlplugin)
+- name: macports_macosx_post | Install p{{ perl_version }}-dbd-mysql  # noqa name[template]
+  macports:
+    name: 'p{{ perl_version }}-dbd-mysql'
+    variant: +{{ mysql_variant }}
+
+- name: macports_macosx_post | Install {{ qt_version }}-mysqlplugin  # noqa name[template]
+  macports:
+    name: '{{ qt_version }}-mysql-plugin'
+    variant: +{{ mysql_variant }}
+
+# locate mysqlclient to aide the linker and compilers
+- name: macports_macosx_post | Get mysqlclient libs
+  shell:
+    export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:{{ pkgmgr_prefix }}/lib/{{ database_version }}/pkgconfig/ &&
+    {{ pkgmgr_prefix }}/bin/pkg-config --libs mysqlclient
+  register: libs_out
+
+- name: macports_macosx_post | Set mysqlclient_ldflags fact
+  set_fact:
+    mysqlclient_ldflags: '{{ libs_out.stdout }}'
+
+- name: macports_macosx_post | Get mysqlclient cflags
+  shell:
+    export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:{{ pkgmgr_prefix }}/lib/{{ database_version }}/pkgconfig/ &&
+    {{ pkgmgr_prefix }}/bin/pkg-config --cflags mysqlclient
+  register: cflag_out
+
+- name: macports_macosx_post | Set mysqlclient_cflags fact
+  set_fact:
+    mysqlclient_cflags: '{{ cflag_out.stdout }}'
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=3:

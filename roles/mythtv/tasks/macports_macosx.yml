@@ -1,0 +1,83 @@
+# roles/mythtv/tasks/macports_macosx.yml
+#
+# macports requires some special handling to set the environment for the qt, python, and database
+# versions specified
+#
+# qt6               qt6 usage is set to true by default
+#                   qt5 can be enabled by --extra-vars='{"qt5":true}'
+#
+# venv_active       Creation of a python virtual environment is required as not all python modules
+#                   are available in the package manager
+#
+# database_version  mysql8 is the default database
+#                   other databases can be used by --extra-vars="database_version=mariadb-10.5"
+#
+---
+
+# input variables
+- name: macports_macosx | Set qt6 to true
+  set_fact:
+    qt6: true
+  when: qt5 is undefined
+
+- name: macports_macosx | Set venv_active to true
+  set_fact:
+    venv_active: true
+
+- name: macports_macosx | Set database_version as {{ database_version }}
+  set_fact:
+    database_version: mysql8
+  when: database_version is undefined
+
+- name: macports_macosx | Set perl_version
+  set_fact:
+    perl_version: 5.34
+  when: perl_version is undefined
+
+# locate macports install prefix
+- name: macports_macosx | Get macports install prefix
+  shell: dirname $(dirname $(which port))
+  register: mp_out
+
+- name: macports_macosx | Set pkgmgr_prefix fact
+  set_fact:
+    pkgmgr_prefix: '{{ mp_out.stdout }}'
+
+# database fact parsing
+- name: macports_macosx | Set mariadb based facts
+  set_fact:
+    database_name: mariadb
+  when: database_version is search("mariadb")
+
+- name: macports_macosx | Set mysql based facts
+  set_fact:
+    database_name: mysql
+  when: database_version is search("mysql")
+
+- name: macports_macosx | Generate macports mariadb/mysql variant facts
+  set_fact:
+    mysql_variant: "{{ database_version | regex_replace('-') | regex_replace('\\.', '_') }}"
+
+# qt_version is required to specify the correct ports for installation
+- name: macports_macosx | Set qt_version as qt5
+  set_fact:
+    qt_version: qt5
+  when: qt5 is defined and qt5
+
+- name: macports_macosx | Set qt_version as qt6
+  set_fact:
+    qt_version: qt6
+  when: qt5 is undefined or not qt5
+
+# python_package_suffix and python_exe_suffix are required to install the correct python ports
+# and to aide in development of the python venv
+- name: macports_macosx | Develop python package version suffixes
+  set_fact:
+    python_package_suffix:
+      '{{ ansible_python.version.major }}{{ ansible_python.version.minor }}'
+    python_exe_suffix:
+      '{{ ansible_python.version.major }}.{{ ansible_python.version.minor }}'
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=3:

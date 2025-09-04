@@ -5,12 +5,15 @@
 - name: python-venv | Try to use discovered_interpreter_python
   set_fact:
     using_python_version: '{{ discovered_interpreter_python }}'
-  when: discovered_interpreter_python is defined
+  when:
+    - using_python_version is undefined
+    - discovered_interpreter_python is defined
 
 - name: python-venv | Choose alternate python if required
   set_fact:
     using_python_version: '{{ ansible_python.executable }}'
   when:
+    - using_python_version is undefined
     - discovered_interpreter_python is undefined
     - ansible_python.executable is defined
 

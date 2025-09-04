@@ -1,0 +1,24 @@
+---
+
+# roles/python/tasks/macosx.yml
+
+# Assumes that these variables are set in the macports or
+# homebrew playbooks:
+#
+#   MYSQLCLIENT_LDFLAGS   - flags to find the mysqlclient dylib
+#   MYSQLCLIENT_CFLAGS    - flags to find the mysqlclient includes
+#
+
+- name: macosx_install | Generate the python virtual environment for standard user
+  become: false
+  pip:
+    virtualenv: '{{ venv_path }}'
+    virtualenv_python: '{{ using_python_version }}'
+    virtualenv_site_packages: false
+    name:
+      '{{ lookup("flattened", pip_packages) }}'
+  environment:
+    MYSQLCLIENT_LDFLAGS: "{{ mysqlclient_ldflags }}"
+    MYSQLCLIENT_CFLAGS: "{{ mysqlclient_cflags }}"
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

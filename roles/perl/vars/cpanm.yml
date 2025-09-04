@@ -1,0 +1,22 @@
+---
+
+perl_modules:
+  - Date::Manip
+  - DateTime::Format::ISO8601
+  - DBI
+  - Image::Size
+  - IO::Socket::INET6
+  - JSON
+  - LWP
+  - HTTP::Request::AsCGI
+  - Net::UPnP
+  - Net::SSLeay
+  - SOAP::Lite
+  - XML::XPath
+  - XML::Simple
+  - FindBin
+  - IPC::Cmd
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=4:

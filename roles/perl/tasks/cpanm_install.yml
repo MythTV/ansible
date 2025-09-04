@@ -1,0 +1,18 @@
+# roles/perl/tasks/cpanm_install.yml
+#
+# install perl modules with ansible's cpanm capabiltiy
+#
+---
+
+- name: 'cpanm_install | Install perl modules'
+  become: false
+  command: cpanm
+    --mirror 'http://cpan.cpantesters.org/'
+    --force
+    {{ perl_modules | join(' ') }}
+  ignore_errors: yes
+  environment:
+    OPENSSL_PREFIX: '{{ openssl_path }}'
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=3:

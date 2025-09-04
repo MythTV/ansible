@@ -1,0 +1,32 @@
+# roles/python/tasks/macosx.yml
+#
+# setup macOS specific variables for the venv including a custom location to avoid
+# python version conflicts. Also clear any old environtment to prevent package conflict.
+#
+# Assumes that these variables are set in the macports or
+# homebrew playbooks:
+#
+#   python_exe_suffix     - specifies the version of python "dot" version to use
+#   python_package_suffix - specifies the version of python to use
+#
+
+---
+
+- name: macosx | Specify python exectuables
+  set_fact:
+    using_python_version: '{{ pkgmgr_prefix }}/bin/python{{ python_exe_suffix }}'
+
+- name: macosx | Specify a location to install the python virtual environment
+  set_fact:
+    venv_path: '{{ venv_path }}/python-venv{{ python_package_suffix }}'
+
+- name: macosx | Expand the user name in the pyvenv location variable
+  set_fact:
+    venv_path: '{{ venv_path | expanduser }}'
+
+- name: macosx | Clearing previous python virtual environment
+  file:
+    path: '{{ venv_path }}'
+    state: absent
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:

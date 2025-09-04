@@ -1,0 +1,73 @@
+# roles/mythtv/tasks/homebrew_macosx.yml
+#
+# homebrew requires some special handling to set the environment for the qt, python, and database
+# versions specified
+#
+# qt6               qt6 usage is set to true by default
+#                   qt5 can be enabled by --extra-vars='{"qt5":true}'
+#
+# cpanm_active      Installation of perl modules via cpanm is required as homebrew does not provide
+#                   perl modules
+#
+# venv_active       Creation of a python virtual environment is required as homebrew does not provide
+#                   perl modules
+#
+# database_version  mariadb is the default database
+#                   other databases can be used by --extra-vars="database_version=mariadb-10.5"
+#
+---
+
+# input variables
+- name: homebrew_macosx | Set qt6 to true
+  set_fact:
+    qt6: true
+  when: qt5 is undefined
+
+- name: homebrew_macosx | Set cpanm_active to true
+  set_fact:
+    cpanm_active: true
+
+- name: homebrew_macosx | Set database_version as {{ database_version }}
+  set_fact:
+    database_version: mariadb
+  when: database_version is undefined
+
+- name: homebrew_macosx | Set venv_active to true
+  set_fact:
+    venv_active: true
+
+# locate homebrew install prefix
+- name: homebrew_macosx | Get homebrew install prefix
+  command: brew --prefix
+  register: hb_out
+
+- name: homebrew_macosx | Set pkgmgr_prefix fact
+  set_fact:
+    pkgmgr_prefix: '{{ hb_out.stdout }}'
+
+# database fact parsing
+- name: homebrew_macosx | Set mariadb based facts
+  set_fact:
+    database_name: mariadb
+  when: database_version is search("mariadb")
+
+- name: homebrew_macosx | Set mysql based facts
+  set_fact:
+    database_name: mysql
+  when: database_version is search("mysql")
+
+- name: homebrew_macosx | Set mysql based facts
+  set_fact:
+    openssl_path: "{{ pkgmgr_prefix }}/opt/openssl/"
+
+# python_package_suffix and python_exe_suffix are required to aide in development of the python venv
+- name: homebrew_macosx | Develop python package version suffixes
+  set_fact:
+    python_package_suffix:
+      '{{ ansible_python.version.major }}{{ ansible_python.version.minor }}'
+    python_exe_suffix:
+      '{{ ansible_python.version.major }}.{{ ansible_python.version.minor }}'
+
+...
+
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=3:
