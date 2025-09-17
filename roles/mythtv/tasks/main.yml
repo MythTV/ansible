@@ -27,14 +27,15 @@
     - '{{ distro }}/{{ ansible_distribution_release | lower }}.yml'
     - '{{ distro }}/rolling.yml'
     - '{{ distro }}/{{ ansible_pkg_mgr }}.yml'
+    - '{{ distro }}/{{ ansible_distribution_version }}.yml'
     - missing.yml
 
 - name: No package list, warn the user and end this play
   when: packages is undefined
   block:
-    - name: 'Missing package alert: {{ manual_action_text }}'
+    - name: 'Unable to find a package: {{ manual_action_text }}'
       debug:
-        msg: './roles/mythtv/vars/{{ distro }}/{{ version }}.yml is missing.
+        msg: './roles/mythtv/vars/{{ distro }}/... is missing.
         {{ missing_package_message }}: {{ instruction_text }}'
 
     - name: Ending this play

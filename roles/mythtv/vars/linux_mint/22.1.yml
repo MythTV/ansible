@@ -1,4 +1,4 @@
-# File: roles/mythtv/vars/linux_mint/22.yml
+# File: roles/mythtv/vars/linux_mint/22.1.yml
 #
 #        "inventory_hostname:                 localhost",
 #        "ansible_distribution:               Linux Mint",
@@ -102,7 +102,7 @@ packages:
   - python3-mysqldb
 
 qt5_packages:
-  - libqt5core5a
+  - libqt5core5t64
   - libqt5opengl5-dev
   - libqt5script5
   - qtscript5-dev
