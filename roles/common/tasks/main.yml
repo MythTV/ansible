@@ -22,13 +22,13 @@
         msg: "Aborting play because --limit=all was used"
       when: ansible_limit == "all"
 
-    - name: Checkout repo  # noqa latest[git]
-      ansible.builtin.git:
-        accept_hostkey: false
-        clone: false
-        repo: https://github.com/MythTV/ansible
-        update: false
-      register: gitresponse
+      # name: Checkout repo  # noqa latest[git]
+      # ansible.builtin.git:
+      #   accept_hostkey: false
+      #   clone: false
+      #   repo: https://github.com/MythTV/ansible
+      #   update: false
+      # register: gitresponse
 
 - name: "{{ instruction_text }}:"
   debug:
@@ -41,7 +41,7 @@
       - "ansible_pkg_mgr:                    {{ ansible_pkg_mgr }}"
       - "ansible_version.full:               {{ ansible_version.full }}"
       - "ansible_distribution_version:       {{ ansible_distribution_version }}"
-      - "ansible playbook version:           {{ gitresponse.after | truncate(11) }}"
+      # "ansible playbook version:           {{ gitresponse.after | truncate(11) }}"
   when:
     - ansible_lsb.major_release is defined
 
@@ -54,7 +54,7 @@
       - "ansible_distribution_major_version: {{ ansible_distribution_major_version }}"
       - "ansible_pkg_mgr:                    {{ ansible_pkg_mgr }}"
       - "ansible_version.full:               {{ ansible_version.full }}"
-      - "ansible playbook version:           {{ gitresponse.after | truncate(11) }}"
+      # "ansible playbook version:           {{ gitresponse.after | truncate(11) }}"
   when: ansible_lsb.major_release is undefined
 
 - name: Load user_options.yml
