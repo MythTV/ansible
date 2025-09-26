@@ -1,3 +1,6 @@
+# Is v16 still a Release Candidate as of 9/26/2025? Note packages commented
+# out below.
+
 ---
 
 packages:
@@ -53,26 +56,26 @@ packages:
   - libmp3lame-devel
   - python3-mysqlclient
   - python3-lxml
-  - python3-urlgrabber
+  # python3-urlgrabber  # Unavailable as of 9/26/2025
   - python3-requests
   - python3-setuptools
-  - python3-oauth2
-  # perl-ExtUtils-MakeMaker
-  # perl-DBI
-  # perl-DBD-mysql
-  # perl-HTTP-Message
-  # perl-libwww-perl
-  # perl-IO-Socket-INET6
-  # perl-Date-Manip
-  # perl-XML-Simple
-  # perl-XML-XPath
-  # perl-DateTime-Format-ISO8601
-  # perl-SOAP-Lite
-  # perl-JSON
-  # perl-Image-Size
-  # perl-Net-UPnP
-  # perl(FindBin)
-  # perl(IPC::Cmd)
+  # python3-oauth2  # Unavailable as of 9/26/2025
+  - perl-ExtUtils-MakeMaker
+  - perl-DBI
+  - perl-DBD-mysql
+  - perl-HTTP-Message
+  - perl-libwww-perl
+  - perl-IO-Socket-INET6
+  - perl-Date-Manip
+  - perl-XML-Simple
+  - perl-XML-XPath
+  - perl-DateTime-Format-ISO8601
+  - perl-SOAP-Lite
+  - perl-JSON
+  - perl-Image-Size
+  - perl-Net-UPnP
+  - perl(FindBin)
+  - perl(IPC::Cmd)
   - libvorbis-devel
   - flac-devel
   - libtag-devel
@@ -88,8 +91,8 @@ packages:
 qt5_packages:
   - libqt5-qtbase-devel
   - libqt5-qtscript-devel
-  - libQt5WebKit5-devel
-  - libQt5WebKitWidgets-devel
+  # libQt5WebKit5-devel
+  # libQt5WebKitWidgets-devel
   - libQt5Sql5-mysql
 
 ...

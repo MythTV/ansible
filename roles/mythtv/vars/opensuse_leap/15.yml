@@ -57,22 +57,22 @@ packages:
   - python3-requests
   - python3-setuptools
   - python3-oauth2
-  # perl-ExtUtils-MakeMaker
-  # perl-DBI
-  # perl-DBD-mysql
-  # perl-HTTP-Message
-  # perl-libwww-perl
-  # perl-IO-Socket-INET6
-  # perl-Date-Manip
-  # perl-XML-Simple
-  # perl-XML-XPath
-  # perl-DateTime-Format-ISO8601
-  # perl-SOAP-Lite
-  # perl-JSON
-  # perl-Image-Size
-  # perl-Net-UPnP
-  # perl(FindBin)
-  # perl(IPC::Cmd)
+  - perl-ExtUtils-MakeMaker
+  - perl-DBI
+  - perl-DBD-mysql
+  - perl-HTTP-Message
+  - perl-libwww-perl
+  - perl-IO-Socket-INET6
+  - perl-Date-Manip
+  - perl-XML-Simple
+  - perl-XML-XPath
+  - perl-DateTime-Format-ISO8601
+  - perl-SOAP-Lite
+  - perl-JSON
+  - perl-Image-Size
+  - perl-Net-UPnP
+  - perl(FindBin)
+  - perl(IPC::Cmd)
   - libvorbis-devel
   - flac-devel
   - libtag-devel

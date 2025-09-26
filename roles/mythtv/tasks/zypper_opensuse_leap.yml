@@ -1,3 +1,4 @@
+# v16.0 URL:  http://download.opensuse.org/repositories/devel:/languages:/perl/16.0
 ---
 
 - name: zypper_opensuse_leap | Set Suse repository
@@ -13,13 +14,13 @@
   set_fact:
     perl_repo:
       "{{ suse_repo }}/{{ ansible_distribution | regex_replace('\\ ', '_') }}_{{ ansible_distribution_version }}/"
-  when: ansible_distribution_release|int < 4
+  when: ansible_distribution_major_version | int < 4
 
 - name: zypper_opensuse_leap | Set Perl repository URL for Leap v4+
   set_fact:
     perl_repo:
       "{{ suse_repo }}/{{ ansible_distribution_version }}"
-  when: ansible_distribution_release|int > 3
+  when: ansible_distribution_major_version | int > 4
 
 - name: zypper_opensuse_leap | Print Perl repository URL
   debug:

@@ -1,6 +1,6 @@
 # To read these tools in, type: . tools/aliases_and_functions
 # That's <DOT> <SPACE> tools/aliases_and_functions
-# Really: . to<TAB>/a<TAB> should work to auto complete the above
+# Really: . t<TAB>a<TAB> will work for those with shells with auto-complete
 
 # Ansible Add Package. Good for testing that a single package can be added
 # without running the entire playbook. Note that the module name is: package
