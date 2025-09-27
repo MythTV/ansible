@@ -4,11 +4,10 @@ extends: default
 
 rules:
 
-  # For braces, colons and commas, allow more spaces for readability
   braces:
     level: warning
-    max-spaces-inside: 8
-    min-spaces-inside: 1
+    max-spaces-inside: 1
+    min-spaces-inside: 0
 
   colons:
     level: warning
@@ -19,6 +18,11 @@ rules:
     level: warning
     max-spaces-after: 16
     max-spaces-before: 0
+
+  comments:
+    min-spaces-from-content: 1
+
+  comments-indentation: false
 
   document-end: disable
 

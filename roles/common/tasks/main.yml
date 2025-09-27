@@ -22,30 +22,30 @@
         msg: "Aborting play because --limit=all was used"
       when: ansible_limit == "all"
 
-- name: "{{ instruction_text }}:"
+- name: '{{ instruction_text }}:'
   debug:
     msg:
-      - "inventory_hostname:                 {{ inventory_hostname }}"
-      - "ansible_distribution:               {{ ansible_distribution }}"
-      - "ansible_distribution_release:       {{ ansible_distribution_release }}"
-      - "ansible_distribution_major_version: {{ ansible_distribution_major_version }}"
-      - "ansible_lsb.major_release:          {{ ansible_lsb.major_release }}"
-      - "ansible_pkg_mgr:                    {{ ansible_pkg_mgr }}"
-      - "ansible_version.full:               {{ ansible_version.full }}"
-      - "ansible_distribution_version:       {{ ansible_distribution_version }}"
+      - 'inventory_hostname:                        {{ inventory_hostname }}'
+      - 'ansible_facts[distribution]:               {{ ansible_facts["distribution"] }}'
+      - 'ansible_facts[distribution_release]:       {{ ansible_facts["distribution_release"] }}'
+      - 'ansible_facts[distribution_major_version:  {{ ansible_facts["distribution_major_version"] }}'
+      - 'ansible_facts[lsb.major_release]:          {{ ansible_facts["lsb.major_release"] }}'
+      - 'ansible_facts[pkg_mgr]:                    {{ ansible_facts["pkg_mgr"] }}'
+      - 'ansible_version.full:                      {{ ansible_version.full }}'
+      - 'ansible_facts[distribution_version]:       {{ ansible_facts["distribution_version"] }}'
   when:
-    - ansible_lsb.major_release is defined
+    - ansible_facts["lsb.major_release"] is defined
 
-- name: "{{ instruction_text }}:"
+- name: '{{ instruction_text }}:'
   debug:
     msg:
-      - "inventory_hostname:                 {{ inventory_hostname }}"
-      - "ansible_distribution:               {{ ansible_distribution }}"
-      - "ansible_distribution_release:       {{ ansible_distribution_release }}"
-      - "ansible_distribution_major_version: {{ ansible_distribution_major_version }}"
-      - "ansible_pkg_mgr:                    {{ ansible_pkg_mgr }}"
-      - "ansible_version.full:               {{ ansible_version.full }}"
-  when: ansible_lsb.major_release is undefined
+      - 'inventory_hostname:                        {{ inventory_hostname }}'
+      - 'ansible_facts[distribution]:               {{ ansible_facts["distribution"] }}'
+      - 'ansible_facts[distribution_release]:       {{ ansible_facts["distribution_release"] }}'
+      - 'ansible_facts[distribution_major_version:  {{ ansible_facts["distribution_major_version"] }}'
+      - 'ansible_facts[pkg_mgr]:                    {{ ansible_facts["pkg_mgr"] }}'
+      - 'ansible_version.full:                      {{ ansible_version.full }}'
+  when: ansible_facts["lsb.major_release"] is undefined
 
 - name: Load user_options.yml
   include_vars:

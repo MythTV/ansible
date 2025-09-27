@@ -9,14 +9,14 @@
 
 - name: Set distro and version values
   set_fact:
-    distro: '{{ ansible_distribution | regex_replace("[/ ]", "_") | lower }}'
-    version: '{{ ansible_distribution_major_version | int }}'
+    distro: '{{ ansible_facts["distribution"] | regex_replace("[/ ]", "_") | lower }}'
+    version: '{{ ansible_facts["distribution_major_version"] | int }}'
 
 - name: 'Run any special tasks'
   include_tasks:
     file: '{{ item }}'
   with_first_found:
-    - files: '{{ ansible_pkg_mgr }}_{{ distro }}.yml'
+    - files: '{{ ansible_facts["pkg_mgr"] }}_{{ distro }}.yml'
       skip: true
 
 - name: Load distribution/version packages.
@@ -24,10 +24,10 @@
     file: '{{ item }}'
   with_first_found:
     - '{{ distro }}/{{ version }}.yml'
-    - '{{ distro }}/{{ ansible_distribution_release | lower }}.yml'
+    - '{{ distro }}/{{ ansible_facts["distribution_release"] | lower }}.yml'
     - '{{ distro }}/rolling.yml'
-    - '{{ distro }}/{{ ansible_pkg_mgr }}.yml'
-    - '{{ distro }}/{{ ansible_distribution_version }}.yml'
+    - '{{ distro }}/{{ ansible_facts["pkg_mgr"] }}.yml'
+    - '{{ distro }}/{{ ansible_facts["distribution_version"] }}.yml'
     - missing.yml
 
 - name: No package list, warn the user and end this play
@@ -78,7 +78,7 @@
   include_tasks:
     file: '{{ item }}'
   with_first_found:
-    - files: '{{ ansible_pkg_mgr }}_{{ distro }}_post.yml'
+    - files: '{{ ansible_facts["pkg_mgr"] }}_{{ distro }}_post.yml'
       skip: true
 
 ...
