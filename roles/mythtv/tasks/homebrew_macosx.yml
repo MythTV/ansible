@@ -27,7 +27,7 @@
   set_fact:
     cpanm_active: true
 
-- name: homebrew_macosx | Set database_version as {{ database_version }}
+- name: homebrew_macosx | Set database_version to mariadb if undefined
   set_fact:
     database_version: mariadb
   when: database_version is undefined

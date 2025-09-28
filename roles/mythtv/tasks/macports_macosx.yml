@@ -24,7 +24,7 @@
   set_fact:
     venv_active: true
 
-- name: macports_macosx | Set database_version as {{ database_version }}
+- name: macports_macosx | Set database_version to mysql8 if undefined
   set_fact:
     database_version: mysql8
   when: database_version is undefined
