@@ -12,7 +12,7 @@
 
 # select the correct executables
 - name: macports_macosx_post | Select the installed version of mariadb/mysql and python
-  command: 'port select --set {{ item.group }} {{ item.version }}'
+  command: 'port select --set {{ mp_pkg.group }} {{ mp_pkg.version }}'
   with_list:
     - { group: mysql, version: '{{ database_version }}' }
     - { group: python, version: 'python{{ python_package_suffix }}' }
@@ -20,6 +20,8 @@
     - { group: pip3, version: 'pip{{ python_package_suffix }}' }
     - { group: php, version: 'php84' }
     - { group: virtualenv, version: 'virtualenv{{ python_package_suffix }}' }
+  loop_control:
+    loop_var: mp_pkg
 
 # package is unable to install variants as the input is specific to macports.  Install
 # any required variants now (e.g. dbd-mysql and qt-mysqlplugin)
