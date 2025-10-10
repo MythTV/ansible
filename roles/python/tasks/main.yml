@@ -15,7 +15,7 @@
     file: '{{ item }}'
   with_first_found:
     - 'pip3.yml'
-  when: ansible_facts["distribution"] == 'macosx'
+  when: ansible_facts["distribution"] == 'MacOSX'
 
 - name: 'Run any distro special tasks'
   include_tasks:
