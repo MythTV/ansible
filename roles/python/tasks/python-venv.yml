@@ -4,23 +4,22 @@
 
 - name: python-venv | Try to use discovered_interpreter_python
   set_fact:
-    using_python_version: '{{ discovered_interpreter_python }}'
+    using_python_version: '{{ ansible_facts["discovered_interpreter_python"] }}'
   when:
     - using_python_version is undefined
-    - discovered_interpreter_python is defined
+    - ansible_facts["discovered_interpreter_python"] is defined
 
 - name: python-venv | Choose alternate python if required
   set_fact:
-    using_python_version: '{{ ansible_python.executable }}'
+    using_python_version: '{{ ansible_facts["python.executable"] }}'
   when:
     - using_python_version is undefined
     - discovered_interpreter_python is undefined
-    - ansible_python.executable is defined
+    - ansible_facts["python.executable"] is defined
 
 - fail:
     msg: "Python executable not found, aborting."
-  when: using_python_version is undefined
-  ignore_errors: true
+  failed_when: using_python_version is undefined
 
 - name: python-venv | Create Python Virtual Environment
   command:

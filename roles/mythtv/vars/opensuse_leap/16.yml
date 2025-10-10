@@ -60,6 +60,7 @@ packages:
   - python3-requests
   - python3-setuptools
   # python3-oauth2  # Unavailable as of 9/26/2025
+  - python3-wheel
   - perl-ExtUtils-MakeMaker
   - perl-DBI
   - perl-DBD-mysql

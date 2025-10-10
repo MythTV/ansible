@@ -56,7 +56,6 @@ doesn't work for your distribution:
 
 Distribution|--limit value
 :-----------|:------------
-Fedora 30 | f30 (36 went EOL on 2023/05/16)
 macOS (using macports)| macports
 macOS (using homebrew)| homebrew
 FreeBSD | freebsd (was for python2.7 only)

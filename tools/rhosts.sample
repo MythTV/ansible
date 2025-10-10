@@ -1,7 +1,7 @@
 # rhosts.sample (remote hosts). An Inventory file.
 #
-# Copy this file to ../rhosts.yml. Make local changes there (so that changes
-# to rhosts.sample won't clobber your work.)
+# Copy this file to ../rhosts.yml. Make local changes there (so that a git pull
+# won't clobber your work.)
 #
 # This playbook can live on a host that doesn't even have MythTV running on it
 # (remove localhost below if that's the case). ssh access is required to each

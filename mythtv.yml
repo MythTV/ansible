@@ -17,6 +17,7 @@
 
 - name: 'MythTV'
   hosts: mythtv_hosts
+  gather_facts: false
 
   tasks:
 

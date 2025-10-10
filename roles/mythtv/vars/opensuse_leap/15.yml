@@ -57,6 +57,7 @@ packages:
   - python3-requests
   - python3-setuptools
   - python3-oauth2
+  - python3-wheel
   - perl-ExtUtils-MakeMaker
   - perl-DBI
   - perl-DBD-mysql

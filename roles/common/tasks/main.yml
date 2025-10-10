@@ -3,24 +3,24 @@
 # the --limit=<name> must be used. The debug: prints information useful
 # for diagnosing issues.
 #
-# Next, print some valuable debugging information
-#
 # Finally, load any user specific variables (not under git control).
 
 ---
 
-- name: "Don't do limit checks if using rhosts.yml"
-  when:  inventory_file is not search("/rhosts.yml$")
+- name: Do limit checks when using hosts.yml
+  when:
+    inventory_file is search("/hosts.yml$") and (
+    ansible_limit is undefined or
+    ansible_limit | length == 0 or
+    ansible_limit == "all")
   block:
-    - fail:
-        msg: "Aborting play because the --limit switch wasn't used"
-      when: ansible_limit is undefined
-    - fail:
-        msg: "Aborting play because the --limit= switch was empty"
-      when: not ansible_limit
-    - fail:
-        msg: "Aborting play because --limit=all was used"
-      when: ansible_limit == "all"
+    - name: "Limit switch must be used, e.g. ./mythtv-yml --limit=localhost"
+      debug:
+        msg: "Aborting because the --limit switch was missing, empty or set to 'all'"
+    - meta: end_play
+
+- name: Gather facts
+  setup:
 
 - name: '{{ instruction_text }}:'
   debug:
