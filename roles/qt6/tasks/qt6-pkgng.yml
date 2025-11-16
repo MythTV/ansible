@@ -5,8 +5,8 @@
     name:
       - qt6
       # FreeBSD seems to be missing the Qt6 Sql drivers
-      # - qt6-base_sqldriver-mysql
-      # - qt6-base_sqldriver-sqlite
+      - qt6-base_sqldriver-mysql
+      - qt6-base_sqldriver-sqlite
     state:
       present
   tags:
