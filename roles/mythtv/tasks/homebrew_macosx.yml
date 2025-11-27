@@ -60,13 +60,18 @@
   set_fact:
     openssl_path: "{{ pkgmgr_prefix }}/opt/openssl/"
 
+# get the python version specified by user in ansible_python_interpreter or defaulted by the interpreter
+- name: Gather specific Python facts
+  ansible.builtin.shell: "{{ ansible_python_interpreter | default('python3') }} -c 'import sys; print(f\"{sys.version_info.major}.{sys.version_info.minor}\")'"
+  register: python_version
+
 # python_package_suffix and python_exe_suffix are required to aide in development of the python venv
 - name: homebrew_macosx | Develop python package version suffixes
   set_fact:
     python_package_suffix:
-      '{{ ansible_python.version.major }}{{ ansible_python.version.minor }}'
+      "{{ python_version.stdout | replace('.', '') }}"
     python_exe_suffix:
-      '{{ ansible_python.version.major }}.{{ ansible_python.version.minor }}'
+      "{{ python_version.stdout }}"
 
 ...
 

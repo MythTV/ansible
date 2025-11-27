@@ -19,7 +19,7 @@
   include_tasks:
     file: '{{ item }}'
   with_first_found:
-    - files: '{{ ansible_pkg_mgr }}_{{ distro }}.yml'
+    - files: '{{ ansible_facts["pkg_mgr"] }}_{{ distro }}.yml'
       skip: true
 
 - name: 'Optionally perform any installation operations'
