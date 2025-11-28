@@ -102,4 +102,9 @@ qt5_packages:
   - qt5-qmake
   - qt5-script
 
+qt6_packages:
+  - qt6
+  - qt6-base_sqldriver-mysql
+  - qt6-base_sqldriver-sqlite
+
 ...

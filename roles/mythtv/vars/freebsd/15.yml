@@ -104,4 +104,9 @@ qt5_packages:
   - qt5-sqldrivers-mysql
   - qt5-sqldrivers-sqlite3
 
+qt6_packages:
+  - qt6
+  - qt6-base_sqldriver-mysql
+  - qt6-base_sqldriver-sqlite
+
 ...
