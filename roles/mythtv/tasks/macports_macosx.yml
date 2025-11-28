@@ -70,7 +70,7 @@
   when: qt5 is undefined or not qt5
 
 # get the python version specified by user in ansible_python_interpreter or defaulted by the interpreter
-- name: Gather specific Python facts
+- name: macports_macosx | Gather specific Python facts
   ansible.builtin.shell: "{{ ansible_python_interpreter | default('python3') }} -c 'import sys; print(f\"{sys.version_info.major}.{sys.version_info.minor}\")'"
   register: python_version
 
