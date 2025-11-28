@@ -26,8 +26,8 @@ function aap () {
 function mbuild () {
     deactivate || true
     rm -rf ./build-qt5
-    cmake --preset qt5
-    VIRTUAL_ENV=~/.virtualenvs/mythtv cmake --build build-qt5
+    VIRTUAL_ENV=~/.virtualenvs/mythtv cmake --preset qt5
+    cmake --build build-qt5
     echo "Activate venv, expect MythTV to be found:"
     . $VIRTUAL_ENV/bin/activate
     pip3 show MythTV

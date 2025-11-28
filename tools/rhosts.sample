@@ -4,7 +4,7 @@
 # won't clobber your work.)
 #
 # This playbook can live on a host that doesn't even have MythTV running on it
-# (remove localhost below if that's the case). ssh access is required to each
+# (remove localhost below if that's the case.) ssh access is required to each
 # host. This is the way Ansible is typically used.
 #
 # Next, change the hostnames below to your own. Delete names/IPs you don't use.
@@ -52,4 +52,4 @@ mythtv_hosts:
 
 ...
 
-# vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=80:
+# vim: set expandtab tabstop=2 shiftwidth=2 smartindent syntax=yaml noautoindent colorcolumn=80:
