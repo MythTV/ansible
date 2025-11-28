@@ -2,12 +2,13 @@
 #
 # install perl modules with ansible's cpanm capabiltiy
 #
+# --mirror 'http://cpan.cpantesters.org/'
 ---
 
 - name: 'cpanm_install | Install perl modules'
   become: false
   command: cpanm
-    --mirror 'http://cpan.cpantesters.org/'
+    --mirror 'https://metacpan.org/'
     --force
     {{ perl_modules | join(' ') }}
   ignore_errors: yes
