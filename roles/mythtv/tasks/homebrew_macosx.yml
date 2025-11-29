@@ -21,7 +21,7 @@
 - name: homebrew_macosx | Set qt6 to true
   set_fact:
     qt6: true
-  when: qt5 is undefined
+  when: not qt5 | default(false) | bool
 
 - name: homebrew_macosx | Set cpanm_active to true
   set_fact:

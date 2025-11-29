@@ -18,7 +18,7 @@
 - name: macports_macosx | Set qt6 to true
   set_fact:
     qt6: true
-  when: qt5 is undefined
+  when: not qt5 | default(false) | bool
 
 - name: macports_macosx | Set venv_active to true
   set_fact:
@@ -62,12 +62,12 @@
 - name: macports_macosx | Set qt_version as qt5
   set_fact:
     qt_version: qt5
-  when: qt5 is defined and qt5
+  when: qt5 | default(false) | bool
 
 - name: macports_macosx | Set qt_version as qt6
   set_fact:
     qt_version: qt6
-  when: qt5 is undefined or not qt5
+  when: qt5 | default(true) | bool
 
 # get the python version specified by user in ansible_python_interpreter or defaulted by the interpreter
 - name: macports_macosx | Gather specific Python facts
