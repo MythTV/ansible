@@ -8,6 +8,7 @@ tags
 rhosts.yml
 *~
 *.setup.out
+__pycache__
 **.sw[nop]
 # If retry_files_enabled=False gets changed in ansible.cfg
 mythtv.retry
