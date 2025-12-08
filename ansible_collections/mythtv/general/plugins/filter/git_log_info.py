@@ -3,8 +3,9 @@
 
 # Copyright: (c) 2025, Bill Meek <bmeek@mythtv.org>
 
-''' git log filter. Use this to view documentation:
-    ANSIBLE_FILTER_PLUGINS=./filter_plugins ansible-doc -t filter git_log_info
+'''
+git log filter. Use this to view documentation:
+    ansible-doc -t filter mythtv.general.git_log_info
 '''
 
 
@@ -17,14 +18,14 @@ class FilterModule(object):
 
         return {
             'git_log_info': self.git_log_info,
-            'something_else': self.something_else
         }
 
     def git_log_info(self, file_path, scope='playbook'):
-        ''' See if PATH is set, look for git in it and return git log
-            information if the file is under git control. Else N/A.
-            Also allow getting the SHA1 for HEAD, so that the version
-            of the entire project can be retrieved.
+        '''
+        See if PATH is set, look for git in it and return git log information
+        if the file is under git control. Else N/A.  Also allow getting the
+        SHA1 for HEAD, so that the version of the entire project can be
+        retrieved.
         '''
 
         import os
@@ -65,10 +66,3 @@ class FilterModule(object):
             return 'N/A'
 
         return data.strip('"')
-
-    def something_else(self, some_argument):
-        ''' Place holder for some other filter. Mostly here to prove that
-            multiple filters can live in a single Python file.
-        '''
-
-        return some_argument
