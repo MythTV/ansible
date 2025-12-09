@@ -1,0 +1,29 @@
+If this playbook fails almost immediately like this:
+
+    [ERROR]: Task failed: Timed out waiting for become success.
+
+and your distribution is Ubuntu 25.10, then read on.
+
+Ubuntu bug report (marked as an upstream issue) for more information:
+    https://bugs.launchpad.net/ubuntu/+source/rust-sudo-rs/+bug/2122414
+
+Ansible bug report:
+https://github.com/ansible/ansible/issues/85837
+
+One workaround, that changes alternatives (do this once):
+
+
+  $ sudo update-alternatives --config sudo
+  There are 2 choices for the alternative sudo (providing /usr/bin/sudo).
+
+   Selection  Path                     Priority  Status
+   --------------------------------------------------------- 
+ * 0          /usr/lib/cargo/bin/sudo   50       auto mode   # Original choice
+   1          /usr/bin/sudo.ws          40       manual mode
+   2          /usr/lib/cargo/bin/sudo   50       manual mode <-- Pick this one
+
+
+Another, use this run time workaround (every time)l:
+
+    ANSIBLE_BECOME_EXE=sudo.ws ./mythtv.yml -l localhost
+
