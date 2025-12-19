@@ -9,26 +9,26 @@ https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html
 Command line settings (E.g. --extra-vars='{"qt6": true}') would override
 settings here.
 
-Copy the contents between the _____ lines below. Uncomment/change/delete as
-required.
-_______________________________________________________________________
+Copy everything after the following underscores to user_options.yml. Then
+uncomment/change/delete as required.
+_________________________________________________________________________
 
 ---
 
-# Set to true to enable use of the Single Role
-# use_old_roles: false
+# Set to true to enable use of the Single Role, this variable is going away
+#use_old_roles: false
 
 # Set to true to install perl modules using cpanm
-# cpanm_active: false
+#cpanm_active: false
 
 # Set to true to create a Python Virtual Environment:
-# venv_active: false
+#venv_active: false
 
 # Change the default Virtual Environment path to somewhere else:
-# venv_path: ~/.virtualenvs/mythtv
+#venv_path: ~/.virtualenvs/mythtv
 
 # Set this to true to load Qt6 packages rather than Qt5:
-# qt6: false
+#qt6: false
 
 # Optional local packages. DANGER: No attempt is made to verify that additions
 # here available with the distribution in use.
@@ -39,7 +39,5 @@ _______________________________________________________________________
 #  - another_package
 
 ...
-
-_______________________________________________________________________
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=80:

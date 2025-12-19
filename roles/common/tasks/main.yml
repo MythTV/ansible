@@ -21,6 +21,7 @@
 
 - name: Gather facts
   setup:
+    gather_subset: '!devices'  # Don't need all the network and disk information
 
 - name: '{{ instruction_text }}:'
   debug:
@@ -33,7 +34,7 @@
       - 'ansible_facts[pkg_mgr]:                    {{ ansible_facts["pkg_mgr"] }}'
       - 'ansible_version.full:                      {{ ansible_version.full }}'
       - 'ansible_facts[distribution_version]:       {{ ansible_facts["distribution_version"] }}'
-      - 'MythTV playbook SHA1:                      {{ "HEAD" | mythtv.general.git_log_info("playbook") }}'
+      - 'MythTV playbook SHA1:                      {{ "HEAD" | git_log_info("playbook") }}'
   when:
     - ansible_facts["lsb.major_release"] is defined
 
@@ -46,7 +47,7 @@
       - 'ansible_facts[distribution_major_version:  {{ ansible_facts["distribution_major_version"] }}'
       - 'ansible_facts[pkg_mgr]:                    {{ ansible_facts["pkg_mgr"] }}'
       - 'ansible_version.full:                      {{ ansible_version.full }}'
-      - 'MythTV playbook SHA1:                      {{ "HEAD" | mythtv.general.git_log_info("playbook") }}'
+      - 'MythTV playbook SHA1:                      {{ "HEAD" | git_log_info("playbook") }}'
   when: ansible_facts["lsb.major_release"] is undefined
 
 - name: Load user_options.yml
