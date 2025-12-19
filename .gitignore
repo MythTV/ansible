@@ -1,5 +1,6 @@
 # Part 3 of workflows:
 .github/workflows/build-mythtv-all.yml
+ansible_collections
 Dockerfile
 Docker
 group_vars/user_options.yml
