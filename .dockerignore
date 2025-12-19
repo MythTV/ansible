@@ -3,9 +3,9 @@
 .git
 .github
 .gitignore
-.sh
 .yamllint.yml
 *.setup.out
+*.sh
 **.sw[nop]
 *~
 **/Docker
