@@ -1,0 +1,91 @@
+# v14
+
+---
+
+packages:
+#  - avahi-libdns
+  - autoconf
+  - automake
+  - ccache
+  - cmake
+  - exiv2
+  - faac
+  - fftw
+  - flac
+  - freetype2
+  - gcc10
+  - git
+  - gmake
+  - gnutls
+  - gperf
+  - jack
+  - lame
+  - libao-alsa
+  - libao-oss
+  - libass
+  - libbluray
+  - libcdio
+  - libcdio-paranoia
+  - libcec
+  - libhdhomerun
+  - libmpeg2
+  - libsamplerate
+  - libtool
+  - libv4l
+  - libvorbis
+  - libvpx
+  - libxml2
+  - libzip
+  - lzo
+  - MesaLib
+  - meson
+  - minizip
+  - nasm
+  - ninja-build
+  - openssl
+  - p5-DBD-mysql
+  - p5-DBI
+  - p5-Date-Manip
+  - p5-DateTime-Format-ISO8601
+  - p5-FindBin-libs
+  - p5-IO-Socket-INET6
+  - p5-Image-Size
+  - p5-JSON
+  - p5-SOAP-Lite
+  - p5-XML-Simple
+  - p5-XML-XPath
+  - p5-libwww
+  - patch
+  - perl
+  - php84
+  - pkgconf
+  - pulseaudio
+  - py312-lxml
+  - py312-mysqlclient
+  - py312-pip
+  - py312-pymysql
+  - py312-requests
+  - py312-setuptools
+  - py312-simplejson
+  - python312
+  - soundtouch
+  - sqlite3
+  - subversion
+  - taglib
+  - v4l2
+  - x264
+  - x265
+  - xvidcore
+  - vulkan-headers
+
+qt5_packages:
+  - qt5
+  - qt5-mysql
+
+qt6_packages:
+  - qt6
+#  - qt6-base_sqldriver-mysql
+#  - qt6-base_sqldriver-sqlite
+
+...
+
