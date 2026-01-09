@@ -1,11 +1,11 @@
 ---
 
-ansible_managed_sharp: "
-#\n
-# Ansible managed file. Edit on host: {{ template_host }}!\n
-# File Name: {{ template_fullpath }}\n
-# Latest commit: {{ template_fullpath | mythtv.general.git_log_info('full') }}\n
-#\n"
+local_ansible_managed: "
+\n
+ Ansible managed file. Edit on host: {{ template_host }}!\n
+ File Name: {{ template_fullpath }}\n
+ Latest commit: {{ template_fullpath | git_log_info('full') }}\n
+\n"
 
 # Text for manual action items:
 manual_action_text: 'MANUAL ACTION REQUIRED'
