@@ -18,10 +18,11 @@ enable_list:  # These are opt-in rules
   - no-same-owner
 
 skip_list:
-  - fqcn
   - ignore-errors
-  - name[missing]
   - no-changed-when
+  - name[missing]
+  - role-name[path]
+  - fqcn
   - var-naming[no-role-prefix]
 
 warn_list:
