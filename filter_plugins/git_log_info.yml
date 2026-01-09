@@ -1,6 +1,6 @@
 ---
 DOCUMENTATION:
-  name: mythtv.general.git_log_info
+  name: git_log_info
   author: Bill Meek
   short_description: Get some git info about the playbook or a single file
   description:
@@ -28,11 +28,11 @@ DOCUMENTATION:
 EXAMPLES: |
   - name: "get a file's short SHA1, author and timestamp"
     ansible.builtin.debug:
-      var: "{{ some_file_name | mythtv.general.git_log_info('full') }}"
+      var: "{{ some_file_name | git_log_info('full') }}"
 
   - name: "get the long SHA1 for the MythTV playbook (HEAD)"
     ansible.builtin.debug:
-      var: "{{ 'HEAD' | mythtv.general.git_log_info('playbook') }}"
+      var: "{{ 'HEAD' | git_log_info('playbook') }}"
 
 RETURN:
   _output:
