@@ -108,6 +108,26 @@
     - ansible_distribution == "FreeBSD"
     - ansible_distribution_major_version|int >= 13
 
+- name: Install buildbot-worker
+  pkgng:
+    name:
+      - py312-buildbot-worker
+    state:
+      present
+  when:
+    - ansible_distribution == "NetBSD"
+    - ansible_distribution_major_version|int >= 10
+
+- name: Install buildbot-worker
+  pkgng:
+    name:
+      - buildbot-worker
+    state:
+      present
+  when:
+    - ansible_distribution == "OpenBSD"
+    - ansible_distribution_major_version|int >= 8
+
 - name: Create buildworker user
   user:
     name: buildworker
