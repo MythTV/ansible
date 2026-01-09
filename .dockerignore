@@ -9,6 +9,7 @@
 **.sw[nop]
 *~
 **/Docker
+ansible_collections
 Dockerfile
 README.md
 rhosts.sample
