@@ -22,29 +22,33 @@ def run_module():
     ''' Update with real module information. '''
 
     module_args = {
-        "api_port": {"type": 'int', "required": False, "default": 6544},
-        "host": {"type": 'str', "required": False, "default": 'localhost'},
+        'api_port': {
+            'type': 'int',
+            'required': False,
+            'default': 6544
+            },
+        'host': {
+            'type': 'str',
+            'required': False,
+            'default': 'localhost'
+            },
         }
-
-    result = {'changed': False}
-
-    module = AnsibleModule(
-        argument_spec=module_args,
-        supports_check_mode=True
-    )
 
     module = AnsibleModule(argument_spec=module_args, supports_check_mode=True)
 
+    result = {'changed': False}
+
     # In the check mode, really a sanity test of this module.
     if module.check_mode:
-        result['changed'] = True
+        result['comment'] = 'check mode ran'
         module.exit_json(**result)
 
     # Do something(s) here and resurn result information.
 
+    result['changed'] = True
     result['comment'] = 'library/sample.py ran'
     result['host'] = module.params['host']
-    result['port'] = module.params['api_port']
+    result['api_port'] = module.params['api_port']
 
     module.exit_json(**result)
 

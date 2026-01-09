@@ -5,7 +5,7 @@
 
 '''
 git log filter. Use this to view documentation:
-    ansible-doc -t filter mythtv.general.git_log_info
+    ansible-doc -t filter git_log_info
 '''
 
 

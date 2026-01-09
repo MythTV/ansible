@@ -1,14 +1,14 @@
 ---
 DOCUMENTATION:
-  module: mythtv.general.sample
+  module: sample
   plugin_type: module
   author: Bill Meek
   short_description: Enter something short here
   description:
     - Enter the real long description here.
   options:
-    some_option:
-      description: some need for an integer
+    api_port:
+      description: some integer
       default: 1234
       type: int
       required: true
@@ -20,12 +20,12 @@ DOCUMENTATION:
 
 EXAMPLES: |
   - name: do something
-    mythtv.general.sample:
+    sample:
 
   - name: do something with some parameters
-    mythtv.general.sample:
+    sample:
       host: some_hostname
-      some_option: 5678
+      api_port: 5678
 
 RETURN:
   changed:
@@ -33,15 +33,20 @@ RETURN:
     type: bool
     returned: always
     sample: true
-  failed:
-    description: common task message
-    type: bool
-    returned: always
-    sample: false
   comment:
     description: explanatory of result text
     type: str
     returned: always
     sample: "Success, all done!"
+  host:
+    description: some hostname
+    type: str
+    returned: always, except in check mode
+    sample: "hostname"
+  api_port:
+    description: port number
+    type: int
+    returned: always, except in check mode
+    sample: "3456"
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=80:
