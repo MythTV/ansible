@@ -17,7 +17,8 @@
     - discovered_interpreter_python is undefined
     - ansible_facts["python.executable"] is defined
 
-- fail:
+- name: "python-venv | Abort if a Python interpreter can't be found"
+  fail:
     msg: "Python executable not found, aborting."
   failed_when: using_python_version is undefined
 
@@ -37,10 +38,10 @@
   debug:
     msg: >-
       A Python Virtual Environment was created. Before building MythTV,
-      do: export VIRTUAL_ENV={{ venv_path | expanduser }} first. Then
+      do: export VIRTUAL_ENV=/{{ venv_path | expanduser }} first. Then
       run cmake or make as usual. Remember to change the shebang of any
       personal Python programs that import the MythTV module to:
-      #!{{ venv_path | expanduser }}/bin/python
+      #!/{{ venv_path | expanduser }}/bin/python
   when: not command_result.failed or
         (command_result.rc is defined and command_result.rc == 0)
 
