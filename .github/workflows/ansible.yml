@@ -3,12 +3,13 @@ name: Run ansible-playbook
 
 #
 # This workflow tests that ansible can successfully run
-# on linux (macos ansible with macports is extremely
-# slow to install and run ansible, and freebsd running
-# in a macos vm is extremely fragile, so we defer to
-# the full build workflow for macos).  As most churn
-# in this repo tends to happen in the linux ecosystem
-# this provides a quick check for the most common cases.
+# on linux and macOS-homebrew (macos ansible with
+# macports is extremely slow to install and run ansible,
+# and freebsd running in a macos vm is extremely
+# fragile, so we defer to the full build workflow for
+# macos).  As most churn in this repo tends to happen in
+# the linux and macOS homebrew ecosystems this provides
+# a quick check for the most common cases.
 #
 # The containers are selected to be from the set of
 # linux distributions and versions that are currently
@@ -164,3 +165,36 @@ jobs:
       - name: Run ansible to install build requirements
         working-directory: ansible
         run: ansible-playbook ${{ matrix.container.ansibleopts }} mythtv.yml
+
+  ansible-macos:
+    name: Running ansible-playbook on ${{ matrix.os.desc }}
+
+    strategy:
+      matrix:
+        os:
+          - desc: 'macOS 15 (Sequoia) intel'
+            runner: 'macos-15-intel'
+            ansibleopts: '--limit localhost'
+            ansibleoverides: 'ANSIBLE_BECOME=False ANSIBLE_BECOME_ASK_PASS=False'
+          - desc: 'macOS 26 (Tahoe) arm64'
+            runner: 'macos-26'
+            ansibleopts: '--limit localhost'
+            ansibleoverides: 'ANSIBLE_BECOME=False ANSIBLE_BECOME_ASK_PASS=False'
+
+      fail-fast: false
+
+    runs-on: ${{ matrix.os.runner }}
+
+    steps:
+      - name: Install Ansible and missing Python necessities
+        run: |
+          brew install ansible python-setuptools python-packaging
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: ansible
+
+      - name: Run ansible to install build requirements
+        working-directory: ansible
+        run: ${{ matrix.os.ansibleoverides }} ansible-playbook ${{ matrix.os.ansibleopts }} mythtv.yml
