@@ -104,7 +104,7 @@ packages:
  - libminizip-dev
 
 qt5_packages:
- - libqt5core5a
+ - libqt5core5t64
  - libqt5opengl5-dev
  - libqt5script5
  - qtscript5-dev
