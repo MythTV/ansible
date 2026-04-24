@@ -105,8 +105,8 @@ qt6_packages:
   - qt6-base-dev
   - libqt6sql6-mysql
   - qt6-webengine-dev
-  - qt6-base-private-dev
-  - qt6-declarative-private-dev
+  # qt6-base-private-dev
+  # qt6-declarative-private-dev
 
 
 ...
