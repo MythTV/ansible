@@ -7,10 +7,6 @@
 
 ---
 
-- name: "Print warning for Ubuntu 25.10+ sudo_rs users"
-  debug:
-    msg: "If this playbook fails, try using --limit=localhost_ws (see SPECIAL_NOTE file in this directory)"
-
 - name: Do limit checks when using hosts.yml
   when:
     inventory_file is search("/hosts.yml$") and (
@@ -26,6 +22,18 @@
 - name: Gather facts
   setup:
     gather_subset: '!devices'  # Don't need all the network and disk information
+  ignore_unreachable: true
+  register: gather_facts_result
+
+- name: Add information for timeout possibly due to sudo issue
+  when:
+    - gather_facts_result.unreachable is defined
+    - gather_facts_result.unreachable
+  block:
+    - name: "Print warning for Ubuntu 25.10+ sudo_rs users"
+      debug:
+        msg: "try using --limit=localhost_ws (see SPECIAL_NOTE file in this directory)"
+    - meta: end_play
 
 - name: '{{ instruction_text }}:'
   debug:
