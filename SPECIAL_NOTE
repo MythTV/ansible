@@ -2,13 +2,15 @@ If this playbook fails (almost immediately) like this:
 
     [ERROR]: Task failed: Timed out waiting for become success.
 
-and your distribution is Ubuntu 25.10, then run this playbook like this:
+and your distribution is Ubuntu 25.10 or higher, then run this playbook
+like this:
 
     ./mythtv.yml -l localhost_ws
 
 Ubuntu bug report (marked as an upstream ansible issue):
     https://bugs.launchpad.net/ubuntu/+source/rust-sudo-rs/+bug/2122414
 
-Ansible bug report:
+Ansible issue:
 https://github.com/ansible/ansible/issues/85837
 
+The ansible issue has been fixed, various distributions need to release it now.

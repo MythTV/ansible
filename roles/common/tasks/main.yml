@@ -7,6 +7,10 @@
 
 ---
 
+- name: "Print warning for Ubuntu 25.10+ sudo_rs users"
+  debug:
+    msg: "If this playbook fails, try using --limit=localhost_ws (see SPECIAL_NOTE file in this directory)"
+
 - name: Do limit checks when using hosts.yml
   when:
     inventory_file is search("/hosts.yml$") and (
