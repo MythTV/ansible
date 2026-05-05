@@ -28,7 +28,6 @@ mythtv_hosts:
   vars:
     mythtv_builders: false  # Don't change this
     mythtv_tools: false     # Don't change this
-    use_old_roles: false    # Don't change this
     qt6: false
 
   hosts:

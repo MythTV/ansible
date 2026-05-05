@@ -24,7 +24,6 @@ skip_list:
   - role-name[path]
   - fqcn
   - var-naming[no-role-prefix]
-  - role-name
 
 warn_list:
   - latest[git]

@@ -11,10 +11,6 @@ local_ansible_managed: "
 manual_action_text: 'MANUAL ACTION REQUIRED'
 instruction_text: 'Please include the following with any issues or questions'
 
-# See mythtv.yml and roles/mythtv/tasks/main.yml for detail (both will go away):
-use_old_roles: false
-use_old_roles_failure_test: false
-
 # Perl CPANM installation
 # added for situations where the package manger does not provide perl modules (e.g. homebrew)
 cpanm_active: false

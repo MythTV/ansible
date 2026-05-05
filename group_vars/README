@@ -15,9 +15,6 @@ _________________________________________________________________________
 
 ---
 
-# Set to true to enable use of the Single Role, this variable is going away
-#use_old_roles: false
-
 # Set to true to install perl modules using cpanm
 #cpanm_active: false
 

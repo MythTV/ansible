@@ -45,8 +45,8 @@ alias avenv=". ~/.virtualenvs/mythtv/bin/activate"
 # Turn on the Virtual Environment feature:
 alias rvenv="./mythtv.yml --limit=localhost --extra-vars='{\"venv_active\":true}'"
 # Turn on the above AND the new roles layout with qt5 or 6:
-alias svenv="./mythtv.yml --limit=localhost --extra-vars='{\"venv_active\":true}' --extra-vars='{\"use_old_roles\":false}'"
-alias svenv6="./mythtv.yml --limit=localhost --extra-vars='{\"venv_active\":true}' --extra-vars='{\"use_old_roles\":false}' --extra-vars='{\"qt6\":true}'"
+alias svenv="./mythtv.yml --limit=localhost --extra-vars='{\"venv_active\":true}'"
+alias svenv6="./mythtv.yml --limit=localhost --extra-vars='{\"venv_active\":true}' --extra-vars='{\"qt6\":true}'"
 
 # Additional convenience items:
 alias ad='ansible-doc'
