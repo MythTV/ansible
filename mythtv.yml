@@ -40,18 +40,6 @@
       when: not mythtv_tools
 
     - include_role:
-        name: qt5
-      when:
-        - not mythtv_tools
-        - not qt6
-
-    - include_role:
-        name: qt6
-      when:
-        - not mythtv_tools
-        - qt6
-
-    - include_role:
         name: buildworker
       when: mythtv_builders
 
