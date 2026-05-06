@@ -74,7 +74,7 @@ packages:
   - libtool-bin
   - sqlite3
   - libcec-dev
-  - libcec6
+  - libcec7
   - libavc1394-dev
   - libiec61883-dev
   - libpulse-dev
@@ -108,6 +108,9 @@ qt5_packages:
   - qtscript5-dev
   - qt5-qmake
   - libqt5sql5-mysql
+  - libqt5webengine5
+  - libqt5webenginecore5
+  - libqt5webenginewidgets5
 
 ...
 
