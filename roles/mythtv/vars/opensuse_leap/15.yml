@@ -24,7 +24,7 @@ packages:
   - gcc13
   - gcc13-c++
   - libuuid-devel
-  - libxml2-devel
+  # libxml2-devel  # zypper has conflicts with other packages and won't install this
   - alsa-devel
   - avahi-compat-mDNSResponder-devel
   - libexiv2-devel
