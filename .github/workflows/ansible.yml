@@ -42,8 +42,8 @@ jobs:
       matrix:
         container:
           # Ubuntu group
-          - desc: 'Ubuntu 22.04 LTS (Jammy Jellyfish)'
-            image: 'ubuntu:22.04'
+          - desc: 'Ubuntu 26.04 LTS (Resolute Raccoon)'
+            image: 'ubuntu:26.04'
             ansibleopts: '--limit localhost'
           - desc: 'Ubuntu 24.04 (Noble Numbat)'
             image: 'ubuntu:24.04'
