@@ -16,7 +16,7 @@ packages:
   - libcdio-dev
   - git
   - perl-modules-5.40
-  - libtag1-dev
+  - libtag-dev
   - nasm
   - cmake
   - libfindbin-libs-perl
