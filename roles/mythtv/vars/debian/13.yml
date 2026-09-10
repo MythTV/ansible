@@ -115,6 +115,7 @@ qt5_packages:
 qt6_packages:
  - qt6-base-dev
  - qt6-webengine-dev
+ - qt6-base-private-dev
 
 ...
 
