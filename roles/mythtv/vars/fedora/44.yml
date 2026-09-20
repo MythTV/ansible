@@ -89,12 +89,13 @@ packages:
   - taglib-devel
   - libcdio-devel
   - libcdio-paranoia-devel
-  - mysql-devel
+  - mariadb-devel
   - minizip-devel
   - python3-oauth
   - python3-pycurl
   - python3-oauthlib
   - tomlplusplus-devel
+  - spirv-tools-devel
 
 qt5_packages:
   - qt5-qtbase-devel
