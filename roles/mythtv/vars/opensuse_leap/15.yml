@@ -85,6 +85,7 @@ packages:
   - dcraw
   - minizip-devel
   - libzip-devel
+  - tomlplusplus-devel
 
 qt5_packages:
   - libqt5-qtbase-devel

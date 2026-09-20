@@ -98,6 +98,7 @@ packages:
   - python3-oauth
   - python3-pycurl
   - python3-oauthlib
+  - tomlplusplus-devel
 
 qt5_packages:  # these are fillers, from fedora 39, may be correct or not
   - qt5-qtbase-devel

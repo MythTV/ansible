@@ -87,6 +87,7 @@ packages:
   - py311-pip
   - py311-mysqlclient
   - py311-setuptools
+  - tomlplusplus
 
 qt5_packages:
   - qt5-core
