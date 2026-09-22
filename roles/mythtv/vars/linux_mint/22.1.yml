@@ -100,6 +100,7 @@ packages:
   - libdatetime-format-iso8601-perl
   - libfreetype6-dev
   - python3-mysqldb
+  - libtomlplusplus-dev
 
 qt5_packages:
   - libqt5core5t64

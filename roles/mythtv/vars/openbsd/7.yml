@@ -71,6 +71,7 @@ packages:
   - x264
   - x265
   - xvidcore
+  - tomlplusplus
 
 qt6_packages:
   - qt6-qtbase

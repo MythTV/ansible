@@ -80,6 +80,7 @@ packages:
  - xvid
  - zlib
  - zstd
+ - tomlplusplus
 
 qt5_packages:
  - qt@5
