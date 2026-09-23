@@ -139,7 +139,7 @@ jobs:
         if: env.OS_RELEASE_ID == 'fedora' || env.OS_RELEASE_ID == 'centos' || env.OS_RELEASE_ID == 'rocky'
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.workflow_run.head_branch }}
           path: ansible
@@ -149,14 +149,14 @@ jobs:
         run: ansible-playbook ${{ matrix.container.ansibleopts }} ${{ matrix.branch.ansibleopts }} mythtv.yml
 
       - name: Checkout Mythtv/mythtv repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: ${{ matrix.branch.repository }}
           ref: ${{ matrix.branch.ref }}
           path: mythtv
 
       - name: Checkout ccache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.ccache
           key: ${{ matrix.container.image }}-build-core-ccache-${{ github.sha }}

@@ -161,7 +161,7 @@ jobs:
         if: env.OS_RELEASE_ID == 'arch'
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: ansible
 
@@ -194,7 +194,7 @@ jobs:
           brew install ansible python-setuptools python-packaging
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: ansible
 
