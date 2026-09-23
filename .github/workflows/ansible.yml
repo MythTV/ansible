@@ -49,12 +49,15 @@ jobs:
             image: 'ubuntu:24.04'
             ansibleopts: '--limit localhost'
 
-          # Debian group
-          - desc: 'Debian 11 (Bullseye)'
-            image: 'debian:bullseye'
-            ansibleopts: '--limit localhost'
+          # Debian group (15 is Duke)
           - desc: 'Debian 12 (Bookworm)'
             image: 'debian:bookworm'
+            ansibleopts: '--limit localhost'
+          - desc: 'Debian 13 (Trixie)'
+            image: 'debian:trixie'
+            ansibleopts: '--limit localhost'
+          - desc: 'Debian 14 (Forky)'
+            image: 'debian:forky'
             ansibleopts: '--limit localhost'
 
           # Fedora group
