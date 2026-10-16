@@ -15,7 +15,7 @@ packages:
   - libwww-perl
   - libcdio-dev
   - git
-  - perl-modules-5.40
+  - perl
   - libtag-dev
   - nasm
   - cmake
