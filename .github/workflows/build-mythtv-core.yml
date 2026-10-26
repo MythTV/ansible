@@ -56,9 +56,6 @@ jobs:
             configureopts: ''
 
           # Debian group (15 is Duke)
-          - desc: 'Debian 12 (Bookworm)'
-            image: 'debian:bookworm'
-            ansibleopts: '--limit localhost'
             configureopts: ''
           - desc: 'Debian 13 (Trixie)'
             image: 'debian:trixie'
@@ -68,6 +65,9 @@ jobs:
             image: 'debian:forky'
             ansibleopts: '--limit localhost'
             configureopts: ''
+          - desc: 'Debian 15 (Duke)'
+            image: 'debian:duke'
+            ansibleopts: '--limit localhost'
 
           # Fedora group
           - desc: 'Fedora 40'
