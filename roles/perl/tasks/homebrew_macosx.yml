@@ -8,7 +8,7 @@
 
 - name: homebrew_macosx | Specify python exectuables
   set_fact:
-    openssl_path: "{{ pkgmgr_prefix }}/opt/openssl/"
-  when: ansible_pkg_mgr != 'homebrew'
+    openssl_path: "{{ lookup('pipe', 'brew --prefix openssl@3') }}"
+  when: ansible_facts['pkg_mgr'] == 'homebrew'
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=2:
