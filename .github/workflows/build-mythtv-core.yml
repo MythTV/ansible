@@ -64,10 +64,10 @@ jobs:
             image: 'debian:forky'
             ansibleopts: '--limit localhost'
             configureopts: ''
-          - desc: 'Debian 15 (Duke)'
-            image: 'debian:duke'
-            ansibleopts: '--limit localhost'
-            configureopts: ''
+          # desc: 'Debian 15 (Duke)'
+          # image: 'debian:duke'  # Not available as of 10/26/2026
+          # ansibleopts: '--limit localhost'
+          # configureopts: ''
 
           # Fedora group
           - desc: 'Fedora 40'
