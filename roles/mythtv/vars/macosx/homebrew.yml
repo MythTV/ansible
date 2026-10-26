@@ -59,7 +59,7 @@ packages:
  - 'mysql-client'
  - nasm
  - ninja
- - openssl
+ - openssl@3
  - perl
  - perl-dbd-mysql
  - php
