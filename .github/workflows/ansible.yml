@@ -56,9 +56,9 @@ jobs:
           - desc: 'Debian 14 (Forky)'
             image: 'debian:forky'
             ansibleopts: '--limit localhost'
-          - desc: 'Debian 15 (Duke)'
-            image: 'debian:duke'
-            ansibleopts: '--limit localhost'
+          # desc: 'Debian 15 (Duke)'
+          # image: 'debian:duke'
+          # ansibleopts: '--limit localhost'
 
           # Fedora group
           - desc: 'Fedora 39'
