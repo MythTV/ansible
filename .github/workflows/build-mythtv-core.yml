@@ -123,7 +123,7 @@ jobs:
       - name: Debian/Ubuntu OS install ansible
         env:
           DEBIAN_FRONTEND: noninteractive
-        run: apt install ansible
+        run: apt install ansible -y
         if: env.OS_RELEASE_ID == 'debian' || env.OS_RELEASE_ID == 'ubuntu'
 
       - name: Redhat OS - add EPEL repo for EL linux (for ansible)
