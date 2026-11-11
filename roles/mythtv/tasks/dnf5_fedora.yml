@@ -10,31 +10,23 @@
   shell:            /usr/bin/grep -qi Rawhide /etc/fedora-release && echo rawhide || echo release
   register:         rawhide
 
-# TODO: IN PROGRESS, RETESTING, but it doesn't work with Fedora v41. Uncomment and delete next
-# when Fedora 41+ is fixed.
 - name: dnf5_fedora | Enable the RPM Fusion repository
-  dnf:
-    name: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+  dnf5:
+    name: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm"
     disable_gpg_check: true
     state: present
-    # ORIG: name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+  when:
+  - rpmfusion.stdout == "missing"
+  - rawhide.stdout == "release"
 
-# TODO: See above.
-# - name: dnf5_fedora | Enable the RPM Fusion repository  # noqa command-instead-of-module
-#   command:
-#     argv:
-#       - dnf
-#       - install
-#       - --assumeyes
-#       - 'https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm'
-
-- name: dnf5_fedora | Setup RPMFusion repository (Fedora release versions)
-  command:
-    cmd: dnf install -y --nogpgcheck {{ rpmfusion_rpm }}
+- name: dnf5_fedora | Enable the RPM Fusion repository (rawhide)
+  ansible.builtin.dnf5:
+    name: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-rawhide.noarch.rpm"
+    disable_gpg_check: true
+    state: present
   when:
     - rpmfusion.stdout == "missing"
-    - rawhide.stdout == "release"
-
+    - rawhide.stdout == "rawhide"
 ...
 
 # vim: set expandtab tabstop=2 shiftwidth=2 smartindent noautoindent colorcolumn=3:
