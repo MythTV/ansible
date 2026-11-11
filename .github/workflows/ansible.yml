@@ -70,9 +70,12 @@ jobs:
           - desc: 'Fedora 41'
             image: 'quay.io/fedora/fedora:41'
             ansibleopts: '--limit localhost'
-          - desc: 'Fedora Rawhide'
-            image: 'quay.io/fedora/fedora:rawhide'
+          - desc: 'Fedora 44'
+            image: 'quay.io/fedora/fedora:44'
             ansibleopts: '--limit localhost'
+          # desc: 'Fedora Rawhide'
+          # image: 'quay.io/fedora/fedora:rawhide'
+          # ansibleopts: '--limit localhost'
 
           # CentOS group
           - desc: 'CentOS 9 Stream'
