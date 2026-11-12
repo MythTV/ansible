@@ -32,7 +32,7 @@ jobs:
   build-mythtv-linux:
     name: Building ${{ matrix.branch.desc }} on ${{ matrix.container.desc }}
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     env:
       TZ: Etc/UTC
