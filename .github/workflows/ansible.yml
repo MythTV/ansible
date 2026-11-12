@@ -61,21 +61,18 @@ jobs:
           # ansibleopts: '--limit localhost'
 
           # Fedora group
-          - desc: 'Fedora 39'
-            image: 'quay.io/fedora/fedora:39'
-            ansibleopts: '--limit localhost'
-          - desc: 'Fedora 40'
-            image: 'quay.io/fedora/fedora:40'
-            ansibleopts: '--limit localhost'
-          - desc: 'Fedora 41'
-            image: 'quay.io/fedora/fedora:41'
+          - desc: 'Fedora 43'
+            image: 'quay.io/fedora/fedora:43'
             ansibleopts: '--limit localhost'
           - desc: 'Fedora 44'
             image: 'quay.io/fedora/fedora:44'
             ansibleopts: '--limit localhost'
-          # desc: 'Fedora Rawhide'
-          # image: 'quay.io/fedora/fedora:rawhide'
-          # ansibleopts: '--limit localhost'
+          - desc: 'Fedora 45'
+            image: 'quay.io/fedora/fedora:45'
+            ansibleopts: '--limit localhost'
+          - desc: 'Fedora Rawhide'
+            image: 'quay.io/fedora/fedora:rawhide'
+            ansibleopts: '--limit localhost'
 
           # CentOS group
           - desc: 'CentOS 9 Stream'
@@ -83,11 +80,11 @@ jobs:
             ansibleopts: '--limit localhost'
 
           # Rocky Linux group
-          - desc: 'Rocky Linux 8'
-            image: 'rockylinux:8'
-            ansibleopts: '--limit localhost'
           - desc: 'Rocky Linux 9'
             image: 'rockylinux:9'
+            ansibleopts: '--limit localhost'
+          - desc: 'Rocky Linux 10'
+            image: 'rockylinux:10'
             ansibleopts: '--limit localhost'
 
           # openSUSE group
