@@ -142,7 +142,11 @@ jobs:
 
       - name: Redhat/Fedora OS install ansible
         run: dnf install ansible dnf-plugins-core -y
-        if: env.OS_RELEASE_ID == 'fedora' || env.OS_RELEASE_ID == 'centos' || env.OS_RELEASE_ID == 'rocky'
+        if: env.OS_RELEASE_ID == 'fedora' || env.OS_RELEASE_ID == 'centos' || ( env.OS_RELEASE_ID == 'rocky' && env.OS_RELEASE_VERSION_MAJOR < 10 )
+
+      - name: Install ansible-core for Rocky 10+
+        run: dnf install ansible-core -y
+        if: env.OS_RELEASE_ID == 'rocky' && env.OS_RELEASE_VERSION_MAJOR > 9
 
       - name: OpenSUSE OS update
         run: zypper update -y
