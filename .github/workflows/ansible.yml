@@ -84,7 +84,7 @@ jobs:
             image: 'rockylinux:9'
             ansibleopts: '--limit localhost'
           - desc: 'Rocky Linux 10'
-            image: 'rockylinux:10'
+            image: 'rockylinux/rockylinux:10'
             ansibleopts: '--limit localhost'
 
           # openSUSE group

@@ -90,7 +90,7 @@ packages:
   - taglib-devel
   - libcdio-devel
   - libcdio-paranoia-devel
-  - mysql-devel
+  - mysql8.4-devel  # mysql-devel not found as of 11/13/2026
   - minizip-devel
   - python3-pycurl
   - python3-oauthlib
